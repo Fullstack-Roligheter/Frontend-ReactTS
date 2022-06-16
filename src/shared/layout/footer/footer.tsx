@@ -1,38 +1,55 @@
 
 import AppBar from '@mui/material/AppBar';
-import { Grid } from '@mui/material';
-import Toolbar from '@mui/material/Toolbar';
+import { Box, Grid, IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
-
 import { common } from '@mui/material/colors';
+import { Link } from '@mui/icons-material';
 
 
 const Footer = () => {
-	return (
-		<Grid
-  container
-  direction="row"
-  justifyContent="center"
-  alignItems="center"
->
-		  <AppBar position="static" color="transparent">
-			<Grid item>
-			  <Typography variant="h6" color="common.black" component="div" sx={{ flexGrow: 1 }}>
-			  Expense AB © 2021
-			  </Typography>
-			</Grid>
-			<Grid item>
-			  <FacebookIcon sx={{ color: common.black }}/>
-			  <TwitterIcon sx={{ color: common.black }}/>
-			  <InstagramIcon sx={{ color: common.black }}/>
-			</Grid>
-		  </AppBar>
-		</Grid>
-	  );
-}
+    return (
+        <Box>
+            <Grid
+                container
+                direction='column'
+                alignItems='center'
+                sx={{ color: common.black }}
+            >
+                <Box>
+				<IconButton
+                  href="https://www.facebook.com/" target="blank_" rel='noreferrer'
+
+                >
+                    <FacebookIcon fontSize='small' sx={{ color: common.black }}/>
+                </IconButton>
+				<IconButton
+				href="https://www.twitter.com/" target="blank_" rel='noreferrer'
+				>
+                    <TwitterIcon fontSize='small' sx={{ color: common.black }}/>
+				</IconButton>
+				<IconButton
+				href="https://www.instagram.com/" target="blank_" rel='noreferrer'
+				>
+                    <InstagramIcon fontSize='small' sx={{ color: common.black }}/>
+				</IconButton>
+                </Box>
+                <Box>
+                    <Typography
+                        variant='body2'
+                        color='common.black'
+                        component='div'
+                        sx={{ flexGrow: 1 }}
+                    >
+                        Expense AB © 2021
+                    </Typography>
+                </Box>
+            </Grid>
+        </Box>
+    )
+	}
 export default Footer
 
 

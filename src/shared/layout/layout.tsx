@@ -6,7 +6,7 @@ import { Box } from '@mui/material'
 const Layout = () => {
 	return (
 		<>
-		<Box sx={{ minHeight: '100vh' }}>
+		<Box sx={{ minHeight: 'calc(100vh - 70px)' }}>
 			<Header />
 			<Outlet />
 		</Box>
