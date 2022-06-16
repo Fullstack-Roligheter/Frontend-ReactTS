@@ -1,8 +1,8 @@
-const LogIn = () => {
+const Faq = () => {
 	return (
 		<>
 			<div>
-				<h1>Login sidan</h1>
+				<h3>Faq content here</h3>
 			</div>
 			<div>
 				<p>Woop Woop</p>
@@ -10,4 +10,4 @@ const LogIn = () => {
 		</>
 	)
 }
-export default LogIn
+export default Faq
