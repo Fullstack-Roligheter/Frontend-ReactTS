@@ -4,6 +4,7 @@ import LogIn from './features/login/login'
 import Faq from './features/faq/faq'
 import WelcomeFeature from './features/welcome/welcome'
 import Layout from './shared/layout/layout'
+import TransactionsFeature from './features/transactions/transactions'
 
 const ExpenseRoutes = () => {
 	return (
@@ -14,6 +15,7 @@ const ExpenseRoutes = () => {
 					<Route path='/omoss' element={<OmOss />} />
 					<Route path='/login' element={<LogIn />} />
 					<Route path='/faq' element={<Faq />} />
+					<Route path='/transactions' element={<TransactionsFeature />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
