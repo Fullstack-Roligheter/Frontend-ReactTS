@@ -1,9 +1,8 @@
-import "./App.css";
-import Button from "@mui/material/Button";
-import ExpenseRoutes from "./Routes";
+import './App.css'
+import ExpenseRoutes from './routes'
 
 function App() {
-  return <div>{ExpenseRoutes}</div>;
-};
+	return <div>{ExpenseRoutes}</div>
+}
 
-export default App;
+export default App
