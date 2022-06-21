@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
@@ -30,8 +30,8 @@ const LogIn = () => {
 		})
 	}
 
-	const handleSubmit = (e: any) => {
-		e.preventDefault()
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
 		UserLogin(formData)
 			.then((response) => {
 				alert('Access Granted')
