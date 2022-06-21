@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios'
 
 export function UserLogin(data: any) {
     return axios.post('https://localhost:7073/api/user/login', data)
@@ -13,12 +13,13 @@ export function UserLogin(data: any) {
 }
 
 export function UserRegister(data: any) {
-    return axios.post('https://localhost:7073/api/user/register', data)
-        .then((response) => {
-            const data = response.data;
-            return data;
-        })
-        .catch((error) => {
-            console.log("Error in UserRegister: ", error);
-        })
+	return axios
+		.post('https://localhost:7073/api/user/register', data)
+		.then((response) => {
+			const data = response.data
+			return data
+		})
+		.catch((error) => {
+			console.log('Error in UserRegister: ', error)
+		})
 }
