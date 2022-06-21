@@ -8,6 +8,7 @@ export function UserLogin(data: any) {
         })
         .catch((error) => {
             console.log("Error in UserLogin: ", error);
+            throw error
         })
 }
 
