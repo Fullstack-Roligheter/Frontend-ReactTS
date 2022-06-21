@@ -3,11 +3,12 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
 import { useNavigate } from "react-router";
 
 import SubmitButton from "../../shared/buttons/button-default";
 import { UserLogin } from "../../shared/fetch/user";
+
+import { useEffect, useState } from "react";
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,8 +35,11 @@ const LogIn = () => {
     UserLogin(formData)
       .then((response) => {
         alert("Access Granted");
+        setFormData(response.data)
+        localStorage.setItem('user', 'loggedIn')
         console.log("user id:", response);
         navigate("/faq");
+        window.location.reload()
       })
       .catch((error) => {
         console.log("Error:", error);
@@ -44,6 +48,15 @@ const LogIn = () => {
         }
       });
   };
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setFormData(foundUser);
+    }
+  }, []);
+
 
   return (
     <Grid
