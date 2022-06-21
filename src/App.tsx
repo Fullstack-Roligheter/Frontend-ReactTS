@@ -1,5 +1,5 @@
 import './App.css'
-import ExpenseRoutes from './Routes'
+import ExpenseRoutes from './routes'
 
 function App() {
 	return <>{ExpenseRoutes}</>
