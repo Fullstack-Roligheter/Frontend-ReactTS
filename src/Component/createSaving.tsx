@@ -51,33 +51,6 @@ const CreateSaving: React.FC = () => {
     );
   };
 
-  /*  const addPlan = () => {
-    axios
-      .post("https://localhost:7073/api/saving/addplan", {
-        userId: 1,
-        name: title,
-        amount: amount,
-        planStartDate: startDate,
-        planEndDate: endDate,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          setStatus(res.status);
-          setOpen(true);
-          setTitle("");
-          setAmount("");
-          setStartDate("");
-          setEndDate("");
-        }
-      })
-      .catch((error) => {
-        if ((error.name = "AxiosError")) {
-          setOpen(true);
-          setStatus(400);
-        }
-      });
-  }; */
-
   const addPlan = async () => {
     try {
       const sendData = await axios.post(
