@@ -5,9 +5,10 @@ import Layout from './shared/layout/layout'
 
 function App() {
 	return (
-		<>
+		<div>
+			<Header />
 			<div>{ExpenseRoutes}</div>
-		</>
+		</div>
 	)
 }
 
