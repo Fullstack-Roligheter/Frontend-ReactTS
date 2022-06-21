@@ -45,8 +45,9 @@ const EditSavingPlan: React.FC = () => {
         `https://localhost:7073/api/saving/getplans?UserId=${userId}`
       );
       let planList = data as Plan[];
-      const [plan] = planList.filter((plan) => plan.savingId === +id!);
       setPlanList(planList);
+      const [plan] = planList.filter((plan) => plan.savingId === +id!);
+
       if (!plan) return;
       setTitle(plan.name);
       setAmount(plan.amount.toString());
