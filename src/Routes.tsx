@@ -5,7 +5,6 @@ import Faq from './features/faq/faq'
 import WelcomeFeature from './features/welcome/welcome'
 import Layout from './shared/layout/layout'
 
-
 const ExpenseRoutes = () => {
 	return (
 		<BrowserRouter>
