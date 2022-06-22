@@ -13,7 +13,9 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from "@mui/material";
+import { useState } from "react";
 
 const pages = [
   { name: "Om Oss", target: "omoss" },
@@ -21,7 +23,7 @@ const pages = [
 ];
 
 let settings = ["Profile", "Account", "Dashboard", "Logout"];
-let loggedIn: number = 0;
+var UserIsLoggedIn = localStorage.getItem('user');
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -45,6 +47,18 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const [user, setUser] = useState("")
+  const [username, setUsername] = useState("");
+const [password, setPassword] = useState("");
+
+  const handleLogout = () => {
+      setUser("");
+      setUsername("");
+      setPassword("");
+      localStorage.clear();
+      window.location.reload();
+    };
 
   return (
     <AppBar position="static">
@@ -147,7 +161,7 @@ const ResponsiveAppBar = () => {
           </Box>
 
           {(() => {
-            if (loggedIn === 1) {
+            if (UserIsLoggedIn) {
               return (
                 <Box sx={{ flexGrow: 0 }}>
                   <Tooltip title="Open settings">
@@ -180,9 +194,18 @@ const ResponsiveAppBar = () => {
                       </MenuItem>
                     ))}
                   </Menu>
+                  <IconButton
+                  onClick={handleLogout}
+                  sx={{
+                    p: 0,
+                    color: "white",
+                  }}
+                >
+                  <LogoutIcon />
+                </IconButton>
                 </Box>
               );
-            } else {
+            } else if (!UserIsLoggedIn) {
               return (
                 <IconButton
                   href="/login"
