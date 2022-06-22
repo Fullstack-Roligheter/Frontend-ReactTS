@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import { Fragment, useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import { Plan } from "../TypeMap/model";
+import { Plan } from "./Plan";
 import { useParams } from "react-router-dom";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";

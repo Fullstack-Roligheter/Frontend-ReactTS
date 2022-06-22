@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Plan } from "../TypeMap/model";
+import { Plan } from "./Plan";
 import { FiTrash2 } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";

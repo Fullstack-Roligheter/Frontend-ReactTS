@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import { NavLink, Outlet } from "react-router-dom";
 import { Fragment } from "react";
 
-const AppLayout: React.FC = () => {
+const SavingsLayout: React.FC = () => {
   return (
     <Fragment>
       <div className="container">
@@ -26,4 +26,4 @@ const AppLayout: React.FC = () => {
     </Fragment>
   );
 };
-export default AppLayout;
+export default SavingsLayout;
