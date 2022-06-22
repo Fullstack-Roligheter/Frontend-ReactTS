@@ -1,8 +1,8 @@
-import './App.css'
-import ExpenseRoutes from './routes'
+import "./App.css";
+import AppRouter from "./routes";
 
-function App() {
-	return <>{ExpenseRoutes}</>
-}
+const App: React.FC = () => {
+  return <AppRouter />;
+};
 
-export default App
+export default App;
