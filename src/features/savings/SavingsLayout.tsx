@@ -1,4 +1,3 @@
-import "../App.css";
 import Button from "@mui/material/Button";
 import { NavLink, Outlet } from "react-router-dom";
 import { Fragment } from "react";
