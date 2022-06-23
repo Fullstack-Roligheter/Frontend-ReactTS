@@ -8,6 +8,9 @@ import SavingsLayout from "./features/savings/SavingsLayout";
 import CreateSaving from "./features/savings/CreateSaving";
 import EditSavingPlan from "./features/savings/EditSavingPlan";
 import CheckSavingPlans from "./features/savings/GetSavingPlans";
+import Budget from "./features/budget/budget";
+import BudgetLayout from "./features/budget/budgetLayout";
+import CreateBudget from "./features/budget/createBudget";
 
 const AppRouter = () => {
   return (
@@ -22,6 +25,10 @@ const AppRouter = () => {
             <Route index element={<CreateSaving />} />
             <Route path="getplans" element={<CheckSavingPlans />} />
             <Route path="editplan/:id" element={<EditSavingPlan />} />
+          </Route>
+          <Route path="/budget" element={<BudgetLayout />}>
+            <Route index element={<Budget />} />
+            <Route path="createbudget" element={<CreateBudget />} />
           </Route>
         </Route>
       </Routes>
