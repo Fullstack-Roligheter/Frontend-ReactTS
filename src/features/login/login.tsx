@@ -34,9 +34,9 @@ const LogIn = () => {
 		e.preventDefault()
 		UserLogin(formData)
 			.then((response) => {
-				alert('Access Granted')
+				alert('Du är nu Inloggad')
 				setFormData(response.data)
-				localStorage.setItem('user', 'loggedIn')
+				localStorage.setItem('user', `${response.userID}`)
 				console.log('user id:', response)
 				navigate('/dashboard/' + response.userID)
 				// navigate('/faq')

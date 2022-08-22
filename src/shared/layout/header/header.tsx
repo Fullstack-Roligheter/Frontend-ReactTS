@@ -1,4 +1,8 @@
 import * as React from 'react'
+import { Link } from '@mui/material'
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
+
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -14,11 +18,6 @@ import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
-import { Link } from '@mui/material'
-import { useState } from 'react'
-
-import { useNavigate } from 'react-router'
-var UserIsLoggedIn = localStorage.getItem('user')
 
 const pages = [
 	{ name: 'Om Oss', target: 'omoss' },
@@ -34,6 +33,14 @@ let settings = [
 
 const ResponsiveAppBar = () => {
 	const navigate = useNavigate()
+
+	const [user, setUser] = useState('')
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
+
+	var UserIsLoggedIn = localStorage.getItem('user')
+
+	console.log('UserIsLoggedIn :', UserIsLoggedIn)
 
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -55,15 +62,12 @@ const ResponsiveAppBar = () => {
 		setAnchorElUser(null)
 	}
 
-	const [user, setUser] = useState('')
-	const [username, setUsername] = useState('')
-	const [password, setPassword] = useState('')
-
-	const handleMenuClick = (props: any) => {
+	const handleMenuClick = (props: string) => {
 		if (props === 'handleLogout') {
 			handleLogout()
+		} else {
+			navigate(props)
 		}
-		navigate(props)
 	}
 
 	const handleLogout = () => {
@@ -73,7 +77,7 @@ const ResponsiveAppBar = () => {
 		localStorage.clear()
 		alert('Du är nu Utloggad')
 		navigate('/')
-		window.location.reload()
+		// window.location.reload()
 	}
 
 	return (
