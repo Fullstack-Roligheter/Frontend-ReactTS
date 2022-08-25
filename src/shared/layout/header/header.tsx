@@ -36,7 +36,7 @@ const ResponsiveAppBar = (props: any) => {
 	let settings = [
 		{ title: 'Profile', route: '/profile' },
 		{ title: 'Account', route: '/account' },
-		// { title: 'Dashboard', route: `/dashboard/${UserInfo}` },
+		{ title: 'Dashboard', route: `/${UserInfo}` },
 		{ title: 'Log Out', route: 'handleLogout' },
 	]
 
