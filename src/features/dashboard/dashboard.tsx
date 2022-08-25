@@ -1,9 +1,10 @@
 import { Navigate } from 'react-router-dom'
 
-function DashboardFeature(props: any) {
-	console.log('dashboard props:', props)
+function DashboardFeature() {
+	let UserIsLoggedIn = localStorage.getItem('user')
+	console.log('authenticatedLayout: ', UserIsLoggedIn)
 
-	if (!props.user) {
+	if (UserIsLoggedIn === null) {
 		return <Navigate to='/login' replace />
 	}
 
@@ -11,7 +12,7 @@ function DashboardFeature(props: any) {
 		<div className='Welcome'>
 			<p>DASHBOARD</p>
 			<h1>YOU ARE LOGGED IN</h1>
-			<h2>UserId: {props.user}</h2>
+			<h2>UserId: {UserIsLoggedIn}</h2>
 		</div>
 	)
 }

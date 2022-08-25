@@ -37,8 +37,9 @@ const LogIn = () => {
 				alert('Du är nu Inloggad')
 				setFormData(response.data)
 				localStorage.setItem('user', `${response.userID}`)
-				console.log('user id:', response)
-				navigate('/faq')
+				console.log('user id object:', response)
+				console.log('user id value: ', response.userID)
+				navigate(`/${response.userID}`)
 				// window.location.reload()
 			})
 

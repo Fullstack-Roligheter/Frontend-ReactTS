@@ -11,18 +11,9 @@ import EditSavingPlan from './features/savings/EditSavingPlan'
 import CheckSavingPlans from './features/savings/GetSavingPlans'
 import Layout from './shared/layout/layout'
 import AuthenticatedLayout from './shared/layout/authenticatedLayout'
-import UnauthenticatedLayout from './shared/layout/unauthenticatedLayout'
-import { useState } from 'react'
 
 const AppRouter = () => {
-	const [authenticated, setAuthenticated] = useState(() => {
-		const saved = localStorage.getItem('user')
-		const initalValue = JSON.parse(saved)
-		return initalValue || ''
-	})
-
 	let UserIsLoggedIn = localStorage.getItem('user')
-	const UsedThing = JSON.parse(UserIsLoggedIn)
 	console.log('routing user is logged in', UserIsLoggedIn)
 
 	return (
@@ -30,21 +21,21 @@ const AppRouter = () => {
 			<Layout>
 				<Routes>
 					<Route>
-						<Route element={<Layout />}>
+						<Route element={<Layout user={UserIsLoggedIn} />}>
 							<Route index element={<WelcomeFeature />} />
 							<Route path='/omoss' element={<OmOss />} />
 							<Route path='/login' element={<LogIn />} />
 							<Route path='/faq' element={<Faq />} />
 							<Route
-								path='/dashboard/'
-								element={<AuthenticatedLayout user={UsedThing} />}
+								path='/'
+								element={<AuthenticatedLayout user={UserIsLoggedIn} />}
 							>
-								<Route path='/dashboard/:id' element={<DashboardFeature />} />
-							</Route>
-							<Route path='/saving' element={<SavingsLayout />}>
-								<Route index element={<CreateSaving />} />
-								<Route path='getplans' element={<CheckSavingPlans />} />
-								<Route path='editplan/:id' element={<EditSavingPlan />} />
+								<Route path='/:id' element={<DashboardFeature />} />
+								<Route path='/saving' element={<SavingsLayout />}>
+									<Route index element={<CreateSaving />} />
+									<Route path='getplans' element={<CheckSavingPlans />} />
+									<Route path='editplan/:id' element={<EditSavingPlan />} />
+								</Route>
 							</Route>
 						</Route>
 					</Route>

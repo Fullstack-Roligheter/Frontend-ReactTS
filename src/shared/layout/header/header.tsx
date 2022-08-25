@@ -17,30 +17,30 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
-import LogoutIcon from '@mui/icons-material/Logout'
+// import LogoutIcon from '@mui/icons-material/Logout'
 
 const pages = [
 	{ name: 'Om Oss', target: '/omoss' },
 	{ name: 'FAQ', target: '/faq' },
 ]
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = (props: any) => {
 	const navigate = useNavigate()
 
-	const [user, setUser] = useState('')
-	const [username, setUsername] = useState('')
-	const [password, setPassword] = useState('')
+	// const [user, setUser] = useState('')
+	// const [username, setUsername] = useState('')
+	// const [password, setPassword] = useState('')
 
-	var UserIsLoggedIn = localStorage.getItem('user')
+	var UserInfo = localStorage.getItem('user')
 
 	let settings = [
 		{ title: 'Profile', route: '/profile' },
 		{ title: 'Account', route: '/account' },
-		{ title: 'Dashboard', route: `/dashboard/${UserIsLoggedIn}` },
+		// { title: 'Dashboard', route: `/dashboard/${UserInfo}` },
 		{ title: 'Log Out', route: 'handleLogout' },
 	]
 
-	console.log('UserIsLoggedIn :', UserIsLoggedIn)
+	console.log('userInfo (header.tsx) :', UserInfo)
 
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -71,9 +71,9 @@ const ResponsiveAppBar = () => {
 	}
 
 	const handleLogout = () => {
-		setUser('')
-		setUsername('')
-		setPassword('')
+		// setUser('')
+		// setUsername('')
+		// setPassword('')
 		localStorage.clear()
 		alert('Du är nu Utloggad')
 		navigate('/')
@@ -184,7 +184,7 @@ const ResponsiveAppBar = () => {
 					</Box>
 
 					{(() => {
-						if (UserIsLoggedIn) {
+						if (UserInfo) {
 							return (
 								<Box sx={{ flexGrow: 0 }}>
 									<Tooltip title='Open settings'>
@@ -240,7 +240,7 @@ const ResponsiveAppBar = () => {
 									</IconButton> */}
 								</Box>
 							)
-						} else if (!UserIsLoggedIn) {
+						} else if (!UserInfo) {
 							return (
 								<IconButton
 									href='/login'

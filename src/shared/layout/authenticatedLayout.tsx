@@ -7,7 +7,10 @@ import Sidebar from './sidebar/sidebar'
 const AuthenticatedLayout = (props: any) => {
 	console.log('authenticated props:', props)
 
-	if (!props.user) {
+	let UserIsLoggedIn = localStorage.getItem('user')
+	console.log('authenticatedLayout: ', UserIsLoggedIn)
+
+	if (UserIsLoggedIn === null) {
 		return <Navigate to='/login' replace />
 	}
 
