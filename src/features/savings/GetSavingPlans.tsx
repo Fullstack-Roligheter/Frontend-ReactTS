@@ -9,9 +9,10 @@ import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Plan } from "./Plan";
-import { FiTrash2 } from "react-icons/fi";
-import { FiEdit } from "react-icons/fi";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
 import { Link } from "react-router-dom";
+import { IconButton } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -91,13 +92,17 @@ const CheckSavingPlans: React.FC = () => {
               <StyledTableCell align="right">{row.countDown}</StyledTableCell>
               <div className="icon-container">
                 <Link to={""}>
-                  <FiTrash2
-                    className="icon"
-                    onClick={() => deletPlan(row.savingId)}
-                  />
+                  <IconButton 
+                  className="icon"
+                  onClick={() => deletPlan(row.savingId)}>
+                  <DeleteOutlineIcon></DeleteOutlineIcon>
+                  </IconButton>
                 </Link>
                 <Link to={`/saving/editplan/${row.savingId}`}>
-                  <FiEdit className="icon" />
+                  <IconButton
+                  className="icon">
+                    <EditIcon />
+                  </IconButton>
                 </Link>
               </div>
             </StyledTableRow>
