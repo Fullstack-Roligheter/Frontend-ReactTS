@@ -19,7 +19,7 @@ const drawerWidth = 240
 
 export default function Sidebar() {
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', marginRight: 3 }}>
       <CssBaseline />
       <Drawer
         variant='permanent'
