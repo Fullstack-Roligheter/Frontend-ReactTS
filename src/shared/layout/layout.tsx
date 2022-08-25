@@ -3,15 +3,15 @@ import Footer from './footer/footer'
 import Header from './header/header'
 import { Box } from '@mui/material'
 
-const Layout = () => {
+const Layout = (props: any) => {
 	return (
-		<>
-		<Box sx={{ minHeight: 'calc(100vh - 70px)' }}>
-			<Header />
-			<Outlet />
-		</Box>
-			<Footer />
-		</>
+		<main>
+			<Box sx={{ minHeight: 'calc(100vh - 70px)', marginTop: '70px' }}>
+				<Header />
+				<div className='content-container'>{props.children}</div>
+				<Outlet />
+			</Box>
+		</main>
 	)
 }
 export default Layout

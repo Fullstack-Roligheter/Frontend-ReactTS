@@ -20,15 +20,8 @@ import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
 
 const pages = [
-	{ name: 'Om Oss', target: 'omoss' },
-	{ name: 'FAQ', target: 'faq' },
-]
-
-let settings = [
-	{ title: 'Profile', route: '/profile' },
-	{ title: 'Account', route: '/account' },
-	{ title: 'Dashboard', route: '/dashboard/' },
-	{ title: 'Log Out', route: 'handleLogout' },
+	{ name: 'Om Oss', target: '/omoss' },
+	{ name: 'FAQ', target: '/faq' },
 ]
 
 const ResponsiveAppBar = () => {
@@ -39,6 +32,13 @@ const ResponsiveAppBar = () => {
 	const [password, setPassword] = useState('')
 
 	var UserIsLoggedIn = localStorage.getItem('user')
+
+	let settings = [
+		{ title: 'Profile', route: '/profile' },
+		{ title: 'Account', route: '/account' },
+		{ title: 'Dashboard', route: `/dashboard/${UserIsLoggedIn}` },
+		{ title: 'Log Out', route: 'handleLogout' },
+	]
 
 	console.log('UserIsLoggedIn :', UserIsLoggedIn)
 
@@ -81,7 +81,10 @@ const ResponsiveAppBar = () => {
 	}
 
 	return (
-		<AppBar position='static'>
+		<AppBar
+			position='fixed'
+			sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+		>
 			<Container maxWidth='xl'>
 				<Toolbar disableGutters>
 					<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

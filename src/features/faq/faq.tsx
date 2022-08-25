@@ -2,7 +2,7 @@ const Faq = () => {
 	return (
 		<>
 			<div>
-				<h3>Faq content here</h3>
+				<h1>Faq</h1>
 			</div>
 			<div>
 				<p>Woop Woop</p>

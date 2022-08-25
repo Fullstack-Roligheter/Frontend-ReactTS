@@ -38,15 +38,18 @@ const LogIn = () => {
 				setFormData(response.data)
 				localStorage.setItem('user', `${response.userID}`)
 				console.log('user id:', response)
-				navigate('/dashboard/' + response.userID)
-				// navigate('/faq')
+				navigate('/faq')
 				// window.location.reload()
 			})
+
 			.catch((error) => {
 				console.log('Error:', error)
 				if (error.request.status === 401) {
 					alert('Access Denied')
 				}
+			})
+			.finally(() => {
+				console.log('Entered Finally')
 			})
 	}
 
