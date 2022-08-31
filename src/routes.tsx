@@ -13,7 +13,7 @@ import Layout from './shared/layout/layout'
 import AuthenticatedLayout from './shared/layout/authenticatedLayout'
 
 const AppRouter = () => {
-  let UserIsLoggedIn = JSON.parse(localStorage.getItem('user') || ' "" ')
+  let UserIsLoggedIn = JSON.parse(localStorage.getItem('user') || '""')
   console.log('routing user is logged in', UserIsLoggedIn)
 
   return (
