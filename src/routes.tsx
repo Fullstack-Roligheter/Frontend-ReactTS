@@ -19,29 +19,33 @@ const AppRouter = () => {
 
   return (
     <BrowserRouter>
-      <UnauthenticatedLayout element={UserIsLoggedIn}>
-        <Routes>
-          <Route>
-            <Route >
-              <Route index element={<WelcomeFeature />} />
-              <Route path='/omoss' element={<OmOss />} />
-              <Route path='/login' element={<LogIn />} />
-              <Route path='/faq' element={<Faq />} />
-              <Route
+      {/* <UnauthenticatedLayout element={UserIsLoggedIn}> */}
+      <Routes>
+        <Route element={<Layout user={UserIsLoggedIn} />}>
+          <Route >
+            <Route index element={<WelcomeFeature />} />
+            <Route path='/omoss' element={<OmOss />} />
+            <Route path='/login' element={<LogIn />} />
+            <Route path='/faq' element={<Faq />} />
+            {/* <Route
                 path='/'
                 element={<AuthenticatedLayout user={UserIsLoggedIn} />}
-              >
-                <Route path='/:id' element={<DashboardFeature />} />
-                <Route path='/saving' element={<SavingsLayout />}>
-                  <Route index element={<CreateSaving />} />
-                  <Route path='getplans' element={<CheckSavingPlans />} />
-                  <Route path='editplan/:id' element={<EditSavingPlan />} />
-                </Route>
+              > */}
+            <Route path='/:id'>
+              <Route path='/:id/saving' element={<SavingsLayout />}>
+                <Route index element={<CreateSaving />} />
+                <Route path='getplans' element={<CheckSavingPlans />} />
+                <Route path='editplan/:id' element={<EditSavingPlan />} />
               </Route>
+              <Route path='/:id/dashboard' element={<DashboardFeature />} />
+              {/* <Route path='/:id/omoss' element={<OmOss />} />
+              <Route path='/:id/faq' element={<Faq />} /> */}
             </Route>
           </Route>
-        </Routes>
-      </UnauthenticatedLayout>
+          {/* </Route> */}
+        </Route>
+      </Routes>
+      {/* </UnauthenticatedLayout> */}
     </BrowserRouter>
   )
 }

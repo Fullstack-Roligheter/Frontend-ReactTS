@@ -26,7 +26,7 @@ const AuthenticatedLayout = (props: any) => {
         }}
       >
         <AuthenticatedHeader />
-        <Sidebar />
+        <Sidebar user={props.user} />
         <Outlet />
       </Box>
       {/* <Footer /> */}

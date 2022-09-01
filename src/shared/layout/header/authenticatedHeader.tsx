@@ -17,19 +17,9 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
-// import LogoutIcon from '@mui/icons-material/Logout'
-
-// const pages = [
-// 	{ name: 'Om Oss', target: '/omoss' },
-// 	{ name: 'FAQ', target: '/faq' },
-// ]
 
 const AuthenticatedHeader = (props: any) => {
   const navigate = useNavigate()
-
-  // const [user, setUser] = useState('')
-  // const [username, setUsername] = useState('')
-  // const [password, setPassword] = useState('')
 
   var UserInfo = sessionStorage.getItem('user')
 
@@ -74,6 +64,7 @@ const AuthenticatedHeader = (props: any) => {
     sessionStorage.clear()
     alert('Du är nu Utloggad')
     navigate('/')
+    window.location.reload()
 
   }
 
