@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Link } from '@mui/material'
-import { useState } from 'react'
+// import { Link } from '@mui/material'
+// import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import AppBar from '@mui/material/AppBar'
@@ -12,7 +12,7 @@ import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
+// import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
@@ -38,6 +38,8 @@ const AuthenticatedHeader = (props: any) => {
 		{ title: 'Account', route: '/account' },
 		{ title: 'Dashboard', route: `/${UserInfo}` },
 		{ title: 'Log Out', route: 'handleLogout' },
+    { title: 'Om Oss', route: '/omoss' },
+    { title: 'FAQ', route: '/faq' }
 	]
 
 	console.log('userInfo (header.tsx) :', UserInfo)

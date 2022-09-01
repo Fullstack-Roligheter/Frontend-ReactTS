@@ -4,7 +4,7 @@ function DashboardFeature() {
 	let UserIsLoggedIn = sessionStorage.getItem('user')
 	console.log('authenticatedLayout: ', UserIsLoggedIn)
 
-  let timeMilli = Date.now()
+  let timeMilli = Date.now().toString().slice(-3)
 
 	if (UserIsLoggedIn === null) {
 		return <Navigate to='/login' replace />
