@@ -25,241 +25,209 @@ import LoginIcon from '@mui/icons-material/Login'
 // ]
 
 const AuthenticatedHeader = (props: any) => {
-	const navigate = useNavigate()
+  const navigate = useNavigate()
 
-	// const [user, setUser] = useState('')
-	// const [username, setUsername] = useState('')
-	// const [password, setPassword] = useState('')
+  // const [user, setUser] = useState('')
+  // const [username, setUsername] = useState('')
+  // const [password, setPassword] = useState('')
 
-	var UserInfo = sessionStorage.getItem('user')
+  var UserInfo = sessionStorage.getItem('user')
 
-	let settings = [
-		{ title: 'Profile', route: '/profile' },
-		{ title: 'Account', route: '/account' },
-		{ title: 'Dashboard', route: `/${UserInfo}` },
-		{ title: 'Log Out', route: 'handleLogout' },
-    { title: 'Om Oss', route: '/omoss' },
-    { title: 'FAQ', route: '/faq' }
-	]
+  let settings = [
+    { title: 'Profile', route: '/profile' },
+    { title: 'Account', route: '/account' },
+    { title: 'Dashboard', route: `/${UserInfo}/dashboard` },
+    { title: 'Log Out', route: 'handleLogout' }
+  ]
 
-	console.log('userInfo (header.tsx) :', UserInfo)
+  console.log('userInfo (header.tsx) :', UserInfo)
 
-	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
-	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-		null
-	)
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  )
 
-	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElNav(event.currentTarget)
-	}
-	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElUser(event.currentTarget)
-	}
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget)
+  }
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget)
+  }
 
-	const handleCloseNavMenu = () => {
-		setAnchorElNav(null)
-	}
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null)
+  }
 
-	const handleCloseUserMenu = () => {
-		setAnchorElUser(null)
-	}
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
+  }
 
-	const handleMenuClick = (props: string) => {
-		if (props === 'handleLogout') {
-			handleLogout()
-		} else {
-			navigate(props)
-		}
-	}
+  const handleMenuClick = (props: string) => {
+    if (props === 'handleLogout') {
+      handleLogout()
+    } else {
+      navigate(props)
+    }
+  }
 
-	const handleLogout = () => {
-		// setUser('')
-		// setUsername('')
-		// setPassword('')
-		sessionStorage.clear()
-		alert('Du är nu Utloggad')
-		navigate('/')
-		// window.location.reload()
-	}
+  const handleLogout = () => {
+    sessionStorage.clear()
+    alert('Du är nu Utloggad')
+    navigate('/')
 
-	return (
-		<AppBar
-			position='fixed'
-			sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-		>
-			<Container maxWidth='xl'>
-				<Toolbar disableGutters>
-					<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-					<Typography
-						variant='h6'
-						noWrap
-						component='a'
-						href={`/${UserInfo}`}
-						sx={{
-							mr: 2,
-							display: { xs: 'none', md: 'flex' },
-							fontFamily: 'monospace',
-							fontWeight: 700,
-							letterSpacing: '.3rem',
-							color: 'inherit',
-							textDecoration: 'none',
-						}}
-					>
-						Xpense
-					</Typography>
+  }
 
-					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-						<IconButton
-							size='large'
-							aria-label='account of current user'
-							aria-controls='menu-appbar'
-							aria-haspopup='true'
-							onClick={handleOpenNavMenu}
-							color='inherit'
-						>
-							<MenuIcon />
-						</IconButton>
-						<Menu
-							id='menu-appbar'
-							anchorEl={anchorElNav}
-							anchorOrigin={{
-								vertical: 'bottom',
-								horizontal: 'left',
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: 'top',
-								horizontal: 'left',
-							}}
-							open={Boolean(anchorElNav)}
-							onClose={handleCloseNavMenu}
-							sx={{
-								display: { xs: 'block', md: 'none' },
-							}}
-						>
-							{/* {pages.map((page) => (
-								<MenuItem key={page.name} onClick={handleCloseNavMenu}>
-									<Link href={page.target} underline='none'>
-										{page.name}
-									</Link>
-								</MenuItem>
-							))} */}
-						</Menu>
-					</Box>
+  return (
+    <AppBar
+      position='fixed'
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
+      <Container maxWidth='xl'>
+        <Toolbar disableGutters>
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Typography
+            variant='h6'
+            noWrap
+            component='a'
+            href={`/${UserInfo}/dashboard`}
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            Xpense
+          </Typography>
 
-					<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-					<Typography
-						variant='h5'
-						noWrap
-						component='a'
-						href='/'
-						sx={{
-							mr: 2,
-							display: { xs: 'flex', md: 'none' },
-							flexGrow: 1,
-							fontFamily: 'monospace',
-							fontWeight: 700,
-							letterSpacing: '.3rem',
-							color: 'inherit',
-							textDecoration: 'none',
-						}}
-					>
-						Xpense-Mobile
-					</Typography>
-					<Box
-						sx={{
-							flexGrow: 1,
-							display: { xs: 'none', md: 'flex' },
-							justifyContent: 'flex-end',
-						}}
-					>
-						{/* {pages.map((page) => (
-							<Button
-								key={page.name}
-								onClick={handleCloseNavMenu}
-								sx={{ my: 2, color: 'white', display: 'block' }}
-								href={page.target}
-							>
-								{page.name}
-							</Button>
-						))} */}
-					</Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size='large'
+              aria-label='account of current user'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
+              onClick={handleOpenNavMenu}
+              color='inherit'
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id='menu-appbar'
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
 
-					{(() => {
-						if (UserInfo) {
-							return (
-								<Box sx={{ flexGrow: 0 }}>
-									<Tooltip title='Open settings'>
-										<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-											<Avatar
-												alt='Remy Sharp'
-												src=' https://source.unsplash.com/random'
-											/>
-										</IconButton>
-									</Tooltip>
-									<Menu
-										sx={{ mt: '45px' }}
-										id='menu-appbar'
-										anchorEl={anchorElUser}
-										anchorOrigin={{
-											vertical: 'top',
-											horizontal: 'right',
-										}}
-										keepMounted
-										transformOrigin={{
-											vertical: 'top',
-											horizontal: 'right',
-										}}
-										open={Boolean(anchorElUser)}
-										onClose={handleCloseUserMenu}
-									>
-										{/* {settings.map((setting) => (
-											<MenuItem key={setting} onClick={handleCloseUserMenu}>
-												<Typography textAlign='center'>{setting}</Typography>
-											</MenuItem>
-										))} */}
-										{settings.map((setting) => (
-											<MenuItem
-												key={setting.title}
-												onClick={(e) => {
-													handleMenuClick(setting.route)
-												}}
-											>
-												<Typography textAlign='center'>
-													{setting.title}
-												</Typography>
-											</MenuItem>
-										))}
-									</Menu>
-									{/* <IconButton
-										onClick={handleLogout}
-										sx={{
-											p: 0,
-											color: 'white',
-										}}
-									>
-										<LogoutIcon />
-									</IconButton> */}
-								</Box>
-							)
-						} else if (!UserInfo) {
-							return (
-								<IconButton
-									href='/login'
-									onClick={handleOpenUserMenu}
-									sx={{
-										p: 0,
-										color: 'white',
-									}}
-								>
-									<LoginIcon />
-								</IconButton>
-							)
-						}
-					})()}
-				</Toolbar>
-			</Container>
-		</AppBar>
-	)
+            </Menu>
+          </Box>
+
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant='h5'
+            noWrap
+            component='a'
+            href={`/${UserInfo}/dashboard`}
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            Xpense-Mobile
+          </Typography>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', md: 'flex' },
+              justifyContent: 'flex-end',
+            }}
+          >
+
+          </Box>
+
+          {(() => {
+            if (UserInfo) {
+              return (
+                <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title='Open settings'>
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar
+                        alt='Remy Sharp'
+                        src=' https://source.unsplash.com/random'
+                      />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id='menu-appbar'
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+
+                    {settings.map((setting) => (
+                      <MenuItem
+                        key={setting.title}
+                        onClick={(e) => {
+                          handleMenuClick(setting.route)
+                        }}
+                      >
+                        <Typography textAlign='center'>
+                          {setting.title}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+
+                </Box>
+              )
+            } else if (!UserInfo) {
+              return (
+                <IconButton
+                  href='/login'
+                  onClick={handleOpenUserMenu}
+                  sx={{
+                    p: 0,
+                    color: 'white',
+                  }}
+                >
+                  <LoginIcon />
+                </IconButton>
+              )
+            }
+          })()}
+        </Toolbar>
+      </Container>
+    </AppBar>
+  )
 }
 export default AuthenticatedHeader
