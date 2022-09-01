@@ -1,5 +1,8 @@
 import * as React from 'react'
 import { Link } from '@mui/material'
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
+
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -8,17 +11,36 @@ import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
+import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
+import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
+// import LogoutIcon from '@mui/icons-material/Logout'
 
-const pages = [
-	{ name: 'Om Oss', target: '/omoss' },
-	{ name: 'FAQ', target: '/faq' },
-]
+// const pages = [
+// 	{ name: 'Om Oss', target: '/omoss' },
+// 	{ name: 'FAQ', target: '/faq' },
+// ]
 
-const ResponsiveAppBar = (props: any) => {
+const AuthenticatedHeader = (props: any) => {
+	const navigate = useNavigate()
+
+	// const [user, setUser] = useState('')
+	// const [username, setUsername] = useState('')
+	// const [password, setPassword] = useState('')
+
+	var UserInfo = sessionStorage.getItem('user')
+
+	let settings = [
+		{ title: 'Profile', route: '/profile' },
+		{ title: 'Account', route: '/account' },
+		{ title: 'Dashboard', route: `/${UserInfo}` },
+		{ title: 'Log Out', route: 'handleLogout' },
+	]
+
+	console.log('userInfo (header.tsx) :', UserInfo)
 
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -36,6 +58,27 @@ const ResponsiveAppBar = (props: any) => {
 		setAnchorElNav(null)
 	}
 
+	const handleCloseUserMenu = () => {
+		setAnchorElUser(null)
+	}
+
+	const handleMenuClick = (props: string) => {
+		if (props === 'handleLogout') {
+			handleLogout()
+		} else {
+			navigate(props)
+		}
+	}
+
+	const handleLogout = () => {
+		// setUser('')
+		// setUsername('')
+		// setPassword('')
+		sessionStorage.clear()
+		alert('Du är nu Utloggad')
+		navigate('/')
+		// window.location.reload()
+	}
 
 	return (
 		<AppBar
@@ -49,7 +92,7 @@ const ResponsiveAppBar = (props: any) => {
 						variant='h6'
 						noWrap
 						component='a'
-						href='/'
+						href={`/${UserInfo}`}
 						sx={{
 							mr: 2,
 							display: { xs: 'none', md: 'flex' },
@@ -92,13 +135,13 @@ const ResponsiveAppBar = (props: any) => {
 								display: { xs: 'block', md: 'none' },
 							}}
 						>
-							{pages.map((page) => (
+							{/* {pages.map((page) => (
 								<MenuItem key={page.name} onClick={handleCloseNavMenu}>
 									<Link href={page.target} underline='none'>
 										{page.name}
 									</Link>
 								</MenuItem>
-							))}
+							))} */}
 						</Menu>
 					</Box>
 
@@ -128,7 +171,7 @@ const ResponsiveAppBar = (props: any) => {
 							justifyContent: 'flex-end',
 						}}
 					>
-						{pages.map((page) => (
+						{/* {pages.map((page) => (
 							<Button
 								key={page.name}
 								onClick={handleCloseNavMenu}
@@ -137,8 +180,68 @@ const ResponsiveAppBar = (props: any) => {
 							>
 								{page.name}
 							</Button>
-						))}
+						))} */}
 					</Box>
+
+					{(() => {
+						if (UserInfo) {
+							return (
+								<Box sx={{ flexGrow: 0 }}>
+									<Tooltip title='Open settings'>
+										<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+											<Avatar
+												alt='Remy Sharp'
+												src=' https://source.unsplash.com/random'
+											/>
+										</IconButton>
+									</Tooltip>
+									<Menu
+										sx={{ mt: '45px' }}
+										id='menu-appbar'
+										anchorEl={anchorElUser}
+										anchorOrigin={{
+											vertical: 'top',
+											horizontal: 'right',
+										}}
+										keepMounted
+										transformOrigin={{
+											vertical: 'top',
+											horizontal: 'right',
+										}}
+										open={Boolean(anchorElUser)}
+										onClose={handleCloseUserMenu}
+									>
+										{/* {settings.map((setting) => (
+											<MenuItem key={setting} onClick={handleCloseUserMenu}>
+												<Typography textAlign='center'>{setting}</Typography>
+											</MenuItem>
+										))} */}
+										{settings.map((setting) => (
+											<MenuItem
+												key={setting.title}
+												onClick={(e) => {
+													handleMenuClick(setting.route)
+												}}
+											>
+												<Typography textAlign='center'>
+													{setting.title}
+												</Typography>
+											</MenuItem>
+										))}
+									</Menu>
+									{/* <IconButton
+										onClick={handleLogout}
+										sx={{
+											p: 0,
+											color: 'white',
+										}}
+									>
+										<LogoutIcon />
+									</IconButton> */}
+								</Box>
+							)
+						} else if (!UserInfo) {
+							return (
 								<IconButton
 									href='/login'
 									onClick={handleOpenUserMenu}
@@ -149,9 +252,12 @@ const ResponsiveAppBar = (props: any) => {
 								>
 									<LoginIcon />
 								</IconButton>
+							)
+						}
+					})()}
 				</Toolbar>
 			</Container>
 		</AppBar>
 	)
 }
-export default ResponsiveAppBar
+export default AuthenticatedHeader

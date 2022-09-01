@@ -3,6 +3,8 @@ import Footer from './footer/footer'
 import Header from './header/header'
 import { Box } from '@mui/material'
 import Sidebar from './sidebar/sidebar'
+import AuthenticatedHeader from './header/authenticatedHeader'
+
 
 const AuthenticatedLayout = (props: any) => {
   // console.log('authenticated props:', props)
@@ -23,7 +25,7 @@ const AuthenticatedLayout = (props: any) => {
           marginTop: '70px',
         }}
       >
-        <Header />
+        <AuthenticatedHeader />
         <Sidebar />
         <Outlet />
       </Box>
