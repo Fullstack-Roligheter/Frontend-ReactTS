@@ -14,6 +14,7 @@ const UnauthenticatedLayout = (props: any) => {
 				}}
 			>
 				<Header />
+				<Box>{props.children}</Box>
 				<Outlet />
 			</Box>
 			<Footer />

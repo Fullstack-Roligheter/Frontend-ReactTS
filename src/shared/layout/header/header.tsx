@@ -31,7 +31,7 @@ const ResponsiveAppBar = (props: any) => {
 	// const [username, setUsername] = useState('')
 	// const [password, setPassword] = useState('')
 
-	var UserInfo = localStorage.getItem('user')
+	var UserInfo = sessionStorage.getItem('user')
 
 	let settings = [
 		{ title: 'Profile', route: '/profile' },
@@ -74,7 +74,7 @@ const ResponsiveAppBar = (props: any) => {
 		// setUser('')
 		// setUsername('')
 		// setPassword('')
-		localStorage.clear()
+		sessionStorage.clear()
 		alert('Du är nu Utloggad')
 		navigate('/')
 		// window.location.reload()
@@ -191,7 +191,7 @@ const ResponsiveAppBar = (props: any) => {
 										<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 											<Avatar
 												alt='Remy Sharp'
-												src='/static/images/avatar/2.jpg'
+												src=' https://source.unsplash.com/random'
 											/>
 										</IconButton>
 									</Tooltip>

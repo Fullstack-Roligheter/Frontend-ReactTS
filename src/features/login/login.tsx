@@ -36,7 +36,7 @@ const LogIn = () => {
 			.then((response) => {
 				alert('Du är nu Inloggad')
 				setFormData(response.data)
-				localStorage.setItem('user', `${response.userID}`)
+				sessionStorage.setItem('user', `${response.userID}`)
 				console.log('user id object:', response)
 				console.log('user id value: ', response.userID)
 				navigate(`/${response.userID}`)
@@ -55,7 +55,7 @@ const LogIn = () => {
 	}
 
 	useEffect(() => {
-		const loggedInUser = localStorage.getItem('user')
+		const loggedInUser = sessionStorage.getItem('user')
 		if (loggedInUser) {
 			const foundUser = JSON.parse(loggedInUser)
 			setFormData(foundUser)

@@ -11,17 +11,18 @@ import EditSavingPlan from './features/savings/EditSavingPlan'
 import CheckSavingPlans from './features/savings/GetSavingPlans'
 import Layout from './shared/layout/layout'
 import AuthenticatedLayout from './shared/layout/authenticatedLayout'
+import UnauthenticatedLayout from './shared/layout/unauthenticatedLayout'
 
 const AppRouter = () => {
-  let UserIsLoggedIn = JSON.parse(localStorage.getItem('user') || '""')
+  let UserIsLoggedIn = JSON.parse(sessionStorage.getItem('user') || '""')
   console.log('routing user is logged in', UserIsLoggedIn)
 
   return (
     <BrowserRouter>
-      <Layout>
+      <UnauthenticatedLayout element={UserIsLoggedIn}>
         <Routes>
           <Route>
-            <Route element={<Layout user={UserIsLoggedIn} />}>
+            <Route >
               <Route index element={<WelcomeFeature />} />
               <Route path='/omoss' element={<OmOss />} />
               <Route path='/login' element={<LogIn />} />
@@ -40,7 +41,7 @@ const AppRouter = () => {
             </Route>
           </Route>
         </Routes>
-      </Layout>
+      </UnauthenticatedLayout>
     </BrowserRouter>
   )
 }

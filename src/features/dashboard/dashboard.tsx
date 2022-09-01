@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom'
 
 function DashboardFeature() {
-	let UserIsLoggedIn = localStorage.getItem('user')
+	let UserIsLoggedIn = sessionStorage.getItem('user')
 	console.log('authenticatedLayout: ', UserIsLoggedIn)
 
 	if (UserIsLoggedIn === null) {
