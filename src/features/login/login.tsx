@@ -1,14 +1,13 @@
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { Link, Visibility, VisibilityOff } from '@mui/icons-material'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import { useNavigate } from 'react-router'
-
 import SubmitButton from '../../shared/buttons/button-default'
 import { UserLogin } from '../../shared/fetch/user'
-
 import { useEffect, useState } from 'react'
+import { Typography } from '@mui/material'
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -72,7 +71,10 @@ const LogIn = () => {
       style={{ minHeight: '70vh' }}
     >
       <Grid item xs={3} alignItems='center'>
-        <h3>Logga in</h3>
+        <Typography variant="h3" align="center">Logga in</Typography>
+        <a href="/register">
+          <Typography variant="h6" align="center">Har du inte ett konto? Klicka på mig!</Typography>
+        </a>
       </Grid>
       <Grid item>
         <form onSubmit={handleSubmit}>
