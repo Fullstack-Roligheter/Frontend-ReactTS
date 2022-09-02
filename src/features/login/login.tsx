@@ -1,13 +1,14 @@
-import { Link, Visibility, VisibilityOff } from '@mui/icons-material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import { useNavigate } from 'react-router'
-import SubmitButton from '../../shared/buttons/button-default'
+import { SubmitButton } from '../../shared/buttons/button-default'
 import { UserLogin } from '../../shared/fetch/user'
 import { useEffect, useState } from 'react'
 import { Typography } from '@mui/material'
+import { NavLink } from 'react-router-dom';
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -72,9 +73,9 @@ const LogIn = () => {
     >
       <Grid item xs={3} alignItems='center'>
         <Typography variant="h3" align="center">Logga in</Typography>
-        <a href="/register">
+        <NavLink to="/register">
           <Typography variant="h6" align="center">Har du inte ett konto? Klicka på mig!</Typography>
-        </a>
+        </NavLink>
       </Grid>
       <Grid item>
         <form onSubmit={handleSubmit}>

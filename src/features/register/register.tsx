@@ -1,19 +1,27 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material"
-import { Grid, IconButton, InputAdornment, Link, TextField, Typography } from "@mui/material"
+import { Box, Grid, IconButton, InputAdornment, Link, TextField, Typography } from "@mui/material"
 import { useState } from "react"
-import SubmitButton from "../../shared/buttons/button-default"
+import { SubmitButton, DisabledSubmitButton } from "../../shared/buttons/button-default"
+import { UserRegister } from '../../shared/fetch/user'
+import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router'
+
+
 
 const RegisterUser = () => {
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
 
+  const [sPassword, setPassword] = useState("")
+
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState({
-    userName: '',
-    password: '',
-    secondPassword: '',
+    name: '',
     email: '',
     age: '',
+    password: '',
   })
 
   const handleChange = (e: any) => {
@@ -23,28 +31,21 @@ const RegisterUser = () => {
       [name]: value,
     })
   }
+
+//const [buttonState, setButtonState] = (false);
+
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    // UserLogin(formData)
-    //   .then((response) => {
-    //     alert('Du är nu Inloggad')
-    //     setFormData(response.data)
-    //     sessionStorage.setItem('user', `${response.userID}`)
-    //     console.log('user id object:', response)
-    //     console.log('user id value: ', response.userID)
-    //     navigate(`/${response.userID}/dashboard`)
-    //     window.location.reload()
-    //   })
-
-    //   .catch((error) => {
-    //     console.log('Error:', error)
-    //     if (error.request.status === 401) {
-    //       alert('Access Denied')
-    //     }
-    //   })
-    //   .finally(() => {
-    //     console.log('Entered Finally')
-    //   })
+      UserRegister(formData)
+      .then((response) => {
+          debugger
+          console.log(response)
+          alert("Du är nu registrerad")
+          setTimeout(() => {
+            navigate(`/login`)
+          }, 1000)
+          }
+        )
   }
 
   return (
@@ -58,9 +59,9 @@ const RegisterUser = () => {
     >
       <Grid item xs={3} alignItems='center'>
         <Typography variant="h3" align="center">Registrera konto</Typography>
-        <a href="/login">
+        <NavLink to="/login">
           <Typography variant="h6" align="center">Vill du logga in? Klicka på mig!</Typography>
-        </a>
+        </NavLink>
       </Grid>
       <Grid item>
         <form onSubmit={handleSubmit}>
@@ -68,9 +69,9 @@ const RegisterUser = () => {
             label='Select User Name'
             variant='outlined'
             type='text'
-            name='userName'
+            name='name'
             required={true}
-            value={formData.userName}
+            value={formData.name}
             onChange={handleChange}
             style={{ width: '100%' }}
           />
@@ -127,9 +128,9 @@ const RegisterUser = () => {
           <TextField
             label=' Enter Password again'
             variant='outlined'
-            name='secondPassword'
-            onChange={handleChange}
-            value={formData.secondPassword}
+            name='sPassword'
+            onChange = {((e) => setPassword(e.target.value))}
+            value={sPassword}
             required={true}
             type={showPassword ? 'text' : 'password'}
             InputProps={{
@@ -149,7 +150,16 @@ const RegisterUser = () => {
           <br />
           <br />
           <Grid container justifyContent='center'>
-            <SubmitButton />
+          {(() => {
+						if (sPassword != formData.password || formData.name === "" || formData.age === undefined || formData.email === "" || formData.password === "") {
+              return < DisabledSubmitButton /> 
+            } 
+            else {
+              return < SubmitButton />
+            }
+					})()}
+              
+ 
           </Grid>
         </form>
 
