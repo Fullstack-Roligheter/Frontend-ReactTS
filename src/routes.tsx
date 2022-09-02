@@ -10,38 +10,32 @@ import CreateSaving from './features/savings/CreateSaving'
 import EditSavingPlan from './features/savings/EditSavingPlan'
 import CheckSavingPlans from './features/savings/GetSavingPlans'
 import Layout from './shared/layout/layout'
-import AuthenticatedLayout from './shared/layout/authenticatedLayout'
-import UnauthenticatedLayout from './shared/layout/unauthenticatedLayout'
+import RegisterUser from './features/register/register'
 
 const AppRouter = () => {
   let UserIsLoggedIn = JSON.parse(sessionStorage.getItem('user') || '""')
-  console.log('routing user is logged in', UserIsLoggedIn)
 
   return (
     <BrowserRouter>
-      <UnauthenticatedLayout element={UserIsLoggedIn}>
-        <Routes>
-          <Route>
-            <Route >
-              <Route index element={<WelcomeFeature />} />
-              <Route path='/omoss' element={<OmOss />} />
-              <Route path='/login' element={<LogIn />} />
-              <Route path='/faq' element={<Faq />} />
-              <Route
-                path='/'
-                element={<AuthenticatedLayout user={UserIsLoggedIn} />}
-              >
-                <Route path='/:id' element={<DashboardFeature />} />
-                <Route path='/saving' element={<SavingsLayout />}>
-                  <Route index element={<CreateSaving />} />
-                  <Route path='getplans' element={<CheckSavingPlans />} />
-                  <Route path='editplan/:id' element={<EditSavingPlan />} />
-                </Route>
+      <Routes>
+        <Route element={<Layout user={UserIsLoggedIn} />}>
+          <Route >
+            <Route index element={<WelcomeFeature />} />
+            <Route path='/omoss' element={<OmOss />} />
+            <Route path='/login' element={<LogIn />} />
+            <Route path='/register' element={<RegisterUser />} />
+            <Route path='/faq' element={<Faq />} />
+            <Route path='/:id'>
+              <Route path='/:id/saving' element={<SavingsLayout />}>
+                <Route index element={<CreateSaving />} />
+                <Route path='getplans' element={<CheckSavingPlans />} />
+                <Route path='editplan/:id' element={<EditSavingPlan />} />
               </Route>
+              <Route path='/:id/dashboard' element={<DashboardFeature />} />
             </Route>
           </Route>
-        </Routes>
-      </UnauthenticatedLayout>
+        </Route>
+      </Routes>
     </BrowserRouter>
   )
 }

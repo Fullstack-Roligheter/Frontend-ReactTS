@@ -1,18 +1,12 @@
-import { Outlet } from 'react-router-dom'
-import Footer from './footer/footer'
-import Header from './header/header'
-import { Box } from '@mui/material'
+import AuthenticatedLayout from "./authenticatedLayout"
+import UnauthenticatedLayout from "./unauthenticatedLayout"
 
 const Layout = (props: any) => {
-  return (
-    <>
-      <Box sx={{ minHeight: 'calc(100vh - 70px)', marginTop: '70px' }}>
-        <Header />
-        <Box>{props.children}</Box>
-        <Outlet />
-      </Box>
-      <Footer />
-    </>
-  )
+  if (props.user === '') {
+    return <UnauthenticatedLayout />
+  } else {
+    return <AuthenticatedLayout />
+  }
 }
+
 export default Layout
