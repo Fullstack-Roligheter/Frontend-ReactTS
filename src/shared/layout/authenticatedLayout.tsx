@@ -1,16 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import Footer from './footer/footer'
-import Header from './header/header'
 import { Box } from '@mui/material'
 import Sidebar from './sidebar/sidebar'
 import AuthenticatedHeader from './header/authenticatedHeader'
 
-
 const AuthenticatedLayout = (props: any) => {
-  // console.log('authenticated props:', props)
-
   let UserIsLoggedIn = sessionStorage.getItem('user')
-  // console.log('authenticatedLayout: ', UserIsLoggedIn)
 
   if (UserIsLoggedIn === null) {
     return <Navigate to='/login' replace />
@@ -29,7 +24,7 @@ const AuthenticatedLayout = (props: any) => {
         <Sidebar user={props.user} />
         <Outlet />
       </Box>
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }
