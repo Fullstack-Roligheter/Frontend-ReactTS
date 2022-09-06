@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import axios from 'axios';
 
 interface BudgetList {
     budgetId: number;
@@ -10,7 +11,7 @@ interface BudgetList {
     budgetMaxAmount: number;
 };
 
-const userId: number = 1;
+const tempUserId: number = 1;
 
 const rows = [
   { id: 1, budgetName: 'Mat',            budgetStartDate: new Date("2022-10-10").toLocaleString(), budgetEndDate: new Date("2022-12-30").toLocaleString(), budgetMaxAmount: 4000 },
@@ -32,18 +33,25 @@ const rows = [
   // }[]>([],
   // );
   
-  // const FetchData = async () => {
-  //   await fetch('https://localhost:7073/ListAllBudgetInfosForSpecificUser',{
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(userId)
-  //   })
-  //   .then((res) => res.json()) 
-  //   // .then((data: Array<BudgetList>) => setBudgetData(data))
-  //   ;
-  // }
+  const FetchData = async () => {
+    await fetch('https://localhost:7073/ListAllBudgetInfosForSpecificUser',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(tempUserId)
+    })
+    .then((res) => res.json()) 
+    // .then((data: Array<BudgetList>) => setBudgetData(data))
+    ;
+  }
+  axios({
+    method: 'get',
+    url: 'https://localhost:7073/ListAllBudgetInfosForSpecificUser',
+    params:  {
+      userId: tempUserId 
+    }
+  }).then((res) => console.log(res));
   
   
   // const GetRows = (data: Array<BudgetList>) => {
