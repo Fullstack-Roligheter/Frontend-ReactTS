@@ -8,12 +8,14 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { useNavigate } from 'react-router-dom'
-import { menuItemClasses } from '@mui/material'
+import {
+  QuestionAnswer,
+  Info,
+  AttachMoney,
+  AccountBalanceWallet,
+  AccountBalance,
+} from '@mui/icons-material'
 
 const drawerWidth = 240
 
@@ -25,14 +27,26 @@ export default function Sidebar(props: Props) {
   const navigate = useNavigate()
 
   const MenuTargets = [
-    { title: 'Transactions', route: `/${props.user}/transactions` },
-    { title: 'Budgets', route: `/${props.user}/budgets` },
-    { title: 'Saving Plans', route: `/${props.user}/saving` },
+    {
+      title: 'Transactions',
+      route: `/${props.user}/transactions`,
+      icon: <AccountBalance />,
+    },
+    {
+      title: 'Budgets',
+      route: `/${props.user}/budgets`,
+      icon: <AccountBalanceWallet />,
+    },
+    {
+      title: 'Saving Plans',
+      route: `/${props.user}/saving`,
+      icon: <AttachMoney />,
+    },
   ]
 
   const SubMenu = [
-    { title: 'Faq', route: `/faq` },
-    { title: 'About us', route: `/omoss` },
+    { title: 'Faq', route: `/faq`, icon: <QuestionAnswer /> },
+    { title: 'About us', route: `/omoss`, icon: <Info /> },
   ]
 
   return (
@@ -55,13 +69,7 @@ export default function Sidebar(props: Props) {
             {MenuTargets.map((menuItem, index) => (
               <ListItem key={menuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(menuItem.route)}>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? (
-                      <AccountBalanceIcon />
-                    ) : (
-                      <AttachMoneyIcon />
-                    )}
-                  </ListItemIcon>
+                  <ListItemIcon>{menuItem.icon}</ListItemIcon>
                   <ListItemText primary={menuItem.title} />
                 </ListItemButton>
               </ListItem>
@@ -72,9 +80,7 @@ export default function Sidebar(props: Props) {
             {SubMenu.map((subMenuItem, index) => (
               <ListItem key={subMenuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(subMenuItem.route)}>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
+                  <ListItemIcon>{subMenuItem.icon}</ListItemIcon>
                   <ListItemText primary={subMenuItem.title} />
                 </ListItemButton>
               </ListItem>
