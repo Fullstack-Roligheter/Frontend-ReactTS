@@ -13,19 +13,24 @@ import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
+import { useNavigate, NavLink } from 'react-router-dom'
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
+type Props = {
+  user: number
+}
 
+export default function Sidebar(props: Props) {
+  const navigate = useNavigate()
 
-export default function Sidebar(props: any) {
   const MenuTargets = [
     { title: 'Transactions', route: `/${props.user}/transactions` },
     { title: 'Budgets', route: `/${props.user}/budgets` },
     { title: 'Saving Plans', route: `/${props.user}/saving` },
-    { title: 'Faq', route: `/${props.user}/faq` },
-    { title: 'About us', route: `/${props.user}/omoss` },
+    { title: 'Faq', route: `/faq` },
+    { title: 'About us', route: `/omoss` },
   ]
 
   return (
@@ -45,13 +50,17 @@ export default function Sidebar(props: any) {
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
           <List>
-            {MenuTargets.map((text, index) => (
-              <ListItem key={text.title} disablePadding>
-                <ListItemButton href={text.route}>
+            {MenuTargets.map((menuItem, index) => (
+              <ListItem key={menuItem.title} disablePadding>
+                <ListItemButton onClick={() => navigate(menuItem.route)}>
                   <ListItemIcon>
-                    {index % 2 === 0 ? <AccountBalanceIcon /> : <AttachMoneyIcon />}
+                    {index % 2 === 0 ? (
+                      <AccountBalanceIcon />
+                    ) : (
+                      <AttachMoneyIcon />
+                    )}
                   </ListItemIcon>
-                  <ListItemText primary={text.title} />
+                  <ListItemText primary={menuItem.title} />
                 </ListItemButton>
               </ListItem>
             ))}

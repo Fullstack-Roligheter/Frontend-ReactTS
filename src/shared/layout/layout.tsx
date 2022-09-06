@@ -5,7 +5,7 @@ const Layout = (props: any) => {
   if (props.user === '') {
     return <UnauthenticatedLayout />
   } else {
-    return <AuthenticatedLayout />
+    return <AuthenticatedLayout user={props.user} />
   }
 }
 
