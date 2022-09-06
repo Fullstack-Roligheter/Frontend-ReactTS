@@ -13,6 +13,7 @@ import MailIcon from '@mui/icons-material/Mail'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { useNavigate } from 'react-router-dom'
+import { menuItemClasses } from '@mui/material'
 
 const drawerWidth = 240
 
@@ -27,6 +28,9 @@ export default function Sidebar(props: Props) {
     { title: 'Transactions', route: `/${props.user}/transactions` },
     { title: 'Budgets', route: `/${props.user}/budgets` },
     { title: 'Saving Plans', route: `/${props.user}/saving` },
+  ]
+
+  const SubMenu = [
     { title: 'Faq', route: `/faq` },
     { title: 'About us', route: `/omoss` },
   ]
@@ -65,13 +69,13 @@ export default function Sidebar(props: Props) {
           </List>
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
+            {SubMenu.map((subMenuItem, index) => (
+              <ListItem key={subMenuItem.title} disablePadding>
+                <ListItemButton onClick={() => navigate(subMenuItem.route)}>
                   <ListItemIcon>
                     {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                   </ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItemText primary={subMenuItem.title} />
                 </ListItemButton>
               </ListItem>
             ))}
