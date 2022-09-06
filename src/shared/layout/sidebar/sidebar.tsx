@@ -22,13 +22,13 @@ type Props = {
   user: number
 }
 
-export default function Sidebar({ user = 1 }: Props) {
+export default function Sidebar(props: Props) {
   const navigate = useNavigate()
 
   const MenuTargets = [
-    { title: 'Transactions', route: `/transactions` },
-    { title: 'Budgets', route: `/budgets` },
-    { title: 'Saving Plans', route: `/${user}/saving` },
+    { title: 'Transactions', route: `/${props.user}/transactions` },
+    { title: 'Budgets', route: `/${props.user}/budgets` },
+    { title: 'Saving Plans', route: `/${props.user}/saving` },
     { title: 'Faq', route: `/faq` },
     { title: 'About us', route: `/omoss` },
   ]
