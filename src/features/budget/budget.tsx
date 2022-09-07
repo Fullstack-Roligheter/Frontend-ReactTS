@@ -23,82 +23,58 @@ const rows = [
   { id: 7, budgetName: 'Trädgård',       budgetStartDate: new Date("2021-11-12").toLocaleString(), budgetEndDate: new Date("2022-12-31").toLocaleString(), budgetMaxAmount: 8000 }
 ];
 
-
-  // const [budgetData, setBudgetData] = useState<{
-  //   budgetId: number;
-  //   budgetName: string;
-  //   budgetStartDate: Date;
-  //   budgetEndDate: Date;
-  //   budgetMaxAmount: number;
-  // }[]>([],
-  // );
-  
-  const FetchData = async () => {
-    await fetch('https://localhost:7073/ListAllBudgetInfosForSpecificUser',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(tempUserId)
-    })
-    .then((res) => res.json()) 
-    // .then((data: Array<BudgetList>) => setBudgetData(data))
-    ;
-  }
-  axios({
-    method: 'get',
-    url: 'https://localhost:7073/ListAllBudgetInfosForSpecificUser',
-    params:  {
-      userId: tempUserId 
-    }
-  }).then((res) => console.log(res));
-  
-  
-  // const GetRows = (data: Array<BudgetList>) => {
-  //   const arr: Array<object> = data;
-  //   for (let i = 0; i < data.length; i++){
-  //     let { budgetId, budgetName, budgetStartDate, budgetEndDate, 
-  //       budgetMaxAmount }: BudgetList = data[i];
-  //       // setBudgetData(arr[i]);
-  //     }
-  // }
-
-  // const GetMeRows = async () => {
-  //   await FetchData();
-  //   console.log(budgetData);
-  //   return budgetData;
-  // }
-
-    const columns: GridColDef[] = [
-      {field: 'id', headerName: 'ID', width: 70},
-      {
-        field: 'budgetName',
-        headerName: 'Budget',
-        width: 200,
-        editable: false,
-      },
-      {
-        field: 'budgetStartDate',
-        headerName: 'Startdatum',
-        width: 200,
-        editable: false,
-      },
-      {
-        field: 'budgetEndDate',
-        headerName: 'Slutdatum',
-        width: 200,
-        editable: false,
-      },
-      {
-        field: 'budgetMaxAmount',
-        headerName: 'Summa',
-        type: 'number',
-        width: 140,
-        editable: false
-      }
-    ];
-
 const Budget = () => {
+
+  const [budgetId, setBudgetId] = useState(0);
+  const AddToTable = (arr: BudgetList) => {
+    console.log(arr);
+    // setBudgetId(arr.budgetId);
+      
+  };
+
+  const data = axios({
+    method: 'post',
+    url: 'https://localhost:7073/ListAllBudgetInfosForSpecificUser',
+    data:  {
+      userId: 1 
+    }
+    }).then((res) => {
+    for(let i = 0; i < res.data.length; i++){
+      AddToTable(res.data[i]);
+    }    
+    })
+
+
+
+  const columns: GridColDef[] = [
+    {field: 'id', headerName: 'ID', width: 70},
+    {
+      field: 'budgetName',
+      headerName: 'Budget',
+      width: 200,
+      editable: false,
+    },
+    {
+      field: 'budgetStartDate',
+      headerName: 'Startdatum',
+      width: 200,
+      editable: false,
+    },
+    {
+      field: 'budgetEndDate',
+      headerName: 'Slutdatum',
+      width: 200,
+      editable: false,
+    },
+    {
+      field: 'budgetMaxAmount',
+      headerName: 'Summa',
+      type: 'number',
+      width: 140,
+      editable: false
+    }
+  ];
+
   return (
         <Fragment>
             <Box sx={{ height: 370.5, width: 662}}>
@@ -111,5 +87,6 @@ const Budget = () => {
             </Box>
         </Fragment>
     );
-  }
-  export default Budget;
+}
+
+export default Budget;

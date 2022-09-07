@@ -19,7 +19,7 @@ const defaultBudget: Budget = {
     endDate: "",
 }
 
-function CreateBudget() {
+const CreateBudget = () => {
 
     const [budget, setBudget] = useState(defaultBudget);
 

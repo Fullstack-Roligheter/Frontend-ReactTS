@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { NavLink, Outlet } from  "react-router-dom"
 import Button from "@mui/material/Button";
 
-function BudgetLayout() {
+const BudgetLayout = () => {
     return (
         <Box sx={{width: '70%', margin: 'auto'}}>
             <Box sx={{height: 60, width: 532, paddingBottom: 4}}>
