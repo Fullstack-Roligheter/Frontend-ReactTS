@@ -1,5 +1,5 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material"
-import { Grid, IconButton, InputAdornment, Link, TextField, Typography } from "@mui/material"
+import { Box, Grid, IconButton, InputAdornment, Link, TextField, Typography } from "@mui/material"
 import { useState } from "react"
 import { SubmitButton, DisabledSubmitButton } from "../../shared/buttons/button-default"
 import { UserRegister } from '../../shared/fetch/user'
@@ -25,6 +25,8 @@ const styles = {
 const RegisterUser = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showPassword2, setShowPassword2] = useState(false)
+  const [warning, setWarning] = useState("")
+  const [warningState, setWarningState] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
   const handleClickShowPassword2 = () => setShowPassword2(!showPassword2)
@@ -51,14 +53,23 @@ const RegisterUser = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    UserRegister(formData)
-      .then((response) => {
-        alert("Du är nu registrerad")
-        setTimeout(() => {
-          navigate(`/login`)
-        }, 1000)
-      }
-      )
+    if (sPassword != formData.password) {
+      setWarning("Lösenorden matchar inte")
+      setWarningState(true)
+      setTimeout(() => {
+        setWarningState(false)
+      }, 3000)
+    } else {
+      UserRegister(formData)
+        .then((response) => {
+          alert("Du är nu registrerad")
+          setTimeout(() => {
+            navigate(`/login`)
+          }, 1000)
+        }
+        )
+    }
+
   }
 
   return (
@@ -164,10 +175,21 @@ const RegisterUser = () => {
               }}
             />
             <br />
+            {(() => {
+              if (warningState) {
+                return (
+                  <Box>
+                    <br />
+                    <Typography>{warning}</Typography>
+                    <br />
+                  </Box>
+                )
+              }
+            })()}
             <br />
             <Grid container justifyContent='center'>
               {(() => {
-                if (sPassword != formData.password || formData.name === "" || formData.age === undefined || formData.email === "" || formData.password === "") {
+                if (formData.name === "" || formData.age === undefined || formData.email === "" || formData.password === "") {
                   return < DisabledSubmitButton />
                 }
                 else {
