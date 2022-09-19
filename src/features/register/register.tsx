@@ -43,6 +43,14 @@ const RegisterUser = () => {
     password: '',
   })
 
+  const checkForm = () => {
+    if (formData.name === "" || formData.age === undefined || formData.email === "" || formData.password === "" || sPassword === "") {
+      return false
+    } else {
+      return true
+    }
+  }
+
   const handleChange = (e: any) => {
     const { name, value } = e.target
     setFormData({
@@ -189,7 +197,7 @@ const RegisterUser = () => {
             <br />
             <Grid container justifyContent='center'>
               {(() => {
-                if (formData.name === "" || formData.age === undefined || formData.email === "" || formData.password === "") {
+                if (!checkForm()) {
                   return < DisabledSubmitButton />
                 }
                 else {
