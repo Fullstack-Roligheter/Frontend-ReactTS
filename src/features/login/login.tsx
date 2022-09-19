@@ -10,6 +10,20 @@ import { useEffect, useState } from 'react'
 import { Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom';
 
+const styles = {
+  color: {
+    background: 'rgba(130, 180, 95, 0.5)',
+    width: 'fit-content',
+    padding: '30px',
+    borderRadius: '15px',
+    marginTop: '35px',
+  },
+  textfield: {
+    backgroundColor: 'white',
+    width: '100%',
+  },
+};
+
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
@@ -71,54 +85,57 @@ const LogIn = () => {
       justifyContent='center'
       style={{ minHeight: '70vh' }}
     >
-      <Grid item xs={3} alignItems='center'>
-        <Typography variant="h3" align="center">Logga in</Typography>
-        <NavLink to="/register">
-          <Typography variant="h6" align="center">Har du inte ett konto? Klicka på mig!</Typography>
-        </NavLink>
-      </Grid>
-      <Grid item>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label='User Name'
-            variant='outlined'
-            type='text'
-            name='userName'
-            required={true}
-            value={formData.userName}
-            onChange={handleChange}
-            style={{ width: '100%' }}
-          />
-          <br />
-          <br />
-          <TextField
-            label='Password'
-            variant='outlined'
-            name='password'
-            onChange={handleChange}
-            value={formData.password}
-            required={true}
-            type={showPassword ? 'text' : 'password'}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position='end'>
-                  <IconButton
-                    aria-label='toggle password visibility'
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <br />
-          <br />
-          <Grid container justifyContent='center'>
-            <SubmitButton />
-          </Grid>
-        </form>
+      <Grid style={styles.color} item xs={3} alignItems='center'>
+        <Grid >
+          <Typography variant="h3" align="center">Logga in</Typography>
+          <NavLink to="/register">
+            <Typography variant="h6" align="center" marginBottom='10px'>Har du inte ett konto? Klicka på mig!</Typography>
+          </NavLink>
+        </Grid>
+        <Grid item>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              label='User Name'
+              variant='outlined'
+              type='text'
+              name='userName'
+              required={true}
+              value={formData.userName}
+              onChange={handleChange}
+              style={styles.textfield}
+            />
+            <br />
+            <br />
+            <TextField
+              label='Password'
+              variant='outlined'
+              name='password'
+              onChange={handleChange}
+              value={formData.password}
+              required={true}
+              style={styles.textfield}
+              type={showPassword ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <br />
+            <br />
+            <Grid container justifyContent='center'>
+              <SubmitButton />
+            </Grid>
+          </form>
+        </Grid>
       </Grid>
     </Grid>
   )

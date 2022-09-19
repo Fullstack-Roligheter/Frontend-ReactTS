@@ -6,8 +6,6 @@ import { UserRegister } from '../../shared/fetch/user'
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router'
 
-
-
 const styles = {
   color: {
     background: 'rgba(130, 180, 95, 0.5)',
@@ -55,8 +53,6 @@ const RegisterUser = () => {
     e.preventDefault()
     UserRegister(formData)
       .then((response) => {
-        debugger
-        console.log(response)
         alert("Du är nu registrerad")
         setTimeout(() => {
           navigate(`/login`)
@@ -72,7 +68,7 @@ const RegisterUser = () => {
       direction='column'
       alignItems='center'
       justifyContent='center'
-      style={{ minHeight: '70vh', }}
+      style={{ minHeight: '70vh' }}
     >
       <Grid style={styles.color} alignItems='center' item xs={3} >
         <Grid >
