@@ -34,21 +34,23 @@ export default function Sidebar(props: Props) {
   ]
 
   return (
-    <Box sx={{ display: 'flex', marginRight: 3 }}>
+    <Box sx={{ display: 'flex', marginRight: 3 }}  >
       <CssBaseline />
       <Drawer
         variant='permanent'
+
         sx={{
           width: drawerWidth,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: 'border-box',
+            backgroundColor: 'rgba(130, 180, 95, 0.5)',
           },
         }}
       >
         <Toolbar />
-        <Box sx={{ overflow: 'auto' }}>
+        <Box sx={{ overflow: 'auto', backgroundColor: 'rgba(130, 180, 95, 0.5)' }}>
           <List>
             {MenuTargets.map((menuItem, index) => (
               <ListItem key={menuItem.title} disablePadding>
@@ -79,19 +81,6 @@ export default function Sidebar(props: Props) {
             ))}
           </List>
           <Divider />
-          {/* 
-					<List>
-						{['All mail', 'Trash', 'Spam'].map((text, index) => (
-							<ListItem key={text} disablePadding>
-								<ListItemButton>
-									<ListItemIcon>
-										{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-									</ListItemIcon>
-									<ListItemText primary={text} />
-								</ListItemButton>
-							</ListItem>
-						))}
-					</List> */}
         </Box>
       </Drawer>
     </Box>
