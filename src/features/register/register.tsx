@@ -25,8 +25,8 @@ const styles = {
 const RegisterUser = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showPassword2, setShowPassword2] = useState(false)
-  const [warning, setWarning] = useState("")
-  const [warningState, setWarningState] = useState(false)
+  const [message, setmessage] = useState("")
+  const [messageState, setmessageState] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
   const handleClickShowPassword2 = () => setShowPassword2(!showPassword2)
@@ -62,10 +62,10 @@ const RegisterUser = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (sPassword != formData.password) {
-      setWarning("Lösenorden matchar inte")
-      setWarningState(true)
+      setmessage("Lösenorden matchar inte")
+      setmessageState(true)
       setTimeout(() => {
-        setWarningState(false)
+        setmessageState(false)
       }, 3000)
     } else {
       UserRegister(formData)
@@ -184,11 +184,11 @@ const RegisterUser = () => {
             />
             <br />
             {(() => {
-              if (warningState) {
+              if (messageState) {
                 return (
                   <Box>
                     <br />
-                    <Typography>{warning}</Typography>
+                    <Typography>{message}</Typography>
                     <br />
                   </Box>
                 )
