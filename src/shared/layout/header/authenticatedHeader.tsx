@@ -188,7 +188,7 @@ const AuthenticatedHeader = (props: any) => {
 
                     {settings.map((setting) => (
                       <MenuItem
-                        sx={{ backgroundColor: 'rgba(130, 180, 95, 0.5)' }}
+                        sx={{ backgroundColor: 'rgba(65, 162, 72, 0.5)' }}
                         key={setting.title}
                         onClick={(e) => {
                           handleMenuClick(setting.route)

@@ -12,7 +12,7 @@ import { NavLink } from 'react-router-dom';
 
 const styles = {
   color: {
-    background: 'rgba(130, 180, 95, 0.5)',
+    background: 'rgba(65, 162, 72, 0.5)',
     width: 'fit-content',
     padding: '30px',
     borderRadius: '15px',
