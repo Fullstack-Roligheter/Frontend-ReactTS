@@ -160,7 +160,7 @@ const AuthenticatedHeader = (props: any) => {
             if (UserInfo) {
               return (
                 <Box sx={{ flexGrow: 0 }}>
-                  <Tooltip title='Open settings'>
+                  <Tooltip title='Open settings' >
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
                         alt='Remy Sharp'
@@ -169,8 +169,9 @@ const AuthenticatedHeader = (props: any) => {
                     </IconButton>
                   </Tooltip>
                   <Menu
-                    sx={{ mt: '45px' }}
+                    sx={{ mt: '45px', '& .css - 6hp17o-MuiList-root-MuiMenu-list': { paddingBottom: '0px' } }}
                     id='menu-appbar'
+
                     anchorEl={anchorElUser}
                     anchorOrigin={{
                       vertical: 'top',
@@ -187,6 +188,7 @@ const AuthenticatedHeader = (props: any) => {
 
                     {settings.map((setting) => (
                       <MenuItem
+                        sx={{ backgroundColor: 'rgba(130, 180, 95, 0.5)' }}
                         key={setting.title}
                         onClick={(e) => {
                           handleMenuClick(setting.route)
@@ -197,6 +199,7 @@ const AuthenticatedHeader = (props: any) => {
                         </Typography>
                       </MenuItem>
                     ))}
+
                   </Menu>
 
                 </Box>
