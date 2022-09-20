@@ -7,6 +7,8 @@ import axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import { baseURL } from '../../config'
+import { Grid } from '@mui/material'
+import { SubmitButton } from '../../shared/buttons/button-default'
 
 const CreateSaving: React.FC = () => {
   const [title, setTitle] = useState('')
@@ -121,9 +123,9 @@ const CreateSaving: React.FC = () => {
           onChange={(e) => setEndDate(e.target.value)}
         />
         <br />
-        <Button variant='contained' type='button' onClick={addPlan}>
-          Submit
-        </Button>
+        <Grid container justifyContent='center'>
+          <SubmitButton isLoading={true} onClick={addPlan} />
+        </Grid>
       </Box>
       {status !== 200 ? showError() : successMessage()}
     </Fragment>
