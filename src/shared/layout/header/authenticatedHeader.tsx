@@ -169,7 +169,7 @@ const AuthenticatedHeader = (props: any) => {
                     </IconButton>
                   </Tooltip>
                   <Menu
-                    sx={{ mt: '45px', '& .css - 6hp17o-MuiList-root-MuiMenu-list': { paddingBottom: '0px' } }}
+                    sx={{ mt: '45px', '& .css-6hp17o-MuiList-root-MuiMenu-list': { paddingBottom: '0px', paddingTop: '0px' } }}
                     id='menu-appbar'
 
                     anchorEl={anchorElUser}

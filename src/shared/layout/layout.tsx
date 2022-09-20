@@ -14,7 +14,7 @@ const styles = {
 
 
 const Layout = (props: any) => (
-  <Paper style={styles.paperContainer}>
+  <Paper sx={{ width: '100%', height: '100%' }} style={styles.paperContainer} >
     {(() => {
       if (props.user === '') {
         return <UnauthenticatedLayout />;
