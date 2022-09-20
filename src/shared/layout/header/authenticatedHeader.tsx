@@ -71,7 +71,7 @@ const AuthenticatedHeader = (props: any) => {
   return (
     <AppBar
       position='fixed'
-      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'rgba(25, 118, 210, 1)' }}
     >
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
