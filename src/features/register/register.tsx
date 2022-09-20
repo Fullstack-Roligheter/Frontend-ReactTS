@@ -201,7 +201,7 @@ const RegisterUser = () => {
                   return < DisabledSubmitButton />
                 }
                 else {
-                  return < SubmitButton />
+                  return < SubmitButton isLoading={true} />
                 }
               })()}
 
