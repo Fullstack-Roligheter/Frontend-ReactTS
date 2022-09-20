@@ -132,7 +132,7 @@ const LogIn = () => {
             <br />
             <br />
             <Grid container justifyContent='center'>
-              <SubmitButton />
+              <SubmitButton isLoading={true} />
             </Grid>
           </form>
         </Grid>
