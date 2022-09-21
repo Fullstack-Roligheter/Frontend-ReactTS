@@ -45,12 +45,12 @@ export default function Sidebar(props: Props) {
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: 'rgba(65, 162, 72, 0.5)',
+            backgroundColor: 'rgba(65, 162, 72, 0.1)',
           },
         }}
       >
         <Toolbar />
-        <Box sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.5)' }}>
+        <Box sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.3)' }}>
           <List>
             {MenuTargets.map((menuItem, index) => (
               <ListItem key={menuItem.title} disablePadding>
