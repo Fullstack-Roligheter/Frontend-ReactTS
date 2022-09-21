@@ -17,6 +17,9 @@ const CreateSaving: React.FC = () => {
   const [endDate, setEndDate] = useState('')
   const [open, setOpen] = useState(false)
   const [status, setStatus] = useState(0)
+  const [buttontext, setButtonText] = useState("")
+
+  setButtonText("Spara")
 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -124,7 +127,7 @@ const CreateSaving: React.FC = () => {
         />
         <br />
         <Grid container justifyContent='center'>
-          <SubmitButton isLoading={true} onClick={addPlan} />
+          <SubmitButton isLoading={true} buttontext={buttontext} onClick={addPlan} />
         </Grid>
       </Box>
       {status !== 200 ? showError() : successMessage()}

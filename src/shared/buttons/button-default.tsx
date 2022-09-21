@@ -19,7 +19,7 @@ export function SubmitButton(props: any) {
   }
 
   return (
-    <Button variant="contained" type="submit" onClick={(() => onClick(props))}>Submit
+    <Button variant="contained" type="submit" onClick={(() => onClick(props))}>{props.buttontext}
       {(() => {
         if (isLoading) {
           return (
@@ -33,8 +33,8 @@ export function SubmitButton(props: any) {
   )
 }
 
-export function DisabledSubmitButton() {
+export function DisabledSubmitButton(props: any) {
   return (
-    <Button variant="contained" type="submit" disabled >Submit</Button>
+    <Button variant="contained" type="submit" disabled >{props.buttontext}</Button>
   )
 }

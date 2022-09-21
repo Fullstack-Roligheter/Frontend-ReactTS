@@ -29,8 +29,10 @@ const EditSavingPlan: React.FC = () => {
   const [planList, setPlanList] = useState<Plan[]>([])
   const [open, setOpen] = useState(false)
   const [planId, setPlanId] = useState(0)
+  const [buttontext, setButtonText] = useState("")
 
   const { id } = useParams()
+  setButtonText("Spara")
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -130,7 +132,7 @@ const EditSavingPlan: React.FC = () => {
         />
         <br />
         <Grid container justifyContent='center'>
-          <SubmitButton isLoading={true} onClick={() => handleEdit(planId)} />
+          <SubmitButton isLoading={true} buttontext={buttontext} onClick={() => handleEdit(planId)} />
         </Grid>
       </Box>
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
