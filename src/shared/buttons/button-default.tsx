@@ -24,7 +24,7 @@ export function SubmitButton(props: any) {
         if (isLoading) {
           return (
             <Box sx={{ display: 'flex' }}>
-              <CircularProgress />
+              <CircularProgress sx={{ color: 'white' }} />
             </Box>
           )
         }
