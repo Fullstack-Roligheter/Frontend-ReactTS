@@ -19,17 +19,25 @@ export function SubmitButton(props: any) {
   }
 
   return (
-    <Button variant="contained" type="submit" onClick={(() => onClick(props))}>{props.buttontext}
-      {(() => {
-        if (isLoading) {
-          return (
-            <Box sx={{ display: 'flex' }}>
-              <CircularProgress sx={{ color: 'white' }} />
-            </Box>
-          )
-        }
-      })()}
-    </Button>
+    <Box sx={{ m: 1, position: 'relative' }}>
+      <Button variant="contained" type="submit" onClick={(() => onClick(props))}>{props.buttontext}
+        {(() => {
+          if (isLoading) {
+            return (
+              <Box sx={{ display: 'flex' }}>
+                <CircularProgress size={24} sx={{
+                  color: 'white', position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-12px',
+                  marginLeft: '-12px',
+                }} />
+              </Box>
+            )
+          }
+        })()}
+      </Button>
+    </Box>
   )
 }
 
