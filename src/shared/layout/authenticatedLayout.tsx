@@ -17,7 +17,6 @@ const AuthenticatedLayout = (props: any) => {
         sx={{
           minHeight: 'calc(100vh - 70px)',
           display: 'flex',
-          marginTop: '70px',
         }}
       >
         <AuthenticatedHeader />

@@ -50,21 +50,23 @@ export default function Sidebar(props: Props) {
   ]
 
   return (
-    <Box sx={{ display: 'flex', marginRight: 3 }}>
+    <Box sx={{ display: 'flex', marginRight: 3 }}  >
       <CssBaseline />
       <Drawer
         variant='permanent'
+
         sx={{
           width: drawerWidth,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: 'border-box',
+            backgroundColor: 'rgba(65, 162, 72, 0.5)',
           },
         }}
       >
         <Toolbar />
-        <Box sx={{ overflow: 'auto' }}>
+        <Box sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.5)' }}>
           <List>
             {MenuTargets.map((menuItem, index) => (
               <ListItem key={menuItem.title} disablePadding>
