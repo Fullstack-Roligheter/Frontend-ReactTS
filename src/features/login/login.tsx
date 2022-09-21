@@ -26,11 +26,11 @@ const styles = {
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const [buttontext, setButtonText] = useState("")
+  const [buttontext, setButtonText] = useState("Logga in")
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
 
-  setButtonText("Logga in")
+
   const [formData, setFormData] = useState({
     userName: '',
     password: '',

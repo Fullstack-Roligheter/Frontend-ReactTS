@@ -29,10 +29,9 @@ const EditSavingPlan: React.FC = () => {
   const [planList, setPlanList] = useState<Plan[]>([])
   const [open, setOpen] = useState(false)
   const [planId, setPlanId] = useState(0)
-  const [buttontext, setButtonText] = useState("")
+  const [buttontext, setButtonText] = useState("Spara")
 
   const { id } = useParams()
-  setButtonText("Spara")
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,

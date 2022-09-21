@@ -17,9 +17,7 @@ const CreateSaving: React.FC = () => {
   const [endDate, setEndDate] = useState('')
   const [open, setOpen] = useState(false)
   const [status, setStatus] = useState(0)
-  const [buttontext, setButtonText] = useState("")
-
-  setButtonText("Spara")
+  const [buttontext, setButtonText] = useState("Spara")
 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,

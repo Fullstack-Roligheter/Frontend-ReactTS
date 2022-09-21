@@ -32,10 +32,8 @@ const RegisterUser = () => {
   const handleClickShowPassword2 = () => setShowPassword2(!showPassword2)
   const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2)
 
-  const [buttontext, setButtonText] = useState("")
+  const [buttontext, setButtonText] = useState("Registrera")
   const [sPassword, setPassword] = useState("")
-
-  setButtonText("Registrera")
 
   const navigate = useNavigate()
 
