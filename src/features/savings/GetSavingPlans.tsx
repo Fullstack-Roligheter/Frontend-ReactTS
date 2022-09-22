@@ -14,6 +14,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import { Link } from 'react-router-dom'
 import { IconButton } from '@mui/material'
 import { baseURL } from '../../config'
+import React from 'react'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -24,7 +25,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }))
-const userId = 1
+
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
@@ -40,8 +41,18 @@ const CheckSavingPlans: React.FC = () => {
 
   const getPlans = async () => {
     try {
-      const { data } = await axios(
-        `${baseURL}/saving/getplans?UserId=${userId}`
+      //
+      let numberValue: string | null = ''
+      const value = sessionStorage.getItem('user')
+      if (value !== null) {
+        numberValue = JSON.parse(value)
+      } else {
+        console.log('never entered parse value')
+      }
+      //
+
+      const { data } = await axios.get(
+        `${baseURL}/saving/getplans?UserId=${numberValue}`
       )
       let planList = data as Plan[]
       setPlanList(planList)
@@ -51,6 +62,7 @@ const CheckSavingPlans: React.FC = () => {
   }
 
   useEffect(() => {
+    console.log('getPlans in GetSavingsPlans init')
     getPlans()
   }, [])
 
