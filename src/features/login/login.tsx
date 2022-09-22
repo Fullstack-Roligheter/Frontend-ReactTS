@@ -53,7 +53,7 @@ const LogIn = () => {
         sessionStorage.setItem('user', `${response.userID}`)
         console.log('user id object:', response)
         console.log('user id value: ', response.userID)
-        navigate(`/${response.userID}/dashboard`)
+        navigate(`/dashboard`)
         window.location.reload()
       })
 

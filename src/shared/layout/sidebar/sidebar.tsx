@@ -29,17 +29,17 @@ export default function Sidebar(props: Props) {
   const MenuTargets = [
     {
       title: 'Transactions',
-      route: `/${props.user}/transactions`,
+      route: `/transactions`,
       icon: <AccountBalance />,
     },
     {
       title: 'Budgets',
-      route: `/${props.user}/budgets`,
+      route: `/budgets`,
       icon: <AccountBalanceWallet />,
     },
     {
       title: 'Saving Plans',
-      route: `/${props.user}/saving`,
+      route: `/saving`,
       icon: <AttachMoney />,
     },
   ]

@@ -26,7 +26,7 @@ const AuthenticatedHeader = (props: any) => {
   let settings = [
     { title: 'Profile', route: '/profile' },
     { title: 'Account', route: '/account' },
-    { title: 'Dashboard', route: `/${UserInfo}/dashboard` },
+    { title: 'Dashboard', route: `/dashboard` },
     { title: 'Log Out', route: 'handleLogout' }
   ]
 
@@ -80,7 +80,7 @@ const AuthenticatedHeader = (props: any) => {
             variant='h6'
             noWrap
             component='a'
-            href={`/${UserInfo}/dashboard`}
+            href={`/dashboard`}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
