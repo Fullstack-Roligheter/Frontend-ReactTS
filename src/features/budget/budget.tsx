@@ -1,17 +1,10 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import axios from 'axios';
 import { DateRangeOutlined } from '@mui/icons-material';
 import { breakpoints } from '@mui/system';
-
-interface BudgetList {
-    id: number;
-    budgetName: string;
-    budgetStartDate: Date;
-    budgetEndDate: Date;
-    budgetMaxAmount: number;
-};
+import Budget from './IBudget';
 
 const tempUserId: number = 1;
 
@@ -25,79 +18,55 @@ const rows = [
   { id: 7, budgetName: 'Trädgård',       budgetStartDate: new Date("2021-11-12").toLocaleString(), budgetEndDate: new Date("2022-12-31").toLocaleString(), budgetMaxAmount: 8000 }
 ];
 
-const Budget = () => {
-  let rowsNew: object[] = [];
-  
-  const [rowsValue, setRowsValue] = useState<{object: BudgetList}[]>();
+const columns: GridColDef[] = [
+  {field: 'id', headerName: 'ID', width: 70},
+  {
+    field: 'budgetName',
+    headerName: 'Budget',
+    width: 200,
+    editable: false,
+  },
+  {
+    field: 'budgetStartDate',
+    headerName: 'Startdatum',
+    width: 200,
+    editable: false,
+  },
+  {
+    field: 'budgetEndDate',
+    headerName: 'Slutdatum',
+    width: 200,
+    editable: false,
+  },
+  {
+    field: 'budgetMaxAmount',
+    headerName: 'Summa',
+    type: 'number',
+    width: 140,
+    editable: false
+  }
+];
 
-  const [budgetId, setBudgetId] = useState(0);
-  const [budgetName, setBudgetName] = useState("");
-  const [budgetStartDate, setBudgetStartDate] = useState(new Date);
-  const [budgetEndDate, setBudgetEndDate] = useState(new Date);
-  const [budgetMaxAmount, setBudgetMaxAmount] = useState(0);
+const GetBudgets = () => {
+  const [budgetList, setBudgetList] = useState<Budget[]>([]);
 
-  // const SetValues = (arr: BudgetList) => {
-  //   setBudgetId(arr.id);
-  //   setBudgetName(arr.budgetName);
-  //   setBudgetStartDate(arr.budgetStartDate);
-  //   setBudgetEndDate(arr.budgetEndDate);
-  //   setBudgetMaxAmount(arr.budgetMaxAmount);
-  //   // console.log(arr);
-  //   // rowsNew.push(arr);
-  // };
-
-  const stuff = (arr: any[]) => {
-    arr.forEach(element => {
-      console.log(element)
-      rowsNew = Object.assign([], rowsNew);
-      rowsNew.push(element);
-    });
+  const FetchData = async () => {
+    await axios('https://localhost:7073/ListAllBudgetInfosForSpecificUser/' + tempUserId)
+    .then((res) => {;
+      let newData = res.data as Budget[];
+      setBudgetList(newData);
+    })
   }
 
-  axios({
-    method: 'post',
-    url: 'https://localhost:7073/ListAllBudgetInfosForSpecificUser',
-    data:  {
-      userId: 1 
-    }
-    }).then((res) => {
-      stuff(res.data);
-    }  )  
-
-  const columns: GridColDef[] = [
-    {field: 'id', headerName: 'ID', width: 70},
-    {
-      field: 'budgetName',
-      headerName: 'Budget',
-      width: 200,
-      editable: false,
-    },
-    {
-      field: 'budgetStartDate',
-      headerName: 'Startdatum',
-      width: 200,
-      editable: false,
-    },
-    {
-      field: 'budgetEndDate',
-      headerName: 'Slutdatum',
-      width: 200,
-      editable: false,
-    },
-    {
-      field: 'budgetMaxAmount',
-      headerName: 'Summa',
-      type: 'number',
-      width: 140,
-      editable: false
-    }
-  ];
+  useEffect(() => {
+    FetchData();
+  },[])
 
   return (
         <Fragment>
             <Box sx={{ height: 370.5, width: 662}}>
                 <DataGrid
-                    rows={rowsNew}
+                    rows={budgetList}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
@@ -107,4 +76,4 @@ const Budget = () => {
     );
 }
 
-export default Budget;
+export default GetBudgets;
