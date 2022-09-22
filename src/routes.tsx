@@ -11,6 +11,7 @@ import EditSavingPlan from './features/savings/EditSavingPlan'
 import CheckSavingPlans from './features/savings/GetSavingPlans'
 import Layout from './shared/layout/layout'
 import RegisterUser from './features/register/register'
+import ExpenseDashboard from './features/expense/ExpenseDashboard'
 
 const AppRouter = () => {
   let UserIsLoggedIn = JSON.parse(sessionStorage.getItem('user') || '""')
@@ -32,6 +33,7 @@ const AppRouter = () => {
                 <Route path='editplan/:id' element={<EditSavingPlan />} />
               </Route>
               <Route path='/:id/dashboard' element={<DashboardFeature />} />
+              <Route path='/:id/transactions' element={<ExpenseDashboard/ >} />
             </Route>
           </Route>
         </Route>
