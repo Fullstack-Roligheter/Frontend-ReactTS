@@ -32,6 +32,7 @@ const RegisterUser = () => {
   const handleClickShowPassword2 = () => setShowPassword2(!showPassword2)
   const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2)
 
+  const [buttontext, setButtonText] = useState("Registrera")
   const [sPassword, setPassword] = useState("")
 
   const navigate = useNavigate()
@@ -198,10 +199,10 @@ const RegisterUser = () => {
             <Grid container justifyContent='center'>
               {(() => {
                 if (!checkForm()) {
-                  return < DisabledSubmitButton />
+                  return < DisabledSubmitButton buttontext={buttontext} />
                 }
                 else {
-                  return < SubmitButton />
+                  return < SubmitButton isLoading={true} buttontext={buttontext} />
                 }
               })()}
 

@@ -26,8 +26,10 @@ const styles = {
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const [buttontext, setButtonText] = useState("Logga in")
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
+
 
   const [formData, setFormData] = useState({
     userName: '',
@@ -132,7 +134,7 @@ const LogIn = () => {
             <br />
             <br />
             <Grid container justifyContent='center'>
-              <SubmitButton />
+              <SubmitButton isLoading={true} buttontext={buttontext} />
             </Grid>
           </form>
         </Grid>

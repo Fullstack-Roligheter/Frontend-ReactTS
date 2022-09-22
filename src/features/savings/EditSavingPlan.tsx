@@ -9,6 +9,8 @@ import { useParams } from 'react-router-dom'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 import { baseURL } from '../../config'
+import { SubmitButton } from '../../shared/buttons/button-default'
+import Grid from '@mui/material/Grid'
 
 const userId = 1
 
@@ -27,6 +29,7 @@ const EditSavingPlan: React.FC = () => {
   const [planList, setPlanList] = useState<Plan[]>([])
   const [open, setOpen] = useState(false)
   const [planId, setPlanId] = useState(0)
+  const [buttontext, setButtonText] = useState("Spara")
 
   const { id } = useParams()
 
@@ -127,13 +130,9 @@ const EditSavingPlan: React.FC = () => {
           onChange={(e) => setEndDate(e.target.value)}
         />
         <br />
-        <Button
-          variant='contained'
-          type='button'
-          onClick={() => handleEdit(planId)}
-        >
-          Save Changes
-        </Button>
+        <Grid container justifyContent='center'>
+          <SubmitButton isLoading={true} buttontext={buttontext} onClick={() => handleEdit(planId)} />
+        </Grid>
       </Box>
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
