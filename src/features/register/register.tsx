@@ -34,6 +34,7 @@ const RegisterUser = () => {
 
   const [buttontext, setButtonText] = useState("Registrera")
   const [sPassword, setPassword] = useState("")
+  const [loadingState, setloadingState] = useState(false)
 
   const navigate = useNavigate()
 
@@ -69,6 +70,7 @@ const RegisterUser = () => {
         setmessageState(false)
       }, 3000)
     } else {
+      setloadingState(true)
       UserRegister(formData)
         .then((response) => {
           alert("Du är nu registrerad")
@@ -77,6 +79,20 @@ const RegisterUser = () => {
           }, 1000)
         }
         )
+        .catch((error) => {
+          setTimeout(() => {
+            setloadingState(false)
+            setmessage('Kunde inte registrera.')
+            setmessageState(true)
+            setTimeout(() => {
+              setmessageState(false)
+            }, 3000)
+          }, 5000)
+
+        })
+        .finally(() => {
+          console.log('Entered Finally')
+        })
     }
 
   }
@@ -92,10 +108,11 @@ const RegisterUser = () => {
     >
       <Grid style={styles.color} alignItems='center' item xs={3} >
         <Grid >
-          <Typography variant="h3" align="center">Registrera konto</Typography>
-          <NavLink to="/login">
-            <Typography variant="h6" align="center" marginBottom='10px'>Vill du logga in? Klicka på mig!</Typography>
-          </NavLink>
+          <Typography variant="h3" color="white" align="center" sx={{ textShadow: '1px 1px 2px black' }}>Registrera konto</Typography>
+          <Box sx={{ marginBottom: '15px' }}>
+            <Typography variant="h6" color="white" align="center" component='a'
+              href='/login' sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }} >Vill du logga in? Klicka på mig!</Typography>
+          </Box>
         </Grid>
         <Grid item>
           <form onSubmit={handleSubmit}>

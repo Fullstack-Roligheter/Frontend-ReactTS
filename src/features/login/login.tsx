@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router'
 import { SubmitButton, DisabledSubmitButton } from '../../shared/buttons/button-default'
 import { UserLogin } from '../../shared/fetch/user'
 import { useEffect, useState } from 'react'
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom';
 
 const styles = {
@@ -29,7 +29,9 @@ const LogIn = () => {
   const [buttontext, setButtonText] = useState("Logga in")
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
-
+  const [message, setmessage] = useState("")
+  const [messageState, setmessageState] = useState(false)
+  const [loadingState, setloadingState] = useState(false)
 
 
   const [formData, setFormData] = useState({
@@ -38,7 +40,7 @@ const LogIn = () => {
   })
 
   const checkForm = () => {
-    if (formData.userName === "" || formData.password === "" ) {
+    if (formData.userName === "" || formData.password === "") {
       return false
     } else {
       return true
@@ -57,6 +59,7 @@ const LogIn = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
+    setloadingState(true)
     UserLogin(formData)
       .then((response) => {
         alert('Du är nu Inloggad')
@@ -69,10 +72,15 @@ const LogIn = () => {
       })
 
       .catch((error) => {
-        console.log('Error:', error)
-        if (error.request.status === 401) {
-          alert('Access Denied')
-        }
+        setTimeout(() => {
+          setloadingState(false)
+          setmessage('Kunde inte logga in.')
+          setmessageState(true)
+          setTimeout(() => {
+            setmessageState(false)
+          }, 3000)
+        }, 5000)
+
       })
       .finally(() => {
         console.log('Entered Finally')
@@ -98,10 +106,10 @@ const LogIn = () => {
     >
       <Grid style={styles.color} item xs={3} alignItems='center'>
         <Grid >
-          <Typography variant="h3" align="center">Logga in</Typography>
-          <NavLink to="/register">
-            <Typography variant="h6" align="center" marginBottom='10px'>Har du inte ett konto? Klicka på mig!</Typography>
-          </NavLink>
+          <Typography variant="h3" color='white' sx={{ textShadow: '1px 1px 2px black' }} align="center">Logga in</Typography>
+          <Box sx={{ marginBottom: '15px' }}>
+            <Typography variant="h6" align="center" color='white' component='a' href='/register' sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }}>Har du inte ett konto? Klicka på mig!</Typography>
+          </Box>
         </Grid>
         <Grid item>
           <form onSubmit={handleSubmit}>
@@ -141,14 +149,25 @@ const LogIn = () => {
               }}
             />
             <br />
+            {(() => {
+              if (messageState) {
+                return (
+                  <Box>
+                    <br />
+                    <Typography>{message}</Typography>
+                    <br />
+                  </Box>
+                )
+              }
+            })()}
             <br />
             <Grid container justifyContent='center'>
-            {(() => {
+              {(() => {
                 if (!checkForm()) {
                   return < DisabledSubmitButton buttontext={buttontext} />
                 }
                 else {
-                  return < SubmitButton isLoading={true} buttontext={buttontext} />
+                  return < SubmitButton isLoading={loadingState} buttontext={buttontext} />
                 }
               })()}
             </Grid>

@@ -29,10 +29,10 @@ function DashboardFeature() {
       paddingBottom: '100px',
       height: 'fit-content'
     }}>
-      <Typography variant='h1'>DASHBOARD</Typography>
-      <Typography variant='h3'>YOU ARE LOGGED IN</Typography>
-      <Typography variant='h5'>UserId: {UserIsLoggedIn}</Typography>
-      <Typography variant='subtitle1'>{timeMilli}</Typography>
+      <Typography color='white' variant='h1' sx={{ textShadow: '1px 1px 2px black' }}>DASHBOARD</Typography>
+      <Typography color='white' variant='h3' sx={{ textShadow: '1px 1px 2px black' }}>YOU ARE LOGGED IN</Typography>
+      <Typography variant='h5' color='white' sx={{ textShadow: '1px 1px 2px black' }}>UserId: {UserIsLoggedIn}</Typography>
+      <Typography variant='subtitle1' color='white' sx={{ textShadow: '1px 1px 2px black' }}>{timeMilli}</Typography>
     </Box>
   )
 }
