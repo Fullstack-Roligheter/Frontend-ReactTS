@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import { useNavigate } from 'react-router'
-import { SubmitButton } from '../../shared/buttons/button-default'
+import { SubmitButton, DisabledSubmitButton } from '../../shared/buttons/button-default'
 import { UserLogin } from '../../shared/fetch/user'
 import { useEffect, useState } from 'react'
 import { Typography } from '@mui/material'
@@ -31,10 +31,19 @@ const LogIn = () => {
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
 
 
+
   const [formData, setFormData] = useState({
     userName: '',
     password: '',
   })
+
+  const checkForm = () => {
+    if (formData.userName === "" || formData.password === "" ) {
+      return false
+    } else {
+      return true
+    }
+  }
 
   const navigate = useNavigate()
 
@@ -134,7 +143,14 @@ const LogIn = () => {
             <br />
             <br />
             <Grid container justifyContent='center'>
-              <SubmitButton isLoading={true} buttontext={buttontext} />
+            {(() => {
+                if (!checkForm()) {
+                  return < DisabledSubmitButton buttontext={buttontext} />
+                }
+                else {
+                  return < SubmitButton isLoading={true} buttontext={buttontext} />
+                }
+              })()}
             </Grid>
           </form>
         </Grid>
