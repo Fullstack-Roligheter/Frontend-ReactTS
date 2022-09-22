@@ -10,7 +10,6 @@ const styles = {
     paddingBottom: '60px',
     display: 'flex',
     justifyItems: 'center',
-    textShadow: '1px 1px 2px black'
   },
 };
 
