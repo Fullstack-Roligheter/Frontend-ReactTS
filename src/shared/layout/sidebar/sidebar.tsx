@@ -37,6 +37,7 @@ export default function Sidebar(props: Props) {
       icon: <AttachMoney />,
     },
   ]
+
   const SubMenu = [
     { title: 'Faq', route: `/faq`, icon: <QuestionAnswer /> },
     { title: 'About us', route: `/omoss`, icon: <Info /> },
