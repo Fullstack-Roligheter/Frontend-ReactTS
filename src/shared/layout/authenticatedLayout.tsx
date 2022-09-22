@@ -2,13 +2,19 @@ import { Navigate, Outlet } from 'react-router-dom'
 import Footer from './footer/footer'
 import { Box } from '@mui/material'
 import Sidebar from './sidebar/sidebar'
+import { useState } from 'react'
 import AuthenticatedHeader from './header/authenticatedHeader'
 
 const AuthenticatedLayout = (props: any) => {
   let UserIsLoggedIn = sessionStorage.getItem('user')
 
+  const [smallWindow, setSmallWindowOpen] = useState(true)
+
   if (UserIsLoggedIn === null) {
     return <Navigate to='/login' replace />
+  }
+  const toggleSidebar = () => {
+      setSmallWindowOpen(!smallWindow)
   }
 
   return (
@@ -20,8 +26,8 @@ const AuthenticatedLayout = (props: any) => {
           marginTop: '50px'
         }}
       >
-        <AuthenticatedHeader />
-        <Sidebar user={props.user} />
+        <AuthenticatedHeader toggleSidebar={toggleSidebar}/>
+        <Sidebar user={props.user} show={smallWindow} />
         <Outlet />
       </Box>
       <Footer />
