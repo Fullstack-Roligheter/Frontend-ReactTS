@@ -2,9 +2,11 @@ import { Fragment, useState } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import axios from 'axios';
+import { DateRangeOutlined } from '@mui/icons-material';
+import { breakpoints } from '@mui/system';
 
 interface BudgetList {
-    budgetId: number;
+    id: number;
     budgetName: string;
     budgetStartDate: Date;
     budgetEndDate: Date;
@@ -24,27 +26,43 @@ const rows = [
 ];
 
 const Budget = () => {
+  let rowsNew: object[] = [];
+  
+  const [rowsValue, setRowsValue] = useState<{object: BudgetList}[]>();
 
   const [budgetId, setBudgetId] = useState(0);
-  const AddToTable = (arr: BudgetList) => {
-    console.log(arr);
-    // setBudgetId(arr.budgetId);
-      
-  };
+  const [budgetName, setBudgetName] = useState("");
+  const [budgetStartDate, setBudgetStartDate] = useState(new Date);
+  const [budgetEndDate, setBudgetEndDate] = useState(new Date);
+  const [budgetMaxAmount, setBudgetMaxAmount] = useState(0);
 
-  const data = axios({
+  // const SetValues = (arr: BudgetList) => {
+  //   setBudgetId(arr.id);
+  //   setBudgetName(arr.budgetName);
+  //   setBudgetStartDate(arr.budgetStartDate);
+  //   setBudgetEndDate(arr.budgetEndDate);
+  //   setBudgetMaxAmount(arr.budgetMaxAmount);
+  //   // console.log(arr);
+  //   // rowsNew.push(arr);
+  // };
+
+  const stuff = (arr: any[]) => {
+    arr.forEach(element => {
+      console.log(element)
+      rowsNew = Object.assign([], rowsNew);
+      rowsNew.push(element);
+    });
+  }
+
+  axios({
     method: 'post',
     url: 'https://localhost:7073/ListAllBudgetInfosForSpecificUser',
     data:  {
       userId: 1 
     }
     }).then((res) => {
-    for(let i = 0; i < res.data.length; i++){
-      AddToTable(res.data[i]);
-    }    
-    })
-
-
+      stuff(res.data);
+    }  )  
 
   const columns: GridColDef[] = [
     {field: 'id', headerName: 'ID', width: 70},
@@ -79,7 +97,7 @@ const Budget = () => {
         <Fragment>
             <Box sx={{ height: 370.5, width: 662}}>
                 <DataGrid
-                    rows={rows}
+                    rows={rowsNew}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
