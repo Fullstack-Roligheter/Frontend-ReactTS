@@ -1,13 +1,18 @@
+import { Box, Typography } from "@mui/material"
+
+
 const OmOss = (props: any) => {
-	return (
-		<>
-			<div>
-				<h1>Om Oss Sida</h1>
-			</div>
-			<div>
-				<p>Woop Woop</p>
-			</div>
-		</>
-	)
+  return (
+    <>
+      <Box sx={{ marginTop: '70px' }}>
+        <Box >
+          <Typography variant="h1">Om Oss Sida</Typography>
+        </Box>
+        <Box>
+          <Typography variant="h5">Woop Woop</Typography>
+        </Box>
+      </Box>
+    </>
+  )
 }
 export default OmOss

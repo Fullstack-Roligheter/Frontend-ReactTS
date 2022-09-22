@@ -9,13 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { useNavigate } from 'react-router-dom'
-import {
-  QuestionAnswer,
-  Info,
-  AttachMoney,
-  AccountBalanceWallet,
-  AccountBalance,
-} from '@mui/icons-material'
+import { AccountBalance, AccountBalanceWallet, AttachMoney, Info, QuestionAnswer } from '@mui/icons-material'
 
 const drawerWidth = 240
 
@@ -61,12 +55,12 @@ export default function Sidebar(props: Props) {
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: 'rgba(65, 162, 72, 0.5)',
+            backgroundColor: 'rgba(65, 162, 72, 0.1)',
           },
         }}
       >
         <Toolbar />
-        <Box sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.5)' }}>
+        <Box sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.3)' }}>
           <List>
             {MenuTargets.map((menuItem, index) => (
               <ListItem key={menuItem.title} disablePadding>
