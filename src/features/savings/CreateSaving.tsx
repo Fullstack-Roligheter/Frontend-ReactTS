@@ -57,8 +57,16 @@ const CreateSaving: React.FC = () => {
 
   const addPlan = async () => {
     try {
+      let numberValue: string | null = ''
+      const value = sessionStorage.getItem('user')
+      if (value !== null) {
+        numberValue = JSON.parse(value)
+      } else {
+        console.log('never entered parse value')
+      }
+
       const sendData = await axios.post(`${baseURL}/saving/addplan`, {
-        userId: 1,
+        userId: numberValue,
         name: title,
         amount: amount,
         planStartDate: startDate,

@@ -12,7 +12,7 @@ import { baseURL } from '../../config'
 import { SubmitButton } from '../../shared/buttons/button-default'
 import Grid from '@mui/material/Grid'
 
-const userId = 1
+/* const userId = 1 */
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -45,8 +45,16 @@ const EditSavingPlan: React.FC = () => {
 
   const getPlans = async () => {
     try {
+      let numberValue: string | null = ''
+      const value = sessionStorage.getItem('user')
+      if (value !== null) {
+        numberValue = JSON.parse(value)
+      } else {
+        console.log('never entered parse value')
+      }
+
       const { data } = await axios(
-        `${baseURL}/saving/getplans?UserId=${userId}`
+        `${baseURL}/saving/getplans?UserId=${numberValue}`
       )
       let planList = data as Plan[]
       setPlanList(planList)
