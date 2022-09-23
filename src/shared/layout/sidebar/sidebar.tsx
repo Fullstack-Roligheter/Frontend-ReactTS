@@ -70,9 +70,6 @@ export default function Sidebar(props: Props) {
           <List sx={{
             '& .MuiListItemButton-root:hover': {
               bgcolor: 'white',
-              '&, & .MuiListItemIcon-root': {
-                color: 'rgba(65, 162, 72, 1.0)',
-              },
             },
           }}>
             {MenuTargets.map((menuItem, index) => (
@@ -88,9 +85,6 @@ export default function Sidebar(props: Props) {
           <List sx={{
             '& .MuiListItemButton-root:hover': {
               bgcolor: 'white',
-              '&, & .MuiListItemIcon-root': {
-                color: 'rgba(65, 162, 72, 1.0)',
-              },
             },
           }}>
             {SubMenu.map((subMenuItem) => (
