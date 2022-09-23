@@ -14,12 +14,14 @@ import { AccountBalance, AccountBalanceWallet, AttachMoney, Info, QuestionAnswer
 const drawerWidth = 240
 
 type Props = {
-  user: number
+  user: number,
+  show: boolean,
+ 
 }
 
 export default function Sidebar(props: Props) {
   const navigate = useNavigate()
-
+  console.log(props.show)
   const MenuTargets = [
     {
       title: 'Transactions',
@@ -43,12 +45,15 @@ export default function Sidebar(props: Props) {
     { title: 'About us', route: `/omoss`, icon: <Info /> },
   ]
 
+
+  const {show} = props;
+
   return (
     <Box sx={{ display: 'flex', marginRight: 3 }}  >
       <CssBaseline />
       <Drawer
-        variant='permanent'
-
+        variant='persistent'
+        open={show}
         sx={{
           width: drawerWidth,
           flexShrink: 0,
@@ -73,7 +78,7 @@ export default function Sidebar(props: Props) {
           </List>
           <Divider />
           <List>
-            {SubMenu.map((subMenuItem, index) => (
+            {SubMenu.map((subMenuItem) => (
               <ListItem key={subMenuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(subMenuItem.route)}>
                   <ListItemIcon>{subMenuItem.icon}</ListItemIcon>
