@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { useNavigate } from 'react-router'
-import { GetGravatarImage } from '../../fetch/gravatar'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -15,12 +14,10 @@ import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
 
-/* Generate a md5-hash of a email address and return its hexadecimal value */
+/* Generate a md5-hash of a email address for Gravatar */
 var CryptoJS = require("crypto-js");
-var hash = CryptoJS.MD5("danielkjellberg@hotmail.com").toString();
-console.log(hash);
-
-// console.log(avatarIMG)
+let userEmail = sessionStorage.getItem('email')
+var hash = CryptoJS.MD5(userEmail).toString();
 
 const AuthenticatedHeader = (props: any) => {
   const navigate = useNavigate()
@@ -168,7 +165,7 @@ const AuthenticatedHeader = (props: any) => {
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
                         alt='Remy Sharp'
-                        src={`${() => GetGravatarImage(hash)}`}
+                        src={`https://s.gravatar.com/avatar/${hash}`}
                       />
                     </IconButton>
                   </Tooltip>

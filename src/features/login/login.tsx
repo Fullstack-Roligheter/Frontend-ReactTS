@@ -62,6 +62,7 @@ const LogIn = () => {
         alert('Du är nu Inloggad')
         setFormData(response.data)
         sessionStorage.setItem('user', `${response.userID}`)
+        sessionStorage.setItem('email', `${response.email}`)
         console.log('user id object:', response)
         console.log('user id value: ', response.userID)
         navigate(`/dashboard`)
