@@ -165,7 +165,7 @@ const AuthenticatedHeader = (props: any) => {
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar 
                           alt='Remy Sharp' 
-                          src={`https://s.gravatar.com/avatar/${hash}`} 
+                          src={`https://s.gravatar.com/avatar/${hash}?d=wavatar`} 
                         />
                     </IconButton>
                   </Tooltip>
