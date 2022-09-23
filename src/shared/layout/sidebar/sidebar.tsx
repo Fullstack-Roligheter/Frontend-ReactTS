@@ -16,8 +16,9 @@ const drawerWidth = 240
 type Props = {
   user: number,
   show: boolean,
- 
+
 }
+
 
 export default function Sidebar(props: Props) {
   const navigate = useNavigate()
@@ -46,7 +47,7 @@ export default function Sidebar(props: Props) {
   ]
 
 
-  const {show} = props;
+  const { show } = props;
 
   return (
     <Box sx={{ display: 'flex', marginRight: 3 }}  >
@@ -65,8 +66,15 @@ export default function Sidebar(props: Props) {
         }}
       >
         <Toolbar />
-        <Box sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.3)' }}>
-          <List>
+        <Box sx={{ backgroundColor: 'rgba(65, 162, 72, 0.1)' }}>
+          <List sx={{
+            '& .MuiListItemButton-root:hover': {
+              bgcolor: 'white',
+              '&, & .MuiListItemIcon-root': {
+                color: 'rgba(65, 162, 72, 1.0)',
+              },
+            },
+          }}>
             {MenuTargets.map((menuItem, index) => (
               <ListItem key={menuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(menuItem.route)}>
@@ -77,7 +85,14 @@ export default function Sidebar(props: Props) {
             ))}
           </List>
           <Divider />
-          <List>
+          <List sx={{
+            '& .MuiListItemButton-root:hover': {
+              bgcolor: 'white',
+              '&, & .MuiListItemIcon-root': {
+                color: 'rgba(65, 162, 72, 1.0)',
+              },
+            },
+          }}>
             {SubMenu.map((subMenuItem) => (
               <ListItem key={subMenuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(subMenuItem.route)}>
