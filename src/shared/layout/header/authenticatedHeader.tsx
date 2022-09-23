@@ -1,8 +1,6 @@
 import * as React from 'react'
-// import { Link } from '@mui/material'
-// import { useState } from 'react'
 import { useNavigate } from 'react-router'
-
+import { GetGravatarImage } from '../../fetch/gravatar'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -12,11 +10,17 @@ import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
-// import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
+
+/* Generate a md5-hash of a email address and return its hexadecimal value */
+var CryptoJS = require("crypto-js");
+var hash = CryptoJS.MD5("danielkjellberg@hotmail.com").toString();
+console.log(hash);
+
+// console.log(avatarIMG)
 
 const AuthenticatedHeader = (props: any) => {
   const navigate = useNavigate()
@@ -164,7 +168,7 @@ const AuthenticatedHeader = (props: any) => {
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
                         alt='Remy Sharp'
-                        src=' https://source.unsplash.com/random'
+                        src={`${() => GetGravatarImage(hash)}`}
                       />
                     </IconButton>
                   </Tooltip>
