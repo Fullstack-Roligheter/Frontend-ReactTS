@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router'
 
 const styles = {
   color: {
-    background: 'rgba(65, 162, 72, 0.5)',
+    background: 'rgba(65, 162, 72, 0.4)',
     width: 'fit-content',
     padding: '30px',
     borderRadius: '15px',
