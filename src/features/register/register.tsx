@@ -1,9 +1,20 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material"
-import { Box, Grid, IconButton, InputAdornment, Link, TextField, Typography } from "@mui/material"
-import { useState } from "react"
-import { SubmitButton, DisabledSubmitButton } from "../../shared/buttons/button-default"
-import { UserRegister } from '../../shared/fetch/user'
-import { NavLink } from 'react-router-dom';
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import {
+  Box,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material'
+import { useState } from 'react'
+import {
+  SubmitButton,
+  DisabledSubmitButton,
+} from '../../shared/buttons/button-default'
+import { Register } from '../../shared/fetch/user'
+import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router'
 
 const styles = {
@@ -18,22 +29,20 @@ const styles = {
     backgroundColor: 'white',
     width: '100%',
   },
-};
-
-
+}
 
 const RegisterUser = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showPassword2, setShowPassword2] = useState(false)
-  const [message, setmessage] = useState("")
+  const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
   const handleClickShowPassword2 = () => setShowPassword2(!showPassword2)
   const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2)
 
-  const [buttontext, setButtonText] = useState("Registrera")
-  const [sPassword, setPassword] = useState("")
+  const [buttontext, setButtonText] = useState('Registrera')
+  const [sPassword, setPassword] = useState('')
 
   const navigate = useNavigate()
 
@@ -45,7 +54,13 @@ const RegisterUser = () => {
   })
 
   const checkForm = () => {
-    if (formData.name === "" || formData.age === undefined || formData.email === "" || formData.password === "" || sPassword === "") {
+    if (
+      formData.name === '' ||
+      formData.age === undefined ||
+      formData.email === '' ||
+      formData.password === '' ||
+      sPassword === ''
+    ) {
       return false
     } else {
       return true
@@ -63,22 +78,19 @@ const RegisterUser = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (sPassword != formData.password) {
-      setmessage("Lösenorden matchar inte")
+      setmessage('Lösenorden matchar inte')
       setmessageState(true)
       setTimeout(() => {
         setmessageState(false)
       }, 3000)
     } else {
-      UserRegister(formData)
-        .then((response) => {
-          alert("Du är nu registrerad")
-          setTimeout(() => {
-            navigate(`/login`)
-          }, 1000)
-        }
-        )
+      Register(formData).then((response) => {
+        alert('Du är nu registrerad')
+        setTimeout(() => {
+          navigate(`/login`)
+        }, 1000)
+      })
     }
-
   }
 
   return (
@@ -90,11 +102,15 @@ const RegisterUser = () => {
       justifyContent='center'
       style={{ minHeight: '70vh' }}
     >
-      <Grid style={styles.color} alignItems='center' item xs={3} >
-        <Grid >
-          <Typography variant="h3" align="center">Registrera konto</Typography>
-          <NavLink to="/login">
-            <Typography variant="h6" align="center" marginBottom='10px'>Vill du logga in? Klicka på mig!</Typography>
+      <Grid style={styles.color} alignItems='center' item xs={3}>
+        <Grid>
+          <Typography variant='h3' align='center'>
+            Registrera konto
+          </Typography>
+          <NavLink to='/login'>
+            <Typography variant='h6' align='center' marginBottom='10px'>
+              Vill du logga in? Klicka på mig!
+            </Typography>
           </NavLink>
         </Grid>
         <Grid item>
@@ -164,7 +180,7 @@ const RegisterUser = () => {
               label=' Enter Password again'
               variant='outlined'
               name='sPassword'
-              onChange={((e) => setPassword(e.target.value))}
+              onChange={(e) => setPassword(e.target.value)}
               value={sPassword}
               required={true}
               style={styles.textfield}
@@ -199,17 +215,15 @@ const RegisterUser = () => {
             <Grid container justifyContent='center'>
               {(() => {
                 if (!checkForm()) {
-                  return < DisabledSubmitButton buttontext={buttontext} />
-                }
-                else {
-                  return < SubmitButton isLoading={true} buttontext={buttontext} />
+                  return <DisabledSubmitButton buttontext={buttontext} />
+                } else {
+                  return (
+                    <SubmitButton isLoading={true} buttontext={buttontext} />
+                  )
                 }
               })()}
-
-
             </Grid>
           </form>
-
         </Grid>
       </Grid>
     </Grid>

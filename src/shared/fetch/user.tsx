@@ -1,25 +1,26 @@
-import axios from 'axios'
+import instance from './baseURL'
 
-export function UserLogin(data: any) {
-    return axios.post('https://localhost:7073/api/user/login', data)
-        .then((response) => {
-            const data = response.data;
-            return data;
-        })
-        .catch((error) => {
-            console.log("Error in UserLogin: ", error);
-            throw error
-        })
+export function Login(data: any) {
+  return instance
+    .post(`api/user/Login`, data)
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in Login: ', error)
+      throw error
+    })
 }
 
-export function UserRegister(data: any) {
-	return axios
-		.post('https://localhost:7073/api/user/register', data)
-		.then((response) => {
-			const data = response.data
-			return data
-		})
-		.catch((error) => {
-			console.log('Error in UserRegister: ', error)
-		})
+export function Register(data: any) {
+  return instance
+    .post(`api/user/Register`, data)
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in Register: ', error)
+    })
 }

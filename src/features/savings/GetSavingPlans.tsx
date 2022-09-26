@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom'
 import { IconButton } from '@mui/material'
 import { baseURL } from '../../config'
 import React from 'react'
+import { GetPlans } from '../../shared/fetch/savingplan'
+import { userType } from '../../shared/Interfaces/userToken'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,29 +38,35 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-const CheckSavingPlans: React.FC = () => {
+const CheckSavingPlans = (props: userType) => {
   const [planList, setPlanList] = useState<Plan[]>([])
 
   const getPlans = async () => {
-    try {
-      //
-      let numberValue: string | null = ''
-      const value = sessionStorage.getItem('user')
-      if (value !== null) {
-        numberValue = JSON.parse(value)
-      } else {
-        console.log('never entered parse value')
-      }
-      //
-
-      const { data } = await axios.get(
-        `${baseURL}/saving/getplans?UserId=${numberValue}`
-      )
-      let planList = data as Plan[]
+    // const userId = sessionStorage.getItem('userId')
+    GetPlans(props.userId).then((response) => {
+      console.log('response: ', response)
+      let planList = response as Plan[]
       setPlanList(planList)
-    } catch (err) {
-      console.log(err)
-    }
+    })
+    // try {
+    //   //
+    //   // let numberValue: string | null = ''
+    //   const value = sessionStorage.getItem('userId')
+    //   // if (value !== null) {
+    //   //   numberValue = JSON.parse(value)
+    //   // } else {
+    //   //   console.log('never entered parse value')
+    //   // }
+    //   //
+
+    //   const { data } = await axios.get(
+    //     `${baseURL}/saving/getplans?UserId=${value}`
+    //   )
+    //   let planList = data as Plan[]
+    //   setPlanList(planList)
+    // } catch (err) {
+    //   console.log(err)
+    // }
   }
 
   useEffect(() => {
