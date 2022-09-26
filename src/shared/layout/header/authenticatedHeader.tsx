@@ -14,6 +14,11 @@ import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
 
+/* Generate a md5-hash of a email address for Gravatar URL */
+var CryptoJS = require("crypto-js");
+let userEmail = sessionStorage.getItem('email')
+var hash = CryptoJS.MD5(userEmail).toString();
+
 const AuthenticatedHeader = (props: any) => {
   const navigate = useNavigate()
 
@@ -155,10 +160,10 @@ const AuthenticatedHeader = (props: any) => {
                 <Box sx={{ flexGrow: 0 }}>
                   <Tooltip title='Open settings' >
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar
-                        alt='Remy Sharp'
-                        src=' https://source.unsplash.com/random'
-                      />
+                        <Avatar 
+                          alt='Remy Sharp' 
+                          src={`https://s.gravatar.com/avatar/${hash}?d=wavatar`} 
+                        />
                     </IconButton>
                   </Tooltip>
                   <Menu
