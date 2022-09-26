@@ -21,6 +21,7 @@ const styles = {
   textfield: {
     backgroundColor: 'white',
     width: '100%',
+    borderRadius: '5px',
   },
 };
 
