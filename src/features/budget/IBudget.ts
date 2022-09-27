@@ -3,7 +3,7 @@ interface Budget {
     budgetName: string;
     budgetStartDate: Date;
     budgetEndDate: Date;
-    budgetMaxAmount: number;
+    budgetMaxAmountMoney: number;
 }
 
 export default Budget;

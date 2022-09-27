@@ -9,29 +9,28 @@ import Budget from './IBudget';
 const tempUserId: number = 1;
 
 const columns: GridColDef[] = [
-  {field: 'id', headerName: 'ID', width: 70},
+  {field: 'id', headerName: 'ID', width: 50},
   {
     field: 'budgetName',
     headerName: 'Budget',
-    width: 200,
+    width: 150,
     editable: false,
   },
   {
     field: 'budgetStartDate',
     headerName: 'Startdatum',
-    width: 200,
+    width: 160,
     editable: false,
   },
   {
     field: 'budgetEndDate',
     headerName: 'Slutdatum',
-    width: 200,
+    width: 160,
     editable: false,
   },
   {
-    field: 'budgetMaxAmount',
+    field: 'budgetMaxAmountMoney',
     headerName: 'Summa',
-    type: 'number',
     width: 140,
     editable: false
   }
