@@ -1,6 +1,7 @@
 import AuthenticatedLayout from './authenticatedLayout'
 import UnauthenticatedLayout from './unauthenticatedLayout'
 import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
 
 import Image from '../../img/newbackground.png'
 import { CompressOutlined } from '@mui/icons-material'
@@ -16,7 +17,7 @@ const styles = {
 }
 
 const Layout = (user: userType) => (
-  <Paper sx={{ width: '100%', height: '100%' }} style={styles.paperContainer}>
+  <Box height="100vh" display="flex" flexDirection="column"style={styles.paperContainer}>
     {(() => {
       if (user.userId === '') {
         return <UnauthenticatedLayout />
@@ -24,7 +25,7 @@ const Layout = (user: userType) => (
         return <AuthenticatedLayout {...user} />
       }
     })()}
-  </Paper>
+  </Box>
 )
 
 export default Layout

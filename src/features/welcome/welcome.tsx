@@ -20,7 +20,7 @@ function WelcomeFeature() {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        sx={{ paddingTop: '150px', marginTop: '70px', }}
+        sx={{ paddingTop: '100px', marginTop: '70px', }}
       >
         <Box style={styles.color}>
           <Typography color="white" variant='h1' align="center" sx={{ textShadow: '1px 1px 2px black' }}>Välkommen att börja spara med Xpense!</Typography>
