@@ -17,23 +17,26 @@ import {
   QuestionAnswer,
 } from '@mui/icons-material'
 
-import { userToken } from '../../Interfaces/userToken'
+import { userType } from '../../Interfaces/userToken'
 
 const drawerWidth = 240
 
 
-type SidebarProps = {
-  user: userToken
-  show: boolean
+type SidebarType = {
+  user: userType,
+  show: boolean,
+  variant:any
+
 }
 
 export default function Sidebar(props: any) {
 
   const navigate = useNavigate()
 
-  let sideBarProps: SidebarProps = {
-    user: props,
+  let sideBarProps: SidebarType = {
+    user: props.user,
     show: props.show,
+    variant: props.variant
   }
 
   console.log('sidebar props: ', props)
@@ -60,15 +63,13 @@ export default function Sidebar(props: any) {
     { title: 'About us', route: `/omoss`, icon: <Info /> },
   ]
 
-
   const { show } = sideBarProps
-
 
   return (
     <Box sx={{ display: 'flex', marginRight: 3 }}>
       <CssBaseline />
       <Drawer
-        variant='persistent'
+        variant={props.variant}
         open={show}
         sx={{
           width: drawerWidth,
@@ -76,7 +77,7 @@ export default function Sidebar(props: any) {
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: 'rgba(65, 162, 72, 0.1)',
+            backgroundColor: 'rgba(65, 162, 72, 0.68)',
           },
         }}
       >

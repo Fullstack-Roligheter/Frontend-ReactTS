@@ -7,16 +7,18 @@ import AuthenticatedHeader from './header/authenticatedHeader'
 import { userType } from '../Interfaces/userToken'
 
 const AuthenticatedLayout = (user: userType) => {
-  // let UserIsLoggedIn = sessionStorage.getItem('userId')
 
   const [smallWindow, setSmallWindowOpen] = useState(true)
+
+  const [drawervariant, SetDrawerVariant] = useState('permanent')
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 767) {
         setSmallWindowOpen(false)
+        SetDrawerVariant('temporary')
       } else {
-        setSmallWindowOpen(true)
+        SetDrawerVariant('permanent')
       }
     }
     window.addEventListener('resize', handleResize)
@@ -25,10 +27,6 @@ const AuthenticatedLayout = (user: userType) => {
       window.removeEventListener('resize', handleResize)
     }
   }, [])
-
-  // if (UserIsLoggedIn === null) {
-  //   return <Navigate to='/login' replace />
-  // }
 
   if (user.userId === null) {
     return <Navigate to='/login' replace />
@@ -41,12 +39,14 @@ const AuthenticatedLayout = (user: userType) => {
   let newUserHeader = {
     user,
     show: smallWindow,
+    toggleSidebar: toggleSidebar
   }
 
   let newUserSidebar = {
     user,
     show: smallWindow,
-    toggleSidebar: toggleSidebar,
+    variant: drawervariant,
+    
   }
 
   return (
@@ -59,7 +59,7 @@ const AuthenticatedLayout = (user: userType) => {
         }}
       >
         <AuthenticatedHeader {...newUserHeader} />
-        <Sidebar {...newUserSidebar} />
+        <Sidebar {...newUserSidebar}/>
         <Outlet />
       </Box>
       <Footer />
