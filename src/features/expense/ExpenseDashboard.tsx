@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { userType } from '../../shared/Interfaces/userToken'
 import { GetCategoriesForUser } from '../../shared/fetch/category'
 import { GetBudgetsForUser } from '../../shared/fetch/budget'
-import { CreateDebit } from '../../shared/fetch/expense'
+import { CreateDebit, GetDebitsForUser } from '../../shared/fetch/expense'
 import { SubmitButton } from '../../shared/buttons/button-default'
 
 
@@ -18,14 +18,15 @@ import { SubmitButton } from '../../shared/buttons/button-default'
 const ExpenseDashboard = (props:userType) => {
   const [categories, setCategories] = useState([])
   const [budgets, setBudgets] = useState([])
+  const [debits, setDebits] = useState([])
 
   const [newExpense, setNewExpense] = useState({
     Date: '',
     Amount: '',
     Comment: '',
     UserId: props.userId,
-    CategoryId: '',
-    BudgetId: '',
+    CategoryId: null,
+    BudgetId: null,
     // ReturningTransactions: false,
   })
 
@@ -40,22 +41,6 @@ const ExpenseDashboard = (props:userType) => {
     })
   }
 
-  useEffect (() => {
-    GetCategoriesForUser(props.userId)
-    .then((Response) => {
-      console.log(Response)
-      setCategories(Response)
-    })
-  },[])
-
-  useEffect (() => {
-    GetBudgetsForUser(props.userId)
-    .then((Response) => {
-      console.log(Response)
-      setBudgets(Response)
-    })
-  },[])
-
   const handleSubmit = (e : any) => {
     e.preventDefault()
     CreateDebit(newExpense)
@@ -64,9 +49,37 @@ const ExpenseDashboard = (props:userType) => {
     })
   }
 
+  //Get categories for user to put in select
+  useEffect (() => {
+    GetCategoriesForUser(props.userId)
+    .then((Response) => {
+      console.log(Response)
+      setCategories(Response)
+    })
+  },[])
+
+  //Get budgets for user to put in select
+  useEffect (() => {
+    GetBudgetsForUser(props.userId)
+    .then((Response) => {
+      console.log(Response)
+      setBudgets(Response)
+    })
+  },[])
+
+  //Get all debits to put in list
+  useEffect (() => {
+    GetDebitsForUser(props.userId)
+    .then((Response) => {
+      console.log(Response)
+      setDebits(Response)
+    })
+  },[])
+  console.log(debits)
+
   return (
     <>
-      <FormControl onSubmit={handleSubmit} sx={{ m: 2, width: '25ch' }} variant='outlined'>
+      <form onSubmit={handleSubmit}>
           <TextField
             required
             //   label='Date'
@@ -134,7 +147,7 @@ const ExpenseDashboard = (props:userType) => {
         /> */}
 
         <SubmitButton type='submit' onClick={handleSubmit}/>
-      </FormControl>
+      </form>
     </>
   )
 }

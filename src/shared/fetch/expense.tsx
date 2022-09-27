@@ -15,7 +15,7 @@ export function CreateDebit(data: any) {
 
 export function GetDebitsForUser(id: any) {
   return instance
-    .get(`${instance}/api/debit/GetDebitListForUser?${id}`)
+    .get(`${instance}/api/debit/GetDebitListForUser?userId=${id}`)
     .then((response) => {
       const data = response.data
       return data
