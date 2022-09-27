@@ -4,11 +4,15 @@ import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import { useNavigate } from 'react-router'
-import { SubmitButton, DisabledSubmitButton } from '../../shared/buttons/button-default'
-import { UserLogin } from '../../shared/fetch/user'
+import {
+  SubmitButton,
+  DisabledSubmitButton,
+} from '../../shared/buttons/button-default'
+import { Login } from '../../shared/fetch/user'
 import { useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom';
+
 
 const styles = {
   color: {
@@ -23,25 +27,27 @@ const styles = {
     width: '100%',
     borderRadius: '5px',
   },
-};
+}
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const [buttontext, setButtonText] = useState("Logga in")
+  const [buttontext, setButtonText] = useState('Logga in')
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
-  const [message, setmessage] = useState("")
+
+  const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
   const [loadingState, setloadingState] = useState(false)
 
 
   const [formData, setFormData] = useState({
-    userName: '',
+    eMail: '',
     password: '',
   })
 
   const checkForm = () => {
-    if (formData.userName === "" || formData.password === "") {
+    if (formData.eMail === '' || formData.password === '') {
+
       return false
     } else {
       return true
@@ -62,16 +68,17 @@ const LogIn = () => {
     e.preventDefault()
     setloadingState(true)
     UserLogin(formData)
+    Login(formData)
       .then((response) => {
+        // setFormData(response.data)
+        sessionStorage.setItem('userId', `${response.userId}`)
+        sessionStorage.setItem('email', `${response.email}`)
+        sessionStorage.setItem('firstName', `${response.firstName}`)
+        sessionStorage.setItem('lastName', `${response.lastName}`)
         alert('Du är nu Inloggad')
-        setFormData(response.data)
-        sessionStorage.setItem('user', `${response.userID}`)
-        console.log('user id object:', response)
-        console.log('user id value: ', response.userID)
         navigate(`/dashboard`)
         window.location.reload()
       })
-
       .catch((error) => {
         setTimeout(() => {
           setloadingState(false)
@@ -88,13 +95,15 @@ const LogIn = () => {
       })
   }
 
-  useEffect(() => {
-    const loggedInUser = sessionStorage.getItem('user')
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser)
-      setFormData(foundUser)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const loggedInUser = sessionStorage.getItem('userId')
+  //   // setFormData(loggedInUser)
+
+  //   // if (loggedInUser) {
+  //   //   const foundUser = JSON.strin(loggedInUser)
+  //   //   setFormData(foundUser)
+  //   // }
+  // }, [])
 
   return (
     <Grid
@@ -106,21 +115,26 @@ const LogIn = () => {
       style={{ minHeight: '70vh' }}
     >
       <Grid style={styles.color} item xs={3} alignItems='center'>
-        <Grid >
-          <Typography variant="h3" color='white' sx={{ textShadow: '1px 1px 2px black' }} align="center">Logga in</Typography>
-          <Box sx={{ marginBottom: '15px' }}>
-            <Typography variant="h6" align="center" color='white' component='a' href='/register' sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }}>Har du inte ett konto? Klicka på mig!</Typography>
+
+        <Grid>
+          <Typography variant='h3' align='center'  color='white' sx={{ textShadow: '1px 1px 2px black' }} >
+            Logga in
+          </Typography>
+           <Box sx={{ marginBottom: '15px' }}>
+            <Typography variant="h6" align="center" color='white' component='a' href='/register' sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }}>
+              Har du inte ett konto? Klicka på mig!
+             </Typography>
           </Box>
         </Grid>
         <Grid item>
           <form onSubmit={handleSubmit}>
             <TextField
-              label='User Name'
+              label='E-Mail'
               variant='outlined'
               type='text'
-              name='userName'
+              name='eMail'
               required={true}
-              value={formData.userName}
+              value={formData.eMail}
               onChange={handleChange}
               style={styles.textfield}
             />
@@ -165,10 +179,12 @@ const LogIn = () => {
             <Grid container justifyContent='center'>
               {(() => {
                 if (!checkForm()) {
+
                   return < DisabledSubmitButton buttontext={buttontext} />
                 }
                 else {
                   return < SubmitButton isLoading={loadingState} buttontext={buttontext} />
+
                 }
               })()}
             </Grid>

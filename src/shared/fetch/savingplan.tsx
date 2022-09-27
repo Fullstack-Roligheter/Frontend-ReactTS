@@ -1,25 +1,27 @@
-import axios from "axios";
+import instance from './baseURL'
 
 export function GetPlans(id: any) {
-    return axios.get(`https://localhost:7073/api/saving/getplans?${id}`)
-        .then((response) => {
-            const data = response.data;
-            return data;
-        })
-        .catch((error) => {
-            console.log("Error in GetPlans: ", error);
-            throw error;
-        })
+  return instance
+    .get(`api/saving/GetPlans?userId=${id}`)
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in GetPlans: ', error)
+      throw error
+    })
 }
 
-export function AddPlan(data: any) {
-    return axios.post('https://localhost:7073/api/saving/addplan', data)
-        .then((response) => {
-            const data = response.data;
-            return data;
-        })
-        .catch((error) => {
-            console.log("Error in AddPlan: ", error);
-            throw error;
-        })
+export function CreateSaving(data: any) {
+  console.log('savingplan data in:', data)
+  return instance
+    .post(`api/saving/CreateSavingPlan`, data)
+    .then((response) => {
+      return response
+    })
+    .catch((error) => {
+      console.log('Error in CreateSavingPlan: ', error)
+      throw error
+    })
 }
