@@ -10,12 +10,13 @@ import {
 } from '../../shared/buttons/button-default'
 import { Login } from '../../shared/fetch/user'
 import { useEffect, useState } from 'react'
-import { Typography } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { Box, Typography } from '@mui/material'
+import { NavLink } from 'react-router-dom';
+
 
 const styles = {
   color: {
-    background: 'rgba(65, 162, 72, 0.5)',
+    background: 'rgba(65, 162, 72, 0.4)',
     width: 'fit-content',
     padding: '30px',
     borderRadius: '15px',
@@ -24,6 +25,7 @@ const styles = {
   textfield: {
     backgroundColor: 'white',
     width: '100%',
+    borderRadius: '5px',
   },
 }
 
@@ -33,6 +35,11 @@ const LogIn = () => {
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
 
+  const [message, setmessage] = useState('')
+  const [messageState, setmessageState] = useState(false)
+  const [loadingState, setloadingState] = useState(false)
+
+
   const [formData, setFormData] = useState({
     eMail: '',
     password: '',
@@ -40,6 +47,7 @@ const LogIn = () => {
 
   const checkForm = () => {
     if (formData.eMail === '' || formData.password === '') {
+
       return false
     } else {
       return true
@@ -58,6 +66,7 @@ const LogIn = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
+    setloadingState(true)
     Login(formData)
       .then((response) => {
         // setFormData(response.data)
@@ -70,10 +79,15 @@ const LogIn = () => {
         window.location.reload()
       })
       .catch((error) => {
-        console.log('Error:', error)
-        if (error.request.status === 401) {
-          alert('Access Denied')
-        }
+        setTimeout(() => {
+          setloadingState(false)
+          setmessage('Kunde inte logga in.')
+          setmessageState(true)
+          setTimeout(() => {
+            setmessageState(false)
+          }, 3000)
+        }, 5000)
+
       })
       .finally(() => {
         console.log('Entered Finally')
@@ -100,15 +114,16 @@ const LogIn = () => {
       style={{ minHeight: '70vh' }}
     >
       <Grid style={styles.color} item xs={3} alignItems='center'>
+
         <Grid>
-          <Typography variant='h3' align='center'>
+          <Typography variant='h3' align='center' color='white' sx={{ textShadow: '1px 1px 2px black' }} >
             Logga in
           </Typography>
-          <NavLink to='/register'>
-            <Typography variant='h6' align='center' marginBottom='10px'>
+          <Box sx={{ marginBottom: '15px' }}>
+            <Typography variant="h6" align="center" color='white' component='a' href='/register' sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }}>
               Har du inte ett konto? Klicka på mig!
             </Typography>
-          </NavLink>
+          </Box>
         </Grid>
         <Grid item>
           <form onSubmit={handleSubmit}>
@@ -148,15 +163,27 @@ const LogIn = () => {
               }}
             />
             <br />
+            {(() => {
+              if (messageState) {
+                return (
+                  <Box>
+                    <br />
+                    <Typography>{message}</Typography>
+                    <br />
+                  </Box>
+                )
+              }
+            })()}
             <br />
             <Grid container justifyContent='center'>
               {(() => {
                 if (!checkForm()) {
-                  return <DisabledSubmitButton buttontext={buttontext} />
-                } else {
-                  return (
-                    <SubmitButton isLoading={true} buttontext={buttontext} />
-                  )
+
+                  return < DisabledSubmitButton buttontext={buttontext} />
+                }
+                else {
+                  return < SubmitButton isLoading={loadingState} buttontext={buttontext} />
+
                 }
               })()}
             </Grid>

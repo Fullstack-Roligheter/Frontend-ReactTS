@@ -9,20 +9,12 @@ import { useState } from 'react'
 
 export function SubmitButton(props: any) {
 
-  const [isLoading, setIsLoading] = useState(false)
-
-  const loading = props.isLoading
-  const onClick = (loading: boolean) => {
-    if (loading) {
-      setIsLoading(true)
-    }
-  }
 
   return (
     <Box sx={{ m: 1, position: 'relative' }}>
-      <Button variant="contained" type="submit" onClick={(() => onClick(props))}>{props.buttontext}
+      <Button variant="contained" type="submit">{props.buttontext}
         {(() => {
-          if (isLoading) {
+          if (props.isLoading) {
             return (
               <Box sx={{ display: 'flex' }}>
                 <CircularProgress size={24} sx={{
