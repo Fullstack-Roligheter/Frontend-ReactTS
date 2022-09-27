@@ -52,6 +52,7 @@ const AuthenticatedLayout = (user: userType) => {
   let newUserSidebar = {
     user,
     show: smallWindow,
+    variant: drawervariant,
     
   }
 
@@ -65,7 +66,7 @@ const AuthenticatedLayout = (user: userType) => {
         }}
       >
         <AuthenticatedHeader {...newUserHeader} />
-        <Sidebar {...newUserSidebar} variant={drawervariant}/>
+        <Sidebar {...newUserSidebar}/>
         <Outlet />
       </Box>
       <Footer />
