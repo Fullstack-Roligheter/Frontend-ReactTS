@@ -67,7 +67,6 @@ const LogIn = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     setloadingState(true)
-    UserLogin(formData)
     Login(formData)
       .then((response) => {
         // setFormData(response.data)
@@ -117,13 +116,13 @@ const LogIn = () => {
       <Grid style={styles.color} item xs={3} alignItems='center'>
 
         <Grid>
-          <Typography variant='h3' align='center'  color='white' sx={{ textShadow: '1px 1px 2px black' }} >
+          <Typography variant='h3' align='center' color='white' sx={{ textShadow: '1px 1px 2px black' }} >
             Logga in
           </Typography>
-           <Box sx={{ marginBottom: '15px' }}>
+          <Box sx={{ marginBottom: '15px' }}>
             <Typography variant="h6" align="center" color='white' component='a' href='/register' sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }}>
               Har du inte ett konto? Klicka på mig!
-             </Typography>
+            </Typography>
           </Box>
         </Grid>
         <Grid item>
