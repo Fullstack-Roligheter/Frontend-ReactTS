@@ -6,9 +6,14 @@ import FormHelperText from '@mui/material/FormHelperText'
 import InputLabel from '@mui/material/InputLabel'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { SubmitButton } from '../../shared/buttons/button-default'
+import { AddExpense } from '../../shared/fetch/expense'
+
 
 const ExpenseDashboard = () => {
+
+
   const [newExpense, setNewExpense] = useState({
     Date: '',
     Amount: '',
@@ -17,6 +22,7 @@ const ExpenseDashboard = () => {
     Description: '',
     // ReturningTransactions: false,
   })
+
 
   console.log(newExpense)
 
@@ -28,24 +34,9 @@ const ExpenseDashboard = () => {
     })
   }
 
-  const Categories = [
-    {
-      value: 'Hushåll',
-      label: 'Hushåll',
-    },
-    {
-      value: 'Transport',
-      label: 'Transport',
-    },
-    {
-      value: 'Nöje',
-      label: 'Nöje',
-    },
-    {
-      value: 'Mat',
-      label: 'Mat',
-    },
-  ]
+  useEffect (() => {
+
+  })
 
   const Budget = [
     {
@@ -64,77 +55,74 @@ const ExpenseDashboard = () => {
 
   return (
     <>
-      <FormControl sx={{ m: 1, width: '25ch' }} variant='outlined'>
-        <br />
-        <TextField
-          required
-        //   label='Date'
-          type='date'
-		  name='Date'
-          value={newExpense.Date}
-          onChange={handleChange}
-        />
-        <br />
-        <TextField
-          required
-          label='Amount'
-          type='number'
-		  name='Amount'
-          value={newExpense.Amount}
-          onChange={handleChange}
-          InputProps={{
-            endAdornment: <InputAdornment position='end'>Kr</InputAdornment>,
-          }}
-        />
-        <br />
-        <TextField
-          required
-          select
-          label='Category'
-		  name='Category'
-          value={newExpense.Category}
-          onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
-        >
-          {Categories.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
-        <br />
-        <TextField
-          select
-          label='Budget'
-		  name='Budget'
-		  value={newExpense.Budget}
-          onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
-        >
-          {Budget.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
-        <br />
-        <TextField
-          label='Description'
-          multiline
-          rows={5}
-          helperText='Company, Notes, Reciever Etc.'
-		  name='Description'
-		  value={newExpense.Description}
-          onChange={handleChange}
-        />
-        {/* <Checkbox
+      <FormControl sx={{ m: 2, width: '25ch' }} variant='outlined'>
+          <TextField
+            required
+            //   label='Date'
+            type='date'
+            name='Date'
+            value={newExpense.Date}
+            onChange={handleChange}
+          />
+          <TextField
+            required
+            label='Amount'
+            type='number'
+            name='Amount'
+            value={newExpense.Amount}
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: <InputAdornment position='end'>Kr</InputAdornment>,
+            }}
+          />
+          <TextField
+            required
+            select
+            label='Category'
+            name='Category'
+            value={newExpense.Category}
+            onChange={handleChange}
+            SelectProps={{
+              native: true,
+            }}
+          >
+            {/* {Categories.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))} */}
+          </TextField>
+          <TextField
+            select
+            label='Budget'
+            name='Budget'
+            value={newExpense.Budget}
+            onChange={handleChange}
+            SelectProps={{
+              native: true,
+            }}
+          >
+            {Budget.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
+          <TextField
+            label='Description'
+            multiline
+            rows={5}
+            helperText='Company, Notes, Reciever Etc.'
+            name='Description'
+            value={newExpense.Description}
+            onChange={handleChange}
+          />
+          {/* <Checkbox
           aria-label='Returning transactions'
           sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
         /> */}
+
+        {/* <SubmitButton onclick={AddExpense(newExpense)}/> */}
       </FormControl>
     </>
   )
