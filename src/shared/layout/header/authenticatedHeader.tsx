@@ -13,7 +13,6 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
-import { userToken } from '../../Interfaces/userToken'
 
 /* Generate a md5-hash of a email address for Gravatar URL */
 
