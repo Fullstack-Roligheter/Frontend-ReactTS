@@ -12,28 +12,34 @@ import CheckSavingPlans from './features/savings/GetSavingPlans'
 import Layout from './shared/layout/layout'
 import RegisterUser from './features/register/register'
 import ExpenseDashboard from './features/expense/ExpenseDashboard'
+import { userToken, userType } from './shared/Interfaces/userToken'
 
 const AppRouter = () => {
-  let UserIsLoggedIn = JSON.parse(sessionStorage.getItem('user') || '""')
+  let user: userType = {
+    userId: sessionStorage.getItem('userId') || '',
+    email: sessionStorage.getItem('email') || '',
+    firstName: sessionStorage.getItem('firstName') || '',
+    lastName: sessionStorage.getItem('lastName') || '',
+  }
 
   return (
     <BrowserRouter>
+
       <Routes>
-        <Route element={<Layout user={UserIsLoggedIn} />}>
+        {/* <Route element={<Layout user={UserIsLoggedIn} />}> */}
+        <Route element={<Layout {...user} />}>
           <Route>
             <Route index element={<WelcomeFeature />} />
             <Route path='/omoss' element={<OmOss />} />
             <Route path='/login' element={<LogIn />} />
             <Route path='/register' element={<RegisterUser />} />
             <Route path='/faq' element={<Faq />} />
-            <Route path='/:id'>
-              <Route path='/:id/saving' element={<SavingsLayout />}>
-                <Route index element={<CheckSavingPlans />} />
-                <Route path='create' element={<CreateSaving />} />
-                <Route path='editplan/:id' element={<EditSavingPlan />} />
-              </Route>
-              <Route path='/:id/dashboard' element={<DashboardFeature />} />
-              <Route path='/:id/transactions' element={<ExpenseDashboard/ >} />
+            <Route path='/dashboard' element={<DashboardFeature {...user} />} />
+            <Route path='/expense' element={<ExpenseDashboard {...user} />} />
+            <Route path='/saving' element={<SavingsLayout />}>
+              <Route index element={<CheckSavingPlans {...user} />} />
+              <Route path='create' element={<CreateSaving {...user} />} />
+              <Route path='editplan' element={<EditSavingPlan />} />
             </Route>
           </Route>
         </Route>

@@ -1,97 +1,120 @@
-import * as React from 'react'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
 import CssBaseline from '@mui/material/CssBaseline'
 import Toolbar from '@mui/material/Toolbar'
 import List from '@mui/material/List'
-import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { useNavigate, NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import {
+  AccountBalance,
+  AccountBalanceWallet,
+  AttachMoney,
+  Info,
+  QuestionAnswer,
+} from '@mui/icons-material'
+
+import { userType } from '../../Interfaces/userToken'
 
 const drawerWidth = 240
 
-type Props = {
-  user: number
+
+type SidebarType = {
+  user: userType,
+  show: boolean,
+  variant:any
+
 }
 
-export default function Sidebar(props: Props) {
+export default function Sidebar(props: any) {
+
   const navigate = useNavigate()
 
+  let sideBarProps: SidebarType = {
+    user: props.user,
+    show: props.show,
+    variant: props.variant
+  }
+
+  console.log('sidebar props: ', props)
   const MenuTargets = [
-    { title: 'Transactions', route: `/${props.user}/transactions` },
-    { title: 'Budgets', route: `/${props.user}/budgets` },
-    { title: 'Saving Plans', route: `/${props.user}/saving` },
-    { title: 'Faq', route: `/faq` },
-    { title: 'About us', route: `/omoss` },
+    {
+      title: 'Transactions',
+      route: `/transactions`,
+      icon: <AccountBalance />,
+    },
+    {
+      title: 'Budgets',
+      route: `/budgets`,
+      icon: <AccountBalanceWallet />,
+    },
+    {
+      title: 'Saving Plans',
+      route: `/saving`,
+      icon: <AttachMoney />,
+    },
   ]
+
+  const SubMenu = [
+    { title: 'Faq', route: `/faq`, icon: <QuestionAnswer /> },
+    { title: 'About us', route: `/omoss`, icon: <Info /> },
+  ]
+
+  const { show } = sideBarProps
 
   return (
     <Box sx={{ display: 'flex', marginRight: 3 }}>
       <CssBaseline />
       <Drawer
-        variant='permanent'
+        variant={props.variant}
+        open={show}
         sx={{
           width: drawerWidth,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: 'border-box',
+            backgroundColor: 'rgba(65, 162, 72, 0.68)',
           },
         }}
       >
         <Toolbar />
-        <Box sx={{ overflow: 'auto' }}>
-          <List>
+
+        <Box sx={{overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.1)' }}>
+          <List sx={{
+            '& .MuiListItemButton-root:hover': {
+              bgcolor: 'white',
+            },
+          }}>
+
             {MenuTargets.map((menuItem, index) => (
               <ListItem key={menuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(menuItem.route)}>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? (
-                      <AccountBalanceIcon />
-                    ) : (
-                      <AttachMoneyIcon />
-                    )}
-                  </ListItemIcon>
+                  <ListItemIcon>{menuItem.icon}</ListItemIcon>
                   <ListItemText primary={menuItem.title} />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
           <Divider />
-          <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
+          <List sx={{
+            '& .MuiListItemButton-root:hover': {
+              bgcolor: 'white',
+            },
+          }}>
+            {SubMenu.map((subMenuItem) => (
+              <ListItem key={subMenuItem.title} disablePadding>
+                <ListItemButton onClick={() => navigate(subMenuItem.route)}>
+                  <ListItemIcon>{subMenuItem.icon}</ListItemIcon>
+                  <ListItemText primary={subMenuItem.title} />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
           <Divider />
-          {/* 
-					<List>
-						{['All mail', 'Trash', 'Spam'].map((text, index) => (
-							<ListItem key={text} disablePadding>
-								<ListItemButton>
-									<ListItemIcon>
-										{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-									</ListItemIcon>
-									<ListItemText primary={text} />
-								</ListItemButton>
-							</ListItem>
-						))}
-					</List> */}
         </Box>
       </Drawer>
     </Box>
