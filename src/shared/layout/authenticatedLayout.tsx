@@ -12,7 +12,6 @@ const AuthenticatedLayout = (user: userType) => {
   const [smallWindow, setSmallWindowOpen] = useState(true)
 
   const [drawervariant, SetDrawerVariant] = useState('persistant')
-  var w = document.documentElement.clientWidth || window.innerWidth;
 
   useEffect(() => {
     const handleResize = () => {
