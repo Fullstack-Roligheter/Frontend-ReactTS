@@ -21,12 +21,14 @@ import { userToken } from '../../Interfaces/userToken'
 
 const drawerWidth = 240
 
+
 type SidebarProps = {
   user: userToken
   show: boolean
 }
 
 export default function Sidebar(props: any) {
+
   const navigate = useNavigate()
 
   let sideBarProps: SidebarProps = {
@@ -58,7 +60,9 @@ export default function Sidebar(props: any) {
     { title: 'About us', route: `/omoss`, icon: <Info /> },
   ]
 
+
   const { show } = sideBarProps
+
 
   return (
     <Box sx={{ display: 'flex', marginRight: 3 }}>
@@ -77,10 +81,14 @@ export default function Sidebar(props: any) {
         }}
       >
         <Toolbar />
-        <Box
-          sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.3)' }}
-        >
-          <List>
+
+        <Box sx={{overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.1)' }}>
+          <List sx={{
+            '& .MuiListItemButton-root:hover': {
+              bgcolor: 'white',
+            },
+          }}>
+
             {MenuTargets.map((menuItem, index) => (
               <ListItem key={menuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(menuItem.route)}>
@@ -91,7 +99,11 @@ export default function Sidebar(props: any) {
             ))}
           </List>
           <Divider />
-          <List>
+          <List sx={{
+            '& .MuiListItemButton-root:hover': {
+              bgcolor: 'white',
+            },
+          }}>
             {SubMenu.map((subMenuItem) => (
               <ListItem key={subMenuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(subMenuItem.route)}>

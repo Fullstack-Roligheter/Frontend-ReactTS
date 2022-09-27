@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router'
 
 const styles = {
   color: {
-    background: 'rgba(65, 162, 72, 0.5)',
+    background: 'rgba(65, 162, 72, 0.4)',
     width: 'fit-content',
     padding: '30px',
     borderRadius: '15px',
@@ -28,6 +28,7 @@ const styles = {
   textfield: {
     backgroundColor: 'white',
     width: '100%',
+    borderRadius: '5px',
   },
 }
 
@@ -41,8 +42,11 @@ const RegisterUser = () => {
   const handleClickShowPassword2 = () => setShowPassword2(!showPassword2)
   const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2)
 
-  const [buttontext, setButtonText] = useState('Registrera')
+
+  const [buttontext, setButtonText] = useState("Registrera")
   const [sPassword, setPassword] = useState('')
+  const [loadingState, setloadingState] = useState(false)
+
 
   const navigate = useNavigate()
 
@@ -84,12 +88,31 @@ const RegisterUser = () => {
         setmessageState(false)
       }, 3000)
     } else {
-      Register(formData).then((response) => {
-        alert('Du är nu registrerad')
-        setTimeout(() => {
-          navigate(`/login`)
-        }, 1000)
-      })
+
+      setloadingState(true)
+      Register(formData)
+        .then((response) => {
+          alert('Du är nu registrerad')
+          setTimeout(() => {
+            navigate(`/login`)
+          }, 1000)
+        }
+        )
+        .catch((error) => {
+          setTimeout(() => {
+            setloadingState(false)
+            setmessage('Kunde inte registrera.')
+            setmessageState(true)
+            setTimeout(() => {
+              setmessageState(false)
+            }, 3000)
+          }, 5000)
+
+        })
+        .finally(() => {
+          console.log('Entered Finally')
+        })
+
     }
   }
 
@@ -102,16 +125,19 @@ const RegisterUser = () => {
       justifyContent='center'
       style={{ minHeight: '70vh' }}
     >
-      <Grid style={styles.color} alignItems='center' item xs={3}>
-        <Grid>
-          <Typography variant='h3' align='center'>
+
+      <Grid style={styles.color} alignItems='center' item xs={3} >
+        <Grid >
+          <Typography variant="h3" color="white" align="center" sx={{ textShadow: '1px 1px 2px black' }}>
             Registrera konto
           </Typography>
-          <NavLink to='/login'>
-            <Typography variant='h6' align='center' marginBottom='10px'>
-              Vill du logga in? Klicka på mig!
-            </Typography>
-          </NavLink>
+          <Box sx={{ marginBottom: '15px' }}>
+            <Typography variant="h6" color="white" align="center" component='a'
+              href='/login' sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }} >
+                Vill du logga in? Klicka på mig!
+              </Typography>
+          </Box>
+
         </Grid>
         <Grid item>
           <form onSubmit={handleSubmit}>
