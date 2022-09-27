@@ -15,7 +15,7 @@ import instance from './baseURL.js'
 
 export function GetBudgetsForUser(id: any) {
   return instance
-    .get(`api/budget/GetBudgetsForUser?${id}`)
+    .get(`api/budget/GetBudgetsForUser?userId=${id}`)
     .then((response) => {
       const data = response.data
       return data

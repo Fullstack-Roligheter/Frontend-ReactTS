@@ -9,18 +9,23 @@ import Checkbox from '@mui/material/Checkbox'
 import { useEffect, useState } from 'react'
 import { userType } from '../../shared/Interfaces/userToken'
 import { GetCategoriesForUser } from '../../shared/fetch/category'
+import { GetBudgetsForUser } from '../../shared/fetch/budget'
+import { CreateDebit } from '../../shared/fetch/expense'
+import { SubmitButton } from '../../shared/buttons/button-default'
 
 
 
 const ExpenseDashboard = (props:userType) => {
   const [categories, setCategories] = useState([])
+  const [budgets, setBudgets] = useState([])
 
   const [newExpense, setNewExpense] = useState({
     Date: '',
     Amount: '',
-    Category: '',
-    Budget: '',
-    Description: '',
+    Comment: '',
+    UserId: props.userId,
+    CategoryId: '',
+    BudgetId: '',
     // ReturningTransactions: false,
   })
 
@@ -43,24 +48,25 @@ const ExpenseDashboard = (props:userType) => {
     })
   },[])
 
-  const Budget = [
-    {
-      value: 'Standard',
-      label: 'Standard',
-    },
-    {
-      value: 'Bilbudget',
-      label: 'Bilbudget',
-    },
-    {
-      value: 'Köksrenovering',
-      label: 'Köksrenovering',
-    },
-  ]
+  useEffect (() => {
+    GetBudgetsForUser(props.userId)
+    .then((Response) => {
+      console.log(Response)
+      setBudgets(Response)
+    })
+  },[])
+
+  const handleSubmit = (e : any) => {
+    e.preventDefault()
+    CreateDebit(newExpense)
+    .then((Response) => {
+      console.log(Response)
+    })
+  }
 
   return (
     <>
-      <FormControl sx={{ m: 2, width: '25ch' }} variant='outlined'>
+      <FormControl onSubmit={handleSubmit} sx={{ m: 2, width: '25ch' }} variant='outlined'>
           <TextField
             required
             //   label='Date'
@@ -84,32 +90,32 @@ const ExpenseDashboard = (props:userType) => {
             required
             select
             label='Category'
-            name='Category'
-            value={newExpense.Category}
+            name='CategoryId'
+            value={''}
             onChange={handleChange}
             SelectProps={{
               native: true,
             }}
           >
-            {/* {categories.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+            {categories.map((option:any) => (
+              <option key={option.categoryId} value={option.categoryId}>
+                {option.categoryName}
               </option>
-            ))} */}
+            ))}
           </TextField>
           <TextField
             select
             label='Budget'
-            name='Budget'
-            value={newExpense.Budget}
+            name='BudgetId'
+            value={newExpense.BudgetId}
             onChange={handleChange}
             SelectProps={{
               native: true,
             }}
           >
-            {Budget.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+            {budgets.map((option:any) => (
+              <option key={option.budgetId} value={option.budgetId}>
+                {option.budgetName}
               </option>
             ))}
           </TextField>
@@ -118,8 +124,8 @@ const ExpenseDashboard = (props:userType) => {
             multiline
             rows={5}
             helperText='Company, Notes, Reciever Etc.'
-            name='Description'
-            value={newExpense.Description}
+            name='Comment'
+            value={newExpense.Comment}
             onChange={handleChange}
           />
           {/* <Checkbox
@@ -127,7 +133,7 @@ const ExpenseDashboard = (props:userType) => {
           sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
         /> */}
 
-        {/* <SubmitButton onclick={AddExpense(newExpense)}/> */}
+        <SubmitButton type='submit' onClick={handleSubmit}/>
       </FormControl>
     </>
   )
