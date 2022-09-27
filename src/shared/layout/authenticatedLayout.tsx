@@ -41,12 +41,13 @@ const AuthenticatedLayout = (user: userType) => {
   let newUserHeader = {
     user,
     show: smallWindow,
+    toggleSidebar: toggleSidebar
   }
 
   let newUserSidebar = {
     user,
     show: smallWindow,
-    toggleSidebar: toggleSidebar,
+    
   }
 
   return (
