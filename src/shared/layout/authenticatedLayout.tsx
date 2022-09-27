@@ -11,12 +11,17 @@ const AuthenticatedLayout = (user: userType) => {
 
   const [smallWindow, setSmallWindowOpen] = useState(true)
 
+  const [drawervariant, SetDrawerVariant] = useState('persistant')
+  var w = document.documentElement.clientWidth || window.innerWidth;
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 767) {
         setSmallWindowOpen(false)
+        SetDrawerVariant('temporary')
       } else {
         setSmallWindowOpen(true)
+        SetDrawerVariant('permanent')
       }
     }
     window.addEventListener('resize', handleResize)
@@ -60,7 +65,7 @@ const AuthenticatedLayout = (user: userType) => {
         }}
       >
         <AuthenticatedHeader {...newUserHeader} />
-        <Sidebar {...newUserSidebar} />
+        <Sidebar {...newUserSidebar} variant={drawervariant}/>
         <Outlet />
       </Box>
       <Footer />

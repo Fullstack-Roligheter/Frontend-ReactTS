@@ -12,6 +12,8 @@ import CheckSavingPlans from './features/savings/GetSavingPlans'
 import Layout from './shared/layout/layout'
 import RegisterUser from './features/register/register'
 
+import Sidebar from './shared/layout/sidebar/sidebar'
+
 import { userToken, userType } from './shared/Interfaces/userToken'
 
 const AppRouter = () => {
@@ -24,6 +26,7 @@ const AppRouter = () => {
 
   return (
     <BrowserRouter>
+
       <Routes>
         {/* <Route element={<Layout user={UserIsLoggedIn} />}> */}
         <Route element={<Layout {...user} />}>
@@ -42,6 +45,8 @@ const AppRouter = () => {
           </Route>
         </Route>
       </Routes>
+    <Sidebar>
+    </Sidebar>
     </BrowserRouter>
   )
 }

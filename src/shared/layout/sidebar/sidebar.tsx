@@ -64,7 +64,7 @@ export default function Sidebar(props: any) {
     <Box sx={{ display: 'flex', marginRight: 3 }}>
       <CssBaseline />
       <Drawer
-        variant='persistent'
+        variant={props.variant}
         open={show}
         sx={{
           width: drawerWidth,
@@ -72,7 +72,7 @@ export default function Sidebar(props: any) {
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: 'rgba(65, 162, 72, 0.1)',
+            backgroundColor: 'rgba(65, 162, 72, 0.68)',
           },
         }}
       >
