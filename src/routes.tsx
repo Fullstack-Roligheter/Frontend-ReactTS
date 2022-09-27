@@ -17,18 +17,20 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route index element={<WelcomeFeature />} />
-          <Route path="/omoss" element={<OmOss />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/faq" element={<Faq />} />
-          <Route path="saving" element={<SavingsLayout />}>
-            <Route index element={<CreateSaving />} />
-            <Route path="getplans" element={<CheckSavingPlans />} />
-            <Route path="editplan/:id" element={<EditSavingPlan />} />
-          </Route>
-          <Route path="/budget" element={<BudgetLayout />}>
-            <Route index element={<GetBudgets />}/>
-            <Route path="createbudget" element={<CreateBudget />} />
+          <Route>
+            <Route index element={<WelcomeFeature />} />
+            <Route path="/omoss" element={<OmOss />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="saving" element={<SavingsLayout />}>
+              <Route index element={<CreateSaving />} />
+              <Route path="getplans" element={<CheckSavingPlans />} />
+              <Route path="editplan/:id" element={<EditSavingPlan />} />
+            </Route>
+            <Route path="/budget" element={<BudgetLayout />}>
+              <Route index element={<GetBudgets />}/>
+              <Route path="createbudget" element={<CreateBudget />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
