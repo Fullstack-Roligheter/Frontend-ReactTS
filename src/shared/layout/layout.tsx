@@ -1,10 +1,8 @@
 import AuthenticatedLayout from './authenticatedLayout'
 import UnauthenticatedLayout from './unauthenticatedLayout'
-import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 
 import Image from '../../img/newbackground.png'
-import { CompressOutlined } from '@mui/icons-material'
 
 import { userType } from '../../shared/Interfaces/userToken'
 
