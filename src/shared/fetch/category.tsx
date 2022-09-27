@@ -2,7 +2,7 @@ import instance from './baseURL.js'
 
 export function GetCategoriesForUser(id: any) {
   return instance
-    .get(`api/category/GetCategoriesForUser${id}`)
+    .get(`api/category/GetCategoriesForUser?userId=${id}`)
     .then((response) => {
       const data = response.data
       return data

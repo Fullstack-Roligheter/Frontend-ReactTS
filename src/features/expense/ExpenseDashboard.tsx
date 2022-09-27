@@ -7,12 +7,13 @@ import InputLabel from '@mui/material/InputLabel'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
 import { useEffect, useState } from 'react'
-import { SubmitButton } from '../../shared/buttons/button-default'
-import { AddExpense } from '../../shared/fetch/expense'
+import { userType } from '../../shared/Interfaces/userToken'
+import { GetCategoriesForUser } from '../../shared/fetch/category'
 
 
-const ExpenseDashboard = () => {
 
+const ExpenseDashboard = (props:userType) => {
+  const [categories, setCategories] = useState([])
 
   const [newExpense, setNewExpense] = useState({
     Date: '',
@@ -35,8 +36,12 @@ const ExpenseDashboard = () => {
   }
 
   useEffect (() => {
-
-  })
+    GetCategoriesForUser(props.userId)
+    .then((Response) => {
+      console.log(Response)
+      setCategories(Response)
+    })
+  },[])
 
   const Budget = [
     {
@@ -86,7 +91,7 @@ const ExpenseDashboard = () => {
               native: true,
             }}
           >
-            {/* {Categories.map((option) => (
+            {/* {categories.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
