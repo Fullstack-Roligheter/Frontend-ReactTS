@@ -9,19 +9,32 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { useNavigate } from 'react-router-dom'
-import { AccountBalance, AccountBalanceWallet, AttachMoney, Info, QuestionAnswer } from '@mui/icons-material'
+import {
+  AccountBalance,
+  AccountBalanceWallet,
+  AttachMoney,
+  Info,
+  QuestionAnswer,
+} from '@mui/icons-material'
+
+import { userToken } from '../../Interfaces/userToken'
 
 const drawerWidth = 240
 
-type Props = {
-  user: number,
-  show: boolean,
- 
+type SidebarProps = {
+  user: userToken
+  show: boolean
 }
 
-export default function Sidebar(props: Props) {
+export default function Sidebar(props: any) {
   const navigate = useNavigate()
-  console.log(props.show)
+
+  let sideBarProps: SidebarProps = {
+    user: props,
+    show: props.show,
+  }
+
+  console.log('sidebar props: ', props)
   const MenuTargets = [
     {
       title: 'Transactions',
@@ -45,11 +58,10 @@ export default function Sidebar(props: Props) {
     { title: 'About us', route: `/omoss`, icon: <Info /> },
   ]
 
-
-  const {show} = props;
+  const { show } = sideBarProps
 
   return (
-    <Box sx={{ display: 'flex', marginRight: 3 }}  >
+    <Box sx={{ display: 'flex', marginRight: 3 }}>
       <CssBaseline />
       <Drawer
         variant='persistent'
@@ -65,7 +77,9 @@ export default function Sidebar(props: Props) {
         }}
       >
         <Toolbar />
-        <Box sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.3)' }}>
+        <Box
+          sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.3)' }}
+        >
           <List>
             {MenuTargets.map((menuItem, index) => (
               <ListItem key={menuItem.title} disablePadding>

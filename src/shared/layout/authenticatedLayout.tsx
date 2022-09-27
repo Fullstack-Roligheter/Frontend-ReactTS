@@ -4,19 +4,18 @@ import { Box } from '@mui/material'
 import Sidebar from './sidebar/sidebar'
 import { useEffect, useState } from 'react'
 import AuthenticatedHeader from './header/authenticatedHeader'
+import { userType } from '../Interfaces/userToken'
 
-const AuthenticatedLayout = (props: any) => {
-  let UserIsLoggedIn = sessionStorage.getItem('user')
+const AuthenticatedLayout = (user: userType) => {
+  // let UserIsLoggedIn = sessionStorage.getItem('userId')
 
   const [smallWindow, setSmallWindowOpen] = useState(true)
 
   useEffect(() => {
     const handleResize = () => {
-
       if (window.innerWidth < 767) {
         setSmallWindowOpen(false)
-      }
-      else {
+      } else {
         setSmallWindowOpen(true)
       }
     }
@@ -27,11 +26,27 @@ const AuthenticatedLayout = (props: any) => {
     }
   }, [])
 
-  if (UserIsLoggedIn === null) {
+  // if (UserIsLoggedIn === null) {
+  //   return <Navigate to='/login' replace />
+  // }
+
+  if (user.userId === null) {
     return <Navigate to='/login' replace />
   }
+
   const toggleSidebar = () => {
-      setSmallWindowOpen(!smallWindow)
+    setSmallWindowOpen(!smallWindow)
+  }
+
+  let newUserHeader = {
+    user,
+    show: smallWindow,
+  }
+
+  let newUserSidebar = {
+    user,
+    show: smallWindow,
+    toggleSidebar: toggleSidebar,
   }
 
   return (
@@ -40,11 +55,11 @@ const AuthenticatedLayout = (props: any) => {
         sx={{
           minHeight: 'calc(100vh - 70px)',
           display: 'flex',
-          marginTop: '50px'
+          marginTop: '50px',
         }}
       >
-        <AuthenticatedHeader toggleSidebar={toggleSidebar}/>
-        <Sidebar user={props.user} show={smallWindow} />
+        <AuthenticatedHeader {...newUserHeader} />
+        <Sidebar {...newUserSidebar} />
         <Outlet />
       </Box>
       <Footer />
