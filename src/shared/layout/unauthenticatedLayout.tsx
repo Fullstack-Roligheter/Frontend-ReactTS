@@ -7,14 +7,11 @@ const UnauthenticatedLayout = (props: any) => {
   return (
     <>
       <Box
-        sx={{
-          minHeight: 'calc(100vh - 70px)',
-          marginTop: '70px',
-        }}
+        height="100vh" 
       >
         <Header />
         <Box>{props.children}</Box>
-        <Outlet />
+        <Outlet />        
       </Box>
       <Footer />
     </>

@@ -5,6 +5,7 @@ import Sidebar from './sidebar/sidebar'
 import { useEffect, useState } from 'react'
 import AuthenticatedHeader from './header/authenticatedHeader'
 import { userType } from '../Interfaces/userToken'
+import Grid from '@mui/material/Grid'
 
 const AuthenticatedLayout = (user: userType) => {
 
@@ -52,15 +53,18 @@ const AuthenticatedLayout = (user: userType) => {
   return (
     <>
       <Box
-        sx={{
-          minHeight: 'calc(100vh - 70px)',
-          display: 'flex',
-          marginTop: '50px',
-        }}
+          height="100vh" 
       >
         <AuthenticatedHeader {...newUserHeader} />
         <Sidebar {...newUserSidebar}/>
+        <Grid
+        container={true}
+        justifyContent="center"
+        spacing={0}
+        my={8}
+      >
         <Outlet />
+        </ Grid>
       </Box>
       <Footer />
     </>
