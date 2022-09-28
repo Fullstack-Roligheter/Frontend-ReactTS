@@ -11,6 +11,7 @@ import EditSavingPlan from './features/savings/EditSavingPlan'
 import CheckSavingPlans from './features/savings/GetSavingPlans'
 import Layout from './shared/layout/layout'
 import RegisterUser from './features/register/register'
+import ExpenseDashboard from './features/expense/ExpenseDashboard'
 import { userToken, userType } from './shared/Interfaces/userToken'
 
 const AppRouter = () => {
@@ -34,6 +35,7 @@ const AppRouter = () => {
             <Route path='/register' element={<RegisterUser />} />
             <Route path='/faq' element={<Faq />} />
             <Route path='/dashboard' element={<DashboardFeature {...user} />} />
+            <Route path='/transactions' element={<ExpenseDashboard {...user} />} />
             <Route path='/saving' element={<SavingsLayout />}>
               <Route index element={<CheckSavingPlans {...user} />} />
               <Route path='create' element={<CreateSaving {...user} />} />

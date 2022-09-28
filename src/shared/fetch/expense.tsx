@@ -2,7 +2,7 @@ import instance from './baseURL.js'
 
 export function CreateDebit(data: any) {
   return instance
-    .post(`api/expense/CreateDebit`, data)
+    .post(`api/debit/CreateDebit`, data)
     .then((response) => {
       const data = response.data
       return data
@@ -15,7 +15,7 @@ export function CreateDebit(data: any) {
 
 export function GetDebitsForUser(id: any) {
   return instance
-    .get(`${instance}/api/expense/GetDebitListForUser?${id}`)
+    .get(`api/debit/GetDebitListForUser?userId=${id}`)
     .then((response) => {
       const data = response.data
       return data
