@@ -92,6 +92,7 @@ const ExpenseDashboard = (props: userType) => {
         >
           <TextField
             required
+            label="date"
             type='date'
             name='Date'
             value={newExpense.Date}

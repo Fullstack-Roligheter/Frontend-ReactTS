@@ -128,7 +128,7 @@ const RegisterUser = () => {
           >
             Registrera konto
           </Typography>
-          <Box sx={{ marginBottom: '15px' }}>
+          <Box sx={{ marginBottom: '15px', display: 'flex', justifyContent: 'center' }}>
             <Typography
               variant='h6'
               color='white'
@@ -258,7 +258,7 @@ const RegisterUser = () => {
           </form>
         </Grid>
       </Grid>
-    </Grid>
+    </Grid >
   )
 }
 export default RegisterUser

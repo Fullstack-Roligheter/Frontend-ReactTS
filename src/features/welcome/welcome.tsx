@@ -23,7 +23,7 @@ function WelcomeFeature() {
         sx={{ paddingTop: '100px', marginTop: '70px', }}
       >
         <Box style={styles.color}>
-          <Typography color="white" variant='h1' align="center" sx={{ textShadow: '1px 1px 2px black' }}>Välkommen att börja spara med Xpense!</Typography>
+          <Typography variant='h1' color="white" align="center" sx={{ textShadow: '1px 1px 2px black' }}>Välkommen att börja spara med Xpense!</Typography>
         </Box>
       </Box>
 

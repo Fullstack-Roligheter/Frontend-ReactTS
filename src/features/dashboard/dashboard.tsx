@@ -2,6 +2,15 @@ import { Box, Typography } from '@mui/material'
 import { Navigate } from 'react-router-dom'
 import { userType } from '../../shared/Interfaces/userToken'
 
+const styles = {
+  text: {
+    color: "white",
+    align: "center",
+    textShadow: '1px 1px 2px black',
+
+  }
+}
+
 function DashboardFeature(user: userType) {
   // let UserIsLoggedIn = sessionStorage.getItem('user')
   // console.log('authenticatedLayout: ', UserIsLoggedIn)
@@ -34,13 +43,13 @@ function DashboardFeature(user: userType) {
         height: 'fit-content',
       }}
     >
-      <Typography variant='h1'>DASHBOARD</Typography>
-      <Typography variant='h3'>YOU ARE LOGGED IN</Typography>
-      <Typography variant='h5'>UserId: {user.userId}</Typography>
-      <Typography variant='h5'>Förnamn: {user.firstName}</Typography>
-      <Typography variant='h5'>Efternamn: {user.lastName}</Typography>
-      <Typography variant='h5'>Epost: {user.email}</Typography>
-      <Typography variant='subtitle1'>{timeMilli}</Typography>
+      <Typography variant='h1' style={styles.text}>DASHBOARD</Typography>
+      <Typography variant='h3' style={styles.text}>YOU ARE LOGGED IN</Typography>
+      <Typography variant='h5' style={styles.text}>UserId: {user.userId}</Typography>
+      <Typography variant='h5' style={styles.text}>Förnamn: {user.firstName}</Typography>
+      <Typography variant='h5' style={styles.text}>Efternamn: {user.lastName}</Typography>
+      <Typography variant='h5' style={styles.text}>Epost: {user.email}</Typography>
+      <Typography variant='subtitle1' style={styles.text}>{timeMilli}</Typography>
     </Box>
   )
 }
