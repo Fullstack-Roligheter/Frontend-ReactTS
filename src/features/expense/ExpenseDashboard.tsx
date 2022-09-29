@@ -9,8 +9,6 @@ import { GetCategoriesForUser } from '../../shared/fetch/category'
 import { GetBudgetsForUser } from '../../shared/fetch/budget'
 import { CreateDebit, GetDebitsForUser } from '../../shared/fetch/expense'
 
-
-
 const ExpenseDashboard = (props: userType) => {
   const [categories, setCategories] = useState([])
   const [budgets, setBudgets] = useState([])
@@ -21,8 +19,8 @@ const ExpenseDashboard = (props: userType) => {
     Amount: '',
     Comment: '',
     UserId: props.userId,
-    CategoryId: null,
-    BudgetId: null,
+    CategoryId: undefined,
+    BudgetId: undefined,
     // ReturningTransactions: false,
   })
 
@@ -39,10 +37,10 @@ const ExpenseDashboard = (props: userType) => {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (newExpense.BudgetId === '') {
-      newExpense.BudgetId = null
+      newExpense.BudgetId = undefined
     }
     if (newExpense.CategoryId === '') {
-      newExpense.CategoryId = null
+      newExpense.CategoryId = undefined
     }
     CreateDebit(newExpense).then((Response) => {
       console.log(Response)
@@ -80,84 +78,93 @@ const ExpenseDashboard = (props: userType) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-          <FormControl sx={{ width: 330, m: 3, mt: 7, p: 3, pt: 1, borderRadius: 2, bgcolor: 'RGBA(255,255,255,0.65)', boxShadow: 5 }}>
-            <TextField
-              required
-              type='date'
-              name='Date'
-              value={newExpense.Date}
-              onChange={handleChange}
-              margin='normal'
-            />
-            <TextField
-              required
-              label='Amount'
-              type='number'
-              name='Amount'
-              value={newExpense.Amount}
-              onChange={handleChange}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>Kr</InputAdornment>
-                ),
-              }}
-              margin='normal'
-            />
-            <TextField
-              select
-              label='Category'
-              name='CategoryId'
-              value={newExpense.CategoryId}
-              onChange={handleChange}
-              SelectProps={{
-                native: true,
-              }}
-              margin='normal'
-            >
-              <option value='' />
-              {categories.map((option: any) => (
-                <option key={option.categoryId} value={option.categoryId}>
-                  {option.categoryName}
-                </option>
-              ))}
-            </TextField>
-            <TextField
-              select
-              label='Budget'
-              name='BudgetId'
-              value={newExpense.BudgetId}
-              onChange={handleChange}
-              SelectProps={{
-                native: true,
-              }}
-              margin='normal'
-            >
-              <option value='' />
-              {budgets.map((option: any) => (
-                <option key={option.budgetId} value={option.budgetId}>
-                  {option.budgetName}
-                </option>
-              ))}
-            </TextField>
-            <TextField
-              label='Description'
-              multiline
-              rows={5}
-              helperText='Company, Notes, Reciever Etc.'
-              name='Comment'
-              value={newExpense.Comment}
-              onChange={handleChange}
-              margin='normal'
-            />
-            {/* <Checkbox
+        <FormControl
+          sx={{
+            width: 330,
+            m: 3,
+            mt: 7,
+            p: 3,
+            pt: 1,
+            borderRadius: 2,
+            bgcolor: 'RGBA(255,255,255,0.65)',
+            boxShadow: 5,
+          }}
+        >
+          <TextField
+            required
+            type='date'
+            name='Date'
+            value={newExpense.Date}
+            onChange={handleChange}
+            margin='normal'
+          />
+          <TextField
+            required
+            label='Amount'
+            type='number'
+            name='Amount'
+            value={newExpense.Amount}
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: <InputAdornment position='end'>Kr</InputAdornment>,
+            }}
+            margin='normal'
+          />
+          <TextField
+            select
+            label='Category'
+            name='CategoryId'
+            value={newExpense.CategoryId}
+            onChange={handleChange}
+            SelectProps={{
+              native: true,
+            }}
+            margin='normal'
+          >
+            <option value='' />
+            {categories.map((option: any) => (
+              <option key={option.categoryId} value={option.categoryId}>
+                {option.categoryName}
+              </option>
+            ))}
+          </TextField>
+          <TextField
+            select
+            label='Budget'
+            name='BudgetId'
+            value={newExpense.BudgetId}
+            onChange={handleChange}
+            SelectProps={{
+              native: true,
+            }}
+            margin='normal'
+          >
+            <option value='' />
+            {budgets.map((option: any) => (
+              <option key={option.budgetId} value={option.budgetId}>
+                {option.budgetName}
+              </option>
+            ))}
+          </TextField>
+          <TextField
+            label='Description'
+            multiline
+            rows={5}
+            helperText='Company, Notes, Reciever Etc.'
+            name='Comment'
+            value={newExpense.Comment}
+            onChange={handleChange}
+            margin='normal'
+          />
+          {/* <Checkbox
           aria-label='Returning transactions'
           sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
         /> */}
 
-            <Button variant='contained' type='submit' onClick={handleSubmit}>
-              Submit
-            </Button>
-          </FormControl>
+          <Button variant='contained' type='submit' onClick={handleSubmit}>
+            Submit
+          </Button>
+        </FormControl>
       </form>
     </>
   )
