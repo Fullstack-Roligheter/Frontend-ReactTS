@@ -4,7 +4,6 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  Link,
   TextField,
   Typography,
 } from '@mui/material'
@@ -42,25 +41,23 @@ const RegisterUser = () => {
   const handleClickShowPassword2 = () => setShowPassword2(!showPassword2)
   const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2)
 
-
-  const [buttontext, setButtonText] = useState("Registrera")
+  const [buttontext, setButtonText] = useState('Registrera')
   const [sPassword, setPassword] = useState('')
   const [loadingState, setloadingState] = useState(false)
-
 
   const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    age: '',
     password: '',
   })
 
   const checkForm = () => {
     if (
-      formData.name === '' ||
-      formData.age === undefined ||
+      formData.firstName === '' ||
+      formData.lastName === '' ||
       formData.email === '' ||
       formData.password === '' ||
       sPassword === ''
@@ -81,14 +78,13 @@ const RegisterUser = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    if (sPassword != formData.password) {
+    if (sPassword !== formData.password) {
       setmessage('Lösenorden matchar inte')
       setmessageState(true)
       setTimeout(() => {
         setmessageState(false)
       }, 3000)
     } else {
-
       setloadingState(true)
       Register(formData)
         .then((response) => {
@@ -96,8 +92,7 @@ const RegisterUser = () => {
           setTimeout(() => {
             navigate(`/login`)
           }, 1000)
-        }
-        )
+        })
         .catch((error) => {
           setTimeout(() => {
             setloadingState(false)
@@ -107,12 +102,10 @@ const RegisterUser = () => {
               setmessageState(false)
             }, 3000)
           }, 5000)
-
         })
         .finally(() => {
           console.log('Entered Finally')
         })
-
     }
   }
 
@@ -125,29 +118,50 @@ const RegisterUser = () => {
       justifyContent='center'
       style={{ minHeight: '70vh' }}
     >
-
-      <Grid style={styles.color} alignItems='center' item xs={3} >
-        <Grid >
-          <Typography variant="h3" color="white" align="center" sx={{ textShadow: '1px 1px 2px black' }}>
+      <Grid style={styles.color} alignItems='center' item xs={3}>
+        <Grid>
+          <Typography
+            variant='h3'
+            color='white'
+            align='center'
+            sx={{ textShadow: '1px 1px 2px black' }}
+          >
             Registrera konto
           </Typography>
           <Box sx={{ marginBottom: '15px' }}>
-            <Typography variant="h6" color="white" align="center" component='a'
-              href='/login' sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }} >
-                Vill du logga in? Klicka på mig!
-              </Typography>
+            <Typography
+              variant='h6'
+              color='white'
+              align='center'
+              component='a'
+              href='/login'
+              sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }}
+            >
+              Vill du logga in? Klicka på mig!
+            </Typography>
           </Box>
-
         </Grid>
         <Grid item>
           <form onSubmit={handleSubmit}>
             <TextField
-              label='Select User Name'
+              label='First Name'
               variant='outlined'
               type='text'
-              name='name'
+              name='firstName'
               required={true}
-              value={formData.name}
+              value={formData.firstName}
+              onChange={handleChange}
+              style={styles.textfield}
+            />
+            <br />
+            <br />
+            <TextField
+              label='Last Name'
+              variant='outlined'
+              type='text'
+              name='lastName'
+              required={true}
+              value={formData.lastName}
               onChange={handleChange}
               style={styles.textfield}
             />
@@ -163,18 +177,7 @@ const RegisterUser = () => {
               onChange={handleChange}
               style={styles.textfield}
             />
-            <br />
-            <br />
-            <TextField
-              label='Enter your age'
-              variant='outlined'
-              type='number'
-              name='age'
-              required={true}
-              value={formData.age}
-              onChange={handleChange}
-              style={styles.textfield}
-            />
+
             <br />
             <br />
             <TextField
@@ -244,7 +247,10 @@ const RegisterUser = () => {
                   return <DisabledSubmitButton buttontext={buttontext} />
                 } else {
                   return (
-                    <SubmitButton isLoading={true} buttontext={buttontext} />
+                    <SubmitButton
+                      isLoading={loadingState}
+                      buttontext={buttontext}
+                    />
                   )
                 }
               })()}
