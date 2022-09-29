@@ -28,8 +28,8 @@ const EditSavingPlan: React.FC = () => {
   const [endDate, setEndDate] = useState('')
   const [planList, setPlanList] = useState<Plan[]>([])
   const [open, setOpen] = useState(false)
-  const [planId, setPlanId] = useState(0)
-  const [buttontext, setButtonText] = useState("Spara")
+  const [planId, setPlanId] = useState('')
+  const [buttontext, setButtonText] = useState('Spara')
 
   const { id } = useParams()
 
@@ -54,11 +54,11 @@ const EditSavingPlan: React.FC = () => {
       }
 
       const { data } = await axios(
-        `${baseURL}/saving/getplans?UserId=${numberValue}`
+        `${baseURL}/saving/Getplans?UserId=${numberValue}`
       )
       let planList = data as Plan[]
       setPlanList(planList)
-      const [plan] = planList.filter((plan) => plan.savingId === +id!)
+      const [plan] = planList.filter((plan) => plan.savingId === String(id))
 
       if (!plan) return
       setTitle(plan.name)
@@ -75,9 +75,9 @@ const EditSavingPlan: React.FC = () => {
     getPlans()
   }, [])
 
-  const handleEdit = async (id: number) => {
+  const handleEdit = async (id: string) => {
     if (id === null) return
-    const newData = await axios.put(`${baseURL}/saving/updateplan/${id}`, {
+    const newData = await axios.put(`${baseURL}/saving/Updateplan/${id}`, {
       savingId: id,
       name: title,
       amount: amount,
@@ -139,7 +139,11 @@ const EditSavingPlan: React.FC = () => {
         />
         <br />
         <Grid container justifyContent='center'>
-          <SubmitButton isLoading={true} buttontext={buttontext} onClick={() => handleEdit(planId)} />
+          <SubmitButton
+            isLoading={true}
+            buttontext={buttontext}
+            onClick={() => handleEdit(planId)}
+          />
         </Grid>
       </Box>
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>

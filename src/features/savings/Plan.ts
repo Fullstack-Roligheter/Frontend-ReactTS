@@ -1,5 +1,5 @@
 export interface Plan {
-  savingId: number;
+  savingId: string;
   name: string;
   amount: number;
   planStartDate: string;

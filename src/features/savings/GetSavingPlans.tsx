@@ -74,9 +74,9 @@ const CheckSavingPlans = (props: userType) => {
     getPlans()
   }, [])
 
-  const deletPlan = (id: number) => {
+  const deletPlan = (id: string) => {
     if (id !== null) {
-      axios.delete(`${baseURL}/saving/deteleplan/${id}`).then((res) => {
+      axios.delete(`${baseURL}/saving/DeletePlan/${id}`).then((res) => {
         if (res.status === 200) {
           getPlans()
         }
