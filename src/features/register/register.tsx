@@ -15,21 +15,7 @@ import {
 import { Register } from '../../shared/fetch/user'
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router'
-
-const styles = {
-  color: {
-    background: 'rgba(65, 162, 72, 0.4)',
-    width: 'fit-content',
-    padding: '30px',
-    borderRadius: '15px',
-    marginTop: '35px',
-  },
-  textfield: {
-    backgroundColor: 'white',
-    width: '100%',
-    borderRadius: '5px',
-  },
-}
+import styles from '../../styles.js'
 
 const RegisterUser = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -118,7 +104,7 @@ const RegisterUser = () => {
       justifyContent='center'
       style={{ minHeight: '70vh' }}
     >
-      <Grid style={styles.color} alignItems='center' item xs={3}>
+      <Grid style={styles.formBackground} alignItems='center' item xs={3}>
         <Grid>
           <Typography
             variant='h3'
@@ -131,11 +117,10 @@ const RegisterUser = () => {
           <Box sx={{ marginBottom: '15px', display: 'flex', justifyContent: 'center' }}>
             <Typography
               variant='h6'
-              color='white'
               align='center'
               component='a'
               href='/login'
-              sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }}
+              style={styles.linkTextField}
             >
               Vill du logga in? Klicka på mig!
             </Typography>
