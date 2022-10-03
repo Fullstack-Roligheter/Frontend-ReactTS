@@ -19,9 +19,9 @@ import LoginIcon from '@mui/icons-material/Login'
 const AuthenticatedHeader = (props: any) => {
   const navigate = useNavigate()
 
-  var CryptoJS = require('crypto-js')
-  let userEmail = props.user.email
-  var hash = CryptoJS.MD5(userEmail).toString()
+  // var CryptoJS = require('crypto-js')
+  // let userEmail = props.user.email
+  // var hash = CryptoJS.MD5(userEmail).toString()
 
   let settings = [
     { title: 'Profile', route: '/profile' },
@@ -70,7 +70,7 @@ const AuthenticatedHeader = (props: any) => {
         backgroundColor: 'rgba(25, 118, 210, 1)',
       }}
     >
-      <Container maxWidth='xl'>
+      {/* <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -215,7 +215,7 @@ const AuthenticatedHeader = (props: any) => {
             }
           })()}
         </Toolbar>
-      </Container>
+      </Container> */}
     </AppBar>
   )
 }

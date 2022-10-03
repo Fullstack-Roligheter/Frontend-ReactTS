@@ -7,8 +7,7 @@ import AuthenticatedHeader from './header/authenticatedHeader'
 import { userType } from '../Interfaces/userToken'
 import Grid from '@mui/material/Grid'
 
-const AuthenticatedLayout = (user: userType) => {
-
+const AuthenticatedLayout = (props: any) => {
   const [smallWindow, setSmallWindowOpen] = useState(true)
 
   const [drawervariant, SetDrawerVariant] = useState('permanent')
@@ -29,44 +28,48 @@ const AuthenticatedLayout = (user: userType) => {
     }
   }, [])
 
-  if (user.userId === null) {
-    return <Navigate to='/login' replace />
-  }
+  // if (user.userId === null) {
+  //   return <Navigate to='/login' replace />
+  // }
+  // const [loggedIn, setLoggedIn] = useState(false)
+  // useEffect(() => {
+  //   if (user.userId === null) {
+  //     console.log('not logged in')
+  //     setLoggedIn(false)
+  //   } else {
+  //     setLoggedIn(true)
+  //     console.log('logged in')
+  //   }
+  // }, [])
 
   const toggleSidebar = () => {
     setSmallWindowOpen(!smallWindow)
   }
 
-  let newUserHeader = {
-    user,
-    show: smallWindow,
-    toggleSidebar: toggleSidebar
-  }
+  // let newUserHeader = {
+  //   user,
+  //   show: smallWindow,
+  //   toggleSidebar: toggleSidebar,
+  // }
 
-  let newUserSidebar = {
-    user,
-    show: smallWindow,
-    variant: drawervariant,
-    
-  }
+  // let newUserSidebar = {
+  //   user,
+  //   show: smallWindow,
+  //   variant: drawervariant,
+  // }
 
   return (
     <>
-      <Box
-          height="100vh" 
-      >
+      {/* <Box height='100vh'>
         <AuthenticatedHeader {...newUserHeader} />
-        <Sidebar {...newUserSidebar}/>
-        <Grid
-        container={true}
-        justifyContent="center"
-        spacing={0}
-        my={8}
-      >
-        <Outlet />
-        </ Grid>
+        <Sidebar {...newUserSidebar} />
+        <Grid container={true} justifyContent='center' spacing={0} my={8}>
+          <Outlet />
+        </Grid>
       </Box>
-      <Footer />
+      <Footer /> */}
+      <Outlet />
+      <Box>{props.children}</Box>
     </>
   )
 }

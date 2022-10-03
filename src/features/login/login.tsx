@@ -70,7 +70,7 @@ const LogIn = () => {
         sessionStorage.setItem('firstName', `${response.firstName}`)
         sessionStorage.setItem('lastName', `${response.lastName}`)
         navigate(`/dashboard`)
-        window.location.reload()
+        // window.location.reload()
       })
       .catch((error) => {
         setTimeout(() => {

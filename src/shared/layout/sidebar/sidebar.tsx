@@ -18,25 +18,34 @@ import {
 } from '@mui/icons-material'
 
 import { userType } from '../../Interfaces/userToken'
+import { useEffect, useState } from 'react'
 
 const drawerWidth = 240
 
-
 type SidebarType = {
-  user: userType,
-  show: boolean,
-  variant:any
-
+  user: userType
+  show: boolean
+  variant: any
 }
 
 export default function Sidebar(props: any) {
-
   const navigate = useNavigate()
+
+  const [loggedIn, setLoggedIn] = useState(false)
+  useEffect(() => {
+    if (props.userId === null) {
+      console.log('not logged in')
+      setLoggedIn(false)
+    } else {
+      setLoggedIn(true)
+      console.log('logged in')
+    }
+  }, [])
 
   let sideBarProps: SidebarType = {
     user: props.user,
     show: props.show,
-    variant: props.variant
+    variant: props.variant,
   }
 
   console.log('sidebar props: ', props)
@@ -66,57 +75,64 @@ export default function Sidebar(props: any) {
   const { show } = sideBarProps
 
   return (
-    <Box sx={{ display: 'flex', marginRight: 3 }}>
-      <CssBaseline />
-      <Drawer
-        variant={props.variant}
-        open={show}
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: {
+    <>
+      <Box sx={{ display: 'flex', marginRight: 3 }}>
+        <CssBaseline />
+        <Drawer
+          variant={props.variant}
+          open={show}
+          sx={{
             width: drawerWidth,
-            boxSizing: 'border-box',
-            backgroundColor: 'rgba(65, 162, 72, 0.68)',
-          },
-        }}
-      >
-        <Toolbar />
-
-        <Box sx={{overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.1)' }}>
-          <List sx={{
-            '& .MuiListItemButton-root:hover': {
-              bgcolor: 'white',
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+              backgroundColor: 'rgba(65, 162, 72, 0.68)',
             },
-          }}>
+          }}
+        >
+          <Toolbar />
 
-            {MenuTargets.map((menuItem, index) => (
-              <ListItem key={menuItem.title} disablePadding>
-                <ListItemButton onClick={() => navigate(menuItem.route)}>
-                  <ListItemIcon>{menuItem.icon}</ListItemIcon>
-                  <ListItemText primary={menuItem.title} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List sx={{
-            '& .MuiListItemButton-root:hover': {
-              bgcolor: 'white',
-            },
-          }}>
-            {SubMenu.map((subMenuItem) => (
-              <ListItem key={subMenuItem.title} disablePadding>
-                <ListItemButton onClick={() => navigate(subMenuItem.route)}>
-                  <ListItemIcon>{subMenuItem.icon}</ListItemIcon>
-                  <ListItemText primary={subMenuItem.title} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-        </Box>
-      </Drawer>
-    </Box>
+          <Box
+            sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.1)' }}
+          >
+            <List
+              sx={{
+                '& .MuiListItemButton-root:hover': {
+                  bgcolor: 'white',
+                },
+              }}
+            >
+              {MenuTargets.map((menuItem, index) => (
+                <ListItem key={menuItem.title} disablePadding>
+                  <ListItemButton onClick={() => navigate(menuItem.route)}>
+                    <ListItemIcon>{menuItem.icon}</ListItemIcon>
+                    <ListItemText primary={menuItem.title} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+            <Divider />
+            <List
+              sx={{
+                '& .MuiListItemButton-root:hover': {
+                  bgcolor: 'white',
+                },
+              }}
+            >
+              {SubMenu.map((subMenuItem) => (
+                <ListItem key={subMenuItem.title} disablePadding>
+                  <ListItemButton onClick={() => navigate(subMenuItem.route)}>
+                    <ListItemIcon>{subMenuItem.icon}</ListItemIcon>
+                    <ListItemText primary={subMenuItem.title} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+            <Divider />
+          </Box>
+        </Drawer>
+      </Box>
+    </>
   )
 }

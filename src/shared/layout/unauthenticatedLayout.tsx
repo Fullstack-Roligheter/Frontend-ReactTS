@@ -6,14 +6,15 @@ import { Box } from '@mui/material'
 const UnauthenticatedLayout = (props: any) => {
   return (
     <>
-      <Box
-        height="100vh" 
-      >
+      {/* <Box height='100vh'>
         <Header />
         <Box>{props.children}</Box>
-        <Outlet />        
+        <Outlet />
       </Box>
-      <Footer />
+      <Footer /> */}
+
+      <Outlet />
+      <Box>{props.children}</Box>
     </>
   )
 }
