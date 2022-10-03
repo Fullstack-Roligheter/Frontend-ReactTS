@@ -9,25 +9,11 @@ import {
   DisabledSubmitButton,
 } from '../../shared/buttons/button-default'
 import { Login } from '../../shared/fetch/user'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom';
+import styles from '../../styles.js'
 
-
-const styles = {
-  color: {
-    background: 'rgba(65, 162, 72, 0.4)',
-    width: 'fit-content',
-    padding: '30px',
-    borderRadius: '15px',
-    marginTop: '35px',
-  },
-  textfield: {
-    backgroundColor: 'white',
-    width: '100%',
-    borderRadius: '5px',
-  },
-}
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -39,7 +25,6 @@ const LogIn = () => {
   const [messageState, setmessageState] = useState(false)
   const [loadingState, setloadingState] = useState(false)
 
-
   const [formData, setFormData] = useState({
     eMail: '',
     password: '',
@@ -47,7 +32,6 @@ const LogIn = () => {
 
   const checkForm = () => {
     if (formData.eMail === '' || formData.password === '') {
-
       return false
     } else {
       return true
@@ -69,12 +53,10 @@ const LogIn = () => {
     setloadingState(true)
     Login(formData)
       .then((response) => {
-        // setFormData(response.data)
         sessionStorage.setItem('userId', `${response.userId}`)
         sessionStorage.setItem('email', `${response.email}`)
         sessionStorage.setItem('firstName', `${response.firstName}`)
         sessionStorage.setItem('lastName', `${response.lastName}`)
-        alert('Du är nu Inloggad')
         navigate(`/dashboard`)
         window.location.reload()
       })
@@ -87,22 +69,11 @@ const LogIn = () => {
             setmessageState(false)
           }, 3000)
         }, 5000)
-
       })
       .finally(() => {
         console.log('Entered Finally')
       })
   }
-
-  // useEffect(() => {
-  //   const loggedInUser = sessionStorage.getItem('userId')
-  //   // setFormData(loggedInUser)
-
-  //   // if (loggedInUser) {
-  //   //   const foundUser = JSON.strin(loggedInUser)
-  //   //   setFormData(foundUser)
-  //   // }
-  // }, [])
 
   return (
     <Grid
@@ -111,16 +82,26 @@ const LogIn = () => {
       direction='column'
       alignItems='center'
       justifyContent='center'
-      style={{ minHeight: '70vh' }}
+      sx={{ minHeight: '70vh' }}
     >
-      <Grid style={styles.color} item xs={3} alignItems='center'>
 
+      <Grid style={styles.formBackground} item xs={3} alignItems='center'>
         <Grid>
-          <Typography variant='h3' align='center' color='white' sx={{ textShadow: '1px 1px 2px black' }} >
+          <Typography
+            variant='h3'
+            align='center'
+
+            style={styles.whiteTypography} >
             Logga in
           </Typography>
           <Box sx={{ marginBottom: '15px' }}>
-            <Typography variant="h6" align="center" color='white' component='a' href='/register' sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }}>
+            <Typography
+              variant="h6"
+              align="center"
+              component='a'
+              href='/register'
+              style={styles.linkTypography}
+            >
               Har du inte ett konto? Klicka på mig!
             </Typography>
           </Box>
@@ -178,12 +159,14 @@ const LogIn = () => {
             <Grid container justifyContent='center'>
               {(() => {
                 if (!checkForm()) {
-
-                  return < DisabledSubmitButton buttontext={buttontext} />
-                }
-                else {
-                  return < SubmitButton isLoading={loadingState} buttontext={buttontext} />
-
+                  return <DisabledSubmitButton buttontext={buttontext} />
+                } else {
+                  return (
+                    <SubmitButton
+                      isLoading={loadingState}
+                      buttontext={buttontext}
+                    />
+                  )
                 }
               })()}
             </Grid>
