@@ -50,7 +50,7 @@ const EditSavingPlan: React.FC = () => {
       if (value !== null) {
         numberValue = JSON.parse(value)
       } else {
-        console.log('never entered parse value')
+        console.log('never entered value')
       }
 
       const { data } = await axios(
