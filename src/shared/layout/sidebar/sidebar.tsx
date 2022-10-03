@@ -18,6 +18,8 @@ import {
 } from '@mui/icons-material'
 
 import { userType } from '../../Interfaces/userToken'
+import styles from '../../../styles.js'
+
 
 const drawerWidth = 240
 
@@ -32,6 +34,14 @@ type SidebarType = {
 export default function Sidebar(props: any) {
 
   const navigate = useNavigate()
+
+  let background = ''
+  if (props.variant === 'temporary') {
+    background = styles.littlesidebargreenbackground.background
+  } else {
+    background = styles.sidebargreenbackground.background
+  }
+
 
   let sideBarProps: SidebarType = {
     user: props.user,
@@ -65,6 +75,7 @@ export default function Sidebar(props: any) {
 
   const { show } = sideBarProps
 
+
   return (
     <Box sx={{ display: 'flex', marginRight: 3 }}>
       <CssBaseline />
@@ -77,13 +88,12 @@ export default function Sidebar(props: any) {
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: 'rgba(65, 162, 72, 0.68)',
+            backgroundColor: background,
           },
         }}
       >
         <Toolbar />
-
-        <Box sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.1)', }}>
+        <Box sx={{ overflow: 'auto', backgroundColor: styles.sidebargreenbackground.background, }}>
           <List sx={{
             color: 'white',
             '& .MuiListItemButton-root:hover': {

@@ -9,6 +9,12 @@ const styles = {
     display: 'flex',
     justifyItems: 'center',
   },
+  littlesidebargreenbackground: {
+    background: 'rgba(65, 162, 72, 0.8)'
+  },
+  sidebargreenbackground: {
+    background: 'rgba(65, 162, 72, 0.4)'
+  },
   textfield: {
     backgroundColor: 'white',
     width: '100%',
