@@ -9,10 +9,11 @@ import {
   DisabledSubmitButton,
 } from '../../shared/buttons/button-default'
 import { Login } from '../../shared/fetch/user'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom';
 import styles from '../../styles.js'
+
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -24,7 +25,6 @@ const LogIn = () => {
   const [messageState, setmessageState] = useState(false)
   const [loadingState, setloadingState] = useState(false)
 
-
   const [formData, setFormData] = useState({
     eMail: '',
     password: '',
@@ -32,7 +32,6 @@ const LogIn = () => {
 
   const checkForm = () => {
     if (formData.eMail === '' || formData.password === '') {
-
       return false
     } else {
       return true
@@ -54,12 +53,10 @@ const LogIn = () => {
     setloadingState(true)
     Login(formData)
       .then((response) => {
-        // setFormData(response.data)
         sessionStorage.setItem('userId', `${response.userId}`)
         sessionStorage.setItem('email', `${response.email}`)
         sessionStorage.setItem('firstName', `${response.firstName}`)
         sessionStorage.setItem('lastName', `${response.lastName}`)
-        alert('Du är nu Inloggad')
         navigate(`/dashboard`)
         window.location.reload()
       })
@@ -72,22 +69,11 @@ const LogIn = () => {
             setmessageState(false)
           }, 3000)
         }, 5000)
-
       })
       .finally(() => {
         console.log('Entered Finally')
       })
   }
-
-  // useEffect(() => {
-  //   const loggedInUser = sessionStorage.getItem('userId')
-  //   // setFormData(loggedInUser)
-
-  //   // if (loggedInUser) {
-  //   //   const foundUser = JSON.strin(loggedInUser)
-  //   //   setFormData(foundUser)
-  //   // }
-  // }, [])
 
   return (
     <Grid
@@ -98,12 +84,13 @@ const LogIn = () => {
       justifyContent='center'
       sx={{ minHeight: '70vh' }}
     >
-      <Grid style={styles.formBackground} item xs={3} alignItems='center'>
 
+      <Grid style={styles.formBackground} item xs={3} alignItems='center'>
         <Grid>
           <Typography
             variant='h3'
             align='center'
+
             style={styles.whiteTypography} >
             Logga in
           </Typography>
@@ -172,12 +159,14 @@ const LogIn = () => {
             <Grid container justifyContent='center'>
               {(() => {
                 if (!checkForm()) {
-
-                  return < DisabledSubmitButton buttontext={buttontext} />
-                }
-                else {
-                  return < SubmitButton isLoading={loadingState} buttontext={buttontext} />
-
+                  return <DisabledSubmitButton buttontext={buttontext} />
+                } else {
+                  return (
+                    <SubmitButton
+                      isLoading={loadingState}
+                      buttontext={buttontext}
+                    />
+                  )
                 }
               })()}
             </Grid>
