@@ -96,12 +96,15 @@ const LogIn = () => {
       direction='column'
       alignItems='center'
       justifyContent='center'
-      style={{ minHeight: '70vh' }}
+      sx={{ minHeight: '70vh' }}
     >
       <Grid style={styles.formBackground} item xs={3} alignItems='center'>
 
         <Grid>
-          <Typography variant='h3' align='center' color='white' sx={{ textShadow: '1px 1px 2px black' }} >
+          <Typography
+            variant='h3'
+            align='center'
+            style={styles.whiteTypography} >
             Logga in
           </Typography>
           <Box sx={{ marginBottom: '15px' }}>
@@ -110,7 +113,7 @@ const LogIn = () => {
               align="center"
               component='a'
               href='/register'
-              style={styles.linkTextField}
+              style={styles.linkTypography}
             >
               Har du inte ett konto? Klicka på mig!
             </Typography>
