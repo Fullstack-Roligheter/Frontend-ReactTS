@@ -8,6 +8,7 @@ import { userType } from '../../shared/Interfaces/userToken'
 import { GetCategoriesForUser } from '../../shared/fetch/category'
 import { GetBudgetsForUser } from '../../shared/fetch/budget'
 import { CreateDebit, GetDebitsForUser } from '../../shared/fetch/expense'
+import { DateFetcher } from '../../shared/dateFetcher/dateFetcher'
 
 const ExpenseDashboard = (props: userType) => {
   const [categories, setCategories] = useState([])
@@ -73,6 +74,14 @@ const ExpenseDashboard = (props: userType) => {
   }, [])
   console.log(debits)
 
+  useEffect(() => {
+    let currentDate = DateFetcher()
+    setNewExpense({
+      ...newExpense,
+      Date: currentDate,
+    })
+  }, [])
+
   //Grön styling för när vi ändrar färg på standardfärgen i projektet
   //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: 'rgba(120, 174, 135, 0.7)'}}
   return (
@@ -92,12 +101,13 @@ const ExpenseDashboard = (props: userType) => {
         >
           <TextField
             required
-            label="date"
             type='date'
             name='Date'
+            label='Date'
             value={newExpense.Date}
             onChange={handleChange}
             margin='normal'
+            // InputLabelProps={{shrink:true}}
           />
           <TextField
             required
