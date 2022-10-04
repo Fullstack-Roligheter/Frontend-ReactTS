@@ -1,24 +1,24 @@
+import { log } from 'console'
 import React, {
   createContext,
   PropsWithChildren,
   useContext,
   useState,
-  useEffect,
 } from 'react'
 import { useNavigate } from 'react-router'
 import { baseURL } from '../config'
 
 type IProps = PropsWithChildren<{}>
 
-export interface IUser {
+export type IUser = {
   password: string
-  userName: string
+  userEmail: string
 }
 
 type IUserContext = {
   userId: string | null
   setUserId: (userId: string) => void
-  userLogIn: (userName: string, password: string) => void
+  signIn: (userEmail: string, password: string) => void
   signOut: () => void
 }
 
@@ -30,18 +30,17 @@ export const useUserContext = () => {
 
 export const UserContextProvider: React.FC<IProps> = (props) => {
   const navigate = useNavigate()
-
   const [userId, setUserId] = useState<string | null>('')
 
   //login code
-  const userLogIn = async (userName: string, password: string) => {
-    const getResponse = await fetch(`${baseURL}/user/login`, {
+  const signIn = async (userEmail: string, password: string) => {
+    const getResponse = await fetch(`${baseURL}/user/Login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        userName: userName,
+        email: userEmail,
         password: password,
       }),
     })
@@ -51,11 +50,12 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
       return
     }
 
-    const object = await getResponse.json()
-    await sessionStorage.setItem('userId', object.userID)
-    setUserId(object.userID)
-    /*  navigate(`/${object.userID}/dashboard`)
-    window.location.reload() */
+    const object: { userId: string } = await getResponse.json()
+
+    sessionStorage.setItem('userId', object.userId)
+    setUserId(object.userId)
+    navigate(`/dashboard`)
+    window.location.reload()
   }
 
   //sign out
@@ -66,7 +66,7 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
       value={{
         userId,
         setUserId,
-        userLogIn,
+        signIn,
         signOut,
       }}
     >

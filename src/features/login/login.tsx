@@ -11,8 +11,8 @@ import {
 import { Login } from '../../shared/fetch/user'
 import { useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
-import { NavLink } from 'react-router-dom';
-
+import { NavLink } from 'react-router-dom'
+import { useUserContext } from '../../context/UserContext'
 
 const styles = {
   color: {
@@ -39,6 +39,7 @@ const LogIn = () => {
   const [messageState, setmessageState] = useState(false)
   const [loadingState, setloadingState] = useState(false)
 
+  const { signIn } = useUserContext()
 
   const [formData, setFormData] = useState({
     eMail: '',
@@ -47,7 +48,6 @@ const LogIn = () => {
 
   const checkForm = () => {
     if (formData.eMail === '' || formData.password === '') {
-
       return false
     } else {
       return true
@@ -63,8 +63,18 @@ const LogIn = () => {
       [name]: value,
     })
   }
+  // lei skrivit
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
+      await signIn(formData.eMail, formData.password)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-  const handleSubmit = (e: any) => {
+  //---------------------------
+  /* const handleSubmit = (e: any) => {
     e.preventDefault()
     setloadingState(true)
     Login(formData)
@@ -93,6 +103,7 @@ const LogIn = () => {
         console.log('Entered Finally')
       })
   }
+ */
 
   // useEffect(() => {
   //   const loggedInUser = sessionStorage.getItem('userId')
@@ -114,13 +125,24 @@ const LogIn = () => {
       style={{ minHeight: '70vh' }}
     >
       <Grid style={styles.color} item xs={3} alignItems='center'>
-
         <Grid>
-          <Typography variant='h3' align='center' color='white' sx={{ textShadow: '1px 1px 2px black' }} >
+          <Typography
+            variant='h3'
+            align='center'
+            color='white'
+            sx={{ textShadow: '1px 1px 2px black' }}
+          >
             Logga in
           </Typography>
           <Box sx={{ marginBottom: '15px' }}>
-            <Typography variant="h6" align="center" color='white' component='a' href='/register' sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }}>
+            <Typography
+              variant='h6'
+              align='center'
+              color='white'
+              component='a'
+              href='/register'
+              sx={{ textDecoration: 'none', textShadow: '1px 1px 2px black' }}
+            >
               Har du inte ett konto? Klicka på mig!
             </Typography>
           </Box>
@@ -178,12 +200,14 @@ const LogIn = () => {
             <Grid container justifyContent='center'>
               {(() => {
                 if (!checkForm()) {
-
-                  return < DisabledSubmitButton buttontext={buttontext} />
-                }
-                else {
-                  return < SubmitButton isLoading={loadingState} buttontext={buttontext} />
-
+                  return <DisabledSubmitButton buttontext={buttontext} />
+                } else {
+                  return (
+                    <SubmitButton
+                      isLoading={loadingState}
+                      buttontext={buttontext}
+                    />
+                  )
                 }
               })()}
             </Grid>

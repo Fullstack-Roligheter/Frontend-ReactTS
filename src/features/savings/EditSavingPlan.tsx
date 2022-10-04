@@ -11,8 +11,7 @@ import Snackbar from '@mui/material/Snackbar'
 import { baseURL } from '../../config'
 import { SubmitButton } from '../../shared/buttons/button-default'
 import Grid from '@mui/material/Grid'
-
-/* const userId = 1 */
+import { useUserContext } from '../../context/UserContext'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -31,7 +30,10 @@ const EditSavingPlan: React.FC = () => {
   const [planId, setPlanId] = useState('')
   const [buttontext, setButtonText] = useState('Spara')
 
+  const { userId } = useUserContext()
   const { id } = useParams()
+
+  console.log('lei:::', userId)
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -45,17 +47,10 @@ const EditSavingPlan: React.FC = () => {
 
   const getPlans = async () => {
     try {
-      let numberValue: string | null = ''
-      const value = sessionStorage.getItem('user')
-      if (value !== null) {
-        numberValue = JSON.parse(value)
-      } else {
-        console.log('never entered value')
-      }
-
       const { data } = await axios(
-        `${baseURL}/saving/Getplans?UserId=${numberValue}`
+        `${baseURL}/saving/Getplans?UserId=${userId}`
       )
+
       let planList = data as Plan[]
       setPlanList(planList)
       const [plan] = planList.filter((plan) => plan.savingId === String(id))
@@ -84,6 +79,8 @@ const EditSavingPlan: React.FC = () => {
       planStartDate: startDate,
       planEndDate: endDate,
     })
+    console.log('byby:::', id)
+
     if (newData.status === 200) {
       setOpen(true)
       setTitle('')
