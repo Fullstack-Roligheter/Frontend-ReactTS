@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react'
 import { Avatar, Link, Tooltip } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
@@ -16,6 +17,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { userType } from '../../Interfaces/userToken'
 import { UserContext } from '../../UserContext'
+import LoginModal from '../../modals/LoginModal'
 
 const ResponsiveAppBar = () => {
   const user = useContext(UserContext)
@@ -25,20 +27,31 @@ const ResponsiveAppBar = () => {
   let userEmail = user.user.email
   var hash = CryptoJS.MD5(userEmail).toString()
 
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(undefined)
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )
 
+  const styles = {
+    logo: {
+      mr: 2,
+      display: { xs: 'none', md: 'flex' },
+      flexGrow: 1,
+      fontFamily: 'monospace',
+      fontWeight: 700,
+      letterSpacing: '.3rem',
+      color: 'inherit',
+      textDecoration: 'none',
+    },
+  }
+
   useEffect(() => {
-    if (user.user.email === '') {
-      setLoggedIn(false)
-    } else {
-      setLoggedIn(true)
+    if (userEmail) {
+      setLoggedIn(userEmail)
     }
-    console.log(user)
-  }, [loggedIn])
+    console.log('setLogged useEffect: ', loggedIn)
+  }, [loggedIn, user])
 
   let userMenu = [
     { title: 'Profile', route: '/profile' },
@@ -74,11 +87,28 @@ const ResponsiveAppBar = () => {
     }
   }
 
+  const handleLogoClick = (e: any) => {
+    if (userEmail) {
+      navigate('/dashboard')
+    } else {
+      navigate('/')
+    }
+  }
+
   const handleLogout = () => {
     sessionStorage.clear()
     alert('Du är nu Utloggad')
     navigate('/')
     window.location.reload()
+  }
+
+  const handleCallback = (prop: string) => {
+    console.log('Callback entered: ', prop)
+    setLoggedIn({
+      ...loggedIn,
+      value: prop,
+    })
+    console.log('new loggedIn state: ', loggedIn)
   }
 
   return (
@@ -145,6 +175,7 @@ const ResponsiveAppBar = () => {
             ))}
           </Menu>
           <Box
+            onClick={handleCloseNavMenu}
             sx={{
               flexGrow: 1,
               display: { xs: 'flex', md: 'none' },
@@ -155,18 +186,8 @@ const ResponsiveAppBar = () => {
             <Typography
               variant='h5'
               noWrap
-              component='a'
-              href='/'
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
+              onClick={handleLogoClick}
+              style={styles.logo}
             >
               Xpense-Mobile
             </Typography>
@@ -199,18 +220,8 @@ const ResponsiveAppBar = () => {
             <Typography
               variant='h5'
               noWrap
-              component='a'
-              href='/'
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
+              style={styles.logo}
+              onClick={handleLogoClick}
             >
               Xpense-Desktop
             </Typography>
@@ -288,15 +299,16 @@ const ResponsiveAppBar = () => {
                 </>
               ) : (
                 <>
-                  <IconButton
-                    href='/login'
+                  {/* <IconButton
                     sx={{
-                      p: '20px',
                       color: 'white',
+                      align: 'center',
+                      width: '100%',
                     }}
-                  >
-                    <LoginIcon />
-                  </IconButton>
+                  > */}
+                  <LoginModal callBack={handleCallback} />
+                  {/* <LoginIcon />
+                  </IconButton> */}
                 </>
               )}
             </Box>

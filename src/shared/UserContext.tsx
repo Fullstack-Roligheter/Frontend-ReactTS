@@ -1,5 +1,9 @@
 import React from 'react'
-import { userType } from './Interfaces/userToken'
+
+let isLoggedIn = true
+if (!sessionStorage.getItem('userId')) {
+  isLoggedIn = false
+}
 
 export const user = {
   user: {
@@ -8,7 +12,7 @@ export const user = {
     firstName: sessionStorage.getItem('firstName') || '',
     lastName: sessionStorage.getItem('lastName') || '',
   },
-  loggedIn: 'false',
+  loggedIn: isLoggedIn,
   setLoggedIn: () => {},
 }
 

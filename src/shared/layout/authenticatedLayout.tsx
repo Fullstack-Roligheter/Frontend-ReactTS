@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import AuthenticatedHeader from './header/authenticatedHeader'
 import { userType } from '../Interfaces/userToken'
 import Grid from '@mui/material/Grid'
+import { user } from '../UserContext'
 
 const AuthenticatedLayout = (props: any) => {
   const [smallWindow, setSmallWindowOpen] = useState(true)
@@ -57,20 +58,13 @@ const AuthenticatedLayout = (props: any) => {
   //   show: smallWindow,
   //   variant: drawervariant,
   // }
-
-  return (
-    <>
-      {/* <Box height='100vh'>
-        <AuthenticatedHeader {...newUserHeader} />
-        <Sidebar {...newUserSidebar} />
-        <Grid container={true} justifyContent='center' spacing={0} my={8}>
-          <Outlet />
-        </Grid>
-      </Box>
-      <Footer /> */}
-      <Outlet />
-      <Box>{props.children}</Box>
-    </>
-  )
+  if (user.user.email)
+    return (
+      <>
+        <Outlet />
+        {props.children}
+      </>
+    )
+  return <></>
 }
 export default AuthenticatedLayout

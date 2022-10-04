@@ -9,6 +9,7 @@ import Footer from './footer/footer'
 import Header from './header/header'
 import Sidebar from './sidebar/sidebar'
 import AuthenticatedHeader from './header/authenticatedHeader'
+import { Outlet } from 'react-router-dom'
 
 const styles = {
   paperContainer: {
@@ -33,19 +34,11 @@ const Layout = (props: any) => {
       <AuthenticatedLayout>
         <Sidebar />
         {props.children}
+        <Outlet />
       </AuthenticatedLayout>
       <UnauthenticatedLayout>
-        <Box
-          style={{
-            padding: '0px 100px',
-            margin: '70px 0',
-            background: 'red',
-          }}
-        >
-          <div className='site-layout-content'>
-            <h1>UNAUTHENTICATED</h1>
-          </div>
-        </Box>
+        {props.children}
+        <Outlet />
       </UnauthenticatedLayout>
       <Footer />
     </Box>

@@ -14,32 +14,17 @@ const styles = {
 
 function DashboardFeature() {
   const user = useContext(UserContext)
-  // const [loggedIn, setLoggedIn] = useState(false)
 
-  // let UserIsLoggedIn = sessionStorage.getItem('user')
-  // console.log('authenticatedLayout: ', UserIsLoggedIn)
-
+  const [userActive, setUserActive] = useState({
+    active: user,
+  })
+  console.log(user)
   let timeMilli = Date.now().toString().slice(-3)
 
-  // if (user.userId === null) {
-  //   return <Navigate to='/login' replace />
-  // } else {
-  //   setLoggedIn(true)
-  // }
-
-  // useEffect(() => {
-  //   if (user.userId === null) {
-  //     console.log('not logged in')
-  //     setLoggedIn(false)
-  //   } else {
-  //     setLoggedIn(true)
-  //     console.log('logged in')
-  //   }
-  // }, [])
-
-  // if (UserIsLoggedIn === null) {
-  //   return <Navigate to='/login' replace />
-  // }
+  if (userActive.active.loggedIn === false) {
+    console.log('user: ' + userActive)
+    return <Navigate to='/' replace />
+  }
 
   return (
     <Box
@@ -66,16 +51,16 @@ function DashboardFeature() {
         YOU ARE LOGGED IN
       </Typography>
       <Typography variant='h5' style={styles.text}>
-        UserId: {user.user.userId}
+        UserId: {userActive.active.user.userId}
       </Typography>
       <Typography variant='h5' style={styles.text}>
-        Förnamn: {user.user.firstName}
+        Förnamn: {userActive.active.user.firstName}
       </Typography>
       <Typography variant='h5' style={styles.text}>
-        Efternamn: {user.user.lastName}
+        Efternamn: {userActive.active.user.lastName}
       </Typography>
       <Typography variant='h5' style={styles.text}>
-        Epost: {user.user.email}
+        Epost: {userActive.active.user.email}
       </Typography>
       <Typography variant='subtitle1' style={styles.text}>
         {timeMilli}
