@@ -13,17 +13,23 @@ import Layout from './shared/layout/layout'
 import RegisterUser from './features/register/register'
 import ExpenseDashboard from './features/expense/ExpenseDashboard'
 import { userToken, userType } from './shared/Interfaces/userToken'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, createContext, useContext } from 'react'
+import { UserContext } from './shared/UserContext'
+import React from 'react'
 
 const AppRouter = () => {
-  let user: userType = {
-    userId: sessionStorage.getItem('userId') || '',
-    email: sessionStorage.getItem('email') || '',
-    firstName: sessionStorage.getItem('firstName') || '',
-    lastName: sessionStorage.getItem('lastName') || '',
+  const user = {
+    user: {
+      userId: sessionStorage.getItem('userId') || '',
+      email: sessionStorage.getItem('email') || '',
+      firstName: sessionStorage.getItem('firstName') || '',
+      lastName: sessionStorage.getItem('lastName') || '',
+      loggedIn: sessionStorage.getItem('loggedIn') || 'false',
+    },
   }
 
-  // const [loggedIn, setLoggedIn] = useState(false)
+  const UserContext = React.createContext(user)
+
   // useEffect(() => {
   //   if (user.userId === null) {
   //     console.log('not logged in')
@@ -36,14 +42,15 @@ const AppRouter = () => {
 
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route index element={<WelcomeFeature />} />
-          <Route path='/omoss' element={<OmOss />} />
-          <Route path='/faq' element={<Faq />} />
-          <Route path='/login' element={<LogIn />} />
-          <Route path='/dashboard' element={<DashboardFeature {...user} />} />
-          {/* <Route element={<Layout {...user} />}>
+      <UserContext.Provider value={user}>
+        <Layout>
+          <Routes>
+            <Route index element={<WelcomeFeature />} />
+            <Route path='/omoss' element={<OmOss />} />
+            <Route path='/faq' element={<Faq />} />
+            <Route path='/login' element={<LogIn />} />
+            <Route path='/dashboard' element={<DashboardFeature />} />
+            {/* <Route element={<Layout {...user} />}>
           <Route>
             <Route index element={<WelcomeFeature />} />
             <Route path='/omoss' element={<OmOss />} />
@@ -62,8 +69,9 @@ const AppRouter = () => {
             </Route>
           </Route>
           </Route> */}
-        </Routes>
-      </Layout>
+          </Routes>
+        </Layout>
+      </UserContext.Provider>
     </BrowserRouter>
   )
 }

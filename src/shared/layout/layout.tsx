@@ -18,12 +18,19 @@ const styles = {
   },
 }
 
+// let user: userType = {
+//   userId: sessionStorage.getItem('userId') || '',
+//   email: sessionStorage.getItem('email') || '',
+//   firstName: sessionStorage.getItem('firstName') || '',
+//   lastName: sessionStorage.getItem('lastName') || '',
+//   loggedIn: sessionStorage.getItem('loggedIn') || 'false',
+// }
+
 const Layout = (props: any) => {
   return (
     <Box className='App layout'>
       <Header />
-      <AuthenticatedLayout {...props}>
-        <AuthenticatedHeader {...props} />
+      <AuthenticatedLayout>
         <Sidebar />
         {props.children}
       </AuthenticatedLayout>

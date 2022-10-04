@@ -18,7 +18,8 @@ import {
 } from '@mui/icons-material'
 
 import { userType } from '../../Interfaces/userToken'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { UserContext } from '../../UserContext'
 
 const drawerWidth = 240
 
@@ -29,18 +30,19 @@ type SidebarType = {
 }
 
 export default function Sidebar(props: any) {
+  const user = useContext(UserContext)
   const navigate = useNavigate()
 
-  const [loggedIn, setLoggedIn] = useState(false)
-  useEffect(() => {
-    if (props.userId === null) {
-      console.log('not logged in')
-      setLoggedIn(false)
-    } else {
-      setLoggedIn(true)
-      console.log('logged in')
-    }
-  }, [])
+  // const [loggedIn, setLoggedIn] = useState(false)
+  // useEffect(() => {
+  //   if (props.userId === null) {
+  //     console.log('not logged in')
+  //     setLoggedIn(false)
+  //   } else {
+  //     setLoggedIn(true)
+  //     console.log('logged in')
+  //   }
+  // }, [])
 
   let sideBarProps: SidebarType = {
     user: props.user,

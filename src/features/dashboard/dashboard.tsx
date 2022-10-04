@@ -1,7 +1,8 @@
 import { Box, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { userType } from '../../shared/Interfaces/userToken'
+import { UserContext } from '../../shared/UserContext'
 
 const styles = {
   text: {
@@ -11,8 +12,9 @@ const styles = {
   },
 }
 
-function DashboardFeature(user: userType) {
-  const [loggedIn, setLoggedIn] = useState(false)
+function DashboardFeature() {
+  const user = useContext(UserContext)
+  // const [loggedIn, setLoggedIn] = useState(false)
 
   // let UserIsLoggedIn = sessionStorage.getItem('user')
   // console.log('authenticatedLayout: ', UserIsLoggedIn)
@@ -64,16 +66,16 @@ function DashboardFeature(user: userType) {
         YOU ARE LOGGED IN
       </Typography>
       <Typography variant='h5' style={styles.text}>
-        UserId: {user.userId}
+        UserId: {user.user.userId}
       </Typography>
       <Typography variant='h5' style={styles.text}>
-        Förnamn: {user.firstName}
+        Förnamn: {user.user.firstName}
       </Typography>
       <Typography variant='h5' style={styles.text}>
-        Efternamn: {user.lastName}
+        Efternamn: {user.user.lastName}
       </Typography>
       <Typography variant='h5' style={styles.text}>
-        Epost: {user.email}
+        Epost: {user.user.email}
       </Typography>
       <Typography variant='subtitle1' style={styles.text}>
         {timeMilli}

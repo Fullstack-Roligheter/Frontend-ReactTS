@@ -1,3 +1,5 @@
+// @ts-nocheck comment
+
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
@@ -9,8 +11,9 @@ import {
   DisabledSubmitButton,
 } from '../../shared/buttons/button-default'
 import { Login } from '../../shared/fetch/user'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Box, Typography } from '@mui/material'
+import { UserContext } from '../../shared/UserContext'
 
 const styles = {
   color: {
@@ -28,6 +31,10 @@ const styles = {
 }
 
 const LogIn = () => {
+  // const user = useContext(UserContext)
+  const { loggedIn, setLoggedIn } = useState('false')
+  const checkLogin = { loggedIn, setLoggedIn }
+
   const [showPassword, setShowPassword] = useState(false)
   const [buttontext, setButtonText] = useState('Logga in')
   const handleClickShowPassword = () => setShowPassword(!showPassword)
@@ -69,8 +76,10 @@ const LogIn = () => {
         sessionStorage.setItem('email', `${response.email}`)
         sessionStorage.setItem('firstName', `${response.firstName}`)
         sessionStorage.setItem('lastName', `${response.lastName}`)
-        navigate(`/dashboard`)
+        // navigate(`/dashboard`)
         // window.location.reload()
+        navigate(`/dashboard`)
+        setLoggedIn('true')
       })
       .catch((error) => {
         setTimeout(() => {

@@ -12,15 +12,17 @@ import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
+import { userType } from '../../Interfaces/userToken'
+import { UserContext } from '../../UserContext'
 
-const ResponsiveAppBar = (props: any) => {
+const ResponsiveAppBar = () => {
+  const user = useContext(UserContext)
   const navigate = useNavigate()
 
   var CryptoJS = require('crypto-js')
-  // let userEmail = props.user.email
-  let userEmail = 'lmorrison85@gmail.com'
+  let userEmail = user.user.email
   var hash = CryptoJS.MD5(userEmail).toString()
 
   const [loggedIn, setLoggedIn] = useState(false)
@@ -28,6 +30,15 @@ const ResponsiveAppBar = (props: any) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )
+
+  useEffect(() => {
+    if (user.user.email === '') {
+      setLoggedIn(false)
+    } else {
+      setLoggedIn(true)
+    }
+    console.log(user)
+  }, [loggedIn])
 
   let userMenu = [
     { title: 'Profile', route: '/profile' },
@@ -307,8 +318,7 @@ const ResponsiveAppBar = (props: any) => {
 }
 export default ResponsiveAppBar
 
-{
-  /* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
 <Typography
   variant='h6'
   noWrap
@@ -326,10 +336,8 @@ export default ResponsiveAppBar
 >
   Xpense
 </Typography> */
-}
 
-{
-  /* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
 <Typography
   variant='h5'
   noWrap
@@ -348,4 +356,3 @@ export default ResponsiveAppBar
 >
   Xpense-Mobile
 </Typography> */
-}
