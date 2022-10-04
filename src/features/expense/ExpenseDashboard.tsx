@@ -51,7 +51,6 @@ const ExpenseDashboard = (props: userType) => {
   //Get categories for user to put in select
   useEffect(() => {
     GetCategoriesForUser(props.userId).then((Response) => {
-      console.log(Response)
       setCategories(Response)
     })
   }, [])
@@ -59,7 +58,6 @@ const ExpenseDashboard = (props: userType) => {
   //Get budgets for user to put in select
   useEffect(() => {
     GetBudgetsForUser(props.userId).then((Response) => {
-      console.log(Response)
       setBudgets(Response)
     })
   }, [])
@@ -68,7 +66,6 @@ const ExpenseDashboard = (props: userType) => {
   useEffect(() => {
     console.log('props.userId: ', props.userId)
     GetDebitsForUser(props.userId).then((Response) => {
-      console.log(Response)
       setDebits(Response)
     })
   }, [])
