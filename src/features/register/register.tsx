@@ -15,7 +15,7 @@ import {
 import { Register } from '../../shared/fetch/user'
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router'
-import styles from '../../styles.js'
+import styles from '../../CssStyles.js'
 
 const RegisterUser = () => {
   const [showPassword, setShowPassword] = useState(false)

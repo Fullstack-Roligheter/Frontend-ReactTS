@@ -12,7 +12,7 @@ import { Login } from '../../shared/fetch/user'
 import { useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom';
-import styles from '../../styles.js'
+import styles from '../../CssStyles.js'
 
 
 const LogIn = () => {

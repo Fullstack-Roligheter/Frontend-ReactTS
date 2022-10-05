@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import { Navigate } from 'react-router-dom'
 import { userType } from '../../shared/Interfaces/userToken'
-import styles from '../../styles.js'
+import styles from '../../CssStyles.js'
 
 
 function DashboardFeature(user: userType) {
