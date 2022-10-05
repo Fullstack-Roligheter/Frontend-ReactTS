@@ -6,16 +6,16 @@ import { useEffect, useState } from 'react'
 import AuthenticatedHeader from './header/authenticatedHeader'
 import { userType } from '../Interfaces/userToken'
 import Grid from '@mui/material/Grid'
+import styles from '../../styles.js'
 
 const AuthenticatedLayout = (user: userType) => {
-
   const [smallWindow, setSmallWindowOpen] = useState(true)
 
   const [drawervariant, SetDrawerVariant] = useState('permanent')
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 767) {
+      if (window.innerWidth < 900) {
         setSmallWindowOpen(false)
         SetDrawerVariant('temporary')
       } else {
@@ -40,31 +40,23 @@ const AuthenticatedLayout = (user: userType) => {
   let newUserHeader = {
     user,
     show: smallWindow,
-    toggleSidebar: toggleSidebar
+    toggleSidebar: toggleSidebar,
   }
 
   let newUserSidebar = {
     user,
     show: smallWindow,
     variant: drawervariant,
-    
   }
 
   return (
     <>
-      <Box
-          height="100vh" 
-      >
+      <Box style={styles.siteBackground} display='flex'>
         <AuthenticatedHeader {...newUserHeader} />
-        <Sidebar {...newUserSidebar}/>
-        <Grid
-        container={true}
-        justifyContent="center"
-        spacing={0}
-        my={8}
-      >
-        <Outlet />
-        </ Grid>
+        <Sidebar {...newUserSidebar} />
+        <Box>
+          <Outlet />
+        </Box>
       </Box>
       <Footer />
     </>

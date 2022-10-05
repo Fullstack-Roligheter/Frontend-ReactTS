@@ -14,6 +14,7 @@ const Footer = () => {
         container
         direction='column'
         alignItems='center'
+        height='60px'
         sx={{ color: common.black }}
       >
         <Box>

@@ -3,7 +3,6 @@ import { Navigate } from 'react-router-dom'
 import { userType } from '../../shared/Interfaces/userToken'
 import styles from '../../styles.js'
 
-
 function DashboardFeature(user: userType) {
   // let UserIsLoggedIn = sessionStorage.getItem('user')
   // console.log('authenticatedLayout: ', UserIsLoggedIn)
@@ -19,14 +18,31 @@ function DashboardFeature(user: userType) {
   // }
 
   return (
-    <Box style={styles.dashboardBackground} sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Typography variant='h1' style={styles.whiteTypography}>DASHBOARD</Typography>
-      <Typography variant='h3' style={styles.whiteTypography}>YOU ARE LOGGED IN</Typography>
-      <Typography variant='h5' style={styles.whiteTypography}>UserId: {user.userId}</Typography>
-      <Typography variant='h5' style={styles.whiteTypography}>Förnamn: {user.firstName}</Typography>
-      <Typography variant='h5' style={styles.whiteTypography}>Efternamn: {user.lastName}</Typography>
-      <Typography variant='h5' style={styles.whiteTypography}>Epost: {user.email}</Typography>
-      <Typography variant='subtitle1' style={styles.whiteTypography}>{timeMilli}</Typography>
+    <Box
+      alignItems={'center'}
+      sx={{ display: 'flex', flexDirection: 'column' }}
+    >
+      <Typography variant='h1' style={styles.whiteTypography}>
+        DASHBOARD
+      </Typography>
+      <Typography variant='h3' style={styles.whiteTypography}>
+        YOU ARE LOGGED IN
+      </Typography>
+      <Typography variant='h5' style={styles.whiteTypography}>
+        UserId: {user.userId}
+      </Typography>
+      <Typography variant='h5' style={styles.whiteTypography}>
+        Förnamn: {user.firstName}
+      </Typography>
+      <Typography variant='h5' style={styles.whiteTypography}>
+        Efternamn: {user.lastName}
+      </Typography>
+      <Typography variant='h5' style={styles.whiteTypography}>
+        Epost: {user.email}
+      </Typography>
+      <Typography variant='subtitle1' style={styles.whiteTypography}>
+        {timeMilli}
+      </Typography>
     </Box>
   )
 }
