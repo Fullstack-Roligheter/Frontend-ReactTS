@@ -12,6 +12,7 @@ import { baseURL } from '../../config'
 import { SubmitButton } from '../../shared/buttons/button-default'
 import Grid from '@mui/material/Grid'
 import { useUserContext } from '../../context/UserContext'
+import { log } from 'console'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -45,6 +46,7 @@ const EditSavingPlan: React.FC = () => {
     setOpen(false)
   }
 
+  //får data först
   const getPlans = async () => {
     try {
       const { data } = await axios(
@@ -53,7 +55,7 @@ const EditSavingPlan: React.FC = () => {
 
       let planList = data as Plan[]
       setPlanList(planList)
-      const [plan] = planList.filter((plan) => plan.savingId === String(id))
+      const [plan] = planList.filter((plan) => plan.savingId === String(id)) // ?? tidigare är en number type,+id
 
       if (!plan) return
       setTitle(plan.name)
@@ -69,7 +71,7 @@ const EditSavingPlan: React.FC = () => {
   useEffect(() => {
     getPlans()
   }, [])
-
+  // ändra spårplan och toma formdata
   const handleEdit = async (id: string) => {
     if (id === null) return
     const newData = await axios.put(`${baseURL}/saving/Updateplan/${id}`, {

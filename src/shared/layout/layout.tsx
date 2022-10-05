@@ -15,7 +15,12 @@ const styles = {
 }
 
 const Layout = (user: userType) => (
-  <Box height="100vh" display="flex" flexDirection="column"style={styles.paperContainer}>
+  <Box
+    height='100vh'
+    display='flex'
+    flexDirection='column'
+    style={styles.paperContainer}
+  >
     {(() => {
       if (user.userId === '') {
         return <UnauthenticatedLayout />

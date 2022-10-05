@@ -8,7 +8,6 @@ import { userType } from '../Interfaces/userToken'
 import Grid from '@mui/material/Grid'
 
 const AuthenticatedLayout = (user: userType) => {
-
   const [smallWindow, setSmallWindowOpen] = useState(true)
 
   const [drawervariant, SetDrawerVariant] = useState('permanent')
@@ -40,31 +39,23 @@ const AuthenticatedLayout = (user: userType) => {
   let newUserHeader = {
     user,
     show: smallWindow,
-    toggleSidebar: toggleSidebar
+    toggleSidebar: toggleSidebar,
   }
 
   let newUserSidebar = {
     user,
     show: smallWindow,
     variant: drawervariant,
-    
   }
 
   return (
     <>
-      <Box
-          height="100vh" 
-      >
+      <Box height='100vh'>
         <AuthenticatedHeader {...newUserHeader} />
-        <Sidebar {...newUserSidebar}/>
-        <Grid
-        container={true}
-        justifyContent="center"
-        spacing={0}
-        my={8}
-      >
-        <Outlet />
-        </ Grid>
+        <Sidebar {...newUserSidebar} />
+        <Grid container={true} justifyContent='center' spacing={0} my={8}>
+          <Outlet />
+        </Grid>
       </Box>
       <Footer />
     </>

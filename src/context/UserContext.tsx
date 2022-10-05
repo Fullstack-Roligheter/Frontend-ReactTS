@@ -17,6 +17,9 @@ export type IUser = {
 
 type IUserContext = {
   userId: string | null
+  email: string
+  firstName: string
+  lastName: string
   setUserId: (userId: string) => void
   signIn: (userEmail: string, password: string) => void
   signOut: () => void
@@ -31,6 +34,13 @@ export const useUserContext = () => {
 export const UserContextProvider: React.FC<IProps> = (props) => {
   const navigate = useNavigate()
   const [userId, setUserId] = useState<string | null>('')
+  const [email, setEmail] = useState<string>('')
+  const [firstName, setFirstName] = useState<string>('')
+  const [lastName, setLastName] = useState<string>('')
+
+  const [user, setUser] = useState({
+    userId: '',
+  })
 
   //login code
   const signIn = async (userEmail: string, password: string) => {
@@ -50,13 +60,22 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
       return
     }
 
-    const object: { userId: string } = await getResponse.json()
+    const object = await getResponse.json()
 
     sessionStorage.setItem('userId', object.userId)
+    sessionStorage.setItem('email', object.email)
+    sessionStorage.setItem('firstName', object.firstName)
+    sessionStorage.setItem('lastName', object.lastName)
+
     setUserId(object.userId)
+    setEmail(object.email)
+    setFirstName(object.firstName)
+    setLastName(object.lastName)
+
     navigate(`/dashboard`)
-    window.location.reload()
+    /*  window.location.reload() */
   }
+  console.log('saru:::', userId)
 
   //sign out
   const signOut = () => {}
@@ -65,6 +84,9 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
     <UserContext.Provider
       value={{
         userId,
+        email,
+        firstName,
+        lastName,
         setUserId,
         signIn,
         signOut,
