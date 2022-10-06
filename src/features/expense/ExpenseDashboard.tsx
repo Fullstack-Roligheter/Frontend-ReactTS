@@ -3,17 +3,25 @@ import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
 import { Button, Paper } from '@mui/material'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState, Component, FunctionComponent } from 'react'
 import { userType } from '../../shared/Interfaces/userToken'
 import { GetCategoriesForUser } from '../../shared/fetch/category'
 import { GetBudgetsForUser } from '../../shared/fetch/budget'
 import { CreateDebit, GetDebitsForUser } from '../../shared/fetch/expense'
 import { DateFetcher } from '../../shared/dateFetcher/dateFetcher'
+import { render } from 'react-dom'
+import { Modal } from '../../shared/modal/modal'
+import { useModal } from '../../shared/modal/useModal'
+import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
+import { DisabledSubmitButton, SubmitButton } from '../../shared/buttons/button-default'
+
 
 const ExpenseDashboard = (props: userType) => {
   const [categories, setCategories] = useState([])
   const [budgets, setBudgets] = useState([])
   const [debits, setDebits] = useState([])
+  const { isShown, toggle } = useModal();
+  const [isLoading, setloadingState] = useState(false)
 
   const [newExpense, setNewExpense] = useState({
     Date: '',
@@ -24,6 +32,17 @@ const ExpenseDashboard = (props: userType) => {
     BudgetId: undefined,
     // ReturningTransactions: false,
   })
+  const checkForm = () => {
+    if (
+      newExpense.Date === '' ||
+      newExpense.Amount === '' ||
+      newExpense.CategoryId === undefined
+    ) {
+      return false
+    } else {
+      return true
+    }
+  }
 
   console.log(newExpense)
 
@@ -37,6 +56,7 @@ const ExpenseDashboard = (props: userType) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
+    setloadingState(true)
     if (newExpense.BudgetId === '') {
       newExpense.BudgetId = undefined
     }
@@ -104,7 +124,7 @@ const ExpenseDashboard = (props: userType) => {
             value={newExpense.Date}
             onChange={handleChange}
             margin='normal'
-            // InputLabelProps={{shrink:true}}
+          // InputLabelProps={{shrink:true}}
           />
           <TextField
             required
@@ -169,9 +189,28 @@ const ExpenseDashboard = (props: userType) => {
           sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
         /> */}
 
-          <Button variant='contained' type='submit' onClick={handleSubmit}>
-            Submit
-          </Button>
+          <React.Fragment>
+            <button onClick={toggle}>Open modal</button>
+            <Modal
+              isShown={isShown}
+              hide={toggle}
+              headerText='I am a modal'
+              modalContent={<NewCategoryModal
+                message="Add a category"
+              />} />
+          </React.Fragment>
+          {(() => {
+            if (!checkForm()) {
+              return <DisabledSubmitButton buttontext={'Spara utgift'} />
+            } else {
+              return (
+                <SubmitButton
+                  isLoading={isLoading}
+                  buttontext={'Spara utgift'}
+                />
+              )
+            }
+          })()}
         </FormControl>
       </form>
     </>
