@@ -1,30 +1,31 @@
 import { Box, Typography } from "@mui/material"
 import axios from "axios"
+import { userType } from "../../shared/Interfaces/userToken"
 
 
-var CryptoJS = require('crypto-js')
-let userEmail = "danielkjellberg@hotmail.com"
-var hash = CryptoJS.MD5(userEmail).toString()
-var lowercasehash = hash.toLowerCase()
-
-console.log(`https://www.gravatar.com/${lowercasehash}.json`)
-
-var userJSON = axios.get(`https://www.gravatar.com/${lowercasehash}.json`)
-                    .then((response) => {
-                            const data = response.data
-                            console.log(data)
-                            return data
-                        })
-                        .catch((error) => {
-                            console.log('Error in userProfile: ', error)
-                            throw error
-                        })
 
 
-//console.log(`Gravatar JSON: ${userJSON}`)
+function ProfileFeature(user: userType) {
 
-function ProfileFeature() {
-return (
+  var CryptoJS = require('crypto-js')
+  let userEmail = sessionStorage.getItem('email') || "";
+  var hash = CryptoJS.MD5(userEmail.toLowerCase()).toString()
+  
+axios.get(`https://localhost:7073/api/Gravatar/GetGravatarProfile?hash=${hash}}`)
+                      .then((response) => {
+                        debugger
+                              const data = response.data
+                              console.log(data)
+                              return data
+                          })
+                          .catch((error) => {
+                              console.log('Error in userProfile: ', error)
+                              throw error
+                          })
+  
+  // console.log(userProfile)
+
+  return (
     <Box
       sx={{
         display: 'flex',
@@ -42,7 +43,8 @@ return (
         height: 'fit-content',
       }}
     >
-      <Typography variant='h1' >${lowercasehash}</Typography>
+      <Typography variant='h1' >Hej</Typography>
+      {/* <p variant='h1' >${userProfile}</p> */}
       
     </Box>
   )

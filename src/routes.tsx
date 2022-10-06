@@ -36,7 +36,7 @@ const AppRouter = () => {
             <Route path='/register' element={<RegisterUser />} />
             <Route path='/faq' element={<Faq />} />
             <Route path='/dashboard' element={<DashboardFeature {...user} />} />
-            <Route path='/profile' element={<ProfileFeature />} />
+            <Route path='/profile' element={<ProfileFeature {...user}/>} />
             <Route path='/transactions' element={<ExpenseDashboard {...user} />} />
             <Route path='/saving' element={<SavingsLayout />}>
               <Route index element={<CheckSavingPlans {...user} />} />
