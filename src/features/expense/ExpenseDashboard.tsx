@@ -14,6 +14,7 @@ import { Modal } from '../../shared/modal/modal'
 import { useModal } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
 import { DisabledSubmitButton, SubmitButton } from '../../shared/buttons/button-default'
+import { OrdinaryButton } from '../../CustomComponents'
 
 
 const ExpenseDashboard = (props: userType) => {
@@ -208,7 +209,7 @@ const ExpenseDashboard = (props: userType) => {
           </FormControl>
         </form>
         <React.Fragment>
-          <Button variant="contained" onClick={toggle}>Lägg till kategori</Button>
+          <OrdinaryButton onClick={toggle}>Lägg till kategori</OrdinaryButton>
           <Modal
             isShown={isShown}
             hide={toggle}

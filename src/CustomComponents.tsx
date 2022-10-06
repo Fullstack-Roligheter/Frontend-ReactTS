@@ -58,9 +58,18 @@ export const Content = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
 `;
-export const ConfirmationButtons = styled.div`
+export const ButtonCollection = styled.div`
   display: flex;
   justify-content: center;
+`;
+export const OrdinaryButton = styled.button`
+  width: 10rem;
+  background-color: blue;
+  color: white;
+  :hover {
+    background-color: white;
+    color: blue;
+  }
 `;
 
 export const Message = styled.div`

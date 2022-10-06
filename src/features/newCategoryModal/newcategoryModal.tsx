@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { ConfirmationButtons, Message, YesButton, NoButton } from '../../CustomComponents'
+import { ButtonCollection, Message, YesButton, NoButton } from '../../CustomComponents'
 import { useModal } from '../../shared/modal/useModal'
 
 interface NewCategoryModalProps {
@@ -19,10 +19,10 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
   return (
     <React.Fragment>
       <Message>{props.message}</Message>
-      <ConfirmationButtons>
+      <ButtonCollection>
         <YesButton onClick={handleSubmit}>Skicka</YesButton>
         <NoButton onClick={props.onCancel}>Avbryt</NoButton>
-      </ConfirmationButtons>
+      </ButtonCollection>
     </React.Fragment>
   );
 };
