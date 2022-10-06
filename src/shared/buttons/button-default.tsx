@@ -3,13 +3,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { useState } from 'react'
 
-
-
-
-
 export function SubmitButton(props: any) {
-
-
   return (
     <Box sx={{ m: 1, position: 'relative' }}>
       <Button variant="contained" type="submit">{props.buttontext}
@@ -36,5 +30,14 @@ export function SubmitButton(props: any) {
 export function DisabledSubmitButton(props: any) {
   return (
     <Button variant="contained" type="submit" disabled >{props.buttontext}</Button>
+  )
+}
+
+export function OrdinaryButton(props: any) {
+  return (
+    <Box sx={{ m: 1, position: 'relative' }}>
+      <Button variant="contained" type="submit">{props.buttontext}
+      </Button>
+    </Box>
   )
 }
