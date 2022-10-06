@@ -32,12 +32,3 @@ export function DisabledSubmitButton(props: any) {
     <Button variant="contained" type="submit" disabled >{props.buttontext}</Button>
   )
 }
-
-export function OrdinaryButton(props: any) {
-  return (
-    <Box sx={{ m: 1, position: 'relative' }}>
-      <Button variant="contained" type="submit">{props.buttontext}
-      </Button>
-    </Box>
-  )
-}
