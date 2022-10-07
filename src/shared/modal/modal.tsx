@@ -19,12 +19,28 @@ export interface ModalProps {
 }
 
 export const Modal: FunctionComponent<ModalProps> = ({
-
   isShown,
   hide,
   modalContent,
   headerText,
 }) => {
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.keyCode === 27 && isShown) {
+      hide();
+    }
+  };
+
+  useEffect(() => {
+    //Raden nedan förhindrar scrollning när modalen syns
+    //isShown ? (document.body.style.overflow = 'hidden') : (document.body.style.overflow = 'unset');
+    document.addEventListener('keydown', onKeyDown, false);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown, false);
+    };
+  }, [isShown]);
+
+
   const modal = (
     <React.Fragment>
       <Backdrop onClick={hide} />
