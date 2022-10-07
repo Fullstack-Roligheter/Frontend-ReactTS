@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 700;
-  width: inherit;
+  width: 350px;
   outline: 0;
 `;
 
@@ -31,7 +31,8 @@ export const StyledModal = styled.div`
 export const ModalHeader = styled.div`
   border-radius: 8px 8px 0 0;
   display: flex;
-  justify-content: space-evenly;
+  margin-left: 20px;
+  justify-content: space-between;
   padding: 0.3rem;
 `;
 
