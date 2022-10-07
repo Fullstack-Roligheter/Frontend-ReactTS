@@ -28,7 +28,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
   const modal = (
     <React.Fragment>
       <Backdrop onClick={hide} />
-      <Wrapper aria-modal aria-labelledby={headerText} tabIndex={-1} role='dialog'>
+      <Wrapper aria-modal aria-label={headerText} tabIndex={-1} role='dialog'>
         <StyledModal>
           <ModalHeader>
             <Typography variant="h5" align='center' mr='25px'>{headerText}</Typography>
