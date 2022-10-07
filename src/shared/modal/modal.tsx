@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import React, { FunctionComponent, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -19,6 +19,7 @@ export interface ModalProps {
 }
 
 export const Modal: FunctionComponent<ModalProps> = ({
+
   isShown,
   hide,
   modalContent,
@@ -31,7 +32,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
         <StyledModal>
           <ModalHeader>
             <Typography variant="h5" align='center' mr='25px'>{headerText}</Typography>
-            <CloseButton type='button' data-dismiss='modal' aria-label='Close' onClick={hide} />
+            <Button onClick={hide}><CloseButton type='button' data-dismiss='modal' aria-label='Close' /></Button>
           </ModalHeader>
           <Content>{modalContent}</Content>
         </StyledModal>
