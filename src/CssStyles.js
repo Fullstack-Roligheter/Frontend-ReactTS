@@ -43,6 +43,17 @@ const styles = {
     paddingBottom: '100px',
     height: 'fit-content',
   },
+  closeButton: {
+    fontSize: '0.8rem,',
+    marginLeft: '0.5rem',
+    border: '1px solid black',
+    borderRadius: '3px',
+    '& :hover': {
+      cursor: 'pointer',
+      background: 'red',
+      color: 'white',
+    }
+  }
 };
 
 export default styles;

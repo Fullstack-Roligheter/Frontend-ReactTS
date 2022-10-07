@@ -211,12 +211,16 @@ const ExpenseDashboard = (props: userType) => {
           <Modal
             isShown={isShown}
             hide={toggle}
-            modalContent={<NewCategoryModal
-              onConfirm={onConfirm}
-              onCancel={onCancel}
-              message="Add a category"
-              userId={props.userId}
-            />} />
+            headerText='Lägga till egen kategori'
+            modalContent={
+              <NewCategoryModal
+                onConfirm={onConfirm}
+                // onCancel={onCancel}
+                message="Skriv in namn på nya kategorin"
+                userId={props.userId}
+              />
+            }
+          />
         </React.Fragment>
       </Box>
     </>

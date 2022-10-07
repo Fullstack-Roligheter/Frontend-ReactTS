@@ -7,7 +7,7 @@ import { useModal } from '../../shared/modal/useModal'
 
 interface NewCategoryModalProps {
   onConfirm: () => void;
-  onCancel: () => void;
+  // onCancel: () => void;
   message: string;
   userId: string;
 }
@@ -39,7 +39,7 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
       </form>
       <ButtonCollection>
         <Button onClick={() => { handleSubmit(kategoriNamn) }}><OrdinaryButton buttontext='Spara' /></Button>
-        <Button onClick={props.onCancel}><OrdinaryButton buttontext='Avbryt' /></Button>
+        {/* <Button onClick={props.onCancel}><OrdinaryButton buttontext='Avbryt' /></Button> */}
       </ButtonCollection>
     </React.Fragment>
   );
