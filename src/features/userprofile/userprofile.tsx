@@ -36,19 +36,25 @@ function ProfileFeature(user: userType) {
   const [location, setlocation] = useState([])
   const [phone, setphone] = useState([])
   const [btcAddress, setbtcAddress] = useState([])
+  const [data, setdata] = useState("")
   
   useEffect(() => {
     async function getUserProfile(){
       const response = await axios.get(`https://localhost:7073/api/Gravatar/GetGravatarProfile?hash=${hash}`)
       console.log(response)
-      setName(response.data.entry[0].name.formatted)
-      setemail(response.data.entry[0].emails[0].value)
-      setaboutMe(response.data.entry[0].aboutMe)
-      setaccounts(response.data.entry[0].accounts[0].display)
-      setprofileImage(response.data.entry[0].photos[0].value)
-      setlocation(response.data.entry[0].currentLocation)
-      setphone(response.data.entry[0].phoneNumbers[0].value)
-      setbtcAddress(response.data.entry[0].currency[0].value)
+      if (response.data === "User not found") {
+        console.log(response.data)
+        setdata(response.data)
+      } else {
+        setName(response.data.entry[0].name.formatted)
+        setemail(response.data.entry[0].emails[0].value)
+        setaboutMe(response.data.entry[0].aboutMe)
+        setaccounts(response.data.entry[0].accounts[0].display)
+        setprofileImage(response.data.entry[0].photos[0].value)
+        setlocation(response.data.entry[0].currentLocation)
+        setphone(response.data.entry[0].phoneNumbers[0].value)
+        setbtcAddress(response.data.entry[0].currency[0].value)
+      }
     }
   getUserProfile()
 },[])
@@ -68,20 +74,38 @@ function ProfileFeature(user: userType) {
             justifyContent: 'center',
       }}
     >
-      <div style={styles.div} >
-        <div style={styles.profileimgdiv}>
-          <img src={`${profileImage}?s=200`} style={styles.img} />
-        </div>
-        <div style={styles.profileinfodiv}>
-          <Typography variant='subtitle1' >Name: {name}</Typography>
-          <Typography variant='subtitle1' >Twitter Handle: <Link href="https://www.twitter.com">{accounts}</Link></Typography>
-          <Typography variant='subtitle1' >Email: {email}</Typography>
-          <Typography variant='subtitle1' >Location: {location}</Typography>
-          <Typography variant='subtitle1' >Phone: {phone}</Typography>
-          <Typography variant='subtitle1' >BTC Adress: {btcAddress}</Typography>
-          <Link href="https://en.gravatar.com/">Gravatar</Link>
-        </div>
-      </div>
+
+      {(() => {
+              if (data === "User not found") {
+                return (
+                  <Box>
+                    <br />
+                    <Typography variant='subtitle1' >Create your profile at : <Link href="https://en.gravatar.com/">Gravatar</Link></Typography>
+                    <br />
+                  </Box>
+                )
+              } else {
+                return (
+                <Box>
+                  <div style={styles.div} >
+                    <div style={styles.profileimgdiv}>
+                      <img src={`${profileImage}?s=200`} style={styles.img} />
+                    </div>
+                    <div style={styles.profileinfodiv}>
+                      <Typography variant='subtitle1' >Name: {name}</Typography>
+                      <Typography variant='subtitle1' >Twitter Handle: <Link href="https://www.twitter.com">{accounts}</Link></Typography>
+                      <Typography variant='subtitle1' >Email: {email}</Typography>
+                      <Typography variant='subtitle1' >Location: {location}</Typography>
+                      <Typography variant='subtitle1' >Phone: {phone}</Typography>
+                      <Typography variant='subtitle1' >BTC Adress: {btcAddress}</Typography>
+                      <Typography variant='subtitle1' >Ändra din profil här: <Link href="https://en.gravatar.com/">Gravatar</Link></Typography>
+                    </div>
+                  </div>
+                </Box>
+                )
+              }
+            })()}   
+
       
         
       
