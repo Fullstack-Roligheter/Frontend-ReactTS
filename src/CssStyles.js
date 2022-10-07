@@ -54,7 +54,6 @@ const styles = {
     minWidth: '5px',
     height: '40px',
     width: '40px',
-    marginLeft: '0.5rem',
   }
 };
 
