@@ -44,15 +44,10 @@ const styles = {
     height: 'fit-content',
   },
   closeButton: {
-    fontSize: '0.8rem,',
+    padding: '0px',
     marginLeft: '0.5rem',
     border: '1px solid black',
     borderRadius: '3px',
-    '& :hover': {
-      cursor: 'pointer',
-      background: 'red',
-      color: 'white',
-    }
   }
 };
 

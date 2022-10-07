@@ -61,7 +61,15 @@ export function OrdinaryButton(props: any) {
 export function CloseButton(props: any) {
   return (
     <Box sx={{ m: 1, position: 'relative' }}>
-      <Button variant="contained" style={styles.closeButton}><CloseIcon />
+      <Button style={styles.closeButton} sx={{
+        backgroundColor: 'white', color: 'black',
+        '& :hover': {
+          width: '100%',
+          cursor: 'pointer',
+          backgroundColor: 'red',
+          color: 'white',
+        }
+      }}><CloseIcon />
         {(() => {
           if (props.isLoading) {
             return (

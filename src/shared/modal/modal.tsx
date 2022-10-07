@@ -6,10 +6,10 @@ import {
   Wrapper,
   ModalHeader,
   StyledModal,
-  CloseButton,
   Content,
   Backdrop,
 } from '../../CustomComponents';
+import { CloseButton } from '../buttons/button-default';
 
 export interface ModalProps {
   isShown: boolean;
@@ -26,12 +26,12 @@ export const Modal: FunctionComponent<ModalProps> = ({
 }) => {
   const modal = (
     <React.Fragment>
-      <Backdrop />
-      <Wrapper>
+      <Backdrop onClick={hide} />
+      <Wrapper aria-modal aria-labelledby={headerText} tabIndex={-1} role='dialog'>
         <StyledModal>
           <ModalHeader>
             <Typography variant="h5" align='center' mr='25px'>{headerText}</Typography>
-            <CloseButton onClick={hide}>X</CloseButton>
+            <CloseButton type='button' data-dismiss='modal' aria-label='Close' onClick={hide} />
           </ModalHeader>
           <Content>{modalContent}</Content>
         </StyledModal>
