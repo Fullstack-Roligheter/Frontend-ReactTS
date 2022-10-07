@@ -48,6 +48,13 @@ const styles = {
     marginLeft: '0.5rem',
     border: '1px solid black',
     borderRadius: '3px',
+  },
+  addButton: {
+    padding: '0px',
+    minWidth: '5px',
+    height: '40px',
+    width: '40px',
+    marginLeft: '0.5rem',
   }
 };
 

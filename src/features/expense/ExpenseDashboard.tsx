@@ -2,7 +2,7 @@ import FormControl from '@mui/material/FormControl'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
-import { Box, Button, Paper } from '@mui/material'
+import { Box, Button, IconButton, Paper } from '@mui/material'
 import React, { useEffect, useState, Component, FunctionComponent } from 'react'
 import { userType } from '../../shared/Interfaces/userToken'
 import { GetCategoriesForUser } from '../../shared/fetch/category'
@@ -13,7 +13,7 @@ import { render } from 'react-dom'
 import { Modal } from '../../shared/modal/modal'
 import { useModal } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
-import { DisabledSubmitButton, SubmitButton, OrdinaryButton } from '../../shared/buttons/button-default'
+import { DisabledSubmitButton, SubmitButton, OrdinaryButton, AddButton } from '../../shared/buttons/button-default'
 import styles from '../../CssStyles'
 // import { OrdinaryButton } from '../../CustomComponents'
 
@@ -145,41 +145,43 @@ const ExpenseDashboard = (props: userType) => {
               }}
               margin='normal'
             />
-            <TextField
-              select
-              label='Category'
-              name='CategoryId'
-              value={newExpense.CategoryId}
-              onChange={handleChange}
-              style={styles.textfield}
-              SelectProps={{
-                native: true,
-              }}
-              margin='normal'
-            >
-              <option value='' />
-              {categories.map((option: any) => (
-                <option key={option.categoryId} value={option.categoryId}>
-                  {option.categoryName}
-                </option>
-              ))}
-            </TextField>
-            <React.Fragment>
-              <Button onClick={toggle}><OrdinaryButton buttontext={'Lägg till Kategori'} isLoading={isLoading} /></Button>
-              <Modal
-                isShown={isShown}
-                hide={toggle}
-                headerText='Lägga till egen kategori'
-                modalContent={
-                  <NewCategoryModal
-                    onConfirm={onConfirm}
-                    // onCancel={onCancel}
-                    message="Skriv in namn på nya kategorin"
-                    userId={props.userId}
-                  />
-                }
-              />
-            </React.Fragment>
+            <Box display='flex' alignItems='center'>
+              <TextField
+                select
+                label='Category'
+                name='CategoryId'
+                value={newExpense.CategoryId}
+                onChange={handleChange}
+                style={styles.textfield}
+                SelectProps={{
+                  native: true,
+                }}
+                margin='normal'
+              >
+                <option value='' />
+                {categories.map((option: any) => (
+                  <option key={option.categoryId} value={option.categoryId}>
+                    {option.categoryName}
+                  </option>
+                ))}
+              </TextField>
+              <React.Fragment>
+                <IconButton sx={{ '& :hover': { margin: '0px', padding: '0px', border: '0px' } }} style={styles.addButton} onClick={toggle}><AddButton /></IconButton>
+                <Modal
+                  isShown={isShown}
+                  hide={toggle}
+                  headerText='Lägga till egen kategori'
+                  modalContent={
+                    <NewCategoryModal
+                      onConfirm={onConfirm}
+                      // onCancel={onCancel}
+                      message="Skriv in namn på nya kategorin"
+                      userId={props.userId}
+                    />
+                  }
+                />
+              </React.Fragment>
+            </Box>
             <TextField
               select
               label='Budget'

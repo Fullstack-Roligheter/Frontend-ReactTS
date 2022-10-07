@@ -2,8 +2,10 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState } from 'react'
 import styles from '../../CssStyles';
+import { IconButton } from '@mui/material';
 
 export function SubmitButton(props: any) {
   return (
@@ -62,31 +64,30 @@ export function OrdinaryButton(props: any) {
 export function CloseButton(props: any) {
   return (
     <Box sx={{ m: 1, position: 'relative' }}>
-      <Button style={styles.closeButton} sx={{
+      <IconButton style={styles.closeButton} sx={{
         backgroundColor: 'white', color: 'black',
         '& :hover': {
-          width: '100%',
           cursor: 'pointer',
           backgroundColor: 'red',
           color: 'white',
         }
       }}><CloseIcon />
-        {(() => {
-          if (props.isLoading) {
-            return (
-              <Box sx={{ display: 'flex' }}>
-                <CircularProgress size={24} sx={{
-                  color: 'white', position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  marginTop: '-12px',
-                  marginLeft: '-12px',
-                }} />
-              </Box>
-            )
-          }
-        })()}
-      </Button>
+      </IconButton>
+    </Box>
+  )
+}
+export function AddButton() {
+  return (
+    <Box sx={{ m: 1, position: 'relative' }}>
+      <IconButton sx={{
+        color: 'black',
+        '& :hover': {
+          cursor: 'pointer',
+          color: 'red',
+        }
+      }}><AddCircleIcon sx={{ fontSize: 40, border: '0px', color: 'black' }} />
+
+      </IconButton>
     </Box>
   )
 }
