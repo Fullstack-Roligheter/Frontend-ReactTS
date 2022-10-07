@@ -30,7 +30,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
       <Wrapper>
         <StyledModal>
           <ModalHeader>
-            <Typography variant="h5" align='center'>{headerText}</Typography>
+            <Typography variant="h5" align='center' mr='25px'>{headerText}</Typography>
             <CloseButton onClick={hide}>X</CloseButton>
           </ModalHeader>
           <Content>{modalContent}</Content>

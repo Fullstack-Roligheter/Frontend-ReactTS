@@ -5,8 +5,8 @@ export const Wrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 700;
-  width: 350px;
+  z-index: 15;
+  width: inherit;
   outline: 0;
 `;
 
@@ -17,13 +17,14 @@ export const Backdrop = styled.div`
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.3);
-  z-index: 500;
+  z-index: 10;
 `;
 
 export const StyledModal = styled.div`
-  z-index: 100;
+  z-index: 15;
   background: white;
   position: relative;
+  width: calc(100% + 50px);
   margin: auto;
   border-radius: 8px;
 `;
@@ -31,9 +32,9 @@ export const StyledModal = styled.div`
 export const ModalHeader = styled.div`
   border-radius: 8px 8px 0 0;
   display: flex;
-  margin-left: 20px;
-  justify-content: space-between;
+  justify-content: right;
   padding: 0.3rem;
+  text-decoration: underline;
 `;
 
 export const CloseButton = styled.button`
