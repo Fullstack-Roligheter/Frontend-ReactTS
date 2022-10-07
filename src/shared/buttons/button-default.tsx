@@ -32,3 +32,27 @@ export function DisabledSubmitButton(props: any) {
     <Button variant="contained" type="submit" disabled >{props.buttontext}</Button>
   )
 }
+
+export function OrdinaryButton(props: any) {
+  return (
+    <Box sx={{ m: 1, position: 'relative' }}>
+      <Button variant="contained" >{props.buttontext}
+        {(() => {
+          if (props.isLoading) {
+            return (
+              <Box sx={{ display: 'flex' }}>
+                <CircularProgress size={24} sx={{
+                  color: 'white', position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-12px',
+                  marginLeft: '-12px',
+                }} />
+              </Box>
+            )
+          }
+        })()}
+      </Button>
+    </Box>
+  )
+}

@@ -13,8 +13,8 @@ import { render } from 'react-dom'
 import { Modal } from '../../shared/modal/modal'
 import { useModal } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
-import { DisabledSubmitButton, SubmitButton } from '../../shared/buttons/button-default'
-import { OrdinaryButton } from '../../CustomComponents'
+import { DisabledSubmitButton, SubmitButton, OrdinaryButton } from '../../shared/buttons/button-default'
+// import { OrdinaryButton } from '../../CustomComponents'
 
 
 const ExpenseDashboard = (props: userType) => {
@@ -192,8 +192,6 @@ const ExpenseDashboard = (props: userType) => {
           aria-label='Returning transactions'
           sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
         /> */}
-
-
             {(() => {
               if (!checkForm()) {
                 return <DisabledSubmitButton buttontext={'Spara utgift'} />
@@ -209,11 +207,10 @@ const ExpenseDashboard = (props: userType) => {
           </FormControl>
         </form>
         <React.Fragment>
-          <OrdinaryButton onClick={toggle}>Lägg till kategori</OrdinaryButton>
+          <Button onClick={toggle}><OrdinaryButton buttontext={'Lägg till Kategori'} isLoading={isLoading} /></Button>
           <Modal
             isShown={isShown}
             hide={toggle}
-            headerText='I am a modal'
             modalContent={<NewCategoryModal
               onConfirm={onConfirm}
               onCancel={onCancel}
