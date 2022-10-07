@@ -44,7 +44,8 @@ export function OrdinaryButton(props: any) {
             return (
               <Box sx={{ display: 'flex' }}>
                 <CircularProgress size={24} sx={{
-                  color: 'white', position: 'absolute',
+                  color: 'white',
+                  position: 'absolute',
                   top: '50%',
                   left: '50%',
                   marginTop: '-12px',

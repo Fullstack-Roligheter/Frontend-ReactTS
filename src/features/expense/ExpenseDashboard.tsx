@@ -14,6 +14,7 @@ import { Modal } from '../../shared/modal/modal'
 import { useModal } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
 import { DisabledSubmitButton, SubmitButton, OrdinaryButton } from '../../shared/buttons/button-default'
+import styles from '../../CssStyles'
 // import { OrdinaryButton } from '../../CustomComponents'
 
 
@@ -102,8 +103,8 @@ const ExpenseDashboard = (props: userType) => {
     })
   }, [])
 
-  //Grön styling för när vi ändrar färg på standardfärgen i projektet
-  //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: 'rgba(120, 174, 135, 0.7)'}}
+  //Grön styling för när vi ändrar färg på standardfärgen i projektet, den accepterar denna variabel och tolkar som strängen den sparat
+  //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: styles.formBackground.background}}
   return (
     <>
       <Box display="flex" flexDirection='column'>
@@ -128,6 +129,7 @@ const ExpenseDashboard = (props: userType) => {
               value={newExpense.Date}
               onChange={handleChange}
               margin='normal'
+              style={styles.textfield}
             // InputLabelProps={{shrink:true}}
             />
             <TextField
@@ -137,6 +139,7 @@ const ExpenseDashboard = (props: userType) => {
               name='Amount'
               value={newExpense.Amount}
               onChange={handleChange}
+              style={styles.textfield}
               InputProps={{
                 endAdornment: <InputAdornment position='end'>Kr</InputAdornment>,
               }}
@@ -148,6 +151,7 @@ const ExpenseDashboard = (props: userType) => {
               name='CategoryId'
               value={newExpense.CategoryId}
               onChange={handleChange}
+              style={styles.textfield}
               SelectProps={{
                 native: true,
               }}
@@ -160,12 +164,29 @@ const ExpenseDashboard = (props: userType) => {
                 </option>
               ))}
             </TextField>
+            <React.Fragment>
+              <Button onClick={toggle}><OrdinaryButton buttontext={'Lägg till Kategori'} isLoading={isLoading} /></Button>
+              <Modal
+                isShown={isShown}
+                hide={toggle}
+                headerText='Lägga till egen kategori'
+                modalContent={
+                  <NewCategoryModal
+                    onConfirm={onConfirm}
+                    // onCancel={onCancel}
+                    message="Skriv in namn på nya kategorin"
+                    userId={props.userId}
+                  />
+                }
+              />
+            </React.Fragment>
             <TextField
               select
               label='Budget'
               name='BudgetId'
               value={newExpense.BudgetId}
               onChange={handleChange}
+              style={styles.textfield}
               SelectProps={{
                 native: true,
               }}
@@ -185,6 +206,7 @@ const ExpenseDashboard = (props: userType) => {
               helperText='Company, Notes, Reciever Etc.'
               name='Comment'
               value={newExpense.Comment}
+              style={styles.textfield}
               onChange={handleChange}
               margin='normal'
             />
@@ -206,22 +228,7 @@ const ExpenseDashboard = (props: userType) => {
             })()}
           </FormControl>
         </form>
-        <React.Fragment>
-          <Button onClick={toggle}><OrdinaryButton buttontext={'Lägg till Kategori'} isLoading={isLoading} /></Button>
-          <Modal
-            isShown={isShown}
-            hide={toggle}
-            headerText='Lägga till egen kategori'
-            modalContent={
-              <NewCategoryModal
-                onConfirm={onConfirm}
-                // onCancel={onCancel}
-                message="Skriv in namn på nya kategorin"
-                userId={props.userId}
-              />
-            }
-          />
-        </React.Fragment>
+
       </Box>
     </>
   )
