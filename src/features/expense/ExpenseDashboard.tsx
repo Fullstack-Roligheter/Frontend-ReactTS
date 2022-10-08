@@ -2,7 +2,7 @@ import FormControl from '@mui/material/FormControl'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
-import { Button, Paper } from '@mui/material'
+import { Box, Button, FormControlLabel, Paper } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { userType } from '../../shared/Interfaces/userToken'
 import { GetCategoriesForUser } from '../../shared/fetch/category'
@@ -22,7 +22,7 @@ const ExpenseDashboard = (props: userType) => {
     UserId: props.userId,
     CategoryId: undefined,
     BudgetId: undefined,
-    // ReturningTransactions: false,
+    ReturningTransactions: false,
   })
 
   console.log(newExpense)
@@ -32,6 +32,14 @@ const ExpenseDashboard = (props: userType) => {
     setNewExpense({
       ...newExpense,
       [name]: value,
+    })
+  }
+
+  const handleBoolean = (e: any) => {
+    const { name, checked } = e.target
+    setNewExpense({
+      ...newExpense,
+      [name]: checked,
     })
   }
 
@@ -164,10 +172,19 @@ const ExpenseDashboard = (props: userType) => {
             onChange={handleChange}
             margin='normal'
           />
-          {/* <Checkbox
-          aria-label='Returning transactions'
-          sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
-        /> */}
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name='ReturningTransactions'
+                  onChange={handleBoolean}
+                  sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
+                />
+              }
+              label='Return transactions'
+              labelPlacement='start'
+            />
+          </Box>
 
           <Button variant='contained' type='submit' onClick={handleSubmit}>
             Submit
