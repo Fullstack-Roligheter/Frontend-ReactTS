@@ -8,10 +8,11 @@ import { userType } from '../../shared/Interfaces/userToken'
 import { GetCategoriesForUser } from '../../shared/fetch/category'
 import { GetBudgetsForUser } from '../../shared/fetch/budget'
 import { CreateDebit, GetDebitsForUser } from '../../shared/fetch/expense'
+import { useUserContext } from '../../context/UserContext'
 
+const ExpenseDashboard = () => {
+  const user = useUserContext()
 
-
-const ExpenseDashboard = (props: userType) => {
   const [categories, setCategories] = useState([])
   const [budgets, setBudgets] = useState([])
   const [debits, setDebits] = useState([])
@@ -20,7 +21,7 @@ const ExpenseDashboard = (props: userType) => {
     Date: '',
     Amount: '',
     Comment: '',
-    UserId: props.userId,
+    UserId: user,
     CategoryId: null,
     BudgetId: null,
     // ReturningTransactions: false,
@@ -51,7 +52,7 @@ const ExpenseDashboard = (props: userType) => {
 
   //Get categories for user to put in select
   useEffect(() => {
-    GetCategoriesForUser(props.userId).then((Response) => {
+    GetCategoriesForUser(user.userId).then((Response) => {
       console.log(Response)
       setCategories(Response)
     })
@@ -59,7 +60,7 @@ const ExpenseDashboard = (props: userType) => {
 
   //Get budgets for user to put in select
   useEffect(() => {
-    GetBudgetsForUser(props.userId).then((Response) => {
+    GetBudgetsForUser(user.userId).then((Response) => {
       console.log(Response)
       setBudgets(Response)
     })
@@ -67,8 +68,8 @@ const ExpenseDashboard = (props: userType) => {
 
   //Get all debits to put in list
   useEffect(() => {
-    console.log('props.userId: ', props.userId)
-    GetDebitsForUser(props.userId).then((Response) => {
+    console.log('props.userId: ', user.userId)
+    GetDebitsForUser(user.userId).then((Response) => {
       console.log(Response)
       setDebits(Response)
     })
@@ -80,84 +81,93 @@ const ExpenseDashboard = (props: userType) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-          <FormControl sx={{ width: 330, m: 3, mt: 7, p: 3, pt: 1, borderRadius: 2, bgcolor: 'RGBA(255,255,255,0.65)', boxShadow: 5 }}>
-            <TextField
-              required
-              type='date'
-              name='Date'
-              value={newExpense.Date}
-              onChange={handleChange}
-              margin='normal'
-            />
-            <TextField
-              required
-              label='Amount'
-              type='number'
-              name='Amount'
-              value={newExpense.Amount}
-              onChange={handleChange}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>Kr</InputAdornment>
-                ),
-              }}
-              margin='normal'
-            />
-            <TextField
-              select
-              label='Category'
-              name='CategoryId'
-              value={newExpense.CategoryId}
-              onChange={handleChange}
-              SelectProps={{
-                native: true,
-              }}
-              margin='normal'
-            >
-              <option value='' />
-              {categories.map((option: any) => (
-                <option key={option.categoryId} value={option.categoryId}>
-                  {option.categoryName}
-                </option>
-              ))}
-            </TextField>
-            <TextField
-              select
-              label='Budget'
-              name='BudgetId'
-              value={newExpense.BudgetId}
-              onChange={handleChange}
-              SelectProps={{
-                native: true,
-              }}
-              margin='normal'
-            >
-              <option value='' />
-              {budgets.map((option: any) => (
-                <option key={option.budgetId} value={option.budgetId}>
-                  {option.budgetName}
-                </option>
-              ))}
-            </TextField>
-            <TextField
-              label='Description'
-              multiline
-              rows={5}
-              helperText='Company, Notes, Reciever Etc.'
-              name='Comment'
-              value={newExpense.Comment}
-              onChange={handleChange}
-              margin='normal'
-            />
-            {/* <Checkbox
+        <FormControl
+          sx={{
+            width: 330,
+            m: 3,
+            mt: 7,
+            p: 3,
+            pt: 1,
+            borderRadius: 2,
+            bgcolor: 'RGBA(255,255,255,0.65)',
+            boxShadow: 5,
+          }}
+        >
+          <TextField
+            required
+            type='date'
+            name='Date'
+            value={newExpense.Date}
+            onChange={handleChange}
+            margin='normal'
+          />
+          <TextField
+            required
+            label='Amount'
+            type='number'
+            name='Amount'
+            value={newExpense.Amount}
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: <InputAdornment position='end'>Kr</InputAdornment>,
+            }}
+            margin='normal'
+          />
+          <TextField
+            select
+            label='Category'
+            name='CategoryId'
+            value={newExpense.CategoryId}
+            onChange={handleChange}
+            SelectProps={{
+              native: true,
+            }}
+            margin='normal'
+          >
+            <option value='' />
+            {categories.map((option: any) => (
+              <option key={option.categoryId} value={option.categoryId}>
+                {option.categoryName}
+              </option>
+            ))}
+          </TextField>
+          <TextField
+            select
+            label='Budget'
+            name='BudgetId'
+            value={newExpense.BudgetId}
+            onChange={handleChange}
+            SelectProps={{
+              native: true,
+            }}
+            margin='normal'
+          >
+            <option value='' />
+            {budgets.map((option: any) => (
+              <option key={option.budgetId} value={option.budgetId}>
+                {option.budgetName}
+              </option>
+            ))}
+          </TextField>
+          <TextField
+            label='Description'
+            multiline
+            rows={5}
+            helperText='Company, Notes, Reciever Etc.'
+            name='Comment'
+            value={newExpense.Comment}
+            onChange={handleChange}
+            margin='normal'
+          />
+          {/* <Checkbox
           aria-label='Returning transactions'
           sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
         /> */}
 
-            <Button variant='contained' type='submit' onClick={handleSubmit}>
-              Submit
-            </Button>
-          </FormControl>
+          <Button variant='contained' type='submit' onClick={handleSubmit}>
+            Submit
+          </Button>
+        </FormControl>
       </form>
     </>
   )

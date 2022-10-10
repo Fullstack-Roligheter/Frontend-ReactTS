@@ -14,7 +14,6 @@ export function GetPlans(id: any) {
 }
 
 export function CreateSaving(data: any) {
-  console.log('savingplan data in:', data)
   return instance
     .post(`api/saving/CreateSavingPlan`, data)
     .then((response) => {
@@ -22,6 +21,19 @@ export function CreateSaving(data: any) {
     })
     .catch((error) => {
       console.log('Error in CreateSavingPlan: ', error)
+      throw error
+    })
+}
+
+export function DeleteSaving(data: any) {
+  console.log('data in delete: ', data)
+  return instance
+    .delete(`api/saving/DeletePlan/${data}`)
+    .then((response) => {
+      return response
+    })
+    .catch((error) => {
+      console.log('Error in DeleteSavingPlan: ', error)
       throw error
     })
 }

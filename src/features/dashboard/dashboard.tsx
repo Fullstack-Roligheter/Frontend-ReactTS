@@ -9,12 +9,9 @@ function DashboardFeature() {
 
   let timeMilli = Date.now().toString().slice(-3)
 
-  const { userId } = useUserContext()
-  const { email } = useUserContext()
-  const { firstName } = useUserContext()
-  const { lastName } = useUserContext()
+  const user = useUserContext()
 
-  if (userId === null) {
+  if (user.userId === null) {
     return <Navigate to='/login' replace />
   }
 
@@ -42,10 +39,10 @@ function DashboardFeature() {
     >
       <Typography variant='h1'>DASHBOARD</Typography>
       <Typography variant='h3'>YOU ARE LOGGED IN</Typography>
-      <Typography variant='h5'>UserId: {userId}</Typography>
-      <Typography variant='h5'>Förnamn: {firstName}</Typography>
-      <Typography variant='h5'>Efternamn: {lastName}</Typography>
-      <Typography variant='h5'>Epost: {email}</Typography>
+      <Typography variant='h5'>UserId: {user.userId}</Typography>
+      <Typography variant='h5'>Förnamn: {user.firstName}</Typography>
+      <Typography variant='h5'>Efternamn: {user.lastName}</Typography>
+      <Typography variant='h5'>Epost: {user.email}</Typography>
       <Typography variant='subtitle1'>{timeMilli}</Typography>
     </Box>
   )

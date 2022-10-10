@@ -4,12 +4,13 @@ import { Box } from '@mui/material'
 import Sidebar from './sidebar/sidebar'
 import { useEffect, useState } from 'react'
 import AuthenticatedHeader from './header/authenticatedHeader'
-import { userType } from '../Interfaces/userToken'
 import Grid from '@mui/material/Grid'
+import { useUserContext } from '../../context/UserContext'
 
-const AuthenticatedLayout = (user: userType) => {
+const AuthenticatedLayout = () => {
+  const user = useUserContext()
+
   const [smallWindow, setSmallWindowOpen] = useState(true)
-
   const [drawervariant, SetDrawerVariant] = useState('permanent')
 
   useEffect(() => {
@@ -37,13 +38,11 @@ const AuthenticatedLayout = (user: userType) => {
   }
 
   let newUserHeader = {
-    user,
     show: smallWindow,
     toggleSidebar: toggleSidebar,
   }
 
   let newUserSidebar = {
-    user,
     show: smallWindow,
     variant: drawervariant,
   }

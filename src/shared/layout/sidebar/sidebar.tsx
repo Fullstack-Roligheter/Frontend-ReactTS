@@ -17,26 +17,19 @@ import {
   QuestionAnswer,
 } from '@mui/icons-material'
 
-import { userType } from '../../Interfaces/userToken'
-
 const drawerWidth = 240
 
-
 type SidebarType = {
-  user: userType,
-  show: boolean,
-  variant:any
-
+  show: boolean
+  variant: any
 }
 
 export default function Sidebar(props: any) {
-
   const navigate = useNavigate()
 
   let sideBarProps: SidebarType = {
-    user: props.user,
     show: props.show,
-    variant: props.variant
+    variant: props.variant,
   }
 
   console.log('sidebar props: ', props)
@@ -83,13 +76,16 @@ export default function Sidebar(props: any) {
       >
         <Toolbar />
 
-        <Box sx={{overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.1)' }}>
-          <List sx={{
-            '& .MuiListItemButton-root:hover': {
-              bgcolor: 'white',
-            },
-          }}>
-
+        <Box
+          sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.1)' }}
+        >
+          <List
+            sx={{
+              '& .MuiListItemButton-root:hover': {
+                bgcolor: 'white',
+              },
+            }}
+          >
             {MenuTargets.map((menuItem, index) => (
               <ListItem key={menuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(menuItem.route)}>
@@ -100,11 +96,13 @@ export default function Sidebar(props: any) {
             ))}
           </List>
           <Divider />
-          <List sx={{
-            '& .MuiListItemButton-root:hover': {
-              bgcolor: 'white',
-            },
-          }}>
+          <List
+            sx={{
+              '& .MuiListItemButton-root:hover': {
+                bgcolor: 'white',
+              },
+            }}
+          >
             {SubMenu.map((subMenuItem) => (
               <ListItem key={subMenuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(subMenuItem.route)}>

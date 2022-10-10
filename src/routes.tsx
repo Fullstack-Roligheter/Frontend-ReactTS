@@ -28,21 +28,18 @@ const AppRouter = () => {
   return (
     <Routes>
       {/* <Route element={<Layout user={UserIsLoggedIn} />}> */}
-      <Route element={<Layout {...user} />}>
+      <Route element={<Layout />}>
         <Route>
           <Route index element={<WelcomeFeature />} />
           <Route path='/omoss' element={<OmOss />} />
           <Route path='/login' element={<LogIn />} />
           <Route path='/register' element={<RegisterUser />} />
           <Route path='/faq' element={<Faq />} />
-          <Route path='/dashboard' element={<DashboardFeature {...user} />} />
-          <Route
-            path='/transactions'
-            element={<ExpenseDashboard {...user} />}
-          />
+          <Route path='/dashboard' element={<DashboardFeature />} />
+          <Route path='/transactions' element={<ExpenseDashboard />} />
           <Route path='/saving' element={<SavingsLayout />}>
-            <Route index element={<CheckSavingPlans {...user} />} />
-            <Route path='create' element={<CreateSaving {...user} />} />
+            <Route index element={<CheckSavingPlans />} />
+            <Route path='create' element={<CreateSaving />} />
             <Route path='editplan/:id' element={<EditSavingPlan />} />
           </Route>
         </Route>

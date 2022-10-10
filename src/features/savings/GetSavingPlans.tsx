@@ -7,16 +7,13 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { Plan } from './Plan'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import EditIcon from '@mui/icons-material/Edit'
 import { Link } from 'react-router-dom'
 import { IconButton } from '@mui/material'
-import { baseURL } from '../../config'
-import React from 'react'
-import { GetPlans } from '../../shared/fetch/savingplan'
-import { userType } from '../../shared/Interfaces/userToken'
+import { DeleteSaving, GetPlans } from '../../shared/fetch/savingplan'
+import { useUserContext } from '../../context/UserContext'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,55 +29,39 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
   },
 }))
 
-const CheckSavingPlans = (props: userType) => {
+const CheckSavingPlans = () => {
+  const user = useUserContext()
+
   const [planList, setPlanList] = useState<Plan[]>([])
 
+  useEffect(() => {
+    getPlans()
+  }, [])
+
   const getPlans = async () => {
-    // const userId = sessionStorage.getItem('userId')
-    GetPlans(props.userId).then((response) => {
+    GetPlans(user.userId).then((response) => {
       console.log('response: ', response)
       let planList = response as Plan[]
       setPlanList(planList)
     })
-    // try {
-    //   //
-    //   // let numberValue: string | null = ''
-    //   const value = sessionStorage.getItem('userId')
-    //   // if (value !== null) {
-    //   //   numberValue = JSON.parse(value)
-    //   // } else {
-    //   //   console.log('never entered parse value')
-    //   // }
-    //   //
-
-    //   const { data } = await axios.get(
-    //     `${baseURL}/saving/getplans?UserId=${value}`
-    //   )
-    //   let planList = data as Plan[]
-    //   setPlanList(planList)
-    // } catch (err) {
-    //   console.log(err)
-    // }
   }
 
-  useEffect(() => {
-    console.log('getPlans in GetSavingsPlans init')
-    getPlans()
-  }, [])
-
-  const deletPlan = (id: string) => {
+  const DeleteSavingPlan = (id: string) => {
     if (id !== null) {
-      axios.delete(`${baseURL}/saving/DeletePlan/${id}`).then((res) => {
-        if (res.status === 200) {
-          getPlans()
-        }
-      })
+      DeleteSaving(id)
+        .then((res) => {
+          if (res.status === 200) {
+            getPlans()
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 
@@ -109,11 +90,11 @@ const CheckSavingPlans = (props: userType) => {
               </StyledTableCell>
               <StyledTableCell align='right'>{row.planEndDate}</StyledTableCell>
               <StyledTableCell align='right'>{row.countDown}</StyledTableCell>
-              <div className='icon-container'>
+              <StyledTableCell className='icon-container'>
                 <Link to={''}>
                   <IconButton
                     className='icon'
-                    onClick={() => deletPlan(row.savingId)}
+                    onClick={() => DeleteSavingPlan(row.savingId)}
                   >
                     <DeleteOutlineIcon></DeleteOutlineIcon>
                   </IconButton>
@@ -123,7 +104,7 @@ const CheckSavingPlans = (props: userType) => {
                     <EditIcon />
                   </IconButton>
                 </Link>
-              </div>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
