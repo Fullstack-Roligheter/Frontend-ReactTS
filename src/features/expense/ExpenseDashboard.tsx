@@ -182,7 +182,7 @@ const ExpenseDashboard = (props: userType) => {
                 />
               </React.Fragment>
             </Box>
-            <Typography sx={{ textAlign: 'center' }} style={styles.textIncludedInForm}>Tryck på plusset för att lägga til en ny kategori</Typography>
+            <Typography sx={{ textAlign: 'center' }} style={styles.textIncludedInForm}>Tryck på plusset för att lägga till en ny kategori</Typography>
             <TextField
               select
               label='Budget'
