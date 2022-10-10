@@ -9,6 +9,7 @@ import DashboardFeature from './features/dashboard/dashboard'
 import CreateSaving from './features/savings/CreateSaving'
 import EditSavingPlan from './features/savings/EditSavingPlan'
 import CheckSavingPlans from './features/savings/GetSavingPlans'
+import ProfileFeature from './features/userprofile/userprofile'
 import Layout from './shared/layout/layout'
 import RegisterUser from './features/register/register'
 import ExpenseDashboard from './features/expense/ExpenseDashboard'
@@ -35,6 +36,7 @@ const AppRouter = () => {
             <Route path='/register' element={<RegisterUser />} />
             <Route path='/faq' element={<Faq />} />
             <Route path='/dashboard' element={<DashboardFeature {...user} />} />
+            <Route path='/profile' element={<ProfileFeature {...user}/>} />
             <Route path='/transactions' element={<ExpenseDashboard {...user} />} />
             <Route path='/saving' element={<SavingsLayout />}>
               <Route index element={<CheckSavingPlans {...user} />} />
