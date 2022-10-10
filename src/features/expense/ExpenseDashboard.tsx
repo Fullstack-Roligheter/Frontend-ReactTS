@@ -13,9 +13,9 @@ import { render } from 'react-dom'
 import { Modal } from '../../shared/modal/modal'
 import { useModal } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
-import { DisabledSubmitButton, SubmitButton, OrdinaryButton, AddButton } from '../../shared/buttons/button-default'
+import { DisabledSubmitButton, SubmitButton, AddButton } from '../../shared/buttons/button-default'
 import styles from '../../CssStyles'
-// import { OrdinaryButton } from '../../CustomComponents'
+
 
 
 const ExpenseDashboard = (props: userType) => {
