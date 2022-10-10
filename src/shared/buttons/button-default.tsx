@@ -78,14 +78,20 @@ export function CloseButton(props: any) {
 }
 export function AddButton() {
   return (
-    <Box sx={{ m: 1, position: 'relative' }}>
+    <Box sx={{ ml: '15px', mt: '5px', align: 'center', justify: 'center' }}>
       <IconButton sx={{
-        color: 'black',
+        width: '36px',
+        height: '36px',
+        color: 'white',
+        background: 'black',
+        border: '1px solid black',
         '& :hover': {
           cursor: 'pointer',
-          color: 'red',
+          color: 'black',
+          background: 'white',
+          borderRadius: '50px'
         }
-      }}><AddCircleIcon sx={{ fontSize: 40, border: '0px', color: 'black' }} />
+      }}><AddCircleIcon sx={{ fontSize: 40, color: 'inherit', }} />
 
       </IconButton>
     </Box>

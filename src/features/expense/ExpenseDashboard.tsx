@@ -166,7 +166,7 @@ const ExpenseDashboard = (props: userType) => {
                 ))}
               </TextField>
               <React.Fragment>
-                <IconButton sx={{ '& :hover': { margin: '0px', padding: '0px', border: '0px' } }} style={styles.addButton} onClick={toggle}><AddButton /></IconButton>
+                <IconButton style={styles.addButton} onClick={toggle}><AddButton /></IconButton>
                 <Modal
                   isShown={isShown}
                   hide={toggle}
