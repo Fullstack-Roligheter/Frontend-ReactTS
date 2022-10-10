@@ -38,21 +38,6 @@ export const ModalHeader = styled.div`
   text-decoration: underline;
 `;
 
-export const CloseButton = styled.button`
-  font-size: 0.8rem;
-  border: none;
-  border-radius: 3px;
-  margin-left: 0.5rem;
-  background: none;
-  border: 1px solid black;
-  border-radius: 3px;
-  :hover {
-    cursor: pointer;
-    background: red;
-    color: white;
-  }
-`;
-
 export const Content = styled.div`
   padding: 10px;
   max-height: 30rem;

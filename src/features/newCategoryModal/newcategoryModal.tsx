@@ -1,5 +1,5 @@
 import { Button, TextField, Typography } from '@mui/material';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import styles from '../../CssStyles';
 import { ButtonCollection } from '../../CustomComponents'
 import { OrdinaryButton } from '../../shared/buttons/button-default';
@@ -39,7 +39,6 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
       </form>
       <ButtonCollection>
         <Button onClick={() => { handleSubmit(kategoriNamn) }}><OrdinaryButton buttontext='Spara' /></Button>
-        {/* <Button onClick={props.onCancel}><OrdinaryButton buttontext='Avbryt' /></Button> */}
       </ButtonCollection>
     </React.Fragment>
   );
