@@ -50,6 +50,8 @@ const styles = {
     height: 'fit-content',
   },
   closeButton: {
+    width: '25px',
+    height: '25px',
     padding: '0px',
     marginLeft: '0.5rem',
     border: '1px solid black',

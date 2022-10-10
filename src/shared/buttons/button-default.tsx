@@ -65,7 +65,8 @@ export function CloseButton(props: any) {
   return (
     <Box sx={{ m: 1, position: 'relative' }}>
       <IconButton style={styles.closeButton} sx={{
-        backgroundColor: 'white', color: 'black',
+        backgroundColor: 'white',
+        color: 'black',
         '& :hover': {
           cursor: 'pointer',
           backgroundColor: 'red',
