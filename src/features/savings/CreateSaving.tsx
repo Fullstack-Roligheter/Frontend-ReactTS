@@ -1,6 +1,5 @@
-import * as React from 'react'
 import TextField from '@mui/material/TextField'
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import { Grid } from '@mui/material'
@@ -17,7 +16,7 @@ const CreateSavingPlan = () => {
   const [loading, setLoading] = useState(false)
   const [buttontext, setButtonText] = useState('Spara')
 
-  const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
   ) {

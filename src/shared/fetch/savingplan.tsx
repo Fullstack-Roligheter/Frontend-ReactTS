@@ -37,3 +37,16 @@ export function DeleteSaving(data: any) {
       throw error
     })
 }
+
+export function UpdatePlan(data: any) {
+  console.log('data in UpdatePlan: ', data)
+  return instance
+    .put(`api/saving/UpdatePlan`, data)
+    .then((response) => {
+      return response
+    })
+    .catch((error) => {
+      console.log('Error in UpdatePlan: ', error)
+      throw error
+    })
+}
