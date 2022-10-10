@@ -23,6 +23,12 @@ const styles = {
     textShadow: '1px 1px 2px black',
     color: 'white'
   },
+  textIncludedInForm: {
+    fontSize: '10px',
+    width: '100%',
+    marginBottom: '8px',
+    color: 'grey'
+  },
   formBackground: {
     background: 'rgba(65, 162, 72, 0.4)',
     width: 'fit-content',

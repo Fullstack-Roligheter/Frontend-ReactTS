@@ -92,7 +92,6 @@ export function AddButton() {
           borderRadius: '50px'
         }
       }}><AddCircleIcon sx={{ fontSize: 40, color: 'inherit', }} />
-
       </IconButton>
     </Box>
   )

@@ -2,7 +2,7 @@ import FormControl from '@mui/material/FormControl'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
-import { Box, Button, IconButton, Paper } from '@mui/material'
+import { Box, Button, IconButton, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState, Component, FunctionComponent } from 'react'
 import { userType } from '../../shared/Interfaces/userToken'
 import { GetCategoriesForUser } from '../../shared/fetch/category'
@@ -182,6 +182,7 @@ const ExpenseDashboard = (props: userType) => {
                 />
               </React.Fragment>
             </Box>
+            <Typography sx={{ textAlign: 'center' }} style={styles.textIncludedInForm}>Tryck på plusset för att lägga til en kategori</Typography>
             <TextField
               select
               label='Budget'
