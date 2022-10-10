@@ -84,7 +84,7 @@ export function AddButton() {
         height: '36px',
         color: 'white',
         background: 'green',
-        border: '1px solid grey',
+        border: '1px solid lightgrey',
         '& :hover': {
           cursor: 'pointer',
           color: 'green',
