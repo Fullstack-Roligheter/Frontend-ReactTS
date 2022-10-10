@@ -170,7 +170,7 @@ const ExpenseDashboard = (props: userType) => {
                 <Modal
                   isShown={isShown}
                   hide={toggle}
-                  headerText='Lägga till egen kategori'
+                  headerText='Lägg till egen kategori'
                   modalContent={
                     <NewCategoryModal
                       onConfirm={onConfirm}
