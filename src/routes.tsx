@@ -17,14 +17,7 @@ import { userToken, userType } from './shared/Interfaces/userToken'
 import { useUserContext } from './context/UserContext'
 
 const AppRouter = () => {
-  /*   let user: userType = {
-    userId: sessionStorage.getItem('userId') || '',
-    email: sessionStorage.getItem('email') || '',
-    firstName: sessionStorage.getItem('firstName') || '',
-    lastName: sessionStorage.getItem('lastName') || '', */
-  //vill använda context ist
-
-  const { userId } = useUserContext()
+  const user = useUserContext()
 
   return (
     <Routes>
@@ -37,6 +30,7 @@ const AppRouter = () => {
           <Route path='/register' element={<RegisterUser />} />
           <Route path='/faq' element={<Faq />} />
           <Route path='/dashboard' element={<DashboardFeature />} />
+          <Route path='/profile' element={<ProfileFeature />} />
           <Route path='/transactions' element={<ExpenseDashboard />} />
           <Route path='/saving' element={<SavingsLayout />}>
             <Route index element={<CheckSavingPlans />} />
