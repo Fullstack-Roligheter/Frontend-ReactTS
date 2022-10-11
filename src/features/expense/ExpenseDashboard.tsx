@@ -2,12 +2,12 @@ import FormControl from '@mui/material/FormControl'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
-import { Button, Paper } from '@mui/material'
+import { Box, Button, FormControlLabel, Paper } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { userType } from '../../shared/Interfaces/userToken'
 import { GetCategoriesForUser } from '../../shared/fetch/category'
 import { GetBudgetsForUser } from '../../shared/fetch/budget'
 import { CreateDebit, GetDebitsForUser } from '../../shared/fetch/expense'
+import { DateFetcher } from '../../shared/dateFetcher/dateFetcher'
 import { useUserContext } from '../../context/UserContext'
 
 const ExpenseDashboard = () => {
@@ -21,10 +21,10 @@ const ExpenseDashboard = () => {
     Date: '',
     Amount: '',
     Comment: '',
-    UserId: user,
-    CategoryId: null,
-    BudgetId: null,
-    // ReturningTransactions: false,
+    UserId: user.userId,
+    CategoryId: undefined,
+    BudgetId: undefined,
+    ReturningTransactions: false,
   })
 
   console.log(newExpense)
@@ -37,13 +37,21 @@ const ExpenseDashboard = () => {
     })
   }
 
+  const handleBoolean = (e: any) => {
+    const { name, checked } = e.target
+    setNewExpense({
+      ...newExpense,
+      [name]: checked,
+    })
+  }
+
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (newExpense.BudgetId === '') {
-      newExpense.BudgetId = null
+      newExpense.BudgetId = undefined
     }
     if (newExpense.CategoryId === '') {
-      newExpense.CategoryId = null
+      newExpense.CategoryId = undefined
     }
     CreateDebit(newExpense).then((Response) => {
       console.log(Response)
@@ -76,6 +84,14 @@ const ExpenseDashboard = () => {
   }, [])
   console.log(debits)
 
+  useEffect(() => {
+    let currentDate = DateFetcher()
+    setNewExpense({
+      ...newExpense,
+      Date: currentDate,
+    })
+  }, [])
+
   //Grön styling för när vi ändrar färg på standardfärgen i projektet
   //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: 'rgba(120, 174, 135, 0.7)'}}
   return (
@@ -97,9 +113,11 @@ const ExpenseDashboard = () => {
             required
             type='date'
             name='Date'
+            label='Date'
             value={newExpense.Date}
             onChange={handleChange}
             margin='normal'
+            // InputLabelProps={{shrink:true}}
           />
           <TextField
             required
@@ -159,10 +177,19 @@ const ExpenseDashboard = () => {
             onChange={handleChange}
             margin='normal'
           />
-          {/* <Checkbox
-          aria-label='Returning transactions'
-          sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
-        /> */}
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name='ReturningTransactions'
+                  onChange={handleBoolean}
+                  sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
+                />
+              }
+              label='Return transactions'
+              labelPlacement='start'
+            />
+          </Box>
 
           <Button variant='contained' type='submit' onClick={handleSubmit}>
             Submit

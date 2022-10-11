@@ -2,6 +2,8 @@ import { Box, Typography } from '@mui/material'
 import { Navigate } from 'react-router-dom'
 import { useUserContext } from '../../context/UserContext'
 import { userType } from '../../shared/Interfaces/userToken'
+import styles from '../../styles.js'
+
 
 function DashboardFeature() {
   // let UserIsLoggedIn = sessionStorage.getItem('user')
@@ -20,30 +22,14 @@ function DashboardFeature() {
   // }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        width: '80vw',
-        background:
-          'radial-gradient(circle at center, rgba(65, 162, 72, 0.4), rgba(65, 162, 72, 0.0))',
-        borderRadius: '15px',
-        paddingLeft: '30px',
-        paddingRight: '30px',
-        paddingTop: '100px',
-        paddingBottom: '100px',
-        height: 'fit-content',
-      }}
-    >
-      <Typography variant='h1'>DASHBOARD</Typography>
-      <Typography variant='h3'>YOU ARE LOGGED IN</Typography>
-      <Typography variant='h5'>UserId: {user.userId}</Typography>
-      <Typography variant='h5'>Förnamn: {user.firstName}</Typography>
-      <Typography variant='h5'>Efternamn: {user.lastName}</Typography>
-      <Typography variant='h5'>Epost: {user.email}</Typography>
-      <Typography variant='subtitle1'>{timeMilli}</Typography>
+    <Box style={styles.dashboardBackground} sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Typography variant='h1' style={styles.whiteTypography}>DASHBOARD</Typography>
+      <Typography variant='h3' style={styles.whiteTypography}>YOU ARE LOGGED IN</Typography>
+      <Typography variant='h5' style={styles.whiteTypography}>UserId: {user.userId}</Typography>
+      <Typography variant='h5' style={styles.whiteTypography}>Förnamn: {user.firstName}</Typography>
+      <Typography variant='h5' style={styles.whiteTypography}>Efternamn: {user.lastName}</Typography>
+      <Typography variant='h5' style={styles.whiteTypography}>Epost: {user.email}</Typography>
+      <Typography variant='subtitle1' style={styles.whiteTypography}>{timeMilli}</Typography>
     </Box>
   )
 }
