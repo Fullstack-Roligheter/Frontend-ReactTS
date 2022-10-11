@@ -1,4 +1,4 @@
-import { Box, Link, Typography } from "@mui/material"
+import { Box, CircularProgress, LinearProgress, Link, Typography } from "@mui/material"
 import { userType } from "../../shared/Interfaces/userToken"
 import { GetGravatarProfile } from "../../shared/fetch/gravatar"
 import { useEffect, useState } from "react"
@@ -25,10 +25,10 @@ function ProfileFeature(user: userType) {
       const response: any = await GetGravatarProfile(hash)
       if (response === "User not found") {
         setdata(response)
+        setloadingState(true)
       } 
       else {
         JSON.stringify(response)
-        console.log(response)
           setName(response.entry[0].name.formatted)
           setemail(response.entry[0].emails[0].value)
           setaboutMe(response.entry[0].aboutMe)
@@ -37,10 +37,13 @@ function ProfileFeature(user: userType) {
           setlocation(response.entry[0].currentLocation)
           setphone(response.entry[0].phoneNumbers[0].value)
           setbtcAddress(response.entry[0].currency[0].value)
+          setloadingState(true)
       }
     }
   getUserProfile()
 },[])
+
+const [loadingState, setloadingState] = useState(false)
 
   return (
     <Box
@@ -59,6 +62,13 @@ function ProfileFeature(user: userType) {
     >
 
       {(() => {
+              if (!loadingState) {
+                return(
+                  <Box sx={{ display: 'flex' }}>
+                    <CircularProgress />
+                  </Box>
+                )
+              }
               if (data === "User not found") {
                 return (
                   <Box>
