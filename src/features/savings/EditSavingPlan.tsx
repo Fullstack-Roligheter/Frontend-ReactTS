@@ -42,7 +42,7 @@ const EditSavingPlan: React.FC = () => {
         console.log('response: ', response)
         let planList = response as Plan[]
         setPlanList(planList)
-        const [plan] = planList.filter((plan) => plan.savingId === String(id)) // ?? tidigare är en number type,+id
+        const [plan] = planList.filter((plan) => plan.savingId === id) // ?? tidigare är en number type,+id
         if (!plan) {
           return
         }

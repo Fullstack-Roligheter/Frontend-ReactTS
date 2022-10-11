@@ -17,9 +17,9 @@ export type IUser = {
 
 type IUserContext = {
   userId: string | null
-  email: string
-  firstName: string
-  lastName: string
+  email: string | null
+  firstName: string | null
+  lastName: string | null
   setUserId: (userId: string) => void
   signIn: (userEmail: string, password: string) => void
   signOut: () => void
@@ -33,14 +33,18 @@ export const useUserContext = () => {
 
 export const UserContextProvider: React.FC<IProps> = (props) => {
   const navigate = useNavigate()
-  const [userId, setUserId] = useState<string | null>('')
-  const [email, setEmail] = useState<string>('')
-  const [firstName, setFirstName] = useState<string>('')
-  const [lastName, setLastName] = useState<string>('')
-
-  const [user, setUser] = useState({
-    userId: '',
-  })
+  const [userId, setUserId] = useState<string | null>(
+    sessionStorage.getItem('userId')
+  )
+  const [email, setEmail] = useState<string | null>(
+    sessionStorage.getItem('email')
+  )
+  const [firstName, setFirstName] = useState<string | null>(
+    sessionStorage.getItem('firstName')
+  )
+  const [lastName, setLastName] = useState<string | null>(
+    sessionStorage.getItem('lastName')
+  )
 
   //login code
   const signIn = async (userEmail: string, password: string) => {
@@ -73,13 +77,26 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
     setLastName(object.lastName)
 
     navigate(`/dashboard`)
-    /*  window.location.reload() */
   }
-  console.log('saru:::', userId)
+  /*  console.log('userID:', userId) */
 
   //sign out
   const signOut = () => {}
 
+  /*  useEffect(() => {
+    const userId = sessionStorage.getItem('userId')
+    const email = sessionStorage.getItem('email')
+    const firstName = sessionStorage.getItem('firstName')
+    const lastName = sessionStorage.getItem('lastName')
+
+    if (userId && email && firstName && lastName) {
+      setUserId(userId)
+      setEmail(email)
+      setFirstName(firstName)
+      setLastName(lastName)
+    }
+  }, [])
+ */ //andra sätt - gär en useEffect
   return (
     <UserContext.Provider
       value={{

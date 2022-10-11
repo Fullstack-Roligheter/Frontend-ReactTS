@@ -23,7 +23,7 @@ const Layout = () => {
       style={styles.paperContainer}
     >
       {(() => {
-        if (user.userId === '') {
+        if (user.userId === null) {
           return <UnauthenticatedLayout />
         } else {
           return <AuthenticatedLayout />
