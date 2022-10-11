@@ -43,6 +43,15 @@ const styles = {
     paddingBottom: '100px',
     height: 'fit-content',
   },
+  userProfileBOX: {
+    display: "flex",
+  },
+  userProfileIMG: {
+    margin: "5px",
+  },
+  userProfileInfo: {
+    margin: "5px",
+  }
 };
 
 export default styles;
