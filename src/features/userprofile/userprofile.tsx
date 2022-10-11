@@ -4,6 +4,7 @@ import { GetGravatarProfile } from "../../shared/fetch/gravatar"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { flexbox } from "@mui/system"
+import { responsiveProperty } from "@mui/material/styles/cssUtils"
 
 const styles = {
   div: {
@@ -40,20 +41,22 @@ function ProfileFeature(user: userType) {
   
   useEffect(() => {
     async function getUserProfile(){
-      const response = await axios.get(`https://localhost:7073/api/Gravatar/GetGravatarProfile?hash=${hash}`)
-      console.log(response)
-      if (response.data === "User not found") {
-        console.log(response.data)
-        setdata(response.data)
-      } else {
-        setName(response.data.entry[0].name.formatted)
-        setemail(response.data.entry[0].emails[0].value)
-        setaboutMe(response.data.entry[0].aboutMe)
-        setaccounts(response.data.entry[0].accounts[0].display)
-        setprofileImage(response.data.entry[0].photos[0].value)
-        setlocation(response.data.entry[0].currentLocation)
-        setphone(response.data.entry[0].phoneNumbers[0].value)
-        setbtcAddress(response.data.entry[0].currency[0].value)
+      const response: any = await GetGravatarProfile(hash)
+      if (response === "User not found") {
+        console.log("inne i if")
+        setdata(response)
+      } 
+      else {
+        console.log("inne i else")
+        JSON.stringify(response)
+        setName(response.entry[0].name.formatted)
+        setemail(response.entry[0].emails[0].value)
+        setaboutMe(response.entry[0].aboutMe)
+        setaccounts(response.entry[0].accounts[0].display)
+        setprofileImage(response.entry[0].photos[0].value)
+        setlocation(response.entry[0].currentLocation)
+        setphone(response.entry[0].phoneNumbers[0].value)
+        setbtcAddress(response.entry[0].currency[0].value)
       }
     }
   getUserProfile()
@@ -89,7 +92,7 @@ function ProfileFeature(user: userType) {
                 <Box>
                   <div style={styles.div} >
                     <div style={styles.profileimgdiv}>
-                      <img src={`${profileImage}?s=200`} style={styles.img} />
+                      <img src={`${profileImage}?s=200`} style={styles.img} alt="UserprofileImage"/>
                     </div>
                     <div style={styles.profileinfodiv}>
                       <Typography variant='subtitle1' >Name: {name}</Typography>
@@ -105,10 +108,6 @@ function ProfileFeature(user: userType) {
                 )
               }
             })()}   
-
-      
-        
-      
     </Box>
   )
 }
