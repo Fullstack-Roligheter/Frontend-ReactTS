@@ -4,13 +4,15 @@ import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
 import { Box, Button, FormControlLabel, Paper } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { userType } from '../../shared/Interfaces/userToken'
 import { GetCategoriesForUser } from '../../shared/fetch/category'
 import { GetBudgetsForUser } from '../../shared/fetch/budget'
 import { CreateDebit, GetDebitsForUser } from '../../shared/fetch/expense'
 import { DateFetcher } from '../../shared/dateFetcher/dateFetcher'
+import { useUserContext } from '../../context/UserContext'
 
-const ExpenseDashboard = (props: userType) => {
+const ExpenseDashboard = () => {
+  const user = useUserContext()
+
   const [categories, setCategories] = useState([])
   const [budgets, setBudgets] = useState([])
   const [debits, setDebits] = useState([])
@@ -19,7 +21,7 @@ const ExpenseDashboard = (props: userType) => {
     Date: '',
     Amount: '',
     Comment: '',
-    UserId: props.userId,
+    UserId: user.userId,
     CategoryId: undefined,
     BudgetId: undefined,
     ReturningTransactions: false,
@@ -58,22 +60,25 @@ const ExpenseDashboard = (props: userType) => {
 
   //Get categories for user to put in select
   useEffect(() => {
-    GetCategoriesForUser(props.userId).then((Response) => {
+    GetCategoriesForUser(user.userId).then((Response) => {
+      console.log(Response)
       setCategories(Response)
     })
   }, [])
 
   //Get budgets for user to put in select
   useEffect(() => {
-    GetBudgetsForUser(props.userId).then((Response) => {
+    GetBudgetsForUser(user.userId).then((Response) => {
+      console.log(Response)
       setBudgets(Response)
     })
   }, [])
 
   //Get all debits to put in list
   useEffect(() => {
-    console.log('props.userId: ', props.userId)
-    GetDebitsForUser(props.userId).then((Response) => {
+    console.log('props.userId: ', user.userId)
+    GetDebitsForUser(user.userId).then((Response) => {
+      console.log(Response)
       setDebits(Response)
     })
   }, [])

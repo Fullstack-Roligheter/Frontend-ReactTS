@@ -13,14 +13,16 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
+import { useUserContext } from '../../../context/UserContext'
 
 /* Generate a md5-hash of a email address for Gravatar URL */
 
 const AuthenticatedHeader = (props: any) => {
   const navigate = useNavigate()
+  const user = useUserContext()
 
   var CryptoJS = require('crypto-js')
-  let userEmail = props.user.email
+  let userEmail = user.email
   var hash = CryptoJS.MD5(userEmail).toString()
 
   let settings = [
@@ -150,7 +152,7 @@ const AuthenticatedHeader = (props: any) => {
           ></Box>
 
           {(() => {
-            if (props.user.userId !== null) {
+            if (user.userId !== null) {
               return (
                 <Box sx={{ flexGrow: 0 }}>
                   <Tooltip title='Open settings'>
@@ -199,7 +201,7 @@ const AuthenticatedHeader = (props: any) => {
                   </Menu>
                 </Box>
               )
-            } else if (!props.user) {
+            } else if (!user.userId) {
               return (
                 <IconButton
                   href='/login'
