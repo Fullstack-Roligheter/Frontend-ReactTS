@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react'
 import { GetDebitsForUser } from '../../shared/fetch/expense'
 import { userType } from '../../shared/Interfaces/userToken'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
+import { useUserContext } from '../../context/UserContext'
 
-const ExpenseListOutput = (props: any) => {
-  const [debits, setDebits] = useState([])
+const ExpenseListOutput = () => {
+  const user = useUserContext()
+  const [debits, setDebits] = useState<any[]>([])
 
   //Get all debits to put in list
   useEffect(() => {
-    console.log('props.userId: ', props.userId)
-    GetDebitsForUser(props.userId).then((Response) => {
+    GetDebitsForUser(user.userId).then((Response) => {
       setDebits(Response)
     })
   }, [])
@@ -23,11 +24,11 @@ const ExpenseListOutput = (props: any) => {
 
   return (
     <>
-      {/* <TableContainer component={Paper}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
+              <TableCell>Debits</TableCell>
               <TableCell align='right'>Calories</TableCell>
               <TableCell align='right'>Fat&nbsp;(g)</TableCell>
               <TableCell align='right'>Carbs&nbsp;(g)</TableCell>
@@ -35,23 +36,21 @@ const ExpenseListOutput = (props: any) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {debits.map((debits) => (
+            {debits.map((debit) => (
               <TableRow
-                key={debits}
+                key={debit.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component='th' scope='row'>
-                  {debits.Amount}
-                </TableCell>
-                <TableCell align='right'>{debits}</TableCell>
-                <TableCell align='right'>{debits}</TableCell>
-                <TableCell align='right'>{debits}</TableCell>
-                <TableCell align='right'>{debits}</TableCell>
+                <TableCell>{debit.amount}</TableCell>
+                <TableCell>{debit.category}</TableCell>
+                <TableCell>{debit.date}</TableCell>
+                <TableCell>{debit.budget}</TableCell>
+                <TableCell>{debit.comment}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </TableContainer> */}
+      </TableContainer>
     </>
   )
 }
