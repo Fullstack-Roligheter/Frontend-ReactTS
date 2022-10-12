@@ -6,9 +6,8 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 import { useUserContext } from '../../context/UserContext'
 import { GetPlans, UpdatePlan } from '../../shared/fetch/savingplan'
-import LoadingButton from '@mui/lab/LoadingButton'
-import SendIcon from '@mui/icons-material/Save'
 import Grid from '@mui/material/Grid'
+import { SubmitButton } from '../../shared/buttons/button-default'
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -176,16 +175,7 @@ const EditSavingPlan: React.FC = () => {
         <br />
         <br />
         <Grid container justifyContent='center'>
-          <LoadingButton
-            type='submit'
-            loading={loading}
-            onClick={HandleSubmit}
-            variant='contained'
-            startIcon={<SendIcon />}
-            loadingPosition='start'
-          >
-            {buttontext}
-          </LoadingButton>
+          <SubmitButton isLoading={loading} buttontext={buttontext} />
         </Grid>
       </form>
       {status !== 200 ? showError() : successMessage()}

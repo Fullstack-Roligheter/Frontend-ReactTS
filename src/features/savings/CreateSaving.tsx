@@ -7,6 +7,7 @@ import { CreateSaving } from '../../shared/fetch/savingplan'
 import LoadingButton from '@mui/lab/LoadingButton'
 import SendIcon from '@mui/icons-material/Save'
 import { useUserContext } from '../../context/UserContext'
+import { SubmitButton } from '../../shared/buttons/button-default'
 
 const CreateSavingPlan = () => {
   const user = useUserContext()
@@ -14,7 +15,7 @@ const CreateSavingPlan = () => {
   const [open, setOpen] = useState(false)
   const [status, setStatus] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [buttontext, setButtonText] = useState('Spara')
+  const [buttontext, setButtonText] = useState('Skapa')
 
   const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -156,16 +157,7 @@ const CreateSavingPlan = () => {
         <br />
         <br />
         <Grid container justifyContent='center'>
-          <LoadingButton
-            type='submit'
-            loading={loading}
-            onClick={HandleSubmit}
-            variant='contained'
-            startIcon={<SendIcon />}
-            loadingPosition='start'
-          >
-            {buttontext}
-          </LoadingButton>
+          <SubmitButton isLoading={loading} buttontext={buttontext} />
         </Grid>
       </form>
       {status !== 200 ? showError() : successMessage()}
