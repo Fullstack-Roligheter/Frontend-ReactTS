@@ -9,11 +9,11 @@ import { GetCategoriesForUser } from '../../shared/fetch/category'
 import { GetBudgetsForUser } from '../../shared/fetch/budget'
 import { CreateDebit, GetDebitsForUser } from '../../shared/fetch/expense'
 import { DateFetcher } from '../../shared/dateFetcher/dateFetcher'
+import ExpenseListOutput from './ExpenseListOutput'
 
 const ExpenseDashboard = (props: userType) => {
   const [categories, setCategories] = useState([])
   const [budgets, setBudgets] = useState([])
-  const [debits, setDebits] = useState([])
 
   const [newExpense, setNewExpense] = useState({
     Date: '',
@@ -61,15 +61,6 @@ const ExpenseDashboard = (props: userType) => {
       setBudgets(Response)
     })
   }, [])
-
-  //Get all debits to put in list
-  useEffect(() => {
-    console.log('props.userId: ', props.userId)
-    GetDebitsForUser(props.userId).then((Response) => {
-      setDebits(Response)
-    })
-  }, [])
-  console.log(debits)
 
   useEffect(() => {
     let currentDate = DateFetcher()
@@ -174,6 +165,8 @@ const ExpenseDashboard = (props: userType) => {
           </Button>
         </FormControl>
       </form>
+
+      <ExpenseListOutput props={props}/>
     </>
   )
 }
