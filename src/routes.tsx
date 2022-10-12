@@ -9,42 +9,37 @@ import DashboardFeature from './features/dashboard/dashboard'
 import CreateSaving from './features/savings/CreateSaving'
 import EditSavingPlan from './features/savings/EditSavingPlan'
 import CheckSavingPlans from './features/savings/GetSavingPlans'
+import ProfileFeature from './features/userprofile/userprofile'
 import Layout from './shared/layout/layout'
 import RegisterUser from './features/register/register'
 import ExpenseDashboard from './features/expense/ExpenseDashboard'
 import { userToken, userType } from './shared/Interfaces/userToken'
+import { useUserContext } from './context/UserContext'
 
 const AppRouter = () => {
-  let user: userType = {
-    userId: sessionStorage.getItem('userId') || '',
-    email: sessionStorage.getItem('email') || '',
-    firstName: sessionStorage.getItem('firstName') || '',
-    lastName: sessionStorage.getItem('lastName') || '',
-  }
+  const user = useUserContext()
 
   return (
-    <BrowserRouter>
-
-      <Routes>
-        {/* <Route element={<Layout user={UserIsLoggedIn} />}> */}
-        <Route element={<Layout {...user} />}>
-          <Route>
-            <Route index element={<WelcomeFeature />} />
-            <Route path='/omoss' element={<OmOss />} />
-            <Route path='/login' element={<LogIn />} />
-            <Route path='/register' element={<RegisterUser />} />
-            <Route path='/faq' element={<Faq />} />
-            <Route path='/dashboard' element={<DashboardFeature {...user} />} />
-            <Route path='/transactions' element={<ExpenseDashboard {...user} />} />
-            <Route path='/saving' element={<SavingsLayout />}>
-              <Route index element={<CheckSavingPlans {...user} />} />
-              <Route path='create' element={<CreateSaving {...user} />} />
-              <Route path='editplan' element={<EditSavingPlan />} />
-            </Route>
+    <Routes>
+      {/* <Route element={<Layout user={UserIsLoggedIn} />}> */}
+      <Route element={<Layout />}>
+        <Route>
+          <Route index element={<WelcomeFeature />} />
+          <Route path='/omoss' element={<OmOss />} />
+          <Route path='/login' element={<LogIn />} />
+          <Route path='/register' element={<RegisterUser />} />
+          <Route path='/faq' element={<Faq />} />
+          <Route path='/dashboard' element={<DashboardFeature />} />
+          <Route path='/profile' element={<ProfileFeature />} />
+          <Route path='/transactions' element={<ExpenseDashboard />} />
+          <Route path='/saving' element={<SavingsLayout />}>
+            <Route index element={<CheckSavingPlans />} />
+            <Route path='create' element={<CreateSaving />} />
+            <Route path='editplan/:id' element={<EditSavingPlan />} />
           </Route>
         </Route>
-      </Routes>
-    </BrowserRouter>
+      </Route>
+    </Routes>
   )
 }
 
