@@ -2,60 +2,58 @@ import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import styles from '../../CssStyles';
 import { ButtonCollection } from '../../CustomComponents'
-import { DisabledSubmitButton, OrdinaryButton, SubmitButton } from '../../shared/buttons/button-default';
-import { useModal } from '../../shared/modal/useModal'
+import { DisabledSubmitButton, SubmitButton } from '../../shared/buttons/button-default';
+import { useUserContext } from '../../context/UserContext'
+import { CreateCategory } from '../../shared/fetch/category';
 
 interface NewCategoryModalProps {
   onConfirm: () => void;
   // onCancel: () => void;
   message: string;
-  userId: string | null;
   categories: never[];
 }
 export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props) => {
+  const user = useUserContext()
   const [kategoriNamn, setKategoriNamn] = useState('')
   const [isLoading, setloadingState] = useState(false)
   const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
+  const submitData: any = {
+    userId: '',
+    name: '',
+  }
+
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    setloadingState(true)
-    const userId = props.userId
+    debugger;
+    if (user.userId != null) {
+      submitData.userId = user.userId
+      submitData.name = kategoriNamn
+    }
+
+
     console.log(kategoriNamn)
     console.log(props.categories)
     setloadingState(true)
     setmessage('Lägger till kategori')
     setmessageState(true)
-    setTimeout(() => {
-      setmessageState(false)
-      setloadingState(false)
-      props.onConfirm()
-    }, 2000)
+    CreateCategory(submitData)
+      .then((response) => {
+        setmessage('Kategori sparad')
+      })
+      .catch((err) => {
+        setmessage('Kunde inte spara')
 
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setmessageState(false)
+          setloadingState(false)
+          props.onConfirm()
+        }, 2000)
 
-    // NewCategory(kategoriNamn)
-    // .then((response) => {
-    //     setmessage('Lägger till kategori')
-    //      setmessageState(true)
-    //   setTimeout(() => {
-    //   setmessageState(false)
-    //    setloadingstate(false)
-    //   }, 2000)
-    // })
-    // .catch((error) => {
-    //   setTimeout(() => {
-    //     setloadingState(false)
-    //     setmessage('Kunde inte spara.')
-    //     setmessageState(true)
-    //     setTimeout(() => {
-    //       setmessageState(false)
-    //     }, 3000)
-    //   }, 3000)
-    // })
-
-
-    // props.onConfirm()
+      })
   };
 
   return (
