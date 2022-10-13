@@ -26,6 +26,8 @@ import { useUserContext } from '../../context/UserContext'
 const ExpenseDashboard = () => {
   const user = useUserContext()
 
+  const [message, setmessage] = useState('')
+  const [messageState, setmessageState] = useState(false)
 
   const [categories, setCategories] = useState([])
   const [budgets, setBudgets] = useState([])
@@ -85,6 +87,14 @@ const ExpenseDashboard = () => {
     }
     CreateDebit(newExpense).then((Response) => {
       console.log(Response)
+      setTimeout(() => {
+        setloadingState(false)
+        setmessage("Transaction Created")
+        setmessageState(true)
+        setTimeout(() => {
+          setmessageState(false)
+        }, 3000)
+      }, 3000)
     })
   }
 
@@ -244,6 +254,17 @@ const ExpenseDashboard = () => {
                 labelPlacement='start'
               />
             </Box>
+            {(() => {
+              if (messageState) {
+                return (
+                  <Box>
+                    <br />
+                    <Typography>{message}</Typography>
+                    <br />
+                  </Box>
+                )
+              }
+            })()}
             {(() => {
               if (!checkForm()) {
                 return <DisabledSubmitButton buttontext={'Spara utgift'} />
