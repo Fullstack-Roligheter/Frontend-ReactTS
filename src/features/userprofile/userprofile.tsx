@@ -1,14 +1,21 @@
-import { Box, CircularProgress, LinearProgress, Link, Typography } from "@mui/material"
-import { userType } from "../../shared/Interfaces/userToken"
-import { GetGravatarProfile } from "../../shared/fetch/gravatar"
-import { useEffect, useState } from "react"
-import styles from '../../styles.js'
 
-function ProfileFeature(user: userType) {
+import styles from '../../CssStyles.js'
+import { Box, Link, Typography, CircularProgress } from '@mui/material'
+import { userType } from '../../shared/Interfaces/userToken'
+import { GetGravatarProfile } from '../../shared/fetch/gravatar'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { flexbox } from '@mui/system'
+import { useUserContext } from '../../context/UserContext'
+
+function ProfileFeature() {
+  const user = useUserContext()
 
   var CryptoJS = require('crypto-js')
   let userEmail = user.email;
-  var hash = CryptoJS.MD5(userEmail.toLowerCase()).toString()
+  if (userEmail != null) {
+    var hash = CryptoJS.MD5(userEmail.toLowerCase()).toString()
+  }
   
     const [name, setName] = useState([])
     const [aboutMe, setaboutMe] = useState([])
@@ -40,8 +47,8 @@ function ProfileFeature(user: userType) {
           setloadingState(true)
       }
     }
-  getUserProfile()
-},[])
+    getUserProfile()
+  }, [])
 
 const [loadingState, setloadingState] = useState(false)
 
@@ -49,18 +56,17 @@ const [loadingState, setloadingState] = useState(false)
     <Box
       sx={{
         width: 850,
-            m: 3,
-            mt: 3,
-            p: 3,
-            pt: 3,
-            borderRadius: 2,
-            bgcolor: 'RGBA(255,255,255,0.65)',
-            boxShadow: 5,
-            display: 'flex',
-            justifyContent: 'center',
+        m: 3,
+        mt: 3,
+        p: 3,
+        pt: 3,
+        borderRadius: 2,
+        bgcolor: 'RGBA(255,255,255,0.65)',
+        boxShadow: 5,
+        display: 'flex',
+        justifyContent: 'center',
       }}
     >
-
       {(() => {
               if (!loadingState) {
                 return(
@@ -106,4 +112,3 @@ const [loadingState, setloadingState] = useState(false)
 }
 
 export default ProfileFeature
-

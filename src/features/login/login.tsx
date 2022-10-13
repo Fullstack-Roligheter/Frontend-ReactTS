@@ -11,8 +11,12 @@ import {
 import { Login } from '../../shared/fetch/user'
 import { useState } from 'react'
 import { Box, Typography } from '@mui/material'
-import { NavLink } from 'react-router-dom';
-import styles from '../../styles.js'
+
+import styles from '../../CssStyles.js'
+
+import { NavLink } from 'react-router-dom'
+import { useUserContext } from '../../context/UserContext'
+
 
 
 const LogIn = () => {
@@ -24,6 +28,8 @@ const LogIn = () => {
   const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
   const [loadingState, setloadingState] = useState(false)
+
+  const { signIn } = useUserContext()
 
   const [formData, setFormData] = useState({
     eMail: '',
@@ -47,32 +53,14 @@ const LogIn = () => {
       [name]: value,
     })
   }
-
-  const handleSubmit = (e: any) => {
+  // lei skrivit
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setloadingState(true)
-    Login(formData)
-      .then((response) => {
-        sessionStorage.setItem('userId', `${response.userId}`)
-        sessionStorage.setItem('email', `${response.email}`)
-        sessionStorage.setItem('firstName', `${response.firstName}`)
-        sessionStorage.setItem('lastName', `${response.lastName}`)
-        navigate(`/dashboard`)
-        window.location.reload()
-      })
-      .catch((error) => {
-        setTimeout(() => {
-          setloadingState(false)
-          setmessage('Kunde inte logga in.')
-          setmessageState(true)
-          setTimeout(() => {
-            setmessageState(false)
-          }, 3000)
-        }, 5000)
-      })
-      .finally(() => {
-        console.log('Entered Finally')
-      })
+    try {
+      await signIn(formData.eMail, formData.password)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -84,20 +72,19 @@ const LogIn = () => {
       justifyContent='center'
       sx={{ minHeight: '70vh' }}
     >
-
       <Grid style={styles.formBackground} item xs={3} alignItems='center'>
         <Grid>
           <Typography
             variant='h3'
             align='center'
-
-            style={styles.whiteTypography} >
+            style={styles.whiteTypography}
+          >
             Logga in
           </Typography>
           <Box sx={{ marginBottom: '15px' }}>
             <Typography
-              variant="h6"
-              align="center"
+              variant='h6'
+              align='center'
               component='a'
               href='/register'
               style={styles.linkTypography}

@@ -1,10 +1,8 @@
 import AuthenticatedLayout from './authenticatedLayout'
 import UnauthenticatedLayout from './unauthenticatedLayout'
 import Box from '@mui/material/Box'
-
 import Image from '../../img/newbackground.png'
-
-import { userType } from '../../shared/Interfaces/userToken'
+import { useUserContext } from '../../context/UserContext'
 
 const styles = {
   paperContainer: {
@@ -14,16 +12,25 @@ const styles = {
   },
 }
 
-const Layout = (user: userType) => (
-  <Box height="100vh" display="flex" flexDirection="column"style={styles.paperContainer}>
-    {(() => {
-      if (user.userId === '') {
-        return <UnauthenticatedLayout />
-      } else {
-        return <AuthenticatedLayout {...user} />
-      }
-    })()}
-  </Box>
-)
+const Layout = () => {
+  const user = useUserContext()
+
+  return (
+    <Box
+      height='100vh'
+      display='flex'
+      flexDirection='column'
+      style={styles.paperContainer}
+    >
+      {(() => {
+        if (user.userId === null) {
+          return <UnauthenticatedLayout />
+        } else {
+          return <AuthenticatedLayout />
+        }
+      })()}
+    </Box>
+  )
+}
 
 export default Layout

@@ -17,26 +17,19 @@ import {
   QuestionAnswer,
 } from '@mui/icons-material'
 
-import { userType } from '../../Interfaces/userToken'
-
 const drawerWidth = 240
 
-
 type SidebarType = {
-  user: userType,
-  show: boolean,
+  show: boolean
   variant: any
-
 }
 
 export default function Sidebar(props: any) {
-
   const navigate = useNavigate()
 
   let sideBarProps: SidebarType = {
-    user: props.user,
     show: props.show,
-    variant: props.variant
+    variant: props.variant,
   }
 
   const MenuTargets = [
@@ -82,39 +75,49 @@ export default function Sidebar(props: any) {
       >
         <Toolbar />
 
-        <Box sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.1)', }}>
-          <List sx={{
-            color: 'white',
-            '& .MuiListItemButton-root:hover': {
-              bgcolor: 'white',
-              color: 'black',
-            },
-
-          }}>
-
+        <Box
+          sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.1)' }}
+        >
+          <List
+            sx={{
+              color: 'white',
+              '& .MuiListItemButton-root:hover': {
+                bgcolor: 'white',
+                color: 'black',
+              },
+            }}
+          >
             {MenuTargets.map((menuItem, index) => (
               <ListItem key={menuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(menuItem.route)}>
-                  <ListItemIcon sx={{
-                    color: 'inherit'
-                  }}>{menuItem.icon}</ListItemIcon>
+                  <ListItemIcon
+                    sx={{
+                      color: 'inherit',
+                    }}
+                  >
+                    {menuItem.icon}
+                  </ListItemIcon>
                   <ListItemText primary={menuItem.title} />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
           <Divider />
-          <List sx={{
-            color: 'white',
-            '& .MuiListItemButton-root:hover': {
-              bgcolor: 'white',
-              color: 'black',
-            },
-          }}>
+          <List
+            sx={{
+              color: 'white',
+              '& .MuiListItemButton-root:hover': {
+                bgcolor: 'white',
+                color: 'black',
+              },
+            }}
+          >
             {SubMenu.map((subMenuItem) => (
               <ListItem key={subMenuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(subMenuItem.route)}>
-                  <ListItemIcon sx={{ color: 'inherit' }}>{subMenuItem.icon}</ListItemIcon>
+                  <ListItemIcon sx={{ color: 'inherit' }}>
+                    {subMenuItem.icon}
+                  </ListItemIcon>
                   <ListItemText primary={subMenuItem.title} />
                 </ListItemButton>
               </ListItem>
