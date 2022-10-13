@@ -73,7 +73,10 @@ const [loadingState, setloadingState] = useState(false)
                 return (
                   <Box>
                     <br />
-                      <Typography variant='subtitle1' >Create your profile at : <Link href="https://en.gravatar.com/">Gravatar</Link></Typography>
+                      <Typography variant='h5' >Förnamn: {user.firstName}</Typography>
+                      <Typography variant='h5' >Efternamn: {user.lastName}</Typography>
+                      <Typography variant='h5' >Epost: {user.email}</Typography>
+                      <Typography variant='h5' >Create your profile at : <Link href="https://en.gravatar.com/" >Gravatar</Link></Typography>
                     <br />
                   </Box>
                 )
@@ -91,7 +94,7 @@ const [loadingState, setloadingState] = useState(false)
                       <Typography variant='subtitle1' >Phone: {phone}</Typography>
                       <Typography variant='subtitle1' >Twitter Handle: <Link href="https://www.twitter.com">{twitter}</Link></Typography>
                       <Typography variant='subtitle1' >BTC Adress: {btcAddress}</Typography>
-                      <Typography variant='subtitle1' >Change your profile here: <Link href="https://en.gravatar.com/">Gravatar</Link></Typography>
+                      <Typography variant='subtitle1' >Change your profile here: <Link href="https://en.gravatar.com/" >Gravatar</Link></Typography>
                     </div>
                   </div>
                 </Box>
