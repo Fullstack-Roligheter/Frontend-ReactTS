@@ -1,20 +1,15 @@
-import * as React from 'react'
 import TextField from '@mui/material/TextField'
-import Box from '@mui/material/Box'
-import { Fragment, useState, useEffect } from 'react'
-import Button from '@mui/material/Button'
-import axios from 'axios'
-import { Plan } from './Plan'
+import { useState, useEffect, forwardRef } from 'react'
+import { Plan } from '../../shared/Interfaces/savingPlan'
 import { useParams } from 'react-router-dom'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
-import { baseURL } from '../../config'
-import { SubmitButton } from '../../shared/buttons/button-default'
+import { useUserContext } from '../../context/UserContext'
+import { GetPlans, UpdatePlan } from '../../shared/fetch/savingplan'
 import Grid from '@mui/material/Grid'
+import { SubmitButton } from '../../shared/buttons/button-default'
 
-/* const userId = 1 */
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
 ) {
@@ -22,16 +17,74 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 })
 
 const EditSavingPlan: React.FC = () => {
-  const [title, setTitle] = useState('')
+  const [name, setName] = useState('')
   const [amount, setAmount] = useState('')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [planList, setPlanList] = useState<Plan[]>([])
   const [open, setOpen] = useState(false)
-  const [planId, setPlanId] = useState(0)
-  const [buttontext, setButtonText] = useState("Spara")
+  const [planId, setPlanId] = useState('')
+  const [buttontext, setButtonText] = useState('Spara')
+  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState(0)
 
+  const user = useUserContext()
   const { id } = useParams()
+
+  useEffect(() => {
+    getPlans()
+  }, [])
+
+  const getPlans = async () => {
+    GetPlans(user.userId)
+      .then((response) => {
+        console.log('response: ', response)
+        let planList = response as Plan[]
+        setPlanList(planList)
+        const [plan] = planList.filter((plan) => plan.savingId === id) // ?? tidigare är en number type,+id
+        if (!plan) {
+          return
+        }
+        setName(plan.name)
+        setAmount(plan.amount.toString())
+        setStartDate(plan.planStartDate)
+        setEndDate(plan.planEndDate)
+        setPlanId(plan.savingId)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const HandleSubmit = (e: any) => {
+    e.preventDefault()
+    setLoading(true)
+
+    const newData = {
+      ['savingId']: id,
+      ['name']: name,
+      ['amount']: amount,
+      ['StartDate']: startDate,
+      ['EndDate']: endDate,
+    }
+
+    UpdatePlan(newData)
+      .then((result) => {
+        if (result.status === 200) {
+          setOpen(true)
+          setName('')
+          setAmount('')
+          setStartDate('')
+          setEndDate('')
+          setLoading(false)
+          setStatus(result.status)
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+        setLoading(false)
+      })
+  }
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -43,111 +96,90 @@ const EditSavingPlan: React.FC = () => {
     setOpen(false)
   }
 
-  const getPlans = async () => {
-    try {
-      let numberValue: string | null = ''
-      const value = sessionStorage.getItem('user')
-      if (value !== null) {
-        numberValue = JSON.parse(value)
-      } else {
-        console.log('never entered parse value')
-      }
-
-      const { data } = await axios(
-        `${baseURL}/saving/getplans?UserId=${numberValue}`
-      )
-      let planList = data as Plan[]
-      setPlanList(planList)
-      const [plan] = planList.filter((plan) => plan.savingId === +id!)
-
-      if (!plan) return
-      setTitle(plan.name)
-      setAmount(plan.amount.toString())
-      setStartDate(plan.planStartDate)
-      setEndDate(plan.planEndDate)
-      setPlanId(plan.savingId)
-    } catch (err) {
-      console.log(err)
-    }
+  const successMessage = () => {
+    return (
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
+          Your plan has been successfully saved!
+        </Alert>
+      </Snackbar>
+    )
   }
-
-  useEffect(() => {
-    getPlans()
-  }, [])
-
-  const handleEdit = async (id: number) => {
-    if (id === null) return
-    const newData = await axios.put(`${baseURL}/saving/updateplan/${id}`, {
-      savingId: id,
-      name: title,
-      amount: amount,
-      planStartDate: startDate,
-      planEndDate: endDate,
-    })
-    if (newData.status === 200) {
-      setOpen(true)
-      setTitle('')
-      setAmount('')
-      setStartDate('')
-      setEndDate('')
-    }
+  const showError = () => {
+    return (
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
+          You need to fill in correctly!
+        </Alert>
+      </Snackbar>
+    )
   }
 
   return (
-    <Fragment>
-      <Box
-        component='form'
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
-        }}
-        autoComplete='off'
-      >
+    <>
+      <form onSubmit={HandleSubmit}>
         <TextField
-          required
-          value={title}
-          label='Title'
-          onChange={(e) => setTitle(e.target.value)}
+          label='name'
+          variant='outlined'
+          type='text'
+          name='name'
+          required={true}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
         <br />
+        <br />
         <TextField
-          required
+          label='amount'
+          variant='outlined'
+          type='text'
+          name='amount'
+          required={true}
           value={amount}
-          label='Amount'
           onChange={(e) => setAmount(e.target.value)}
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
         <br />
+        <br />
         <TextField
-          required
+          label='startDate'
+          variant='outlined'
+          type='date'
+          name='startDate'
+          required={true}
           value={startDate}
-          label='Start Date'
-          type='date'
+          onChange={(e) => setStartDate(e.target.value)}
           InputLabelProps={{
             shrink: true,
           }}
-          onChange={(e) => setStartDate(e.target.value)}
         />
         <br />
+        <br />
         <TextField
-          required
-          value={endDate}
-          label='End Date'
+          label='endDate'
+          variant='outlined'
           type='date'
+          name='endDate'
+          required={true}
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
           InputLabelProps={{
             shrink: true,
           }}
-          onChange={(e) => setEndDate(e.target.value)}
         />
+        <br />
         <br />
         <Grid container justifyContent='center'>
-          <SubmitButton isLoading={true} buttontext={buttontext} onClick={() => handleEdit(planId)} />
+          <SubmitButton isLoading={loading} buttontext={buttontext} />
         </Grid>
-      </Box>
-      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
-          Change succeeded
-        </Alert>
-      </Snackbar>
-    </Fragment>
+      </form>
+      {status !== 200 ? showError() : successMessage()}
+    </>
   )
 }
 export default EditSavingPlan

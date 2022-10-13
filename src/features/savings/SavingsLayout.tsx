@@ -1,28 +1,29 @@
 import Button from '@mui/material/Button'
-import { NavLink, Outlet } from 'react-router-dom'
-import { Fragment } from 'react'
+import { Navigate, NavLink, Outlet } from 'react-router-dom'
+import { useUserContext } from '../../context/UserContext'
+import Box from '@mui/material/Box'
 
 const SavingsLayout: React.FC = () => {
+  const user = useUserContext()
+
+  if (user.userId === null) {
+    return <Navigate to='/login' replace />
+  }
+
   return (
-    <Fragment>
-      <div className='container'>
-        {/*  <NavLink
-          to={"/saving"}
-          className={({ isActive }) => `text-link ${isActive ? "active" : ""}`}
-        >
-          <Button variant="contained">Saving Plan</Button>
-        </NavLink> */}
+    <>
+      <Box className='container'>
         <NavLink
           to={'create'}
           className={({ isActive }) => `text-link ${isActive ? 'active' : ''}`}
         >
           <Button variant='contained'>Create saving plan</Button>
         </NavLink>
-      </div>
-      <div className='container'>
+      </Box>
+      <Box className='container'>
         <Outlet />
-      </div>
-    </Fragment>
+      </Box>
+    </>
   )
 }
 export default SavingsLayout

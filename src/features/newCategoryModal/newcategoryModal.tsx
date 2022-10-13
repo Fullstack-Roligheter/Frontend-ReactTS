@@ -9,7 +9,7 @@ interface NewCategoryModalProps {
   onConfirm: () => void;
   // onCancel: () => void;
   message: string;
-  userId: string;
+  userId: string | null;
 }
 export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props) => {
   const [kategoriNamn, setKategoriNamn] = useState('')

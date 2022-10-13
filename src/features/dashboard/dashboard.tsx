@@ -1,14 +1,17 @@
 import { Box, Typography } from '@mui/material'
 import { Navigate } from 'react-router-dom'
+import { useUserContext } from '../../context/UserContext'
 import { userType } from '../../shared/Interfaces/userToken'
 import styles from '../../CssStyles.js'
 
 
-function DashboardFeature(user: userType) {
+function DashboardFeature() {
   // let UserIsLoggedIn = sessionStorage.getItem('user')
   // console.log('authenticatedLayout: ', UserIsLoggedIn)
 
   let timeMilli = Date.now().toString().slice(-3)
+
+  const user = useUserContext()
 
   if (user.userId === null) {
     return <Navigate to='/login' replace />

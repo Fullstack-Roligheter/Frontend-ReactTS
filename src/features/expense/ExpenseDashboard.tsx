@@ -2,13 +2,16 @@ import FormControl from '@mui/material/FormControl'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
-import { Box, Button, IconButton, Paper, Typography } from '@mui/material'
+
+import { Box, Button, IconButton, FormControlLabel, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState, Component, FunctionComponent } from 'react'
 import { userType } from '../../shared/Interfaces/userToken'
+
 import { GetCategoriesForUser } from '../../shared/fetch/category'
 import { GetBudgetsForUser } from '../../shared/fetch/budget'
 import { CreateDebit, GetDebitsForUser } from '../../shared/fetch/expense'
 import { DateFetcher } from '../../shared/dateFetcher/dateFetcher'
+
 import { render } from 'react-dom'
 import { Modal } from '../../shared/modal/modal'
 import { useModal } from '../../shared/modal/useModal'
@@ -18,7 +21,12 @@ import styles from '../../CssStyles'
 
 
 
-const ExpenseDashboard = (props: userType) => {
+import { useUserContext } from '../../context/UserContext'
+
+const ExpenseDashboard = () => {
+  const user = useUserContext()
+
+
   const [categories, setCategories] = useState([])
   const [budgets, setBudgets] = useState([])
   const [debits, setDebits] = useState([])
@@ -31,10 +39,10 @@ const ExpenseDashboard = (props: userType) => {
     Date: '',
     Amount: '',
     Comment: '',
-    UserId: props.userId,
+    UserId: user.userId,
     CategoryId: undefined,
     BudgetId: undefined,
-    // ReturningTransactions: false,
+    ReturningTransactions: false,
   })
   const checkForm = () => {
     if (
@@ -58,6 +66,14 @@ const ExpenseDashboard = (props: userType) => {
     })
   }
 
+  const handleBoolean = (e: any) => {
+    const { name, checked } = e.target
+    setNewExpense({
+      ...newExpense,
+      [name]: checked,
+    })
+  }
+
   const handleSubmit = (e: any) => {
     e.preventDefault()
     setloadingState(true)
@@ -74,22 +90,25 @@ const ExpenseDashboard = (props: userType) => {
 
   //Get categories for user to put in select
   useEffect(() => {
-    GetCategoriesForUser(props.userId).then((Response) => {
+    GetCategoriesForUser(user.userId).then((Response) => {
+      console.log(Response)
       setCategories(Response)
     })
   }, [])
 
   //Get budgets for user to put in select
   useEffect(() => {
-    GetBudgetsForUser(props.userId).then((Response) => {
+    GetBudgetsForUser(user.userId).then((Response) => {
+      console.log(Response)
       setBudgets(Response)
     })
   }, [])
 
   //Get all debits to put in list
   useEffect(() => {
-    console.log('props.userId: ', props.userId)
-    GetDebitsForUser(props.userId).then((Response) => {
+    console.log('props.userId: ', user.userId)
+    GetDebitsForUser(user.userId).then((Response) => {
+      console.log(Response)
       setDebits(Response)
     })
   }, [])
@@ -176,7 +195,7 @@ const ExpenseDashboard = (props: userType) => {
                       onConfirm={onConfirm}
                       // onCancel={onCancel}
                       message="Skriv in namn på nya kategorin"
-                      userId={props.userId}
+                      userId={user.userId}
                     />
                   }
                 />
@@ -209,14 +228,22 @@ const ExpenseDashboard = (props: userType) => {
               helperText='Company, Notes, Reciever Etc.'
               name='Comment'
               value={newExpense.Comment}
-              style={styles.textfield}
               onChange={handleChange}
               margin='normal'
             />
-            {/* <Checkbox
-          aria-label='Returning transactions'
-          sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
-        /> */}
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name='ReturningTransactions'
+                    onChange={handleBoolean}
+                    sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
+                  />
+                }
+                label='Return transactions'
+                labelPlacement='start'
+              />
+            </Box>
             {(() => {
               if (!checkForm()) {
                 return <DisabledSubmitButton buttontext={'Spara utgift'} />
@@ -231,7 +258,6 @@ const ExpenseDashboard = (props: userType) => {
             })()}
           </FormControl>
         </form>
-
       </Box>
     </>
   )
