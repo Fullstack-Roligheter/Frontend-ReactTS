@@ -10,7 +10,7 @@ interface NewCategoryModalProps {
   onConfirm: () => void;
   // onCancel: () => void;
   message: string;
-  categories: never[];
+  categories: any;
 }
 export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props) => {
   const user = useUserContext()
@@ -18,42 +18,62 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
   const [isLoading, setloadingState] = useState(false)
   const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
+  const [categoryExist, setcategoryExist] = useState(false)
   const submitData: any = {
     userId: '',
     name: '',
   }
-
-
+  const categories = props.categories
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    debugger;
-    if (user.userId != null) {
-      submitData.userId = user.userId
-      submitData.name = kategoriNamn
+    debugger
+
+    if (categories.some((category: { categoryName: string; }) => category.categoryName === kategoriNamn)) {
+      setmessage('Kategorin finns redan')
+      setmessageState(true)
+      setcategoryExist(true)
+      setTimeout(() => {
+        setmessageState(false)
+        setloadingState(false)
+        props.onConfirm()
+      }, 2000)
     }
 
+    if (!categoryExist) {
+      if (user.userId != null) {
+        submitData.userId = user.userId
+        submitData.name = kategoriNamn
+      }
+      setloadingState(true)
+      setmessage('Lägger till kategori')
+      setmessageState(true)
+      CreateCategory(submitData)
+        .then((response) => {
+          setmessage('Kategori sparad')
+        })
+        .catch((err) => {
+          setmessage('Kunde inte spara')
 
-    console.log(kategoriNamn)
-    console.log(props.categories)
-    setloadingState(true)
-    setmessage('Lägger till kategori')
-    setmessageState(true)
-    CreateCategory(submitData)
-      .then((response) => {
-        setmessage('Kategori sparad')
-      })
-      .catch((err) => {
-        setmessage('Kunde inte spara')
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setmessageState(false)
+            setloadingState(false)
+            props.onConfirm()
+          }, 2000)
 
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setmessageState(false)
-          setloadingState(false)
-          props.onConfirm()
-        }, 2000)
+        })
+    } else {
+      setmessage('Kategorin finns redan')
+      setmessageState(true)
 
-      })
+      setTimeout(() => {
+        setmessageState(false)
+        setloadingState(false)
+        props.onConfirm()
+      }, 2000)
+    }
+
   };
 
   return (
