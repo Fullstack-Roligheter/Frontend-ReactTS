@@ -161,7 +161,7 @@ function ProfileFeature() {
                 onConfirm={onConfirm}
                 // onCancel={onCancel}
                 message="Skriv in namn på nya kategorin"
-                categories={[]} />
+                categories={categories} />
             }
           />
         </React.Fragment>
