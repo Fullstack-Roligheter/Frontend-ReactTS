@@ -10,6 +10,7 @@ interface NewCategoryModalProps {
   // onCancel: () => void;
   message: string;
   userId: string | null;
+  categories: never[];
 }
 export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props) => {
   const [kategoriNamn, setKategoriNamn] = useState('')
@@ -22,6 +23,7 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
     setloadingState(true)
     const userId = props.userId
     console.log(kategoriNamn)
+    console.log(props.categories)
     setloadingState(true)
     setmessage('Lägger till kategori')
     setmessageState(true)

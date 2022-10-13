@@ -1,12 +1,22 @@
 
 import styles from '../../CssStyles.js'
-import { Box, Link, Typography, CircularProgress } from '@mui/material'
+import { Box, Link, Typography, CircularProgress, IconButton } from '@mui/material'
 import { userType } from '../../shared/Interfaces/userToken'
 import { GetGravatarProfile } from '../../shared/fetch/gravatar'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { flexbox } from '@mui/system'
 import { useUserContext } from '../../context/UserContext'
+
+import { Modal } from '../../shared/modal/modal'
+import { useModal } from '../../shared/modal/useModal'
+import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
+import { DisabledSubmitButton, SubmitButton, AddButton } from '../../shared/buttons/button-default'
+import React from 'react'
+import { GetCategoriesForUser } from '../../shared/fetch/category'
+
+
+
 
 function ProfileFeature() {
   const user = useUserContext()
@@ -27,12 +37,22 @@ function ProfileFeature() {
     const [btcAddress, setbtcAddress] = useState([])
     const [data, setdata] = useState("")
 
+    const [message, setmessage] = useState('')
+    const [messageState, setmessageState] = useState(false)
+    const { isShown, toggle } = useModal();
+    
+    const [isLoading, setloadingState] = useState(false)
+    const onConfirm = () => toggle();
+    const onCancel = () => toggle();
+
+    const [categories, setCategories] = useState([])
+
   useEffect(() => {
     async function getUserProfile(){
       const response: any = await GetGravatarProfile(hash)
       if (response === "User not found") {
         setdata(response)
-        setloadingState(true)
+        setProfileloadingState(true)
       } 
       else {
         JSON.stringify(response)
@@ -44,15 +64,23 @@ function ProfileFeature() {
           setlocation(response.entry[0].currentLocation)
           setphone(response.entry[0].phoneNumbers[0].value)
           setbtcAddress(response.entry[0].currency[0].value)
-          setloadingState(true)
+          setProfileloadingState(true)
       }
     }
     getUserProfile()
   }, [])
 
-const [loadingState, setloadingState] = useState(false)
+  useEffect(() => {
+    GetCategoriesForUser(user.userId).then((Response) => {
+      console.log("Response: " + Response)
+      setCategories(Response)
+    })
+  }, [])
+
+const [loadingState, setProfileloadingState] = useState(false)
 
   return (
+    <>
     <Box
       sx={{
         width: 850,
@@ -108,6 +136,37 @@ const [loadingState, setloadingState] = useState(false)
               }
             })()}   
     </Box>
+    <Box sx={{
+        width: 850,
+        m: 3,
+        mt: 3,
+        p: 3,
+        pt: 3,
+        borderRadius: 2,
+        bgcolor: 'RGBA(255,255,255,0.65)',
+        boxShadow: 5,
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+
+     <React.Fragment>
+                <IconButton style={styles.addButton} onClick={toggle}><AddButton /></IconButton>
+                <Modal
+                  isShown={isShown}
+                  hide={toggle}
+                  headerText='Lägg till egen kategori'
+                  modalContent={
+                    <NewCategoryModal
+                      onConfirm={onConfirm}
+                      // onCancel={onCancel}
+                      message="Skriv in namn på nya kategorin"
+                      userId={user.userId} categories={[]}                    />
+                  }
+                />
+      </React.Fragment>
+    </Box>
+    </>
   )
 }
 
