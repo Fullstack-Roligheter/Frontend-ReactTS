@@ -27,19 +27,15 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
   const handleSubmit = (e: any) => {
     e.preventDefault()
     debugger
-
-    if (categories.some((category: { categoryName: string; }) => category.categoryName === kategoriNamn)) {
+    if (categories.some((category: { categoryName: string; }) => category.categoryName.toLowerCase() === kategoriNamn.toLowerCase())) {
       setmessage('Kategorin finns redan')
       setmessageState(true)
       setcategoryExist(true)
       setTimeout(() => {
         setmessageState(false)
         setloadingState(false)
-        props.onConfirm()
       }, 2000)
-    }
-
-    if (!categoryExist) {
+    } else {
       if (user.userId != null) {
         submitData.userId = user.userId
         submitData.name = kategoriNamn
@@ -63,15 +59,6 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
           }, 2000)
 
         })
-    } else {
-      setmessage('Kategorin finns redan')
-      setmessageState(true)
-
-      setTimeout(() => {
-        setmessageState(false)
-        setloadingState(false)
-        props.onConfirm()
-      }, 2000)
     }
 
   };
