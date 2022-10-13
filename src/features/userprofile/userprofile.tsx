@@ -71,7 +71,6 @@ function ProfileFeature() {
 
   useEffect(() => {
     GetUserCreatedCatogories(user.userId).then((Response) => {
-      debugger
       setCategories(Response)
     })
   }, [])
@@ -106,9 +105,8 @@ const [loadingState, setProfileloadingState] = useState(false)
                 return (
                   <Box>
                     <br />
-                      <Typography variant='h5' >Förnamn: {user.firstName}</Typography>
-                      <Typography variant='h5' >Efternamn: {user.lastName}</Typography>
-                      <Typography variant='h5' >Epost: {user.email}</Typography>
+                      <Typography variant='h5' >Name: {user.firstName} {user.lastName}</Typography>
+                      <Typography variant='h5' >Email: {user.email}</Typography>
                       <Typography variant='h5' >Create your profile at : <Link href="https://en.gravatar.com/" >Gravatar</Link></Typography>
                     <br />
                   </Box>
@@ -151,10 +149,9 @@ const [loadingState, setProfileloadingState] = useState(false)
       }}
     >
     <Box>
-        <Typography variant='h3'>Handler </Typography>
-    </Box>
+        <Typography variant='h3'>Handle Categories</Typography>
         <Typography variant='h6'>To create your own catogory click on the plus sign</Typography>
-
+    </Box>
      <React.Fragment>
                 <IconButton style={styles.addButton} onClick={toggle}><AddButton /></IconButton>
                 <Modal
