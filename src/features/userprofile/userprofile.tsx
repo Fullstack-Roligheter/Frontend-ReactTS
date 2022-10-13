@@ -1,6 +1,6 @@
 
 import styles from '../../CssStyles.js'
-import { Box, Link, Typography, CircularProgress, IconButton } from '@mui/material'
+import { Box, Link, Typography, CircularProgress, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, List } from '@mui/material'
 import { userType } from '../../shared/Interfaces/userToken'
 import { GetGravatarProfile } from '../../shared/fetch/gravatar'
 import { useEffect, useState } from 'react'
@@ -13,10 +13,9 @@ import { useModal } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
 import { DisabledSubmitButton, SubmitButton, AddButton } from '../../shared/buttons/button-default'
 import React from 'react'
-import { GetCategoriesForUser } from '../../shared/fetch/category'
-
-
-
+import { GetCategoriesForUser, GetUserCreatedCatogories } from '../../shared/fetch/category'
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 function ProfileFeature() {
   const user = useUserContext()
@@ -71,8 +70,8 @@ function ProfileFeature() {
   }, [])
 
   useEffect(() => {
-    GetCategoriesForUser(user.userId).then((Response) => {
-      console.log("Response: " + Response)
+    GetUserCreatedCatogories(user.userId).then((Response) => {
+      debugger
       setCategories(Response)
     })
   }, [])
@@ -146,9 +145,15 @@ const [loadingState, setProfileloadingState] = useState(false)
         bgcolor: 'RGBA(255,255,255,0.65)',
         boxShadow: 5,
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
+    <Box>
+        <Typography variant='h3'>Handler </Typography>
+    </Box>
+        <Typography variant='h6'>To create your own catogory click on the plus sign</Typography>
 
      <React.Fragment>
                 <IconButton style={styles.addButton} onClick={toggle}><AddButton /></IconButton>
@@ -165,7 +170,24 @@ const [loadingState, setProfileloadingState] = useState(false)
                   }
                 />
       </React.Fragment>
-    </Box>
+        <Box sx={{ width: '100%', "li:nth-child(even)": { background: '#D3D3D3' }, }}>
+          <List>
+            <Divider />
+            {categories.map((category: any) => (
+              <ListItem key={category.categoryId} className="listitem145" disablePadding>
+                <ListItemText primary={category.categoryName} />
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+              </ListItem>
+            ))}
+            <Divider />
+          </List>
+        </Box>
+      </Box>
     </>
   )
 }
