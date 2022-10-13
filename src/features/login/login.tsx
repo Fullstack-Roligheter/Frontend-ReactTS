@@ -57,7 +57,9 @@ const LogIn = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
+      setloadingState(true)
       await signIn(formData.eMail, formData.password)
+      setloadingState(false)
     } catch (error) {
       console.log(error)
     }
