@@ -46,6 +46,12 @@ function ProfileFeature() {
   const onCancel = () => toggle();
 
   const [categories, setCategories] = useState([])
+  const deleteCategoryData: any = {
+    userId: user.userId,
+    id: '',
+
+  }
+
 
   useEffect(() => {
     async function getUserProfile() {
