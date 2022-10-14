@@ -13,9 +13,10 @@ import { useModal } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
 import { DisabledSubmitButton, SubmitButton, AddButton } from '../../shared/buttons/button-default'
 import React from 'react'
-import { GetCategoriesForUser, GetUserCreatedCatogories } from '../../shared/fetch/category'
+import { DeleteCategory, GetUserCreatedCatogories } from '../../shared/fetch/category'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+
 
 function ProfileFeature() {
   const user = useUserContext()
@@ -25,45 +26,54 @@ function ProfileFeature() {
   if (userEmail != null) {
     var hash = CryptoJS.MD5(userEmail.toLowerCase()).toString()
   }
-  
-    const [name, setName] = useState([])
-    const [aboutMe, setaboutMe] = useState([])
-    const [twitter, settwitter] = useState([])
-    const [profileImage, setprofileImage] = useState([])
-    const [email, setemail] = useState([])
-    const [location, setlocation] = useState([])
-    const [phone, setphone] = useState([])
-    const [btcAddress, setbtcAddress] = useState([])
-    const [data, setdata] = useState("")
 
-    const [message, setmessage] = useState('')
-    const [messageState, setmessageState] = useState(false)
-    const { isShown, toggle } = useModal();
-    
-    const [isLoading, setloadingState] = useState(false)
-    const onConfirm = () => toggle();
-    const onCancel = () => toggle();
+  const [name, setName] = useState([])
+  const [aboutMe, setaboutMe] = useState([])
+  const [twitter, settwitter] = useState([])
+  const [profileImage, setprofileImage] = useState([])
+  const [email, setemail] = useState([])
+  const [location, setlocation] = useState([])
+  const [phone, setphone] = useState([])
+  const [btcAddress, setbtcAddress] = useState([])
+  const [data, setdata] = useState("")
 
-    const [categories, setCategories] = useState([])
+  const [message, setmessage] = useState('')
+  const [messageState, setmessageState] = useState(false)
+  const { isShown, toggle } = useModal();
 
+  const [isLoading, setloadingState] = useState(false)
+  const onConfirm = () => toggle();
+  const onCancel = () => toggle();
+
+  const [categories, setCategories] = useState([])
+  const deleteCategoryData: any = {
+    userId: user.userId,
+    id: '',
+
+  }
+
+  const deleteCategory = () => {
+    DeleteCategory(deleteCategoryData)
+      .then()
+  }
   useEffect(() => {
-    async function getUserProfile(){
+    async function getUserProfile() {
       const response: any = await GetGravatarProfile(hash)
       if (response === "User not found") {
         setdata(response)
         setProfileloadingState(true)
-      } 
+      }
       else {
         JSON.stringify(response)
-          setName(response.entry[0].name.formatted)
-          setemail(response.entry[0].emails[0].value)
-          setaboutMe(response.entry[0].aboutMe)
-          settwitter(response.entry[0].accounts[0].display)
-          setprofileImage(response.entry[0].photos[0].value)
-          setlocation(response.entry[0].currentLocation)
-          setphone(response.entry[0].phoneNumbers[0].value)
-          setbtcAddress(response.entry[0].currency[0].value)
-          setProfileloadingState(true)
+        setName(response.entry[0].name.formatted)
+        setemail(response.entry[0].emails[0].value)
+        setaboutMe(response.entry[0].aboutMe)
+        settwitter(response.entry[0].accounts[0].display)
+        setprofileImage(response.entry[0].photos[0].value)
+        setlocation(response.entry[0].currentLocation)
+        setphone(response.entry[0].phoneNumbers[0].value)
+        setbtcAddress(response.entry[0].currency[0].value)
+        setProfileloadingState(true)
       }
     }
     getUserProfile()
@@ -75,7 +85,7 @@ function ProfileFeature() {
     })
   }, [])
 
-const [loadingState, setProfileloadingState] = useState(false)
+  const [loadingState, setProfileloadingState] = useState(false)
 
   return (
     <>
@@ -127,13 +137,13 @@ const [loadingState, setProfileloadingState] = useState(false)
                       <Typography variant='subtitle1' >BTC Adress: {btcAddress}</Typography>
                       <Typography variant='subtitle1' >Change your profile here: <Link href="https://en.gravatar.com/" >Gravatar</Link></Typography>
                     </div>
-                  </div>
-                </Box>
-                )
-              }
-            })()}   
-    </Box>
-    <Box sx={{
+                    </div>
+              </Box>
+            )
+          }
+        })()}
+      </Box>
+      <Box sx={{
         width: 850,
         m: 3,
         mt: 3,
@@ -163,7 +173,7 @@ const [loadingState, setProfileloadingState] = useState(false)
                       onConfirm={onConfirm}
                       // onCancel={onCancel}
                       message="Skriv in namn på nya kategorin"
-                      userId={user.userId} categories={[]}                    />
+                      userId={user.userId} categories={categories}                    />
                   }
                 />
       </React.Fragment>

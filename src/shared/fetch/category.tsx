@@ -51,3 +51,27 @@ export function CreateCategory(data: any) {
       throw error
     })
 }
+export function EditCategory(data: any) {
+  return instance
+    .put(`api/categories/EditCategory`, data)
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in CreateCategory: ', error)
+      throw error
+    })
+}
+export function DeleteCategory(data: any) {
+  return instance
+    .delete(`api/categories/DeleteCategory`, data)
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in CreateCategory: ', error)
+      throw error
+    })
+}

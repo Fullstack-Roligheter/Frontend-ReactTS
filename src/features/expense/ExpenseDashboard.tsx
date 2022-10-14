@@ -29,9 +29,9 @@ const ExpenseDashboard = () => {
   const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
 
-  const [categories, setCategories] = useState([])
-  const [budgets, setBudgets] = useState([])
-  const [debits, setDebits] = useState([])
+  const [categories, setCategories] = useState<any[]>([])
+  const [budgets, setBudgets] = useState<any[]>([])
+  const [debits, setDebits] = useState<any[]>([])
   const { isShown, toggle } = useModal();
   const [isLoading, setloadingState] = useState(false)
   const onConfirm = () => toggle();
@@ -205,7 +205,7 @@ const ExpenseDashboard = () => {
                       onConfirm={onConfirm}
                       // onCancel={onCancel}
                       message="Skriv in namn på nya kategorin"
-                      userId={user.userId}
+
                       categories={categories}
                     />
                   }
