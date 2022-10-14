@@ -20,8 +20,8 @@ export const DeleteCategoryModal: FunctionComponent<DeleteCategoryModalProps> = 
   const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
   const deleteData: any = {
-    categoryId: props.categoryId,
-    userId: user.userId,
+    ['categoryId']: props.categoryId,
+    ['userId']: user.userId,
   }
 
 

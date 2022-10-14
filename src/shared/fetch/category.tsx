@@ -64,6 +64,7 @@ export function EditCategory(data: any) {
     })
 }
 export function DeleteCategory(data: any) {
+  console.log(data)
   debugger
   return instance
   .delete(`api/categories/DeleteCategory`, data)
