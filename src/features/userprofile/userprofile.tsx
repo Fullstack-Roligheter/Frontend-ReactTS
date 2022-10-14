@@ -93,7 +93,8 @@ function ProfileFeature() {
 
   return (
     <>
-    <Box
+    <Box sx={{flexDirection: 'column'}}>
+    <Box 
       sx={{
         width: 850,
         m: 3,
@@ -216,6 +217,7 @@ function ProfileFeature() {
             <Divider />
           </List>
         </Box>
+      </Box>
       </Box>
     </>
   )
