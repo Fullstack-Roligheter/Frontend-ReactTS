@@ -40,7 +40,7 @@ export function CreateCategory(data: any) {
 }
 export function EditCategory(data: any) {
   return instance
-    .post(`api/categories/EditCategory`, data)
+    .put(`api/categories/EditCategory`, data)
     .then((response) => {
       const data = response.data
       return data
@@ -52,7 +52,7 @@ export function EditCategory(data: any) {
 }
 export function DeleteCategory(data: any) {
   return instance
-    .post(`api/categories/DeleteCategory`, data)
+    .delete(`api/categories/DeleteCategory`, data)
     .then((response) => {
       const data = response.data
       return data
