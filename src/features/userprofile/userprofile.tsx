@@ -13,7 +13,7 @@ import { useModal } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
 import { DisabledSubmitButton, SubmitButton, AddButton } from '../../shared/buttons/button-default'
 import React from 'react'
-import { GetCategoriesForUser } from '../../shared/fetch/category'
+import { DeleteCategory, GetCategoriesForUser } from '../../shared/fetch/category'
 
 
 
@@ -52,7 +52,10 @@ function ProfileFeature() {
 
   }
 
-
+  const deleteCategory = () => {
+    DeleteCategory(deleteCategoryData)
+      .then()
+  }
   useEffect(() => {
     async function getUserProfile() {
       const response: any = await GetGravatarProfile(hash)
