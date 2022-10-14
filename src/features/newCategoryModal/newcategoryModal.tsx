@@ -11,7 +11,6 @@ interface NewCategoryModalProps {
   // onCancel: () => void;
   message: string;
   categories: any;
-  userId: string | null;
 }
 export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props) => {
   const user = useUserContext()

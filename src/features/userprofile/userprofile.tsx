@@ -173,7 +173,7 @@ function ProfileFeature() {
                       onConfirm={onConfirm}
                       // onCancel={onCancel}
                       message="Skriv in namn på nya kategorin"
-                      userId={user.userId} categories={categories}                    />
+                      categories={categories}                    />
                   }
                 />
       </React.Fragment>
