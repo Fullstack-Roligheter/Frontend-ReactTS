@@ -100,8 +100,62 @@ function ProfileFeature() {
 
   return (
     <>
-      <Box
-        sx={{
+      <Box sx={{ flexDirection: 'column' }}>
+        <Box
+          sx={{
+            width: 850,
+            m: 3,
+            mt: 3,
+            p: 3,
+            pt: 3,
+            borderRadius: 2,
+            bgcolor: 'RGBA(255,255,255,0.65)',
+            boxShadow: 5,
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          {(() => {
+            if (!loadingState) {
+              return (
+                <Box sx={{ display: 'flex' }}>
+                  <CircularProgress />
+                </Box>
+              )
+            }
+            if (data === "User not found") {
+              return (
+                <Box>
+                  <br />
+                  <Typography variant='h5' >Name: {user.firstName} {user.lastName}</Typography>
+                  <Typography variant='h5' >Email: {user.email}</Typography>
+                  <Typography variant='h5' >Create your profile at : <Link href="https://en.gravatar.com/" >Gravatar</Link></Typography>
+                  <br />
+                </Box>
+              )
+            } else {
+              return (
+                <Box>
+                  <div style={styles.userProfileBOX} >
+                    <div style={styles.userProfileIMG}>
+                      <img src={`${profileImage}?s=200`} alt="UserprofileImage" />
+                    </div>
+                    <div style={styles.userProfileInfo}>
+                      <Typography variant='subtitle1' >Name: {name}</Typography>
+                      <Typography variant='subtitle1' >Email: {email}</Typography>
+                      <Typography variant='subtitle1' >Location: {location}</Typography>
+                      <Typography variant='subtitle1' >Phone: {phone}</Typography>
+                      <Typography variant='subtitle1' >Twitter Handle: <Link href="https://www.twitter.com">{twitter}</Link></Typography>
+                      <Typography variant='subtitle1' >BTC Adress: {btcAddress}</Typography>
+                      <Typography variant='subtitle1' >Change your profile here: <Link href="https://en.gravatar.com/" >Gravatar</Link></Typography>
+                    </div>
+                  </div>
+                </Box>
+              )
+            }
+          })()}
+        </Box>
+        <Box sx={{
           width: 850,
           m: 3,
           mt: 3,
@@ -111,120 +165,68 @@ function ProfileFeature() {
           bgcolor: 'RGBA(255,255,255,0.65)',
           boxShadow: 5,
           display: 'flex',
+          flexDirection: 'column',
           justifyContent: 'center',
+          alignItems: 'center',
         }}
-      >
-        {(() => {
-          if (!loadingState) {
-            return (
-              <Box sx={{ display: 'flex' }}>
-                <CircularProgress />
-              </Box>
-            )
-          }
-          if (data === "User not found") {
-            return (
-              <Box>
-                <br />
-                <Typography variant='h5' >Name: {user.firstName} {user.lastName}</Typography>
-                <Typography variant='h5' >Email: {user.email}</Typography>
-                <Typography variant='h5' >Create your profile at : <Link href="https://en.gravatar.com/" >Gravatar</Link></Typography>
-                <br />
-              </Box>
-            )
-          } else {
-            return (
-              <Box>
-                <div style={styles.userProfileBOX} >
-                  <div style={styles.userProfileIMG}>
-                    <img src={`${profileImage}?s=200`} alt="UserprofileImage" />
-                  </div>
-                  <div style={styles.userProfileInfo}>
-                    <Typography variant='subtitle1' >Name: {name}</Typography>
-                    <Typography variant='subtitle1' >Email: {email}</Typography>
-                    <Typography variant='subtitle1' >Location: {location}</Typography>
-                    <Typography variant='subtitle1' >Phone: {phone}</Typography>
-                    <Typography variant='subtitle1' >Twitter Handle: <Link href="https://www.twitter.com">{twitter}</Link></Typography>
-                    <Typography variant='subtitle1' >BTC Adress: {btcAddress}</Typography>
-                    <Typography variant='subtitle1' >Change your profile here: <Link href="https://en.gravatar.com/" >Gravatar</Link></Typography>
-                  </div>
-                </div>
-              </Box>
-            )
-          }
-        })()}
-      </Box>
-      <Box sx={{
-        width: 850,
-        m: 3,
-        mt: 3,
-        p: 3,
-        pt: 3,
-        borderRadius: 2,
-        bgcolor: 'RGBA(255,255,255,0.65)',
-        boxShadow: 5,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-      >
-        <Box>
-          <Typography variant='h3'>Handle Categories</Typography>
-          <Typography variant='h6'>To create your own catogory click on the plus sign</Typography>
+        >
+          <Box>
+            <Typography variant='h3'>Handle Categories</Typography>
+            <Typography variant='h6'>To create your own catogory click on the plus sign</Typography>
+          </Box>
+          <React.Fragment>
+            <IconButton style={styles.addButton} onClick={toggle}><AddButton /></IconButton>
+            <Modal
+              isShown={isShown}
+              hide={toggle}
+              headerText='Lägg till egen kategori'
+              modalContent={
+                <NewCategoryModal
+                  onConfirm={onConfirm}
+                  // onCancel={onCancel}
+                  message="Skriv in namn på nya kategorin"
+                  categories={categories} />
+              }
+            />
+          </React.Fragment>
+          <Box sx={{ width: '100%', "li:nth-child(even)": { background: '#D3D3D3' }, }}>
+            <List>
+              <Divider />
+              {categories.map((category: any) => (
+                <ListItem key={category.categoryId} disablePadding>
+                  <ListItemText primary={category.categoryName} />
+                  <ListItemText primary={category.categoryId} />
+                  <ListItemIcon>
+                    <IconButton onClick={() => { ToEdit(category.categoryId, category.categoryName) }}><EditIcon /></IconButton>
+
+                  </ListItemIcon>
+                  <ListItemIcon>
+                    <DeleteIcon />
+                  </ListItemIcon>
+                </ListItem>
+              ))}
+              <Divider />
+            </List>
+          </Box>
         </Box>
         <React.Fragment>
-          <IconButton style={styles.addButton} onClick={toggle}><AddButton /></IconButton>
           <Modal
-            isShown={isShown}
-            hide={toggle}
-            headerText='Lägg till egen kategori'
+            isShown={isShownEdit}
+            hide={toggleEdit}
+            headerText='Edit category'
             modalContent={
-              <NewCategoryModal
-                onConfirm={onConfirm}
+              <EditCategoryModal
+                onConfirm={onConfirmEdit}
                 // onCancel={onCancel}
-                message="Skriv in namn på nya kategorin"
-                categories={categories} />
+                message={categoryEditId}
+                categories={categories}
+                categoryId={categoryEditId}
+                categoryName={categoryEditName}
+              />
             }
           />
         </React.Fragment>
-        <Box sx={{ width: '100%', "li:nth-child(even)": { background: '#D3D3D3' }, }}>
-          <List>
-            <Divider />
-            {categories.map((category: any) => (
-              <ListItem key={category.categoryId} disablePadding>
-                <ListItemText primary={category.categoryName} />
-                <ListItemText primary={category.categoryId} />
-                <ListItemIcon>
-                  <IconButton onClick={() => { ToEdit(category.categoryId, category.categoryName) }}><EditIcon /></IconButton>
-
-                </ListItemIcon>
-                <ListItemIcon>
-                  <DeleteIcon />
-                </ListItemIcon>
-              </ListItem>
-            ))}
-            <Divider />
-          </List>
-        </Box>
       </Box>
-      <React.Fragment>
-        <Modal
-          isShown={isShownEdit}
-          hide={toggleEdit}
-          headerText='Edit category'
-          modalContent={
-            <EditCategoryModal
-              onConfirm={onConfirmEdit}
-              // onCancel={onCancel}
-              message={categoryEditId}
-              categories={categories}
-              categoryId={categoryEditId}
-              categoryName={categoryEditName}
-            />
-          }
-        />
-      </React.Fragment>
     </>
   )
 }
