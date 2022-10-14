@@ -9,8 +9,9 @@ import { flexbox } from '@mui/system'
 import { useUserContext } from '../../context/UserContext'
 
 import { Modal } from '../../shared/modal/modal'
-import { useModal } from '../../shared/modal/useModal'
+import { useEditModal, useModal } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
+import { EditCategoryModal } from '../editCategoryModal/editCategoryModal'
 import { DisabledSubmitButton, SubmitButton, AddButton } from '../../shared/buttons/button-default'
 import React from 'react'
 import { DeleteCategory, GetUserCreatedCatogories } from '../../shared/fetch/category'
@@ -40,10 +41,13 @@ function ProfileFeature() {
   const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
   const { isShown, toggle } = useModal();
+  const { isShownEdit, toggleEdit } = useEditModal();
 
   const [isLoading, setloadingState] = useState(false)
   const onConfirm = () => toggle();
+  const onConfirmEdit = () => toggleEdit();
   const onCancel = () => toggle();
+  const onCancelEdit = () => toggleEdit();
 
   const [categories, setCategories] = useState([])
   const deleteCategoryData: any = {
@@ -181,15 +185,33 @@ function ProfileFeature() {
           <List>
             <Divider />
             {categories.map((category: any) => (
-              <ListItem key={category.categoryId} className="listitem145" disablePadding>
+              <React.Fragment>
+              <ListItem key={category.categoryId} disablePadding>
                 <ListItemText primary={category.categoryName} />
+                <ListItemText primary={category.categoryId} />
                 <ListItemIcon>
-                  <EditIcon />
+                    <IconButton onClick={toggleEdit}><EditIcon /></IconButton>
+                    <Modal
+                        isShown={isShownEdit}
+                        hide={toggleEdit}
+                        headerText='Edit category'
+                        modalContent={
+                          <EditCategoryModal
+                            onConfirm={onConfirmEdit}
+                            // onCancel={onCancel}
+                            message={category.categoryId}
+                            categories={categories}    
+                            categoryId={category.categoryId}               
+                            categoryName={category.categoryName} 
+                          />
+                        }
+                        />
                 </ListItemIcon>
                 <ListItemIcon>
                   <DeleteIcon />
                 </ListItemIcon>
               </ListItem>
+                  </React.Fragment>
             ))}
             <Divider />
           </List>

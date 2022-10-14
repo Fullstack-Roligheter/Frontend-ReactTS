@@ -4,17 +4,17 @@ import styles from '../../CssStyles';
 import { ButtonCollection } from '../../CustomComponents'
 import { DisabledSubmitButton, SubmitButton } from '../../shared/buttons/button-default';
 import { useUserContext } from '../../context/UserContext'
-import { CreateCategory } from '../../shared/fetch/category';
+import { CreateCategory, EditCategory } from '../../shared/fetch/category';
 
-interface NewCategoryModalProps {
+interface EditCategoryModalProps {
   onConfirm: () => void;
-  kategoryId: string;
-  kategoryName: string;
+  categoryId: string | null;
+  categoryName: string | null;
   // onCancel: () => void;
   message: string;
   categories: any;
 }
-export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props) => {
+export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (props) => {
   const user = useUserContext()
   const [kategoriNamn, setKategoriNamn] = useState('')
   const [isLoading, setloadingState] = useState(false)
@@ -22,19 +22,10 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
   const [messageState, setmessageState] = useState(false)
   const editData: any = {
     userId: user.userId,
-    id: props.kategoryId,
+    categoryId: props.categoryId,
     categoryName: kategoriNamn
+    
   }
-
-  const submitData: any = {
-    userId: user.userId,
-    name: '',
-  }
-  //fetch för att hämta önskad kategori
-  //EditCategory(editData)
-  // .then((response) => {
-  //   setKategoriNamn(response)
-  // })
 
   const categories = props.categories
   const handleSubmit = (e: any) => {
@@ -48,11 +39,12 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
         setloadingState(false)
       }, 2000)
     } else {
-      submitData.name = kategoriNamn
       setloadingState(true)
+      console.log(props.categoryId)
+      console.log(editData.id)
       setmessage('Lägger till kategori')
       setmessageState(true)
-      CreateCategory(submitData)
+      EditCategory(editData)
         .then((response) => {
           setmessage('Kategori sparad')
         })

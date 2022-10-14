@@ -8,3 +8,12 @@ export const useModal = () => {
     toggle,
   };
 };
+
+export const useEditModal = () => {
+  const [isShownEdit, setIsShown] = useState<boolean>(false);
+  const toggleEdit = () => setIsShown(!isShownEdit);
+  return {
+    isShownEdit,
+    toggleEdit,
+  };
+};
