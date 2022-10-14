@@ -7,7 +7,7 @@ import { useUserContext } from '../../context/UserContext'
 import { CreateCategory, DeleteCategory, EditCategory } from '../../shared/fetch/category';
 
 interface DeleteCategoryModalProps {
-  onConfirm: () => void;
+  onConfirmDelete: () => void;
   categoryId: string | null;
   categoryName: string | null;
   // onCancel: () => void;
@@ -32,20 +32,20 @@ export const DeleteCategoryModal: FunctionComponent<DeleteCategoryModalProps> = 
       setloadingState(true)
       setmessage('Deleting Category')
       setmessageState(true)
-      DeleteCategory(deleteData)
-        .then(() => {
-          setmessage('Category Delete')
-        })
-        .catch((err) => {
-          setmessage('Could Not Delete')
-        })
-        .finally(() => {
-          setTimeout(() => {
-            setmessageState(false)
-            setloadingState(false)
-            props.onConfirm()
-          }, 2000)
-        })
+      props.onConfirmDelete()
+      // DeleteCategory(deleteData)
+      //   .then(() => {
+      //     setmessage('Category Delete')
+      //   })
+      //   .catch((err) => {
+      //     setmessage('Could Not Delete')
+      //   })
+      //   .finally(() => {
+      //     setTimeout(() => {
+      //       setmessageState(false)
+      //       setloadingState(false)
+      //     }, 2000)
+      //   })
   };
 
   return (

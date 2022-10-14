@@ -73,7 +73,7 @@ export function DeleteCategory(data: any) {
       return data
     })
     .catch((error) => {
-      console.log('Error in CreateCategory: ', error)
+      console.log('Error in DeleteCategory: ', error)
       throw error
     })
 }

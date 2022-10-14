@@ -241,7 +241,7 @@ function ProfileFeature() {
             headerText='Delete category'
             modalContent={
               <DeleteCategoryModal
-                onConfirm={onConfirmDelete}
+                onConfirmDelete={onConfirmDelete}
                 // onCancel={onCancel}
                 message={"Delete the category"}
                 categories={categories}
