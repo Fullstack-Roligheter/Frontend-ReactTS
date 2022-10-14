@@ -17,3 +17,12 @@ export const useEditModal = () => {
     toggleEdit,
   };
 };
+
+export const useDeleteModal = () => {
+  const [isShownDelete, setIsShown] = useState<boolean>(false);
+  const toggleDelete = () => setIsShown(!isShownDelete);
+  return {
+    isShownDelete,
+    toggleDelete,
+  };
+};

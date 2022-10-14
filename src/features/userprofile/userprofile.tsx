@@ -9,7 +9,7 @@ import { flexbox } from '@mui/system'
 import { useUserContext } from '../../context/UserContext'
 
 import { Modal } from '../../shared/modal/modal'
-import { useEditModal, useModal } from '../../shared/modal/useModal'
+import { useDeleteModal, useEditModal, useModal } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
 import { EditCategoryModal } from '../editCategoryModal/editCategoryModal'
 import { DisabledSubmitButton, SubmitButton, AddButton } from '../../shared/buttons/button-default'
@@ -17,6 +17,7 @@ import React from 'react'
 import { DeleteCategory, GetUserCreatedCatogories } from '../../shared/fetch/category'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { DeleteCategoryModal } from '../deleteCategorModal/deleteCategoryModal'
 
 
 function ProfileFeature() {
@@ -38,17 +39,20 @@ function ProfileFeature() {
   const [btcAddress, setbtcAddress] = useState([])
   const [data, setdata] = useState("")
 
-  const [categoryEditName, setCategoryEditName] = useState('')
-  const [categoryEditId, setCategoryEditId] = useState('')
+  const [categorySendName, setCategorySendName] = useState('')
+  const [categorySendId, setCategorySendId] = useState('')
   const [messageState, setmessageState] = useState(false)
   const { isShown, toggle } = useModal();
   const { isShownEdit, toggleEdit } = useEditModal();
+  const { isShownDelete, toggleDelete } = useDeleteModal();
 
   const [isLoading, setloadingState] = useState(false)
   const onConfirm = () => toggle();
   const onConfirmEdit = () => toggleEdit();
-  const onCancel = () => toggle();
-  const onCancelEdit = () => toggleEdit();
+  const onConfirmDelete = () => toggleDelete();
+  // const onCancel = () => toggle();
+  // const onCancelEdit = () => toggleEdit();
+  // const onCancelDelete = () => toggleDelete();
 
   const [categories, setCategories] = useState([])
   const deleteCategoryData: any = {
@@ -93,9 +97,15 @@ function ProfileFeature() {
   const [loadingState, setProfileloadingState] = useState(false)
 
   const ToEdit = (catId: React.SetStateAction<string>, catName: any) => {
-    setCategoryEditId(catId)
-    setCategoryEditName(catName)
+    setCategorySendId(catId)
+    setCategorySendName(catName)
     toggleEdit();
+  }
+
+  const ToDelete = (catId: React.SetStateAction<string>, catName: any) => {
+    setCategorySendId(catId)
+    setCategorySendName(catName)
+    toggleDelete();
   }
 
   return (
@@ -195,13 +205,11 @@ function ProfileFeature() {
               {categories.map((category: any) => (
                 <ListItem key={category.categoryId} disablePadding>
                   <ListItemText primary={category.categoryName} />
-                  <ListItemText primary={category.categoryId} />
                   <ListItemIcon>
                     <IconButton onClick={() => { ToEdit(category.categoryId, category.categoryName) }}><EditIcon /></IconButton>
-
                   </ListItemIcon>
                   <ListItemIcon>
-                    <DeleteIcon />
+                    <IconButton onClick={() => { ToDelete(category.categoryId, category.categoryName) }}><DeleteIcon /></IconButton>
                   </ListItemIcon>
                 </ListItem>
               ))}
@@ -218,10 +226,27 @@ function ProfileFeature() {
               <EditCategoryModal
                 onConfirm={onConfirmEdit}
                 // onCancel={onCancel}
-                message={categoryEditId}
+                message={"Edit the category"}
                 categories={categories}
-                categoryId={categoryEditId}
-                categoryName={categoryEditName}
+                categoryId={categorySendId}
+                categoryName={categorySendName}
+              />
+            }
+          />
+        </React.Fragment>
+        <React.Fragment>
+          <Modal
+            isShown={isShownDelete}
+            hide={toggleDelete}
+            headerText='Delete category'
+            modalContent={
+              <DeleteCategoryModal
+                onConfirm={onConfirmDelete}
+                // onCancel={onCancel}
+                message={"Delete the category"}
+                categories={categories}
+                categoryId={categorySendId}
+                categoryName={categorySendName}
               />
             }
           />

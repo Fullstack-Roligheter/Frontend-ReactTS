@@ -64,9 +64,10 @@ export function EditCategory(data: any) {
     })
 }
 export function DeleteCategory(data: any) {
+  debugger
   return instance
-    .delete(`api/categories/DeleteCategory`, data)
-    .then((response) => {
+  .delete(`api/categories/DeleteCategory`, data)
+  .then((response) => {
       const data = response.data
       return data
     })
