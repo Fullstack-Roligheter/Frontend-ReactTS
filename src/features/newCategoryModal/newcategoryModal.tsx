@@ -1,18 +1,22 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import styles from '../../CssStyles';
+import { Box, Button, TextField, Typography } from '@mui/material'
+import React, { FunctionComponent, useState } from 'react'
+import styles from '../../CssStyles'
 import { ButtonCollection } from '../../CustomComponents'
-import { DisabledSubmitButton, SubmitButton } from '../../shared/buttons/button-default';
+import {
+  DisabledSubmitButton,
+  SubmitButton,
+} from '../../shared/buttons/button-default'
 import { useUserContext } from '../../context/UserContext'
-import { CreateCategory } from '../../shared/fetch/category';
+import { CreateCategory } from '../../shared/fetch/category'
 
 interface NewCategoryModalProps {
-  onConfirm: () => void;
-  // onCancel: () => void;
-  message: string;
-  categories: any;
+  onConfirm: () => void
+  message: string
+  categories: any
 }
-export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props) => {
+export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (
+  props
+) => {
   const user = useUserContext()
   const [kategoriNamn, setKategoriNamn] = useState('')
   const [isLoading, setloadingState] = useState(false)
@@ -27,7 +31,12 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
   const handleSubmit = (e: any) => {
     e.preventDefault()
     debugger
-    if (categories.some((category: { categoryName: string; }) => category.categoryName.toLowerCase() === kategoriNamn.toLowerCase())) {
+    if (
+      categories.some(
+        (category: { categoryName: string }) =>
+          category.categoryName.toLowerCase() === kategoriNamn.toLowerCase()
+      )
+    ) {
       setmessage('Kategorin finns redan')
       setmessageState(true)
       setcategoryExist(true)
@@ -49,7 +58,6 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
         })
         .catch((err) => {
           setmessage('Kunde inte spara')
-
         })
         .finally(() => {
           setTimeout(() => {
@@ -57,15 +65,15 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
             setloadingState(false)
             props.onConfirm()
           }, 2000)
-
         })
     }
-
-  };
+  }
 
   return (
     <React.Fragment>
-      <Typography variant='subtitle1' align='center'>{props.message}</Typography>
+      <Typography variant='subtitle1' align='center'>
+        {props.message}
+      </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           label='Namn på kategori'
@@ -74,7 +82,9 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
           name='kategoriNamn'
           required={true}
           value={kategoriNamn}
-          onChange={(e) => { setKategoriNamn(e.target.value) }}
+          onChange={(e) => {
+            setKategoriNamn(e.target.value)
+          }}
           style={styles.textfield}
         />
         <br />
@@ -91,16 +101,17 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
         })()}
         <br />
         <ButtonCollection>
-          <Button onClick={(e) => { handleSubmit(kategoriNamn) }}>
+          <Button
+            onClick={(e) => {
+              handleSubmit(kategoriNamn)
+            }}
+          >
             {(() => {
               if (kategoriNamn === '') {
                 return <DisabledSubmitButton buttontext={'Spara'} />
               } else {
                 return (
-                  <SubmitButton
-                    isLoading={isLoading}
-                    buttontext={'Spara'}
-                  />
+                  <SubmitButton isLoading={isLoading} buttontext={'Spara'} />
                 )
               }
             })()}
@@ -108,7 +119,5 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (props
         </ButtonCollection>
       </form>
     </React.Fragment>
-  );
-};
-
-
+  )
+}

@@ -1,20 +1,25 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import styles from '../../CssStyles';
+import { Box, Button, TextField, Typography } from '@mui/material'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import styles from '../../CssStyles'
 import { ButtonCollection } from '../../CustomComponents'
-import { DisabledSubmitButton, SubmitButton } from '../../shared/buttons/button-default';
+import {
+  DisabledSubmitButton,
+  SubmitButton,
+} from '../../shared/buttons/button-default'
 import { useUserContext } from '../../context/UserContext'
-import { CreateCategory, EditCategory } from '../../shared/fetch/category';
+import { EditCategory } from '../../shared/fetch/category'
 
 interface EditCategoryModalProps {
-  onConfirm: () => void;
-  categoryId: string | null;
-  categoryName: string | null;
+  onConfirm: () => void
+  categoryId: string | null
+  categoryName: string | null
   // onCancel: () => void;
-  message: string;
-  categories: any;
+  message: string
+  categories: any
 }
-export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (props) => {
+export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
+  props
+) => {
   const user = useUserContext()
   const [kategoriNamn, setKategoriNamn] = useState('')
   const [isLoading, setloadingState] = useState(false)
@@ -23,15 +28,18 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (pro
   const editData: any = {
     userId: user.userId,
     categoryId: props.categoryId,
-    categoryName: kategoriNamn
-    
+    categoryName: kategoriNamn,
   }
 
   const categories = props.categories
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    debugger
-    if (categories.some((category: { categoryName: string; }) => category.categoryName.toLowerCase() === kategoriNamn.toLowerCase())) {
+    if (
+      categories.some(
+        (category: { categoryName: string }) =>
+          category.categoryName.toLowerCase() === kategoriNamn.toLowerCase()
+      )
+    ) {
       setmessage('Kategorin finns redan')
       setmessageState(true)
       setTimeout(() => {
@@ -59,12 +67,13 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (pro
           }, 2000)
         })
     }
-
-  };
+  }
 
   return (
     <React.Fragment>
-      <Typography variant='subtitle1' align='center'>{props.message}</Typography>
+      <Typography variant='subtitle1' align='center'>
+        {props.message}
+      </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           label='Namn på kategori'
@@ -73,7 +82,9 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (pro
           name='kategoriNamn'
           required={true}
           value={kategoriNamn}
-          onChange={(e) => { setKategoriNamn(e.target.value) }}
+          onChange={(e) => {
+            setKategoriNamn(e.target.value)
+          }}
           style={styles.textfield}
         />
         <br />
@@ -90,16 +101,17 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (pro
         })()}
         <br />
         <ButtonCollection>
-          <Button onClick={(e) => { handleSubmit(kategoriNamn) }}>
+          <Button
+            onClick={(e) => {
+              handleSubmit(kategoriNamn)
+            }}
+          >
             {(() => {
               if (kategoriNamn === '') {
                 return <DisabledSubmitButton buttontext={'Spara'} />
               } else {
                 return (
-                  <SubmitButton
-                    isLoading={isLoading}
-                    buttontext={'Spara'}
-                  />
+                  <SubmitButton isLoading={isLoading} buttontext={'Spara'} />
                 )
               }
             })()}
@@ -107,7 +119,5 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (pro
         </ButtonCollection>
       </form>
     </React.Fragment>
-  );
-};
-
-
+  )
+}

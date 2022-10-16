@@ -1,6 +1,17 @@
-
 import styles from '../../CssStyles.js'
-import { Box, Link, Typography, CircularProgress, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, List } from '@mui/material'
+import {
+  Box,
+  Link,
+  Typography,
+  CircularProgress,
+  IconButton,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  List,
+} from '@mui/material'
 import { userType } from '../../shared/Interfaces/userToken'
 import { GetGravatarProfile } from '../../shared/fetch/gravatar'
 import { useEffect, useState } from 'react'
@@ -9,22 +20,32 @@ import { flexbox } from '@mui/system'
 import { useUserContext } from '../../context/UserContext'
 
 import { Modal } from '../../shared/modal/modal'
-import { useDeleteModal, useEditModal, useModal } from '../../shared/modal/useModal'
+import {
+  useDeleteModal,
+  useEditModal,
+  useModal,
+} from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
 import { EditCategoryModal } from '../editCategoryModal/editCategoryModal'
-import { DisabledSubmitButton, SubmitButton, AddButton } from '../../shared/buttons/button-default'
+import {
+  DisabledSubmitButton,
+  SubmitButton,
+  AddButton,
+} from '../../shared/buttons/button-default'
 import React from 'react'
-import { DeleteCategory, GetUserCreatedCatogories } from '../../shared/fetch/category'
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import {
+  DeleteCategory,
+  GetUserCreatedCatogories,
+} from '../../shared/fetch/category'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
 import { DeleteCategoryModal } from '../deleteCategorModal/deleteCategoryModal'
-
 
 function ProfileFeature() {
   const user = useUserContext()
 
   var CryptoJS = require('crypto-js')
-  let userEmail = user.email;
+  let userEmail = user.email
   if (userEmail != null) {
     var hash = CryptoJS.MD5(userEmail.toLowerCase()).toString()
   }
@@ -37,19 +58,19 @@ function ProfileFeature() {
   const [location, setlocation] = useState([])
   const [phone, setphone] = useState([])
   const [btcAddress, setbtcAddress] = useState([])
-  const [data, setdata] = useState("")
+  const [data, setdata] = useState('')
 
   const [categorySendName, setCategorySendName] = useState('')
   const [categorySendId, setCategorySendId] = useState('')
   const [messageState, setmessageState] = useState(false)
-  const { isShown, toggle } = useModal();
-  const { isShownEdit, toggleEdit } = useEditModal();
-  const { isShownDelete, toggleDelete } = useDeleteModal();
+  const { isShown, toggle } = useModal()
+  const { isShownEdit, toggleEdit } = useEditModal()
+  const { isShownDelete, toggleDelete } = useDeleteModal()
 
   const [isLoading, setloadingState] = useState(false)
-  const onConfirm = () => toggle();
-  const onConfirmEdit = () => toggleEdit();
-  const onConfirmDelete = () => toggleDelete();
+  const onConfirm = () => toggle()
+  const onConfirmEdit = () => toggleEdit()
+  const onConfirmDelete = () => toggleDelete()
   // const onCancel = () => toggle();
   // const onCancelEdit = () => toggleEdit();
   // const onCancelDelete = () => toggleDelete();
@@ -58,21 +79,18 @@ function ProfileFeature() {
   const deleteCategoryData: any = {
     userId: user.userId,
     id: '',
-
   }
 
   const deleteCategory = () => {
-    DeleteCategory(deleteCategoryData)
-      .then()
+    DeleteCategory(deleteCategoryData).then()
   }
   useEffect(() => {
     async function getUserProfile() {
       const response: any = await GetGravatarProfile(hash)
-      if (response === "User not found") {
+      if (response === 'User not found') {
         setdata(response)
         setProfileloadingState(true)
-      }
-      else {
+      } else {
         JSON.stringify(response)
         setName(response.entry[0].name.formatted)
         setemail(response.entry[0].emails[0].value)
@@ -99,13 +117,13 @@ function ProfileFeature() {
   const ToEdit = (catId: React.SetStateAction<string>, catName: any) => {
     setCategorySendId(catId)
     setCategorySendName(catName)
-    toggleEdit();
+    toggleEdit()
   }
 
   const ToDelete = (catId: React.SetStateAction<string>, catName: any) => {
     setCategorySendId(catId)
     setCategorySendName(catName)
-    toggleDelete();
+    toggleDelete()
   }
 
   return (
@@ -133,31 +151,53 @@ function ProfileFeature() {
                 </Box>
               )
             }
-            if (data === "User not found") {
+            if (data === 'User not found') {
               return (
                 <Box>
                   <br />
-                  <Typography variant='h5' >Name: {user.firstName} {user.lastName}</Typography>
-                  <Typography variant='h5' >Email: {user.email}</Typography>
-                  <Typography variant='h5' >Create your profile at : <Link href="https://en.gravatar.com/" >Gravatar</Link></Typography>
+                  <Typography variant='h5'>
+                    Name: {user.firstName} {user.lastName}
+                  </Typography>
+                  <Typography variant='h5'>Email: {user.email}</Typography>
+                  <Typography variant='h5'>
+                    Create your profile at :{' '}
+                    <Link href='https://en.gravatar.com/'>Gravatar</Link>
+                  </Typography>
                   <br />
                 </Box>
               )
             } else {
               return (
                 <Box>
-                  <div style={styles.userProfileBOX} >
+                  <div style={styles.userProfileBOX}>
                     <div style={styles.userProfileIMG}>
-                      <img src={`${profileImage}?s=200`} alt="UserprofileImage" />
+                      <img
+                        src={`${profileImage}?s=200`}
+                        alt='UserprofileImage'
+                      />
                     </div>
                     <div style={styles.userProfileInfo}>
-                      <Typography variant='subtitle1' >Name: {name}</Typography>
-                      <Typography variant='subtitle1' >Email: {email}</Typography>
-                      <Typography variant='subtitle1' >Location: {location}</Typography>
-                      <Typography variant='subtitle1' >Phone: {phone}</Typography>
-                      <Typography variant='subtitle1' >Twitter Handle: <Link href="https://www.twitter.com">{twitter}</Link></Typography>
-                      <Typography variant='subtitle1' >BTC Adress: {btcAddress}</Typography>
-                      <Typography variant='subtitle1' >Change your profile here: <Link href="https://en.gravatar.com/" >Gravatar</Link></Typography>
+                      <Typography variant='subtitle1'>Name: {name}</Typography>
+                      <Typography variant='subtitle1'>
+                        Email: {email}
+                      </Typography>
+                      <Typography variant='subtitle1'>
+                        Location: {location}
+                      </Typography>
+                      <Typography variant='subtitle1'>
+                        Phone: {phone}
+                      </Typography>
+                      <Typography variant='subtitle1'>
+                        Twitter Handle:{' '}
+                        <Link href='https://www.twitter.com'>{twitter}</Link>
+                      </Typography>
+                      <Typography variant='subtitle1'>
+                        BTC Adress: {btcAddress}
+                      </Typography>
+                      <Typography variant='subtitle1'>
+                        Change your profile here:{' '}
+                        <Link href='https://en.gravatar.com/'>Gravatar</Link>
+                      </Typography>
                     </div>
                   </div>
                 </Box>
@@ -165,27 +205,32 @@ function ProfileFeature() {
             }
           })()}
         </Box>
-        <Box sx={{
-          width: 850,
-          m: 3,
-          mt: 3,
-          p: 3,
-          pt: 3,
-          borderRadius: 2,
-          bgcolor: 'RGBA(255,255,255,0.65)',
-          boxShadow: 5,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        <Box
+          sx={{
+            width: 850,
+            m: 3,
+            mt: 3,
+            p: 3,
+            pt: 3,
+            borderRadius: 2,
+            bgcolor: 'RGBA(255,255,255,0.65)',
+            boxShadow: 5,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
         >
           <Box>
             <Typography variant='h3'>Handle Categories</Typography>
-            <Typography variant='h6'>To create your own catogory click on the plus sign</Typography>
+            <Typography variant='h6'>
+              To create your own catogory click on the plus sign
+            </Typography>
           </Box>
           <React.Fragment>
-            <IconButton style={styles.addButton} onClick={toggle}><AddButton /></IconButton>
+            <Box style={styles.addButton} onClick={toggle}>
+              <AddButton />
+            </Box>
             <Modal
               isShown={isShown}
               hide={toggle}
@@ -194,22 +239,40 @@ function ProfileFeature() {
                 <NewCategoryModal
                   onConfirm={onConfirm}
                   // onCancel={onCancel}
-                  message="Skriv in namn på nya kategorin"
-                  categories={categories} />
+                  message='Skriv in namn på nya kategorin'
+                  categories={categories}
+                />
               }
             />
           </React.Fragment>
-          <Box sx={{ width: '100%', "li:nth-child(even)": { background: '#D3D3D3' }, }}>
+          <Box
+            sx={{
+              width: '100%',
+              'li:nth-child(even)': { background: '#D3D3D3' },
+            }}
+          >
             <List>
               <Divider />
               {categories.map((category: any) => (
                 <ListItem key={category.categoryId} disablePadding>
                   <ListItemText primary={category.categoryName} />
                   <ListItemIcon>
-                    <IconButton onClick={() => { ToEdit(category.categoryId, category.categoryName) }}><EditIcon /></IconButton>
+                    <IconButton
+                      onClick={() => {
+                        ToEdit(category.categoryId, category.categoryName)
+                      }}
+                    >
+                      <EditIcon />
+                    </IconButton>
                   </ListItemIcon>
                   <ListItemIcon>
-                    <IconButton onClick={() => { ToDelete(category.categoryId, category.categoryName) }}><DeleteIcon /></IconButton>
+                    <IconButton
+                      onClick={() => {
+                        ToDelete(category.categoryId, category.categoryName)
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                   </ListItemIcon>
                 </ListItem>
               ))}
@@ -226,7 +289,7 @@ function ProfileFeature() {
               <EditCategoryModal
                 onConfirm={onConfirmEdit}
                 // onCancel={onCancel}
-                message={"Edit the category"}
+                message={'Edit the category'}
                 categories={categories}
                 categoryId={categorySendId}
                 categoryName={categorySendName}
@@ -243,7 +306,7 @@ function ProfileFeature() {
               <DeleteCategoryModal
                 onConfirmDelete={onConfirmDelete}
                 // onCancel={onCancel}
-                message={"Delete the category"}
+                message={'Delete the category'}
                 categories={categories}
                 categoryId={categorySendId}
                 categoryName={categorySendName}

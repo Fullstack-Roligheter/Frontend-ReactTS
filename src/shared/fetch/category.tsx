@@ -63,12 +63,17 @@ export function EditCategory(data: any) {
       throw error
     })
 }
-export function DeleteCategory(data: any) {
-  console.log(data)
-  debugger
+
+export function DeleteCategory(input: any) {
+  const data = {
+    userId: input.userId,
+    categoryId: input.categoryId,
+  }
   return instance
-  .delete(`api/categories/DeleteCategory`, data)
-  .then((response) => {
+    .delete(
+      `api/categories/DeleteCategory?userId=${data.userId}&categoryId=${data.categoryId}`
+    )
+    .then((response) => {
       const data = response.data
       return data
     })
