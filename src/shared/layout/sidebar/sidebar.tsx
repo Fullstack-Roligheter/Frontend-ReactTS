@@ -32,7 +32,6 @@ export default function Sidebar(props: any) {
     variant: props.variant,
   }
 
-  console.log('sidebar props: ', props)
   const MenuTargets = [
     {
       title: 'Transactions',
