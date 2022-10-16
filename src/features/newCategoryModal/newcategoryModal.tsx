@@ -30,7 +30,6 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (
   const categories = props.categories
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    debugger
     if (
       categories.some(
         (category: { categoryName: string }) =>
