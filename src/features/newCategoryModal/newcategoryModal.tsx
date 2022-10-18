@@ -13,6 +13,7 @@ interface NewCategoryModalProps {
   onConfirm: () => void
   message: string
   categories: any
+  callBack: Function
 }
 export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (
   props
@@ -54,6 +55,7 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (
       CreateCategory(submitData)
         .then((response) => {
           setmessage('Kategori sparad')
+          props.callBack()
         })
         .catch((err) => {
           setmessage('Kunde inte spara')

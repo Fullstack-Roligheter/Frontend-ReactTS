@@ -79,11 +79,9 @@ function ProfileFeature() {
   const deleteCategoryData: any = {
     userId: user.userId,
     id: '',
+    callBack: Function,
   }
 
-  const deleteCategory = () => {
-    DeleteCategory(deleteCategoryData).then()
-  }
   useEffect(() => {
     async function getUserProfile() {
       const response: any = await GetGravatarProfile(hash)
@@ -113,6 +111,12 @@ function ProfileFeature() {
   }, [])
 
   const [loadingState, setProfileloadingState] = useState(false)
+
+  function getCategories(): any {
+    GetUserCreatedCatogories(user.userId).then((Response) => {
+      setCategories(Response)
+    })
+  }
 
   const ToEdit = (catId: React.SetStateAction<string>, catName: any) => {
     setCategorySendId(catId)
@@ -241,6 +245,7 @@ function ProfileFeature() {
                   // onCancel={onCancel}
                   message='Skriv in namn på nya kategorin'
                   categories={categories}
+                  callBack={getCategories}
                 />
               }
             />
@@ -293,6 +298,7 @@ function ProfileFeature() {
                 categories={categories}
                 categoryId={categorySendId}
                 categoryName={categorySendName}
+                callBack={getCategories}
               />
             }
           />
@@ -305,11 +311,11 @@ function ProfileFeature() {
             modalContent={
               <DeleteCategoryModal
                 onConfirmDelete={onConfirmDelete}
-                // onCancel={onCancel}
                 message={'Delete the category'}
                 categories={categories}
                 categoryId={categorySendId}
                 categoryName={categorySendName}
+                callBack={getCategories}
               />
             }
           />

@@ -16,6 +16,7 @@ interface EditCategoryModalProps {
   // onCancel: () => void;
   message: string
   categories: any
+  callBack: Function
 }
 export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
   props
@@ -30,8 +31,8 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
     categoryId: props.categoryId,
     categoryName: kategoriNamn,
   }
-
   const categories = props.categories
+
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (
@@ -55,6 +56,7 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
       EditCategory(editData)
         .then((response) => {
           setmessage('Kategori sparad')
+          props.callBack()
         })
         .catch((err) => {
           setmessage('Kunde inte spara')

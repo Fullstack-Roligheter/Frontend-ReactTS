@@ -12,6 +12,7 @@ interface DeleteCategoryModalProps {
   // onCancel: () => void;
   message: string
   categories: any
+  callBack: Function
 }
 export const DeleteCategoryModal: FunctionComponent<
   DeleteCategoryModalProps
@@ -35,6 +36,7 @@ export const DeleteCategoryModal: FunctionComponent<
     DeleteCategory(deleteData)
       .then(() => {
         setmessage('Category Delete')
+        props.callBack()
       })
       .catch((err) => {
         setmessage('Could Not Delete')
