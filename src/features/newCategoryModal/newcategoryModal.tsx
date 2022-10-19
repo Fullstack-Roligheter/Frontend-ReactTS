@@ -25,7 +25,7 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (
 
   const submitData: CreateSubmitData = {
     userId: '',
-    categoryName: '',
+    name: '',
   }
   const categories = props.categories
 
@@ -47,7 +47,7 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (
     } else {
       if (user.userId != null) {
         submitData.userId = user.userId
-        submitData.categoryName = categoryName
+        submitData.name = categoryName
       }
       setLoadingState(true)
       setMessage('Create New Category')

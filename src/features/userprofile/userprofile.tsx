@@ -280,6 +280,7 @@ function ProfileFeature() {
                 categories={categories}
                 categoryId={categorySendId}
                 categoryName={categorySendName}
+                categoryOldName={categorySendName}
                 callBack={getCategories}
               />
             }

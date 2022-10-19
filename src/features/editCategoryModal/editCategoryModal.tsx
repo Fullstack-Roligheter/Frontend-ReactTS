@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Typography } from '@mui/material'
-import React, { FunctionComponent, useState } from 'react'
+import { FormEvent, FunctionComponent, useState, useRef } from 'react'
 import styles from '../../CssStyles'
 import { ButtonCollection } from '../../CustomComponents'
 import {
@@ -17,7 +17,9 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
   props
 ) => {
   const user = useUserContext()
-  const [kategoriNamn, setKategoriNamn] = useState('')
+  const ref = useRef(null)
+
+  const [categoryName, setCategoryName] = useState(props.categoryOldName)
   const [isLoading, setloadingState] = useState(false)
   const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
@@ -25,18 +27,20 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
   const editSumbitData: EditSubmitData = {
     userId: user.userId,
     categoryId: props.categoryId,
-    categoryName: kategoriNamn,
+    categoryName: categoryName,
   }
   const categories = props.categories
+  const oldName = props.categoryOldName
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     if (
       categories.some(
         (category: { categoryName: string }) =>
-          category.categoryName.toLowerCase() === kategoriNamn.toLowerCase()
+          category.categoryName.toLowerCase() === categoryName.toLowerCase()
       )
     ) {
-      setmessage('Kategorin finns redan')
+      setmessage('Category Already Exists')
       setmessageState(true)
       setTimeout(() => {
         setmessageState(false)
@@ -44,15 +48,15 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
       }, 2000)
     } else {
       setloadingState(true)
-      setmessage('Lägger till kategori')
+      setmessage('Edit Category')
       setmessageState(true)
       EditCategory(editSumbitData)
         .then((response) => {
-          setmessage('Kategori sparad')
+          setmessage('Category Saved')
           setloadingState(false)
         })
         .catch((err) => {
-          setmessage('Kunde inte spara')
+          setmessage('Edit Unsuccessful')
           setloadingState(false)
         })
         .finally(() => {
@@ -66,20 +70,20 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
   }
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant='subtitle1' align='center'>
         {props.message}
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
-          label='Namn på kategori'
+          ref={ref}
           variant='outlined'
           type='text'
-          name='kategoriNamn'
+          name='categoryName'
           required={true}
-          value={kategoriNamn}
+          value={categoryName}
           onChange={(e) => {
-            setKategoriNamn(e.target.value)
+            setCategoryName(e.target.value)
           }}
           style={styles.textfield}
         />
@@ -97,13 +101,9 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
         })()}
         <br />
         <ButtonCollection>
-          <Button
-            onClick={(e) => {
-              handleSubmit(kategoriNamn)
-            }}
-          >
+          <Button type='submit'>
             {(() => {
-              if (kategoriNamn === '') {
+              if (categoryName === '' || categoryName === oldName) {
                 return <DisabledSubmitButton buttontext={'Spara'} />
               } else {
                 return (
@@ -114,6 +114,6 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
           </Button>
         </ButtonCollection>
       </form>
-    </React.Fragment>
+    </>
   )
 }

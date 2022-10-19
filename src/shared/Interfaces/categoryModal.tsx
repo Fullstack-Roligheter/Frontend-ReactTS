@@ -9,6 +9,7 @@ export interface EditCategoryModalProps {
   onConfirm: () => void
   categoryId: string | null
   categoryName: string | null
+  categoryOldName: string
   message: string
   categories: any
   callBack: Function
@@ -25,7 +26,7 @@ export interface DeleteCategoryModalProps {
 
 export interface CreateSubmitData {
   userId: string
-  categoryName: string
+  name: string
 }
 
 export interface EditSubmitData {
