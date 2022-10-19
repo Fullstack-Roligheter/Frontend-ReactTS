@@ -213,7 +213,7 @@ function ProfileFeature() {
               To create your own catogory click on the plus sign
             </Typography>
           </Box>
-          <React.Fragment>
+          <>
             <Box style={styles.addButton} onClick={toggle}>
               <AddButton />
             </Box>
@@ -231,11 +231,11 @@ function ProfileFeature() {
                 />
               }
             />
-          </React.Fragment>
+          </>
           <Box
             sx={{
               width: '100%',
-              'li:nth-child(even)': { background: '#D3D3D3' },
+              'li:nth-of-type(even)': { background: '#D3D3D3' },
             }}
           >
             <List>
@@ -267,7 +267,7 @@ function ProfileFeature() {
             </List>
           </Box>
         </Box>
-        <React.Fragment>
+        <>
           <Modal
             isShown={isShownEdit}
             hide={toggleEdit}
@@ -285,8 +285,8 @@ function ProfileFeature() {
               />
             }
           />
-        </React.Fragment>
-        <React.Fragment>
+        </>
+        <>
           <Modal
             isShown={isShownDelete}
             hide={toggleDelete}
@@ -302,7 +302,7 @@ function ProfileFeature() {
               />
             }
           />
-        </React.Fragment>
+        </>
       </Box>
     </>
   )

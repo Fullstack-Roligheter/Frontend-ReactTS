@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from '@mui/material'
+import { Box, TextField, Typography } from '@mui/material'
 import { FormEvent, FunctionComponent, useState, useRef } from 'react'
 import styles from '../../CssStyles'
 import { ButtonCollection } from '../../CustomComponents'
@@ -101,17 +101,13 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
         })()}
         <br />
         <ButtonCollection>
-          <Button type='submit'>
-            {(() => {
-              if (categoryName === '' || categoryName === oldName) {
-                return <DisabledSubmitButton buttontext={'Spara'} />
-              } else {
-                return (
-                  <SubmitButton isLoading={isLoading} buttontext={'Spara'} />
-                )
-              }
-            })()}
-          </Button>
+          {(() => {
+            if (categoryName === '' || categoryName === oldName) {
+              return <DisabledSubmitButton buttontext={'Save'} />
+            } else {
+              return <SubmitButton isLoading={isLoading} buttontext={'Save'} />
+            }
+          })()}
         </ButtonCollection>
       </form>
     </>

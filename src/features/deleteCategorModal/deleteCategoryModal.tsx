@@ -1,5 +1,5 @@
-import { Box, Button, Typography } from '@mui/material'
-import React, { FunctionComponent, useState } from 'react'
+import { Box, Typography } from '@mui/material'
+import { FunctionComponent, useState } from 'react'
 import { ButtonCollection } from '../../CustomComponents'
 import { SubmitButton } from '../../shared/buttons/button-default'
 import { useUserContext } from '../../context/UserContext'
@@ -42,7 +42,7 @@ export const DeleteCategoryModal: FunctionComponent<
   }
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant='subtitle1' align='center'>
         {props.message}
       </Typography>
@@ -62,11 +62,9 @@ export const DeleteCategoryModal: FunctionComponent<
         })()}
         <br />
         <ButtonCollection>
-          <Button type='submit'>
-            <SubmitButton isLoading={isLoading} buttontext={'Delete'} />
-          </Button>
+          <SubmitButton isLoading={isLoading} buttontext={'Delete'} />
         </ButtonCollection>
       </form>
-    </React.Fragment>
+    </>
   )
 }
