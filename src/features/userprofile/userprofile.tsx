@@ -220,12 +220,12 @@ function ProfileFeature() {
             <Modal
               isShown={isShown}
               hide={toggle}
-              headerText='Lägg till egen kategori'
+              headerText='Create New Category'
               modalContent={
                 <NewCategoryModal
                   onConfirm={onConfirm}
                   // onCancel={onCancel}
-                  message='Skriv in namn på nya kategorin'
+                  message='Category Name'
                   categories={categories}
                   callBack={getCategories}
                 />
@@ -271,12 +271,12 @@ function ProfileFeature() {
           <Modal
             isShown={isShownEdit}
             hide={toggleEdit}
-            headerText='Edit category'
+            headerText='Edit Category'
             modalContent={
               <EditCategoryModal
                 onConfirm={onConfirmEdit}
                 // onCancel={onCancel}
-                message={'Edit the category'}
+                message={'Change Name'}
                 categories={categories}
                 categoryId={categorySendId}
                 categoryName={categorySendName}
@@ -290,11 +290,11 @@ function ProfileFeature() {
           <Modal
             isShown={isShownDelete}
             hide={toggleDelete}
-            headerText='Delete category'
+            headerText='Delete Category'
             modalContent={
               <DeleteCategoryModal
                 onConfirm={onConfirmDelete}
-                message={'Delete the category'}
+                message={'Delete following Category?'}
                 categories={categories}
                 categoryId={categorySendId}
                 categoryName={categorySendName}

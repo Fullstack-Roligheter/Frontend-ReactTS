@@ -62,11 +62,7 @@ export const DeleteCategoryModal: FunctionComponent<
         })()}
         <br />
         <ButtonCollection>
-          <Button
-            onClick={(e) => {
-              handleSubmit(props.categoryId)
-            }}
-          >
+          <Button type='submit'>
             <SubmitButton isLoading={isLoading} buttontext={'Delete'} />
           </Button>
         </ButtonCollection>

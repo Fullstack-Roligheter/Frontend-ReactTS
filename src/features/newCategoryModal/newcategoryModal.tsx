@@ -17,17 +17,32 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (
   props
 ) => {
   const user = useUserContext()
+
   const [categoryName, setCategoryName] = useState('')
   const [isLoading, setLoadingState] = useState(false)
   const [message, setMessage] = useState('')
   const [messageState, setMessageState] = useState(false)
   const [categoryExist, setCategoryExist] = useState(false)
 
+  function getRandomPlaceholder(): string {
+    const dummyList = [
+      'School Supplies',
+      'Holiday',
+      'Road Trip',
+      'Shark Repellent',
+      'Helicopter Fuel',
+      'Medicine',
+    ]
+    let randomItem = dummyList[Math.floor(Math.random() * dummyList.length)]
+    return randomItem
+  }
+
   const submitData: CreateSubmitData = {
     userId: '',
     name: '',
   }
   const categories = props.categories
+  let placeHolder = getRandomPlaceholder()
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -78,10 +93,10 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
-          label='Namn på kategori'
+          placeholder={placeHolder}
           variant='outlined'
           type='text'
-          name='kategoriNamn'
+          name='categoryName'
           required={true}
           value={categoryName}
           onChange={(e) => {
