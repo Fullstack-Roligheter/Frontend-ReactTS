@@ -6,17 +6,13 @@ import {
   CircularProgress,
   IconButton,
   ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   Divider,
   List,
 } from '@mui/material'
-import { userType } from '../../shared/Interfaces/userToken'
 import { GetGravatarProfile } from '../../shared/fetch/gravatar'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { flexbox } from '@mui/system'
 import { useUserContext } from '../../context/UserContext'
 
 import { Modal } from '../../shared/modal/modal'
@@ -27,16 +23,9 @@ import {
 } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
 import { EditCategoryModal } from '../editCategoryModal/editCategoryModal'
-import {
-  DisabledSubmitButton,
-  SubmitButton,
-  AddButton,
-} from '../../shared/buttons/button-default'
+import { AddButton } from '../../shared/buttons/button-default'
 import React from 'react'
-import {
-  DeleteCategory,
-  GetUserCreatedCatogories,
-} from '../../shared/fetch/category'
+import { GetUserCreatedCatogories } from '../../shared/fetch/category'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { DeleteCategoryModal } from '../deleteCategorModal/deleteCategoryModal'
@@ -62,12 +51,10 @@ function ProfileFeature() {
 
   const [categorySendName, setCategorySendName] = useState('')
   const [categorySendId, setCategorySendId] = useState('')
-  const [messageState, setmessageState] = useState(false)
   const { isShown, toggle } = useModal()
   const { isShownEdit, toggleEdit } = useEditModal()
   const { isShownDelete, toggleDelete } = useDeleteModal()
 
-  const [isLoading, setloadingState] = useState(false)
   const onConfirm = () => toggle()
   const onConfirmEdit = () => toggleEdit()
   const onConfirmDelete = () => toggleDelete()
@@ -76,11 +63,6 @@ function ProfileFeature() {
   // const onCancelDelete = () => toggleDelete();
 
   const [categories, setCategories] = useState([])
-  const deleteCategoryData: any = {
-    userId: user.userId,
-    id: '',
-    callBack: Function,
-  }
 
   useEffect(() => {
     async function getUserProfile() {
@@ -310,7 +292,7 @@ function ProfileFeature() {
             headerText='Delete category'
             modalContent={
               <DeleteCategoryModal
-                onConfirmDelete={onConfirmDelete}
+                onConfirm={onConfirmDelete}
                 message={'Delete the category'}
                 categories={categories}
                 categoryId={categorySendId}

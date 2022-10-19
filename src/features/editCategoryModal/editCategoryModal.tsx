@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Typography } from '@mui/material'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import styles from '../../CssStyles'
 import { ButtonCollection } from '../../CustomComponents'
 import {
@@ -8,16 +8,11 @@ import {
 } from '../../shared/buttons/button-default'
 import { useUserContext } from '../../context/UserContext'
 import { EditCategory } from '../../shared/fetch/category'
+import {
+  EditCategoryModalProps,
+  EditSubmitData,
+} from '../../shared/Interfaces/categoryModal'
 
-interface EditCategoryModalProps {
-  onConfirm: () => void
-  categoryId: string | null
-  categoryName: string | null
-  // onCancel: () => void;
-  message: string
-  categories: any
-  callBack: Function
-}
 export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
   props
 ) => {
@@ -26,7 +21,8 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
   const [isLoading, setloadingState] = useState(false)
   const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
-  const editData: any = {
+
+  const editSumbitData: EditSubmitData = {
     userId: user.userId,
     categoryId: props.categoryId,
     categoryName: kategoriNamn,
@@ -34,7 +30,6 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
   const categories = props.categories
 
   const handleSubmit = (e: any) => {
-    e.preventDefault()
     if (
       categories.some(
         (category: { categoryName: string }) =>
@@ -49,23 +44,22 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
       }, 2000)
     } else {
       setloadingState(true)
-      console.log(props.categoryId)
-      console.log(editData.id)
       setmessage('Lägger till kategori')
       setmessageState(true)
-      EditCategory(editData)
+      EditCategory(editSumbitData)
         .then((response) => {
           setmessage('Kategori sparad')
-          props.callBack()
+          setloadingState(false)
         })
         .catch((err) => {
           setmessage('Kunde inte spara')
+          setloadingState(false)
         })
         .finally(() => {
           setTimeout(() => {
             setmessageState(false)
-            setloadingState(false)
             props.onConfirm()
+            props.callBack()
           }, 2000)
         })
     }
