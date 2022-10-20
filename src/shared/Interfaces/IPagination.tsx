@@ -1,5 +1,3 @@
-import { ChangeEvent, ReactEventHandler } from "react"
-
 export interface IPagination {
  data: any,
  itemsPerPage: number,

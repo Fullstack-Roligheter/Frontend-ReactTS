@@ -15,12 +15,6 @@ const UsePagination = (props: IPagination) => {
     //     const value = ChangeEvent.target.value as number
     // }
 
-    // Issue: 'event' implicitly has an 'any' type
-    // const onPageChange = (event: React.ChangeEvent<{value: number}>) => { 
-    //     const newPage = event.target.value;
-    //     setCurrentPage(newPage);
-    // }
-
     // Returnerar data för den activa sidan
     const getCurrentData = () => {
         const start = (currentPage - 1) * itemsPerPage;
@@ -38,14 +32,3 @@ const UsePagination = (props: IPagination) => {
 };
 
 export default UsePagination;
-
-// return(
-//     <Pagination
-//     count={pageCount}
-//     page={currentPage}
-//     onChange={onPageChange}
-//     color="primary"
-//     showFirstButton
-//     showLastButton
-//     />
-// )
