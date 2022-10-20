@@ -1,12 +1,10 @@
-import React, {useState} from "react"
+import { useState } from "react"
 import { IPagination } from "../Interfaces/IPagination";
-import { Pagination } from "@mui/material";
-import { SelectChangeEvent } from "@mui/material";
 
 const UsePagination = (props: IPagination) => {
-    
+
     const [currentPage, setCurrentPage] = useState<number>(1)
-    const {data, itemsPerPage} = props;
+    const { data, itemsPerPage } = props;
     const itemCount = data.length;
 
     // MUI:s egna event handler
@@ -21,12 +19,12 @@ const UsePagination = (props: IPagination) => {
         const end = start + itemsPerPage
 
         return data.slice(start, end);
-    }; 
+    };
 
     // Räknar ut hur många pages ska skapas beroende på hur mycket data som finns
     const pageCount = Math.ceil(itemCount / itemsPerPage);
 
-    return{
+    return {
         currentPage, getCurrentData, setCurrentPage, pageCount
     }
 };
