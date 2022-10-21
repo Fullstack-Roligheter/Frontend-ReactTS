@@ -6,17 +6,13 @@ import {
   CircularProgress,
   IconButton,
   ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   Divider,
   List,
 } from '@mui/material'
-import { userType } from '../../shared/Interfaces/userToken'
 import { GetGravatarProfile } from '../../shared/fetch/gravatar'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { flexbox } from '@mui/system'
 import { useUserContext } from '../../context/UserContext'
 
 import { Modal } from '../../shared/modal/modal'
@@ -27,16 +23,9 @@ import {
 } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
 import { EditCategoryModal } from '../editCategoryModal/editCategoryModal'
-import {
-  DisabledSubmitButton,
-  SubmitButton,
-  AddButton,
-} from '../../shared/buttons/button-default'
+import { AddButton } from '../../shared/buttons/button-default'
 import React from 'react'
-import {
-  DeleteCategory,
-  GetUserCreatedCatogories,
-} from '../../shared/fetch/category'
+import { GetUserCreatedCatogories } from '../../shared/fetch/category'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { DeleteCategoryModal } from '../deleteCategorModal/deleteCategoryModal'
@@ -62,12 +51,10 @@ function ProfileFeature() {
 
   const [categorySendName, setCategorySendName] = useState('')
   const [categorySendId, setCategorySendId] = useState('')
-  const [messageState, setmessageState] = useState(false)
   const { isShown, toggle } = useModal()
   const { isShownEdit, toggleEdit } = useEditModal()
   const { isShownDelete, toggleDelete } = useDeleteModal()
 
-  const [isLoading, setloadingState] = useState(false)
   const onConfirm = () => toggle()
   const onConfirmEdit = () => toggleEdit()
   const onConfirmDelete = () => toggleDelete()
@@ -76,14 +63,7 @@ function ProfileFeature() {
   // const onCancelDelete = () => toggleDelete();
 
   const [categories, setCategories] = useState([])
-  const deleteCategoryData: any = {
-    userId: user.userId,
-    id: '',
-  }
 
-  const deleteCategory = () => {
-    DeleteCategory(deleteCategoryData).then()
-  }
   useEffect(() => {
     async function getUserProfile() {
       const response: any = await GetGravatarProfile(hash)
@@ -113,6 +93,12 @@ function ProfileFeature() {
   }, [])
 
   const [loadingState, setProfileloadingState] = useState(false)
+
+  function getCategories(): any {
+    GetUserCreatedCatogories(user.userId).then((Response) => {
+      setCategories(Response)
+    })
+  }
 
   const ToEdit = (catId: React.SetStateAction<string>, catName: any) => {
     setCategorySendId(catId)
@@ -227,28 +213,29 @@ function ProfileFeature() {
               To create your own catogory click on the plus sign
             </Typography>
           </Box>
-          <React.Fragment>
+          <>
             <Box style={styles.addButton} onClick={toggle}>
               <AddButton />
             </Box>
             <Modal
               isShown={isShown}
               hide={toggle}
-              headerText='Lägg till egen kategori'
+              headerText='Create New Category'
               modalContent={
                 <NewCategoryModal
                   onConfirm={onConfirm}
                   // onCancel={onCancel}
-                  message='Skriv in namn på nya kategorin'
+                  message='Category Name'
                   categories={categories}
+                  callBack={getCategories}
                 />
               }
             />
-          </React.Fragment>
+          </>
           <Box
             sx={{
               width: '100%',
-              'li:nth-child(even)': { background: '#D3D3D3' },
+              'li:nth-of-type(even)': { background: '#D3D3D3' },
             }}
           >
             <List>
@@ -280,40 +267,42 @@ function ProfileFeature() {
             </List>
           </Box>
         </Box>
-        <React.Fragment>
+        <>
           <Modal
             isShown={isShownEdit}
             hide={toggleEdit}
-            headerText='Edit category'
+            headerText='Edit Category'
             modalContent={
               <EditCategoryModal
                 onConfirm={onConfirmEdit}
                 // onCancel={onCancel}
-                message={'Edit the category'}
+                message={'Change Name'}
                 categories={categories}
                 categoryId={categorySendId}
                 categoryName={categorySendName}
+                categoryOldName={categorySendName}
+                callBack={getCategories}
               />
             }
           />
-        </React.Fragment>
-        <React.Fragment>
+        </>
+        <>
           <Modal
             isShown={isShownDelete}
             hide={toggleDelete}
-            headerText='Delete category'
+            headerText='Delete Category'
             modalContent={
               <DeleteCategoryModal
-                onConfirmDelete={onConfirmDelete}
-                // onCancel={onCancel}
-                message={'Delete the category'}
+                onConfirm={onConfirmDelete}
+                message={'Delete following Category?'}
                 categories={categories}
                 categoryId={categorySendId}
                 categoryName={categorySendName}
+                callBack={getCategories}
               />
             }
           />
-        </React.Fragment>
+        </>
       </Box>
     </>
   )

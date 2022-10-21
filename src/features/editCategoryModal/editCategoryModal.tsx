@@ -1,5 +1,5 @@
-import { Box, Button, TextField, Typography } from '@mui/material'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import { Box, TextField, Typography } from '@mui/material'
+import { FormEvent, FunctionComponent, useState, useRef } from 'react'
 import styles from '../../CssStyles'
 import { ButtonCollection } from '../../CustomComponents'
 import {
@@ -8,39 +8,39 @@ import {
 } from '../../shared/buttons/button-default'
 import { useUserContext } from '../../context/UserContext'
 import { EditCategory } from '../../shared/fetch/category'
+import {
+  EditCategoryModalProps,
+  EditSubmitData,
+} from '../../shared/Interfaces/categoryModal'
 
-interface EditCategoryModalProps {
-  onConfirm: () => void
-  categoryId: string | null
-  categoryName: string | null
-  // onCancel: () => void;
-  message: string
-  categories: any
-}
 export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
   props
 ) => {
   const user = useUserContext()
-  const [kategoriNamn, setKategoriNamn] = useState('')
+  const ref = useRef(null)
+
+  const [categoryName, setCategoryName] = useState(props.categoryOldName)
   const [isLoading, setloadingState] = useState(false)
   const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
-  const editData: any = {
+
+  const editSumbitData: EditSubmitData = {
     userId: user.userId,
     categoryId: props.categoryId,
-    categoryName: kategoriNamn,
+    categoryName: categoryName,
   }
-
   const categories = props.categories
-  const handleSubmit = (e: any) => {
+  const oldName = props.categoryOldName
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (
       categories.some(
         (category: { categoryName: string }) =>
-          category.categoryName.toLowerCase() === kategoriNamn.toLowerCase()
+          category.categoryName.toLowerCase() === categoryName.toLowerCase()
       )
     ) {
-      setmessage('Kategorin finns redan')
+      setmessage('Category Already Exists')
       setmessageState(true)
       setTimeout(() => {
         setmessageState(false)
@@ -48,42 +48,42 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
       }, 2000)
     } else {
       setloadingState(true)
-      console.log(props.categoryId)
-      console.log(editData.id)
-      setmessage('Lägger till kategori')
+      setmessage('Edit Category')
       setmessageState(true)
-      EditCategory(editData)
+      EditCategory(editSumbitData)
         .then((response) => {
-          setmessage('Kategori sparad')
+          setmessage('Category Saved')
+          setloadingState(false)
         })
         .catch((err) => {
-          setmessage('Kunde inte spara')
+          setmessage('Edit Unsuccessful')
+          setloadingState(false)
         })
         .finally(() => {
           setTimeout(() => {
             setmessageState(false)
-            setloadingState(false)
             props.onConfirm()
+            props.callBack()
           }, 2000)
         })
     }
   }
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant='subtitle1' align='center'>
         {props.message}
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
-          label='Namn på kategori'
+          ref={ref}
           variant='outlined'
           type='text'
-          name='kategoriNamn'
+          name='categoryName'
           required={true}
-          value={kategoriNamn}
+          value={categoryName}
           onChange={(e) => {
-            setKategoriNamn(e.target.value)
+            setCategoryName(e.target.value)
           }}
           style={styles.textfield}
         />
@@ -101,23 +101,15 @@ export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
         })()}
         <br />
         <ButtonCollection>
-          <Button
-            onClick={(e) => {
-              handleSubmit(kategoriNamn)
-            }}
-          >
-            {(() => {
-              if (kategoriNamn === '') {
-                return <DisabledSubmitButton buttontext={'Spara'} />
-              } else {
-                return (
-                  <SubmitButton isLoading={isLoading} buttontext={'Spara'} />
-                )
-              }
-            })()}
-          </Button>
+          {(() => {
+            if (categoryName === '' || categoryName === oldName) {
+              return <DisabledSubmitButton buttontext={'Save'} />
+            } else {
+              return <SubmitButton isLoading={isLoading} buttontext={'Save'} />
+            }
+          })()}
         </ButtonCollection>
       </form>
-    </React.Fragment>
+    </>
   )
 }
