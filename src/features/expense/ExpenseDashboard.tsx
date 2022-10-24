@@ -221,12 +221,14 @@ const ExpenseDashboard = () => {
                 <Modal
                   isShown={isShown}
                   hide={toggle}
-                  headerText='Lägg till egen kategori'
+                  headerText='
+                  Add your own category'
                   modalContent={
                     <NewCategoryModal
                       onConfirm={onConfirm}
                       // onCancel={onCancel}
-                      message='Skriv in namn på nya kategorin'
+                      message='
+                      Enter the name of the new category'
                       categories={categories}
                       callBack={getCategories}
                     />
@@ -238,7 +240,7 @@ const ExpenseDashboard = () => {
               sx={{ textAlign: 'center' }}
               style={styles.textIncludedInForm}
             >
-              Tryck på plusset för att lägga till en ny kategori
+              Click the plus icon to add a new category
             </Typography>
             <TextField
               select
@@ -295,12 +297,12 @@ const ExpenseDashboard = () => {
             })()}
             {(() => {
               if (!checkForm()) {
-                return <DisabledSubmitButton buttontext={'Spara utgift'} />
+                return <DisabledSubmitButton buttontext={'Save expense'} />
               } else {
                 return (
                   <SubmitButton
                     isLoading={isLoading}
-                    buttontext={'Spara utgift'}
+                    buttontext={'Save expense'}
                   />
                 )
               }

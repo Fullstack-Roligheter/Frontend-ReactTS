@@ -52,7 +52,7 @@ export default function Sidebar(props: any) {
 
   const SubMenu = [
     { title: 'Faq', route: `/faq`, icon: <QuestionAnswer /> },
-    { title: 'About us', route: `/omoss`, icon: <Info /> },
+    { title: 'About us', route: `/aboutus`, icon: <Info /> },
   ]
 
   const { show } = sideBarProps
