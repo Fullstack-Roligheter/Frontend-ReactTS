@@ -23,7 +23,7 @@ const AuthenticatedHeader = (props: any) => {
 
   var CryptoJS = require('crypto-js')
   let userEmail = user.email
-  var hash = CryptoJS.MD5(userEmail).toString()
+  var hash = CryptoJS.MD5(userEmail?.toLowerCase()).toString()
 
   let settings = [
     { title: 'Profile', route: '/profile' },

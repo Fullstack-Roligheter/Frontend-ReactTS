@@ -15,7 +15,7 @@ import {
 import { Register } from '../../shared/fetch/user'
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router'
-import styles from '../../styles.js'
+import styles from '../../CssStyles.js'
 
 const RegisterUser = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -27,9 +27,9 @@ const RegisterUser = () => {
   const handleClickShowPassword2 = () => setShowPassword2(!showPassword2)
   const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2)
 
-  const [buttontext, setButtonText] = useState('Registrera')
+
   const [sPassword, setPassword] = useState('')
-  const [loadingState, setloadingState] = useState(false)
+  const [isLoading, setloadingState] = useState(false)
 
   const navigate = useNavigate()
 
@@ -87,7 +87,7 @@ const RegisterUser = () => {
             setTimeout(() => {
               setmessageState(false)
             }, 3000)
-          }, 5000)
+          }, 3000)
         })
         .finally(() => {
           console.log('Entered Finally')
@@ -228,12 +228,12 @@ const RegisterUser = () => {
             <Grid container justifyContent='center'>
               {(() => {
                 if (!checkForm()) {
-                  return <DisabledSubmitButton buttontext={buttontext} />
+                  return <DisabledSubmitButton buttontext={'Registrera'} />
                 } else {
                   return (
                     <SubmitButton
-                      isLoading={loadingState}
-                      buttontext={buttontext}
+                      isLoading={isLoading}
+                      buttontext={'Registrera'}
                     />
                   )
                 }

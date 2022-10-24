@@ -11,9 +11,13 @@ import {
 import { Login } from '../../shared/fetch/user'
 import { useState } from 'react'
 import { Box, Typography } from '@mui/material'
+
+import styles from '../../CssStyles.js'
+
 import { NavLink } from 'react-router-dom'
 import { useUserContext } from '../../context/UserContext'
-import styles from '../../styles.js'
+
+
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -53,7 +57,9 @@ const LogIn = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
+      setloadingState(true)
       await signIn(formData.eMail, formData.password)
+      setloadingState(false)
     } catch (error) {
       console.log(error)
     }
