@@ -299,6 +299,7 @@ const ExpenseDashboard = () => {
           </FormControl>
         </form>
       </Box>
+      <ExpenseListOutput/>
     </>
   )
 }
