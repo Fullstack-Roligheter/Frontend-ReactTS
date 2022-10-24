@@ -74,16 +74,6 @@ const ExpenseDashboard = () => {
     })
   }, [])
 
-  // //Get all debits to put in list
-  // useEffect(() => {
-  //   console.log('props.userId: ', user.userId)
-  //   GetDebitsForUser(user.userId).then((Response) => {
-  //     console.log(Response)
-  //     setDebits(Response)
-  //   })
-  // }, [])
-  // console.log(debits)
-
   useEffect(() => {
     let currentDate = DateFetcher()
     setNewExpense({
@@ -117,7 +107,6 @@ const ExpenseDashboard = () => {
             value={newExpense.Date}
             onChange={handleChange}
             margin='normal'
-            // InputLabelProps={{shrink:true}}
           />
           <TextField
             required
