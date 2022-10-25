@@ -25,6 +25,27 @@ const ExpenseListOutput = () => {
 
   const SortDebits = (sortOption: string) => {
     console.log(sortOption)
+
+
+    //   if (selectedyear !== "Välj år") {
+    //     console.log("Har valt år")
+    //     const filteredYears = items.filter((item) => item.pubdate.year === selectedyear);
+    //     if (selectedmonth !== "Välj månad") {
+    //       console.log("Har valt månad")
+    //       const filteredMonths = filteredYears.filter((item) => item.pubdate.month === selectedmonth);
+    //       dispatch('message', {
+    //         arr: filteredMonths,
+    //       });
+    //     }
+    //     else {
+    //       console.log("Har valt år men inte månad")
+    //       dispatch('message', {
+    //         arr: filteredYears,
+    //       });
+    //     }
+    //   }
+    //   
+
   }
 
   return (
