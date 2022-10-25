@@ -34,6 +34,7 @@ import {
 import styles from '../../CssStyles'
 
 import { useUserContext } from '../../context/UserContext'
+import ExpenseListOutput from './ExpenseListOutput'
 
 const ExpenseDashboard = () => {
   const user = useUserContext()
@@ -53,7 +54,7 @@ const ExpenseDashboard = () => {
     Date: '',
     Amount: '',
     Comment: '',
-    UserId: user.userId,
+  UserId: user.userId,
     CategoryId: undefined,
     BudgetId: undefined,
     ReturningTransactions: false,
@@ -131,16 +132,6 @@ const ExpenseDashboard = () => {
       setBudgets(Response)
     })
   }, [])
-
-  //Get all debits to put in list
-  useEffect(() => {
-    console.log('props.userId: ', user.userId)
-    GetDebitsForUser(user.userId).then((Response) => {
-      console.log(Response)
-      setDebits(Response)
-    })
-  }, [])
-  console.log(debits)
 
   useEffect(() => {
     let currentDate = DateFetcher()
@@ -308,6 +299,7 @@ const ExpenseDashboard = () => {
           </FormControl>
         </form>
       </Box>
+      <ExpenseListOutput/>
     </>
   )
 }
