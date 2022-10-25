@@ -8,3 +8,12 @@ export interface IPagination {
     onPageChange: any,
     currentPage: number
 }
+
+// TypeScript exempel från en pagination-exempel
+
+// export type Props = {
+//     currentPage: number;
+//     lastPage: number;
+//     maxLength: number;
+//     setCurrentPage: (page: number) => void;
+//   };
