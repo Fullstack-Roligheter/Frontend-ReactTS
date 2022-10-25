@@ -23,3 +23,25 @@
 .icon {
     cursor: pointer;
 }
+
+.table-container {
+    overflow-x: auto;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+    padding: 10px;
+    margin: 10px;
+  }
+  
+  /* För scrollning av långa kommentarer/text */
+  th {
+    max-width: 125px;
+    min-width: 125px;
+    padding: 0 !important;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center !important;
+  }
+  
+
+  
