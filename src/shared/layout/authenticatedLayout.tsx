@@ -49,7 +49,7 @@ const AuthenticatedLayout = () => {
 
   return (
     <>
-      <Box height='100vh'>
+      <Box minHeight='100vh' maxHeight='fitContent'>
         <AuthenticatedHeader {...newUserHeader} />
         <Sidebar {...newUserSidebar} />
         <Grid container={true} justifyContent='center' spacing={0} my={8}>

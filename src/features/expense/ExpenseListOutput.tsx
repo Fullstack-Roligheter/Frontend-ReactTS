@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { useUserContext } from '../../context/UserContext'
+import { Button } from '@mui/material'
 
 const ExpenseListOutput = () => {
   const user = useUserContext()
@@ -22,17 +23,21 @@ const ExpenseListOutput = () => {
   }, [])
   console.log(debits)
 
+  const SortDebits = (sortOption: string) => {
+    console.log(sortOption)
+  }
+
   return (
     <>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+        <Table sx={{ minWidth: 650, maxWidth: '100 %' }} aria-label='simple table'>
           <TableHead>
             <TableRow>
-              <TableCell>Datum</TableCell>
-              <TableCell>Summa</TableCell>
-              <TableCell>Kategori</TableCell>
-              <TableCell>Budget</TableCell>
-              <TableCell>Kommentar</TableCell>
+              <TableCell><Button onClick={() => SortDebits('datum')}>Datum</Button></TableCell>
+              <TableCell><Button onClick={() => SortDebits('summa')}>Summa</Button></TableCell>
+              <TableCell><Button onClick={() => SortDebits('kategori')}>Kategori</Button></TableCell>
+              <TableCell><Button onClick={() => SortDebits('budget')}>Budget</Button></TableCell>
+              <TableCell><Button onClick={() => SortDebits('kommentar')}>Kommentar</Button></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

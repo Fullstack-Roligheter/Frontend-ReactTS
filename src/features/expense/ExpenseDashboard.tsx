@@ -54,7 +54,7 @@ const ExpenseDashboard = () => {
     Date: '',
     Amount: '',
     Comment: '',
-  UserId: user.userId,
+    UserId: user.userId,
     CategoryId: undefined,
     BudgetId: undefined,
     ReturningTransactions: false,
@@ -145,52 +145,98 @@ const ExpenseDashboard = () => {
   //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: styles.formBackground.background}}
   return (
     <>
-      <Box display='flex' flexDirection='column'>
-        <form onSubmit={handleSubmit}>
-          <FormControl
-            sx={{
-              width: 330,
-              m: 3,
-              mt: 7,
-              p: 3,
-              pt: 1,
-              borderRadius: 2,
-              bgcolor: 'RGBA(255,255,255,0.65)',
-              boxShadow: 5,
-            }}
-          >
-            <TextField
-              required
-              type='date'
-              name='Date'
-              label='Date'
-              value={newExpense.Date}
-              onChange={handleChange}
-              margin='normal'
-              style={styles.textfield}
-              // InputLabelProps={{shrink:true}}
-            />
-            <TextField
-              required
-              label='Amount'
-              type='number'
-              name='Amount'
-              value={newExpense.Amount}
-              onChange={handleChange}
-              style={styles.textfield}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>Kr</InputAdornment>
-                ),
+      <Box maxWidth='100%' display='flex' flexDirection='column' alignItems='center'>
+        <Box display='flex' flexDirection='column'>
+          <form onSubmit={handleSubmit}>
+            <FormControl
+              sx={{
+                width: 330,
+                m: 3,
+                mt: 7,
+                p: 3,
+                pt: 1,
+                borderRadius: 2,
+                bgcolor: 'RGBA(255,255,255,0.65)',
+                boxShadow: 5,
               }}
-              margin='normal'
-            />
-            <Box display='flex' alignItems='center'>
+            >
+              <TextField
+                required
+                type='date'
+                name='Date'
+                label='Date'
+                value={newExpense.Date}
+                onChange={handleChange}
+                margin='normal'
+                style={styles.textfield}
+              // InputLabelProps={{shrink:true}}
+              />
+              <TextField
+                required
+                label='Amount'
+                type='number'
+                name='Amount'
+                value={newExpense.Amount}
+                onChange={handleChange}
+                style={styles.textfield}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>Kr</InputAdornment>
+                  ),
+                }}
+                margin='normal'
+              />
+              <Box display='flex' alignItems='center'>
+                <TextField
+                  select
+                  label='Category'
+                  name='CategoryId'
+                  value={newExpense.CategoryId}
+                  onChange={handleChange}
+                  style={styles.textfield}
+                  SelectProps={{
+                    native: true,
+                  }}
+                  margin='normal'
+                >
+                  <option value='' />
+                  {categories.map((option: any) => (
+                    <option key={option.categoryId} value={option.categoryId}>
+                      {option.categoryName}
+                    </option>
+                  ))}
+                </TextField>
+                <React.Fragment>
+                  <IconButton style={styles.addButton} onClick={toggle}>
+                    <AddButton />
+                  </IconButton>
+                  <Modal
+                    isShown={isShown}
+                    hide={toggle}
+                    headerText='Lägg till egen kategori'
+                    modalContent={
+                      <NewCategoryModal
+                        onConfirm={onConfirm}
+                        // onCancel={onCancel}
+                        message='Skriv in namn på nya kategorin'
+                        categories={categories}
+                        callBack={getCategories}
+                      />
+                    }
+                  />
+                </React.Fragment>
+              </Box>
+              <Typography
+                sx={{ textAlign: 'center' }}
+                style={styles.textIncludedInForm}
+              >
+                Tryck på plusset för att lägga till en ny kategori
+              </Typography>
               <TextField
                 select
-                label='Category'
-                name='CategoryId'
-                value={newExpense.CategoryId}
+                label='Budget'
+                name='BudgetId'
+                value={newExpense.BudgetId}
                 onChange={handleChange}
                 style={styles.textfield}
                 SelectProps={{
@@ -199,107 +245,63 @@ const ExpenseDashboard = () => {
                 margin='normal'
               >
                 <option value='' />
-                {categories.map((option: any) => (
-                  <option key={option.categoryId} value={option.categoryId}>
-                    {option.categoryName}
+                {budgets.map((option: any) => (
+                  <option key={option.budgetId} value={option.budgetId}>
+                    {option.budgetName}
                   </option>
                 ))}
               </TextField>
-              <React.Fragment>
-                <IconButton style={styles.addButton} onClick={toggle}>
-                  <AddButton />
-                </IconButton>
-                <Modal
-                  isShown={isShown}
-                  hide={toggle}
-                  headerText='Lägg till egen kategori'
-                  modalContent={
-                    <NewCategoryModal
-                      onConfirm={onConfirm}
-                      // onCancel={onCancel}
-                      message='Skriv in namn på nya kategorin'
-                      categories={categories}
-                      callBack={getCategories}
+              <TextField
+                label='Description'
+                multiline
+                rows={5}
+                helperText='Company, Notes, Reciever Etc.'
+                name='Comment'
+                value={newExpense.Comment}
+                onChange={handleChange}
+                margin='normal'
+              />
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name='ReturningTransactions'
+                      onChange={handleBoolean}
+                      sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
                     />
                   }
+                  label='Return transactions'
+                  labelPlacement='start'
                 />
-              </React.Fragment>
-            </Box>
-            <Typography
-              sx={{ textAlign: 'center' }}
-              style={styles.textIncludedInForm}
-            >
-              Tryck på plusset för att lägga till en ny kategori
-            </Typography>
-            <TextField
-              select
-              label='Budget'
-              name='BudgetId'
-              value={newExpense.BudgetId}
-              onChange={handleChange}
-              style={styles.textfield}
-              SelectProps={{
-                native: true,
-              }}
-              margin='normal'
-            >
-              <option value='' />
-              {budgets.map((option: any) => (
-                <option key={option.budgetId} value={option.budgetId}>
-                  {option.budgetName}
-                </option>
-              ))}
-            </TextField>
-            <TextField
-              label='Description'
-              multiline
-              rows={5}
-              helperText='Company, Notes, Reciever Etc.'
-              name='Comment'
-              value={newExpense.Comment}
-              onChange={handleChange}
-              margin='normal'
-            />
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name='ReturningTransactions'
-                    onChange={handleBoolean}
-                    sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
-                  />
+              </Box>
+              {(() => {
+                if (messageState) {
+                  return (
+                    <Box>
+                      <br />
+                      <Typography>{message}</Typography>
+                      <br />
+                    </Box>
+                  )
                 }
-                label='Return transactions'
-                labelPlacement='start'
-              />
-            </Box>
-            {(() => {
-              if (messageState) {
-                return (
-                  <Box>
-                    <br />
-                    <Typography>{message}</Typography>
-                    <br />
-                  </Box>
-                )
-              }
-            })()}
-            {(() => {
-              if (!checkForm()) {
-                return <DisabledSubmitButton buttontext={'Spara utgift'} />
-              } else {
-                return (
-                  <SubmitButton
-                    isLoading={isLoading}
-                    buttontext={'Spara utgift'}
-                  />
-                )
-              }
-            })()}
-          </FormControl>
-        </form>
+              })()}
+              {(() => {
+                if (!checkForm()) {
+                  return <DisabledSubmitButton buttontext={'Spara utgift'} />
+                } else {
+                  return (
+                    <SubmitButton
+                      isLoading={isLoading}
+                      buttontext={'Spara utgift'}
+                    />
+                  )
+                }
+              })()}
+            </FormControl>
+          </form>
+        </Box>
+        <ExpenseListOutput />
       </Box>
-      <ExpenseListOutput/>
     </>
   )
 }
