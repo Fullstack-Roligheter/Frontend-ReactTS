@@ -47,7 +47,7 @@ const ExpenseListOutput = () => {
   };
 
   return (
-      <TableContainer component={Paper}>
+      <TableContainer className="table-container" component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
           <TableHead>
             <TableRow>
@@ -71,7 +71,7 @@ const ExpenseListOutput = () => {
                 <TableCell>{debit.amount}</TableCell>
                 <TableCell>{debit.category}</TableCell>
                 <TableCell>{debit.budget}</TableCell>
-                <TableCell>{debit.comment}</TableCell>
+                <TableCell component="th">{debit.comment}</TableCell>
               </TableRow>
             ))}
             {emptyRows > 0 && (
