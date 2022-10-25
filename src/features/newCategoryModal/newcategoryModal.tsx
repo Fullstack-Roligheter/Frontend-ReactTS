@@ -1,5 +1,5 @@
-import { Box, Button, TextField, Typography } from '@mui/material'
-import React, { FunctionComponent, useState } from 'react'
+import { Box, TextField, Typography } from '@mui/material'
+import { FunctionComponent, useState, FormEvent } from 'react'
 import styles from '../../CssStyles'
 import { ButtonCollection } from '../../CustomComponents'
 import {
@@ -8,81 +8,99 @@ import {
 } from '../../shared/buttons/button-default'
 import { useUserContext } from '../../context/UserContext'
 import { CreateCategory } from '../../shared/fetch/category'
+import {
+  CreateSubmitData,
+  NewCategoryModalProps,
+} from '../../shared/Interfaces/categoryModal'
 
-interface NewCategoryModalProps {
-  onConfirm: () => void
-  message: string
-  categories: any
-}
 export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (
   props
 ) => {
   const user = useUserContext()
-  const [kategoriNamn, setKategoriNamn] = useState('')
-  const [isLoading, setloadingState] = useState(false)
-  const [message, setmessage] = useState('')
-  const [messageState, setmessageState] = useState(false)
-  const [categoryExist, setcategoryExist] = useState(false)
-  const submitData: any = {
+
+  const [categoryName, setCategoryName] = useState('')
+  const [isLoading, setLoadingState] = useState(false)
+  const [message, setMessage] = useState('')
+  const [messageState, setMessageState] = useState(false)
+  const [categoryExist, setCategoryExist] = useState(false)
+
+  function getRandomPlaceholder(): string {
+    const dummyList = [
+      'School Supplies',
+      'Holiday',
+      'Road Trip',
+      'Shark Repellent',
+      'Helicopter Fuel',
+      'Medicine',
+    ]
+    let randomItem = dummyList[Math.floor(Math.random() * dummyList.length)]
+    return randomItem
+  }
+
+  const submitData: CreateSubmitData = {
     userId: '',
     name: '',
   }
   const categories = props.categories
-  const handleSubmit = (e: any) => {
+  let placeHolder = getRandomPlaceholder()
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (
       categories.some(
         (category: { categoryName: string }) =>
-          category.categoryName.toLowerCase() === kategoriNamn.toLowerCase()
+          category.categoryName.toLowerCase() === categoryName.toLowerCase()
       )
     ) {
-      setmessage('Kategorin finns redan')
-      setmessageState(true)
-      setcategoryExist(true)
+      setMessage('Category already exists')
+      setMessageState(true)
+      setCategoryExist(true)
       setTimeout(() => {
-        setmessageState(false)
-        setloadingState(false)
+        setMessageState(false)
+        setLoadingState(false)
       }, 2000)
     } else {
       if (user.userId != null) {
         submitData.userId = user.userId
-        submitData.name = kategoriNamn
+        submitData.name = categoryName
       }
-      setloadingState(true)
-      setmessage('Lägger till kategori')
-      setmessageState(true)
+      setLoadingState(true)
+      setMessage('Create New Category')
+      setMessageState(true)
       CreateCategory(submitData)
         .then((response) => {
-          setmessage('Kategori sparad')
+          setMessage('Category Successfully Created')
+          setLoadingState(false)
         })
-        .catch((err) => {
-          setmessage('Kunde inte spara')
+        .catch((error) => {
+          setMessage('Creation Unsuccessful')
+          setLoadingState(false)
         })
         .finally(() => {
           setTimeout(() => {
-            setmessageState(false)
-            setloadingState(false)
+            setMessageState(false)
             props.onConfirm()
+            props.callBack()
           }, 2000)
         })
     }
   }
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant='subtitle1' align='center'>
         {props.message}
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
-          label='Namn på kategori'
+          placeholder={placeHolder}
           variant='outlined'
           type='text'
-          name='kategoriNamn'
+          name='categoryName'
           required={true}
-          value={kategoriNamn}
+          value={categoryName}
           onChange={(e) => {
-            setKategoriNamn(e.target.value)
+            setCategoryName(e.target.value)
           }}
           style={styles.textfield}
         />
@@ -100,23 +118,17 @@ export const NewCategoryModal: FunctionComponent<NewCategoryModalProps> = (
         })()}
         <br />
         <ButtonCollection>
-          <Button
-            onClick={(e) => {
-              handleSubmit(kategoriNamn)
-            }}
-          >
-            {(() => {
-              if (kategoriNamn === '') {
-                return <DisabledSubmitButton buttontext={'Spara'} />
-              } else {
-                return (
-                  <SubmitButton isLoading={isLoading} buttontext={'Spara'} />
-                )
-              }
-            })()}
-          </Button>
+          {(() => {
+            if (categoryName === '') {
+              return <DisabledSubmitButton buttontext={'Create'} />
+            } else {
+              return (
+                <SubmitButton isLoading={isLoading} buttontext={'Create'} />
+              )
+            }
+          })()}
         </ButtonCollection>
       </form>
-    </React.Fragment>
+    </>
   )
 }

@@ -27,7 +27,6 @@ const RegisterUser = () => {
   const handleClickShowPassword2 = () => setShowPassword2(!showPassword2)
   const handleMouseDownPassword2 = () => setShowPassword2(!showPassword2)
 
-
   const [sPassword, setPassword] = useState('')
   const [isLoading, setloadingState] = useState(false)
 
@@ -111,9 +110,15 @@ const RegisterUser = () => {
             align='center'
             style={styles.whiteTypography}
           >
-            Registrera konto
+            Create new account
           </Typography>
-          <Box sx={{ marginBottom: '15px', display: 'flex', justifyContent: 'center' }}>
+          <Box
+            sx={{
+              marginBottom: '15px',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
             <Typography
               variant='h6'
               align='center'
@@ -121,7 +126,7 @@ const RegisterUser = () => {
               href='/login'
               style={styles.linkTypography}
             >
-              Vill du logga in? Klicka på mig!
+              Do you want to log in? Click me!
             </Typography>
           </Box>
         </Grid>
@@ -228,12 +233,12 @@ const RegisterUser = () => {
             <Grid container justifyContent='center'>
               {(() => {
                 if (!checkForm()) {
-                  return <DisabledSubmitButton buttontext={'Registrera'} />
+                  return <DisabledSubmitButton buttontext={'Sign Up'} />
                 } else {
                   return (
                     <SubmitButton
                       isLoading={isLoading}
-                      buttontext={'Registrera'}
+                      buttontext={'Sign Up'}
                     />
                   )
                 }
@@ -242,7 +247,7 @@ const RegisterUser = () => {
           </form>
         </Grid>
       </Grid>
-    </Grid >
+    </Grid>
   )
 }
 export default RegisterUser

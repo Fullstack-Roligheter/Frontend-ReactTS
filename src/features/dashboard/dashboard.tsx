@@ -5,7 +5,6 @@ import { userType } from '../../shared/Interfaces/userToken'
 import styles from '../../CssStyles.js'
 import { useEffect, useState } from 'react'
 
-
 function DashboardFeature() {
   // let UserIsLoggedIn = sessionStorage.getItem('user')
   // console.log('authenticatedLayout: ', UserIsLoggedIn)
@@ -40,6 +39,7 @@ function DashboardFeature() {
   // }
 
   return (
+
     <Box style={styles.dashboardBackground} sx={{ display: 'flex', flexDirection: 'column', maxWidth: '100%' }}>
       {(() => {
         if (dashboardTextSize == 'small') {
@@ -60,6 +60,7 @@ function DashboardFeature() {
       <Typography variant='h5' style={styles.whiteTypography}>Epost: {user.email}</Typography>
       <Typography variant='subtitle1' style={styles.whiteTypography}>{timeMilli}</Typography>
     </Box >
+
   )
 }
 

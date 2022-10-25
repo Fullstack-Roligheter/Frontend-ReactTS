@@ -46,7 +46,7 @@ const Footer = () => {
             component='div'
             sx={{ flexGrow: 1 }}
           >
-            Expense AB © 2021
+            Xpense AB © 2021
           </Typography>
         </Box>
       </Grid>

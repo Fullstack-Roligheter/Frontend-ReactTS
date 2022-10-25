@@ -3,11 +3,21 @@ import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Checkbox from '@mui/material/Checkbox'
 
-import { Box, Button, IconButton, FormControlLabel, Paper, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  IconButton,
+  FormControlLabel,
+  Paper,
+  Typography,
+} from '@mui/material'
 import React, { useEffect, useState, Component, FunctionComponent } from 'react'
 import { userType } from '../../shared/Interfaces/userToken'
 
-import { GetCategoriesForUser } from '../../shared/fetch/category'
+import {
+  GetCategoriesForUser,
+  GetUserCreatedCatogories,
+} from '../../shared/fetch/category'
 import { GetBudgetsForUser } from '../../shared/fetch/budget'
 import { CreateDebit, GetDebitsForUser } from '../../shared/fetch/expense'
 import { DateFetcher } from '../../shared/dateFetcher/dateFetcher'
@@ -16,12 +26,15 @@ import { render } from 'react-dom'
 import { Modal } from '../../shared/modal/modal'
 import { useModal } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
-import { DisabledSubmitButton, SubmitButton, AddButton } from '../../shared/buttons/button-default'
+import {
+  DisabledSubmitButton,
+  SubmitButton,
+  AddButton,
+} from '../../shared/buttons/button-default'
 import styles from '../../CssStyles'
 
-
-
 import { useUserContext } from '../../context/UserContext'
+import ExpenseListOutput from './ExpenseListOutput'
 
 const ExpenseDashboard = () => {
   const user = useUserContext()
@@ -32,16 +45,16 @@ const ExpenseDashboard = () => {
   const [categories, setCategories] = useState<any[]>([])
   const [budgets, setBudgets] = useState<any[]>([])
   const [debits, setDebits] = useState<any[]>([])
-  const { isShown, toggle } = useModal();
+  const { isShown, toggle } = useModal()
   const [isLoading, setloadingState] = useState(false)
-  const onConfirm = () => toggle();
-  const onCancel = () => toggle();
+  const onConfirm = () => toggle()
+  const onCancel = () => toggle()
 
   const [newExpense, setNewExpense] = useState({
     Date: '',
     Amount: '',
     Comment: '',
-    UserId: user.userId,
+  UserId: user.userId,
     CategoryId: undefined,
     BudgetId: undefined,
     ReturningTransactions: false,
@@ -89,12 +102,18 @@ const ExpenseDashboard = () => {
       console.log(Response)
       setTimeout(() => {
         setloadingState(false)
-        setmessage("Transaction Created")
+        setmessage('Transaction Created')
         setmessageState(true)
         setTimeout(() => {
           setmessageState(false)
         }, 3000)
       }, 3000)
+    })
+  }
+
+  function getCategories(): any {
+    GetUserCreatedCatogories(user.userId).then((Response) => {
+      setCategories(Response)
     })
   }
 
@@ -114,16 +133,6 @@ const ExpenseDashboard = () => {
     })
   }, [])
 
-  //Get all debits to put in list
-  useEffect(() => {
-    console.log('props.userId: ', user.userId)
-    GetDebitsForUser(user.userId).then((Response) => {
-      console.log(Response)
-      setDebits(Response)
-    })
-  }, [])
-  console.log(debits)
-
   useEffect(() => {
     let currentDate = DateFetcher()
     setNewExpense({
@@ -136,7 +145,7 @@ const ExpenseDashboard = () => {
   //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: styles.formBackground.background}}
   return (
     <>
-      <Box display="flex" flexDirection='column'>
+      <Box display='flex' flexDirection='column'>
         <form onSubmit={handleSubmit}>
           <FormControl
             sx={{
@@ -159,7 +168,7 @@ const ExpenseDashboard = () => {
               onChange={handleChange}
               margin='normal'
               style={styles.textfield}
-            // InputLabelProps={{shrink:true}}
+              // InputLabelProps={{shrink:true}}
             />
             <TextField
               required
@@ -170,7 +179,9 @@ const ExpenseDashboard = () => {
               onChange={handleChange}
               style={styles.textfield}
               InputProps={{
-                endAdornment: <InputAdornment position='end'>Kr</InputAdornment>,
+                endAdornment: (
+                  <InputAdornment position='end'>Kr</InputAdornment>
+                ),
               }}
               margin='normal'
             />
@@ -195,24 +206,33 @@ const ExpenseDashboard = () => {
                 ))}
               </TextField>
               <React.Fragment>
-                <IconButton style={styles.addButton} onClick={toggle}><AddButton /></IconButton>
+                <IconButton style={styles.addButton} onClick={toggle}>
+                  <AddButton />
+                </IconButton>
                 <Modal
                   isShown={isShown}
                   hide={toggle}
-                  headerText='Lägg till egen kategori'
+                  headerText='
+                  Add your own category'
                   modalContent={
                     <NewCategoryModal
                       onConfirm={onConfirm}
                       // onCancel={onCancel}
-                      message="Skriv in namn på nya kategorin"
-
+                      message='
+                      Enter the name of the new category'
                       categories={categories}
+                      callBack={getCategories}
                     />
                   }
                 />
               </React.Fragment>
             </Box>
-            <Typography sx={{ textAlign: 'center' }} style={styles.textIncludedInForm}>Tryck på plusset för att lägga till en ny kategori</Typography>
+            <Typography
+              sx={{ textAlign: 'center' }}
+              style={styles.textIncludedInForm}
+            >
+              Click the plus icon to add a new category
+            </Typography>
             <TextField
               select
               label='Budget'
@@ -268,12 +288,12 @@ const ExpenseDashboard = () => {
             })()}
             {(() => {
               if (!checkForm()) {
-                return <DisabledSubmitButton buttontext={'Spara utgift'} />
+                return <DisabledSubmitButton buttontext={'Save expense'} />
               } else {
                 return (
                   <SubmitButton
                     isLoading={isLoading}
-                    buttontext={'Spara utgift'}
+                    buttontext={'Save expense'}
                   />
                 )
               }
@@ -281,6 +301,7 @@ const ExpenseDashboard = () => {
           </FormControl>
         </form>
       </Box>
+      <ExpenseListOutput/>
     </>
   )
 }

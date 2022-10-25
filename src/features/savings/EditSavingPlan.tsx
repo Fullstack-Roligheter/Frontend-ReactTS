@@ -24,7 +24,7 @@ const EditSavingPlan: React.FC = () => {
   const [planList, setPlanList] = useState<Plan[]>([])
   const [open, setOpen] = useState(false)
   const [planId, setPlanId] = useState('')
-  const [buttontext, setButtonText] = useState('Spara')
+  const [buttontext, setButtonText] = useState('Save')
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState(0)
 
@@ -119,7 +119,7 @@ const EditSavingPlan: React.FC = () => {
     <>
       <form onSubmit={HandleSubmit}>
         <TextField
-          label='name'
+          label='Name'
           variant='outlined'
           type='text'
           name='name'
@@ -133,7 +133,7 @@ const EditSavingPlan: React.FC = () => {
         <br />
         <br />
         <TextField
-          label='amount'
+          label='Amount'
           variant='outlined'
           type='text'
           name='amount'
@@ -147,7 +147,7 @@ const EditSavingPlan: React.FC = () => {
         <br />
         <br />
         <TextField
-          label='startDate'
+          label='StartDate'
           variant='outlined'
           type='date'
           name='startDate'
@@ -161,7 +161,7 @@ const EditSavingPlan: React.FC = () => {
         <br />
         <br />
         <TextField
-          label='endDate'
+          label='EndDate'
           variant='outlined'
           type='date'
           name='endDate'
