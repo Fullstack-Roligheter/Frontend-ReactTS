@@ -12,14 +12,17 @@ const AuthenticatedLayout = () => {
 
   const [smallWindow, setSmallWindowOpen] = useState(true)
   const [drawervariant, SetDrawerVariant] = useState('permanent')
+  const [contentPadding, SetContentPadding] = useState('')
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 767) {
         setSmallWindowOpen(false)
         SetDrawerVariant('temporary')
+        SetContentPadding('0px')
       } else {
         SetDrawerVariant('permanent')
+        SetContentPadding('240px')
       }
     }
     window.addEventListener('resize', handleResize)
@@ -52,7 +55,7 @@ const AuthenticatedLayout = () => {
       <Box height='100vh'>
         <AuthenticatedHeader {...newUserHeader} />
         <Sidebar {...newUserSidebar} />
-        <Grid container={true} justifyContent='center' spacing={0} my={8}>
+        <Grid container={true} justifyContent='center' spacing={0} my={8} pl={contentPadding}>
           <Outlet />
         </Grid>
       </Box>
