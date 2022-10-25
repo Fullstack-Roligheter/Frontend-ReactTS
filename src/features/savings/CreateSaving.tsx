@@ -15,7 +15,7 @@ const CreateSavingPlan = () => {
   const [open, setOpen] = useState(false)
   const [status, setStatus] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [buttontext, setButtonText] = useState('Skapa')
+  const [buttontext, setButtonText] = useState('Create')
 
   const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -101,7 +101,7 @@ const CreateSavingPlan = () => {
     <>
       <form onSubmit={HandleSubmit}>
         <TextField
-          label='name'
+          label='Name'
           variant='outlined'
           type='text'
           name='name'
@@ -115,7 +115,7 @@ const CreateSavingPlan = () => {
         <br />
         <br />
         <TextField
-          label='amount'
+          label='Amount'
           variant='outlined'
           type='text'
           name='amount'
@@ -129,7 +129,7 @@ const CreateSavingPlan = () => {
         <br />
         <br />
         <TextField
-          label='startDate'
+          label='StartDate'
           variant='outlined'
           type='date'
           name='startDate'
@@ -143,7 +143,7 @@ const CreateSavingPlan = () => {
         <br />
         <br />
         <TextField
-          label='endDate'
+          label='EndDate'
           variant='outlined'
           type='date'
           name='endDate'

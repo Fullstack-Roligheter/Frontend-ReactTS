@@ -59,7 +59,7 @@ const AuthenticatedHeader = (props: any) => {
 
   const handleLogout = () => {
     sessionStorage.clear()
-    alert('Du är nu Utloggad')
+    alert('You are now logged out')
     navigate('/')
     window.location.reload()
   }
