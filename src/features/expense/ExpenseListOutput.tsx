@@ -71,7 +71,7 @@ const ExpenseListOutput = () => {
                 <TableCell>{debit.amount}</TableCell>
                 <TableCell>{debit.category}</TableCell>
                 <TableCell>{debit.budget}</TableCell>
-                <TableCell component="th">{debit.comment}</TableCell>
+                <TableCell className="comments">{debit.comment}</TableCell>
               </TableRow>
             ))}
             {emptyRows > 0 && (
