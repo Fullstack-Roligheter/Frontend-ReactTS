@@ -14,6 +14,7 @@ const AuthenticatedLayout = () => {
   const [drawervariant, SetDrawerVariant] = useState('permanent')
   const [contentPadding, SetContentPadding] = useState('')
 
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 767) {
