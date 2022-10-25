@@ -1,19 +1,22 @@
-export interface IPagination {
-    data: any,
-    itemsPerPage: number,
-    value: any,
-    event: React.ChangeEvent<HTMLInputElement>,
-    setCurrentPage: number,
-    pageCount: number,
-    onPageChange: any,
-    currentPage: number
-}
+// export interface PaginationProps {
+//     data: any,
+//     itemsPerPage: number,
+//     value: any,
+//     event: React.ChangeEvent<HTMLInputElement>,
+//     setCurrentPage: number,
+//     pageCount: number,
+//     onPageChange: any,
+//     currentPage: number
+// }
 
-// TypeScript exempel från en pagination-exempel
+// Denna behövs egentligen inte men kan vara användbart att se vilka props och typer som MUI:s egna paginatiation interface
+export interface TablePaginationActionsProps {
+    count: number;
+    page: number;
+    rowsPerPage: number;
+    onPageChange: (
+      event: React.MouseEvent<HTMLButtonElement>,
+      newPage: number,
+    ) => void;
+  }
 
-// export type Props = {
-//     currentPage: number;
-//     lastPage: number;
-//     maxLength: number;
-//     setCurrentPage: (page: number) => void;
-//   };
