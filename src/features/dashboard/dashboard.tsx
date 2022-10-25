@@ -14,10 +14,8 @@ function DashboardFeature() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 767) {
+      if (window.innerWidth < 850) {
         setDashboardTextSize('small')
-      } else if (window.innerWidth < 850) {
-        setDashboardTextSize('medium')
       } else {
         setDashboardTextSize('big')
       }
@@ -46,16 +44,13 @@ function DashboardFeature() {
       {(() => {
         if (dashboardTextSize == 'small') {
           return (
-            <Typography variant='h3' style={styles.whiteTypography}>DASHBOARD</Typography>
-          )
-        } else if (dashboardTextSize == 'medium') {
-          return (
             <Typography variant='h2' style={styles.whiteTypography}>DASHBOARD</Typography>
           )
         } else {
           return (
             <Typography variant='h1' style={styles.whiteTypography}>DASHBOARD</Typography>
           )
+
         }
       })()}
       <Typography variant='h3' style={styles.whiteTypography}>Logged in as:</Typography>
