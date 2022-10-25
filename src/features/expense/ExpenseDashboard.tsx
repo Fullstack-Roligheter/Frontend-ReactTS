@@ -145,7 +145,12 @@ const ExpenseDashboard = () => {
   //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: styles.formBackground.background}}
   return (
     <>
-      <Box display='flex' flexDirection='column'>
+      <Box  width={1}
+      sx={{mb: 2}}
+      display="flex"
+      flexWrap="wrap"
+      justifyContent="center"
+      boxSizing="border-box">
         <form onSubmit={handleSubmit}>
           <FormControl
             sx={{
@@ -299,7 +304,14 @@ const ExpenseDashboard = () => {
           </FormControl>
         </form>
       </Box>
+      <Box
+            display="flex"
+            width={{ xs: 2, sm: 2 / 3, md: 2 / 4 }}
+            mb={{ xs: '10px', md: 0 }}
+            boxSizing="border-box"
+          >
       <ExpenseListOutput/>
+      </Box>
     </>
   )
 }
