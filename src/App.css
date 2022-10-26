@@ -14,10 +14,6 @@
 .icon-container {
     margin-top: 5px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-left: 10px;
 }
 
 .icon {
