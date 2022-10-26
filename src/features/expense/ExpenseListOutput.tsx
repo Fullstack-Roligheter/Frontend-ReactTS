@@ -5,11 +5,14 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
+import { TablePagination } from '@mui/material'
+import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { useUserContext } from '../../context/UserContext'
 import { Button } from '@mui/material'
+import React from 'react'
 
 const ExpenseListOutput = () => {
   const user = useUserContext()
@@ -48,6 +51,28 @@ const ExpenseListOutput = () => {
 
   }
 
+  //Pagination, sätter startpage 0, visar 5 rows per sida
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  //Om inte det finns jämt 5 rows kvar, visa tomma rows
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - debits.length) : 0;
+
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -75,6 +100,24 @@ const ExpenseListOutput = () => {
               </TableRow>
             ))}
           </TableBody>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              colSpan={3}
+              count={debits.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: {
+                  'aria-label': 'rows per page',
+                },
+                native: true,
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
         </Table>
       </TableContainer>
     </>
