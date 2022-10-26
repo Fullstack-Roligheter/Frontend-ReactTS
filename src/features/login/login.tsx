@@ -17,11 +17,9 @@ import styles from '../../CssStyles.js'
 import { NavLink } from 'react-router-dom'
 import { useUserContext } from '../../context/UserContext'
 
-
-
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const [buttontext, setButtonText] = useState('Logga in')
+  const [buttontext, setButtonText] = useState('Log in')
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
 
@@ -81,7 +79,7 @@ const LogIn = () => {
             align='center'
             style={styles.whiteTypography}
           >
-            Logga in
+            Log in
           </Typography>
           <Box sx={{ marginBottom: '15px' }}>
             <Typography
@@ -91,7 +89,7 @@ const LogIn = () => {
               href='/register'
               style={styles.linkTypography}
             >
-              Har du inte ett konto? Klicka på mig!
+              Don't have an account? Click me!
             </Typography>
           </Box>
         </Grid>
