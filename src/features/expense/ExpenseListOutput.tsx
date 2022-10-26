@@ -75,7 +75,7 @@ const ExpenseListOutput = () => {
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer className='table-container' component={Paper}>
         <Table sx={{ minWidth: 650, maxWidth: '100 %' }} aria-label='simple table'>
           <TableHead>
             <TableRow>
@@ -87,7 +87,10 @@ const ExpenseListOutput = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {debits.map((debit) => (
+            {(rowsPerPage > 0
+              ? debits.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : debits
+            ).map((debit) => (
               <TableRow
                 key={debit.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -96,9 +99,14 @@ const ExpenseListOutput = () => {
                 <TableCell>{debit.amount}</TableCell>
                 <TableCell>{debit.category}</TableCell>
                 <TableCell>{debit.budget}</TableCell>
-                <TableCell>{debit.comment}</TableCell>
+                <TableCell className="comments">{debit.comment}</TableCell>
               </TableRow>
             ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
           </TableBody>
           <TableRow>
             <TablePagination
