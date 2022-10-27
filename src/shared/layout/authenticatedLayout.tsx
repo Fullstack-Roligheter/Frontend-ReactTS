@@ -16,7 +16,7 @@ const AuthenticatedLayout = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 767) {
+      if (window.innerWidth < 900) {
         setSmallWindowOpen(false)
         SetDrawerVariant('temporary')
         SetContentPadding('0px')
