@@ -12,7 +12,7 @@ const AuthenticatedLayout = () => {
 
   const [smallWindow, setSmallWindowOpen] = useState(true)
   const [drawervariant, SetDrawerVariant] = useState('permanent')
-  const [contentPadding, SetContentPadding] = useState('')
+  const [contentPadding, SetContentPadding] = useState('240px')
 
   useEffect(() => {
     const handleResize = () => {
