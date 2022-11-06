@@ -141,7 +141,13 @@ const ExpenseDashboard = () => {
   //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: styles.formBackground.background}}
   return (
     <>
-      <Box display='flex' flexDirection='column'>
+      <Box  width={400}
+      sx={{mb: 2}}
+      display="flex"
+      flexWrap="wrap"
+      justifyContent="center"
+      boxSizing="border-box"
+      >
         <form onSubmit={handleSubmit}>
           <FormControl
             sx={{
@@ -207,12 +213,14 @@ const ExpenseDashboard = () => {
                 <Modal
                   isShown={isShown}
                   hide={toggle}
-                  headerText='Lägg till egen kategori'
+                  headerText='
+                  Add your own category'
                   modalContent={
                     <NewCategoryModal
                       onConfirm={onConfirm}
                       // onCancel={onCancel}
-                      message='Skriv in namn på nya kategorin'
+                      message='
+                      Enter the name of the new category'
                       categories={categories}
                       callBack={getCategories}
                     />
@@ -224,7 +232,7 @@ const ExpenseDashboard = () => {
               sx={{ textAlign: 'center' }}
               style={styles.textIncludedInForm}
             >
-              Tryck på plusset för att lägga till en ny kategori
+              Click the plus icon to add a new category
             </Typography>
             <TextField
               select
@@ -281,12 +289,12 @@ const ExpenseDashboard = () => {
             })()}
             {(() => {
               if (!checkForm()) {
-                return <DisabledSubmitButton buttontext={'Spara utgift'} />
+                return <DisabledSubmitButton buttontext={'Save expense'} />
               } else {
                 return (
                   <SubmitButton
                     isLoading={isLoading}
-                    buttontext={'Spara utgift'}
+                    buttontext={'Save expense'}
                   />
                 )
               }
@@ -294,7 +302,14 @@ const ExpenseDashboard = () => {
           </FormControl>
         </form>
       </Box>
+      <Box
+            display="flex"
+            width={{ xs: 2, sm: 2 / 3, md: 2 / 4 }}
+            mb={{ xs: '10px', md: 0 }}
+            boxSizing="border-box"
+          >
       <ExpenseListOutput/>
+      </Box>
     </>
   )
 }

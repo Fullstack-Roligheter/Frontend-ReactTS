@@ -25,7 +25,7 @@ const AppRouter = () => {
       <Route element={<Layout />}>
         <Route>
           <Route index element={<WelcomeFeature />} />
-          <Route path='/omoss' element={<OmOss />} />
+          <Route path='/aboutus' element={<OmOss />} />
           <Route path='/login' element={<LogIn />} />
           <Route path='/register' element={<RegisterUser />} />
           <Route path='/faq' element={<Faq />} />

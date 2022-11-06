@@ -74,7 +74,6 @@ const CheckSavingPlans = () => {
             <StyledTableCell align='right'>Amount</StyledTableCell>
             <StyledTableCell align='right'>Start Date</StyledTableCell>
             <StyledTableCell align='right'>End Date</StyledTableCell>
-            <StyledTableCell align='right'>Countdown Days</StyledTableCell>
             <StyledTableCell align='right'>Edit/Delete</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -89,8 +88,7 @@ const CheckSavingPlans = () => {
                 {row.planStartDate}
               </StyledTableCell>
               <StyledTableCell align='right'>{row.planEndDate}</StyledTableCell>
-              <StyledTableCell align='right'>{row.countDown}</StyledTableCell>
-              <StyledTableCell className='icon-container'>
+              <StyledTableCell align='right' className='icon-container'>
                 <Link to={''}>
                   <IconButton
                     className='icon'

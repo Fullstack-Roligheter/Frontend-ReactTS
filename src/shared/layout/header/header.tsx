@@ -14,12 +14,11 @@ import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
 
 const pages = [
-  { name: 'Om Oss', target: '/omoss' },
+  { name: 'ABOUT US', target: '/aboutus' },
   { name: 'FAQ', target: '/faq' },
 ]
 
 const ResponsiveAppBar = (props: any) => {
-
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -33,7 +32,10 @@ const ResponsiveAppBar = (props: any) => {
   return (
     <AppBar
       position='fixed'
-      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'rgba(25, 118, 210, 1)' }}
+      sx={{
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundColor: 'rgba(25, 118, 210, 1)',
+      }}
     >
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
