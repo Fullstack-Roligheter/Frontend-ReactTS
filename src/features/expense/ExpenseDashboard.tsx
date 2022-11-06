@@ -71,8 +71,6 @@ const ExpenseDashboard = () => {
     }
   }
 
-  console.log(newExpense)
-
   const handleChange = (e: any) => {
     const { name, value } = e.target
     setNewExpense({
@@ -99,7 +97,6 @@ const ExpenseDashboard = () => {
       newExpense.CategoryId = undefined
     }
     CreateDebit(newExpense).then((Response) => {
-      console.log(Response)
       setTimeout(() => {
         setloadingState(false)
         setmessage('Transaction Created')
@@ -120,7 +117,6 @@ const ExpenseDashboard = () => {
   //Get categories for user to put in select
   useEffect(() => {
     GetCategoriesForUser(user.userId).then((Response) => {
-      console.log(Response)
       setCategories(Response)
     })
   }, [])
@@ -128,11 +124,11 @@ const ExpenseDashboard = () => {
   //Get budgets for user to put in select
   useEffect(() => {
     GetBudgetsForUser(user.userId).then((Response) => {
-      console.log(Response)
       setBudgets(Response)
     })
   }, [])
 
+  //DateFetcher 
   useEffect(() => {
     let currentDate = DateFetcher()
     setNewExpense({
@@ -168,7 +164,6 @@ const ExpenseDashboard = () => {
               onChange={handleChange}
               margin='normal'
               style={styles.textfield}
-              // InputLabelProps={{shrink:true}}
             />
             <TextField
               required
@@ -269,7 +264,7 @@ const ExpenseDashboard = () => {
                     sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
                   />
                 }
-                label='Return transactions'
+                label='Recurring expense'
                 labelPlacement='start'
               />
             </Box>
