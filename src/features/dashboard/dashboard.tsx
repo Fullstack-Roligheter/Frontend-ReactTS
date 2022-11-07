@@ -56,9 +56,8 @@ function DashboardFeature() {
             justifyContent: 'center',
           }}
         >
-
-      <BarChart />
-        </Box>
+        <BarChart />
+      </Box>
     </Box>
     </>
   )

@@ -13,36 +13,53 @@ import { faker } from '@faker-js/faker';
 import { useEffect, useState } from 'react'
 import { useUserContext } from '../../context/UserContext'
 import { GetCategoriesForUser } from '../../shared/fetch/category'
+import { GetDebitsForUser } from '../../shared/fetch/expense'
  
  function BarChart() {
-      
+
     const user = useUserContext()
-      const [categories, setCategories] = useState([])
+
+
+    const [debits, setDebits] = useState([])
+
+    //Get all debits to put in list
+    useEffect(() => {
+      GetDebitsForUser(user.userId).then((Response) => {
+        setDebits(Response)
+      })
+    }, [])
+
+    const labels = [];
+    const dataValues = [];
+    var sum;
+
+    for (let i = 0; i < debits.length; i++) {
+        if (!labels.includes(debits[i].category)){
+            labels.push(debits[i].category)
+            dataValues.push(debits[i].amount)
+            
+        }
+
+        // console.log("Amount: " + debits[i].amount + " Category: " + debits[i].category)// 
+    }
+
+    // labels.forEach(label => {
+    //     debits.forEach(element => {
+    //         if (element.category === label) {
+    //             sum += element.amount
+    //         }
+    //     });
+    //     dataValues.push(sum)
+    // });
     
-      function getCategories() {
-        GetCategoriesForUser(user.userId).then((Response) => {
-          setCategories(Response)
-        })
-      }
+
+    const [categories, setCategories] = useState([])
     
-    //Get categories for user to put in select
     useEffect(() => {
         GetCategoriesForUser(user.userId).then((Response) => {
           setCategories(Response)
         })
       }, [])
-
-    console.log(categories)
-
-    const labels = [];
-      
-    for (let i = 0; i < categories.length; i++) {
-        labels.push(categories[i].categoryName)
-      }
-
-    //   categories.forEach(category => {
-    //       console.log(category.categoryName)
-    //   });
 
     ChartJS.register(
         CategoryScale,
@@ -74,7 +91,7 @@ import { GetCategoriesForUser } from '../../shared/fetch/category'
         datasets: [
           {
             label: 'Categories',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+            data: dataValues,
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
           },
         ],
