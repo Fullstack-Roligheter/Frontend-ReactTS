@@ -13,7 +13,6 @@ import {
   DisabledSubmitButton,
 } from '../../shared/buttons/button-default'
 import { Register } from '../../shared/fetch/user'
-import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router'
 import styles from '../../CssStyles.js'
 
@@ -81,15 +80,12 @@ const RegisterUser = () => {
         .catch((error) => {
           setTimeout(() => {
             setloadingState(false)
-            setmessage('Kunde inte registrera.')
+            setmessage(error.response.data)
             setmessageState(true)
             setTimeout(() => {
               setmessageState(false)
             }, 3000)
-          }, 3000)
-        })
-        .finally(() => {
-          console.log('Entered Finally')
+          })
         })
     }
   }
