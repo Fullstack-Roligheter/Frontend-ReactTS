@@ -47,6 +47,8 @@ const ExpenseDashboard = () => {
   const [debits, setDebits] = useState<any[]>([])
   const { isShown, toggle } = useModal()
   const [isLoading, setloadingState] = useState(false)
+  const [ReturningTransactionsStart, setReturningTransactionsStart] = useState('')
+  const [ReturningTransactionsEnd, setReturningTransactionsEnd] = useState('')
   const onConfirm = () => toggle()
   const onCancel = () => toggle()
 
@@ -54,10 +56,12 @@ const ExpenseDashboard = () => {
     Date: '',
     Amount: '',
     Comment: '',
-  UserId: user.userId,
+    UserId: user.userId,
     CategoryId: undefined,
     BudgetId: undefined,
     ReturningTransactions: false,
+    // ReturningTransactionsStart: '',
+    // ReturningTransactionsEnd: '',
   })
   const checkForm = () => {
     if (
@@ -67,6 +71,14 @@ const ExpenseDashboard = () => {
     ) {
       return false
     } else {
+      if (newExpense.ReturningTransactions) {
+        if (
+          ReturningTransactionsStart === '' ||
+          ReturningTransactionsEnd === ''
+        ) {
+          return false
+        }
+      }
       return true
     }
   }
@@ -135,18 +147,20 @@ const ExpenseDashboard = () => {
       ...newExpense,
       Date: currentDate,
     })
+    setReturningTransactionsStart(currentDate)
+    setReturningTransactionsEnd(currentDate)
   }, [])
 
   //Grön styling för när vi ändrar färg på standardfärgen i projektet, den accepterar denna variabel och tolkar som strängen den sparat
   //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: styles.formBackground.background}}
   return (
     <>
-      <Box  width={400}
-      sx={{mb: 2}}
-      display="flex"
-      flexWrap="wrap"
-      justifyContent="center"
-      boxSizing="border-box"
+      <Box width={400}
+        sx={{ mb: 2 }}
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="center"
+        boxSizing="border-box"
       >
         <form onSubmit={handleSubmit}>
           <FormControl
@@ -263,7 +277,7 @@ const ExpenseDashboard = () => {
               onChange={handleChange}
               margin='normal'
             />
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -275,6 +289,36 @@ const ExpenseDashboard = () => {
                 label='Recurring expense'
                 labelPlacement='start'
               />
+              {(() => {
+                if (newExpense.ReturningTransactions) {
+                  return (
+                    <Box>
+                      <TextField
+                        required
+                        type='date'
+                        name='Date'
+                        label='Date'
+                        value={ReturningTransactionsStart}
+                        onChange={(e) => setReturningTransactionsStart(e.target.value)}
+                        margin='normal'
+                        style={styles.textfield}
+                      />
+
+                      <br />
+                      <TextField
+                        required
+                        type='date'
+                        name='Date'
+                        label='Date'
+                        value={ReturningTransactionsEnd}
+                        onChange={(e) => setReturningTransactionsEnd(e.target.value)}
+                        margin='normal'
+                        style={styles.textfield}
+                      />
+                    </Box>
+                  )
+                }
+              })()}
             </Box>
             {(() => {
               if (messageState) {
@@ -289,13 +333,20 @@ const ExpenseDashboard = () => {
             })()}
             {(() => {
               if (!checkForm()) {
-                return <DisabledSubmitButton buttontext={'Save expense'} />
+
+                return (
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <DisabledSubmitButton buttontext={'Save expense'} />
+                  </Box>)
+
               } else {
                 return (
-                  <SubmitButton
-                    isLoading={isLoading}
-                    buttontext={'Save expense'}
-                  />
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <SubmitButton
+                      isLoading={isLoading}
+                      buttontext={'Save expense'}
+                    />
+                  </Box>
                 )
               }
             })()}
@@ -303,12 +354,12 @@ const ExpenseDashboard = () => {
         </form>
       </Box>
       <Box
-            display="flex"
-            width={{ xs: 2, sm: 2 / 3, md: 2 / 4 }}
-            mb={{ xs: '10px', md: 0 }}
-            boxSizing="border-box"
-          >
-      <ExpenseListOutput/>
+        display="flex"
+        width={{ xs: 2, sm: 2 / 3, md: 2 / 4 }}
+        mb={{ xs: '10px', md: 0 }}
+        boxSizing="border-box"
+      >
+        <ExpenseListOutput />
       </Box>
     </>
   )
