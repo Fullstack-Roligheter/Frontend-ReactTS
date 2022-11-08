@@ -4,7 +4,7 @@ import { useUserContext } from '../../context/UserContext'
 import { userType } from '../../shared/Interfaces/userToken'
 import styles from '../../CssStyles.js'
 import { useEffect, useState } from 'react'
-import BarChart from '../../shared/charts/barchart'
+import DebitChart from '../../shared/charts/DebitChart'
 
 function DashboardFeature() {
   // let UserIsLoggedIn = sessionStorage.getItem('user')
@@ -53,10 +53,15 @@ function DashboardFeature() {
             bgcolor: 'RGBA(255,255,255,0.65)',
             boxShadow: 5,
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-        <BarChart />
+          
+            <Typography variant='h4' style={styles.whiteTypography}>DASHBOARD</Typography>
+         
+        <DebitChart />
       </Box>
     </Box>
     </>

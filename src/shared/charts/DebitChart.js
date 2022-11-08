@@ -13,14 +13,11 @@ import { useEffect, useState } from 'react'
 import { useUserContext } from '../../context/UserContext'
 import { GetDebitsForUser } from '../../shared/fetch/expense'
  
- function BarChart() {
+ function DebitChart() {
 
     const user = useUserContext()
-
-
     const [debits, setDebits] = useState([])
 
-    //Get all debits to put in list
     useEffect(() => {
       GetDebitsForUser(user.userId).then((Response) => {
         setDebits(Response)
@@ -60,6 +57,7 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
         responsive: true,
         plugins: {
           legend: {
+            display: false,
             position: 'top',
           },
           title: {
@@ -77,7 +75,7 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
           {
             label: 'Categories',
             data: dataValues,
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            backgroundColor: 'rgba(25, 118, 210, 1)',
           },
         ],
       };
@@ -92,4 +90,4 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
     )
 }
 
-export default BarChart;
+export default DebitChart;
