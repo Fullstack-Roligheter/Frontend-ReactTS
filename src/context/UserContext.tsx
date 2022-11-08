@@ -52,6 +52,7 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify({
         email: userEmail,
@@ -65,6 +66,7 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
     }
 
     const object = await getResponse.json()
+    //console.log(object)
 
     sessionStorage.setItem('userId', object.userId)
     sessionStorage.setItem('email', object.email)
