@@ -9,10 +9,8 @@ import {
     Legend,
   } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { faker } from '@faker-js/faker';
 import { useEffect, useState } from 'react'
 import { useUserContext } from '../../context/UserContext'
-import { GetCategoriesForUser } from '../../shared/fetch/category'
 import { GetDebitsForUser } from '../../shared/fetch/expense'
  
  function BarChart() {
@@ -31,35 +29,22 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
 
     const labels = [];
     const dataValues = [];
-    var sum;
-
+    
     for (let i = 0; i < debits.length; i++) {
-        if (!labels.includes(debits[i].category)){
-            labels.push(debits[i].category)
-            dataValues.push(debits[i].amount)
-            
-        }
-
-        // console.log("Amount: " + debits[i].amount + " Category: " + debits[i].category)// 
+      if (!labels.includes(debits[i].category)){
+        labels.push(debits[i].category)
+      }
     }
 
-    // labels.forEach(label => {
-    //     debits.forEach(element => {
-    //         if (element.category === label) {
-    //             sum += element.amount
-    //         }
-    //     });
-    //     dataValues.push(sum)
-    // });
-    
-
-    const [categories, setCategories] = useState([])
-    
-    useEffect(() => {
-        GetCategoriesForUser(user.userId).then((Response) => {
-          setCategories(Response)
-        })
-      }, [])
+    for (let i = 0; i < labels.length; i++) {
+      var sum = 0;
+      debits.forEach(element => {
+        if(element.category === labels[i]){
+          sum += element.amount;
+        }
+      });
+  dataValues.push(sum)
+}
 
     ChartJS.register(
         CategoryScale,
