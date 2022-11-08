@@ -23,6 +23,8 @@ const styles = {
   whiteTypography: {
     textShadow: '1px 1px 2px black',
     color: 'white'
+  },blackTypography: {
+    color: 'black'
   },
   textIncludedInForm: {
     fontSize: '10px',
