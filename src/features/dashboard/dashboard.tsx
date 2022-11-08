@@ -59,7 +59,7 @@ function DashboardFeature() {
           }}
         >
           
-            <Typography variant='h4' style={styles.whiteTypography}>DASHBOARD</Typography>
+            <Typography variant='h4' style={styles.blackTypography}>DASHBOARD</Typography>
          
         <DebitChart />
       </Box>
