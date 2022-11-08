@@ -22,5 +22,6 @@ export function Register(data: any) {
     })
     .catch((error) => {
       console.log('Error in Register: ', error)
+      throw error
     })
 }

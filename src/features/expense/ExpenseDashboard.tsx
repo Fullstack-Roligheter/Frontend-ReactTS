@@ -46,6 +46,8 @@ const ExpenseDashboard = () => {
   const [budgets, setBudgets] = useState<any[]>([])
   const { isShown, toggle } = useModal()
   const [isLoading, setloadingState] = useState(false)
+  const [ReturningTransactionsStart, setReturningTransactionsStart] = useState('')
+  const [ReturningTransactionsEnd, setReturningTransactionsEnd] = useState('')
   const onConfirm = () => toggle()
   const onCancel = () => toggle()
   const [newExpense, setNewExpense] = useState({
@@ -56,6 +58,8 @@ const ExpenseDashboard = () => {
     CategoryId: undefined,
     BudgetId: undefined,
     ReturningTransactions: false,
+    // ReturningTransactionsStart: '',
+    // ReturningTransactionsEnd: '',
   })
   const checkForm = () => {
     if (
@@ -65,6 +69,14 @@ const ExpenseDashboard = () => {
     ) {
       return false
     } else {
+      if (newExpense.ReturningTransactions) {
+        if (
+          ReturningTransactionsStart === '' ||
+          ReturningTransactionsEnd === ''
+        ) {
+          return false
+        }
+      }
       return true
     }
   }
@@ -138,6 +150,8 @@ const ExpenseDashboard = () => {
       ...newExpense,
       Date: currentDate,
     })
+    setReturningTransactionsStart(currentDate)
+    setReturningTransactionsEnd(currentDate)
   }, [])
 
   //Get all debits to put in list
@@ -282,7 +296,7 @@ const ExpenseDashboard = () => {
               onChange={handleChange}
               margin='normal'
             />
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -294,6 +308,36 @@ const ExpenseDashboard = () => {
                 label='Recurring expense'
                 labelPlacement='start'
               />
+              {(() => {
+                if (newExpense.ReturningTransactions) {
+                  return (
+                    <Box>
+                      <TextField
+                        required
+                        type='date'
+                        name='Date'
+                        label='Date'
+                        value={ReturningTransactionsStart}
+                        onChange={(e) => setReturningTransactionsStart(e.target.value)}
+                        margin='normal'
+                        style={styles.textfield}
+                      />
+
+                      <br />
+                      <TextField
+                        required
+                        type='date'
+                        name='Date'
+                        label='Date'
+                        value={ReturningTransactionsEnd}
+                        onChange={(e) => setReturningTransactionsEnd(e.target.value)}
+                        margin='normal'
+                        style={styles.textfield}
+                      />
+                    </Box>
+                  )
+                }
+              })()}
             </Box>
             {(() => {
               if (messageState) {
@@ -308,13 +352,20 @@ const ExpenseDashboard = () => {
             })()}
             {(() => {
               if (!checkForm()) {
-                return <DisabledSubmitButton buttontext={'Save expense'} />
+
+                return (
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <DisabledSubmitButton buttontext={'Save expense'} />
+                  </Box>)
+
               } else {
                 return (
-                  <SubmitButton
-                    isLoading={isLoading}
-                    buttontext={'Save expense'}
-                  />
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <SubmitButton
+                      isLoading={isLoading}
+                      buttontext={'Save expense'}
+                    />
+                  </Box>
                 )
               }
             })()}
