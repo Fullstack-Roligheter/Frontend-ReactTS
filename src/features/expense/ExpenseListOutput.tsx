@@ -11,10 +11,13 @@ import { Button, TablePagination } from '@mui/material'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import { GetDebitsForUser } from '../../shared/fetch/expense'
 import { useUserContext } from '../../context/UserContext'
+import { SortExpenseList } from './SortExpenseList'
+
 
 const ExpenseListOutput = () => {
   const user = useUserContext()
   const [debits, setDebits] = useState<any[]>([])
+  const [sortedDebits, setSortedDebits] = useState<any[]>([])
 
   //Get all debits to put in list
   useEffect(() => {
@@ -23,31 +26,14 @@ const ExpenseListOutput = () => {
     })
   }, [])
   console.log(debits)
+  
+  useEffect(() => {
+    setSortedDebits(debits)
+  }, [])
+const SortExpenses =(sortBy: string)=> {
+  setSortedDebits(SortExpenseList(sortBy, debits))
 
-  const SortDebits = (sortOption: string) => {
-    console.log(sortOption)
-
-
-    //   if (selectedyear !== "Välj år") {
-    //     console.log("Har valt år")
-    //     const filteredYears = items.filter((item) => item.pubdate.year === selectedyear);
-    //     if (selectedmonth !== "Välj månad") {
-    //       console.log("Har valt månad")
-    //       const filteredMonths = filteredYears.filter((item) => item.pubdate.month === selectedmonth);
-    //       dispatch('message', {
-    //         arr: filteredMonths,
-    //       });
-    //     }
-    //     else {
-    //       console.log("Har valt år men inte månad")
-    //       dispatch('message', {
-    //         arr: filteredYears,
-    //       });
-    //     }
-    //   }
-    //   
-
-  }
+}
 
   //Pagination, sätter startpage 0, visar 5 rows per sida
   const [page, setPage] = React.useState(0);
@@ -76,11 +62,11 @@ const ExpenseListOutput = () => {
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
         <TableHead>
           <TableRow>
-            <TableCell><Button onClick={() => SortDebits('datum')}>Datum</Button></TableCell>
-            <TableCell><Button onClick={() => SortDebits('summa')}>Summa</Button></TableCell>
-            <TableCell><Button onClick={() => SortDebits('kategori')}>Kategori</Button></TableCell>
-            <TableCell><Button onClick={() => SortDebits('budget')}>Budget</Button></TableCell>
-            <TableCell><Button onClick={() => SortDebits('kommentar')}>Kommentar</Button></TableCell>
+            <TableCell><Button onClick={() => SortExpenses('datum')}>Datum</Button></TableCell>
+            <TableCell><Button onClick={() => SortExpenses('summa')}>Summa</Button></TableCell>
+            <TableCell><Button onClick={() => SortExpenses('kategori')}>Kategori</Button></TableCell>
+            <TableCell><Button onClick={() => SortExpenses('budget')}>Budget</Button></TableCell>
+            <TableCell><Button onClick={() => SortExpenses('kommentar')}>Kommentar</Button></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
