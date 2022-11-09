@@ -4,6 +4,7 @@ import { useUserContext } from '../../context/UserContext'
 import { userType } from '../../shared/Interfaces/userToken'
 import styles from '../../CssStyles.js'
 import { useEffect, useState } from 'react'
+import DebitChart from '../../shared/charts/DebitChart'
 
 function DashboardFeature() {
   // let UserIsLoggedIn = sessionStorage.getItem('user')
@@ -39,28 +40,31 @@ function DashboardFeature() {
   // }
 
   return (
-
-    <Box style={styles.dashboardBackground} sx={{ display: 'flex', flexDirection: 'column', maxWidth: '100%' }}>
-      {(() => {
-        if (dashboardTextSize == 'small') {
-          return (
-            <Typography variant='h2' style={styles.whiteTypography}>DASHBOARD</Typography>
-          )
-        } else {
-          return (
-            <Typography variant='h1' style={styles.whiteTypography}>DASHBOARD</Typography>
-          )
-
-        }
-      })()}
-      <Typography variant='h3' style={styles.whiteTypography}>Logged in as:</Typography>
-      <Typography variant='h5' style={styles.whiteTypography}>UserId: {user.userId}</Typography>
-      <Typography variant='h5' style={styles.whiteTypography}>Förnamn: {user.firstName}</Typography>
-      <Typography variant='h5' style={styles.whiteTypography}>Efternamn: {user.lastName}</Typography>
-      <Typography variant='h5' style={styles.whiteTypography}>Epost: {user.email}</Typography>
-      <Typography variant='subtitle1' style={styles.whiteTypography}>{timeMilli}</Typography>
-    </Box >
-
+    <>
+    <Box sx={{ flexDirection: 'column' }}>
+        <Box
+          sx={{
+            width: 850,
+            m: 3,
+            mt: 3,
+            p: 3,
+            pt: 3,
+            borderRadius: 2,
+            bgcolor: 'RGBA(255,255,255,0.65)',
+            boxShadow: 5,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          
+            <Typography variant='h4' style={styles.blackTypography}>DASHBOARD</Typography>
+         
+        <DebitChart />
+      </Box>
+    </Box>
+    </>
   )
 }
 

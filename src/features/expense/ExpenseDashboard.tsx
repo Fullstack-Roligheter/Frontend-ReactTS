@@ -47,6 +47,8 @@ const ExpenseDashboard = () => {
   const [debits, setDebits] = useState<any[]>([])
   const { isShown, toggle } = useModal()
   const [isLoading, setloadingState] = useState(false)
+  const [ReturningTransactionsStart, setReturningTransactionsStart] = useState('')
+  const [ReturningTransactionsEnd, setReturningTransactionsEnd] = useState('')
   const onConfirm = () => toggle()
   const onCancel = () => toggle()
 
@@ -58,6 +60,8 @@ const ExpenseDashboard = () => {
     CategoryId: undefined,
     BudgetId: undefined,
     ReturningTransactions: false,
+    // ReturningTransactionsStart: '',
+    // ReturningTransactionsEnd: '',
   })
   const checkForm = () => {
     if (
@@ -67,11 +71,17 @@ const ExpenseDashboard = () => {
     ) {
       return false
     } else {
+      if (newExpense.ReturningTransactions) {
+        if (
+          ReturningTransactionsStart === '' ||
+          ReturningTransactionsEnd === ''
+        ) {
+          return false
+        }
+      }
       return true
     }
   }
-
-  console.log(newExpense)
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
@@ -99,7 +109,6 @@ const ExpenseDashboard = () => {
       newExpense.CategoryId = undefined
     }
     CreateDebit(newExpense).then((Response) => {
-      console.log(Response)
       setTimeout(() => {
         setloadingState(false)
         setmessage('Transaction Created')
@@ -120,7 +129,6 @@ const ExpenseDashboard = () => {
   //Get categories for user to put in select
   useEffect(() => {
     GetCategoriesForUser(user.userId).then((Response) => {
-      console.log(Response)
       setCategories(Response)
     })
   }, [])
@@ -128,29 +136,32 @@ const ExpenseDashboard = () => {
   //Get budgets for user to put in select
   useEffect(() => {
     GetBudgetsForUser(user.userId).then((Response) => {
-      console.log(Response)
       setBudgets(Response)
     })
   }, [])
 
+  //DateFetcher 
   useEffect(() => {
     let currentDate = DateFetcher()
     setNewExpense({
       ...newExpense,
       Date: currentDate,
     })
+    setReturningTransactionsStart(currentDate)
+    setReturningTransactionsEnd(currentDate)
   }, [])
 
   //Grön styling för när vi ändrar färg på standardfärgen i projektet, den accepterar denna variabel och tolkar som strängen den sparat
   //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: styles.formBackground.background}}
   return (
     <>
-      <Box width={1}
+      <Box width={400}
         sx={{ mb: 2 }}
         display="flex"
         flexWrap="wrap"
         justifyContent="center"
-        boxSizing="border-box">
+        boxSizing="border-box"
+      >
         <form onSubmit={handleSubmit}>
           <FormControl
             sx={{
@@ -173,32 +184,6 @@ const ExpenseDashboard = () => {
               onChange={handleChange}
               margin='normal'
               style={styles.textfield}
-            // InputLabelProps={{shrink:true}}
-            />
-            <TextField
-              required
-              label='Amount'
-              type='number'
-              name='Amount'
-              value={newExpense.Amount}
-              onChange={handleChange}
-              style={styles.textfield}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>Kr</InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              required
-              type='date'
-              name='Date'
-              label='Date'
-              value={newExpense.Date}
-              onChange={handleChange}
-              margin='normal'
-              style={styles.textfield}
-            // InputLabelProps={{shrink:true}}
             />
             <TextField
               required
@@ -290,7 +275,7 @@ const ExpenseDashboard = () => {
               onChange={handleChange}
               margin='normal'
             />
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -299,9 +284,39 @@ const ExpenseDashboard = () => {
                     sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
                   />
                 }
-                label='Return transactions'
+                label='Recurring expense'
                 labelPlacement='start'
               />
+              {(() => {
+                if (newExpense.ReturningTransactions) {
+                  return (
+                    <Box>
+                      <TextField
+                        required
+                        type='date'
+                        name='Date'
+                        label='Date'
+                        value={ReturningTransactionsStart}
+                        onChange={(e) => setReturningTransactionsStart(e.target.value)}
+                        margin='normal'
+                        style={styles.textfield}
+                      />
+
+                      <br />
+                      <TextField
+                        required
+                        type='date'
+                        name='Date'
+                        label='Date'
+                        value={ReturningTransactionsEnd}
+                        onChange={(e) => setReturningTransactionsEnd(e.target.value)}
+                        margin='normal'
+                        style={styles.textfield}
+                      />
+                    </Box>
+                  )
+                }
+              })()}
             </Box>
             {(() => {
               if (messageState) {
@@ -316,13 +331,20 @@ const ExpenseDashboard = () => {
             })()}
             {(() => {
               if (!checkForm()) {
-                return <DisabledSubmitButton buttontext={'Spara utgift'} />
+
+                return (
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <DisabledSubmitButton buttontext={'Save expense'} />
+                  </Box>)
+
               } else {
                 return (
-                  <SubmitButton
-                    isLoading={isLoading}
-                    buttontext={'Spara utgift'}
-                  />
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <SubmitButton
+                      isLoading={isLoading}
+                      buttontext={'Save expense'}
+                    />
+                  </Box>
                 )
               }
             })()}
