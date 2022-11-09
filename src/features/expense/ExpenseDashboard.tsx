@@ -351,7 +351,6 @@ const ExpenseDashboard = () => {
           </FormControl>
         </form>
       </Box>
-      <ExpenseListOutput />
       <Box
         display="flex"
         width={{ xs: 2, sm: 2 / 3, md: 2 / 4 }}

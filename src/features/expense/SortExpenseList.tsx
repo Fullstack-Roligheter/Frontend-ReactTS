@@ -1,12 +1,14 @@
 import { useState } from "react";
 
  export const SortExpenseList = (sortOption: string, debits: any[]) => {
-   const [sortedDebits, setSortedDebits] = useState<any[]>([])
+  debugger
+   let sortedDebits: any[] = [debits];
+   let sortedDebitsByName;
 
     const sortByName = (sortBy: string) => {
 // // sort by name
      if(sortBy === 'kategori'){
-       debits.sort((a, b) => {
+        sortedDebits = debits.sort((a, b) => {
          const nameA = a.category.toLocaleLowerCase() // ignore upper and lowercase
          const nameB = b.category.toUpperCase(); // ignore upper and lowercase
          if (nameA < nameB) {
@@ -18,8 +20,9 @@ import { useState } from "react";
          // names must be equal
          return 0;
        });
+       return sortedDebits
      } else if(sortOption === 'budget'){
-       debits.sort((a, b) => {
+       sortedDebits =debits.sort((a, b) => {
          const nameA = a.budget.toLocaleLowerCase() // ignore upper and lowercase
          const nameB = b.budget.toUpperCase(); // ignore upper and lowercase
          if (nameA < nameB) {
@@ -31,8 +34,9 @@ import { useState } from "react";
          // names must be equal
          return 0;
        });
+       return sortedDebits
      }else if(sortOption === 'kommentar'){
-       debits.sort((a, b) => {
+       sortedDebits =debits.sort((a, b) => {
          const nameA = a.comment.toLocaleLowerCase() // ignore upper and lowercase
          const nameB = b.comment.toUpperCase(); // ignore upper and lowercase
          if (nameA < nameB) {
@@ -44,27 +48,35 @@ import { useState } from "react";
          // names must be equal
          return 0;
        });
+       return sortedDebits
      }
     }
 
     if(sortOption === 'summa'){
       // sort by value
-      let sortedByAmount = debits.sort((a, b) => a.amount - b.amount)
-      setSortedDebits(sortedByAmount)
+      sortedDebits = debits.sort((a, b) => a.amount - b.amount)
+     
     } else if(sortOption === 'datum'){
       // sort by date
-      let sortedByAmount = debits.sort((a,b)=>a.date.getTime()-b.date.getTime());
-      setSortedDebits(sortedByAmount)
+      sortedDebits = debits.sort((a,b)=>a.date.getTime()-b.date.getTime());
+      
     } else if(sortOption === 'kategori'){
       // sort by name
-          sortByName(sortOption)
+         sortedDebitsByName = sortByName(sortOption)
+         if (sortedDebitsByName != undefined){
+          sortedDebits = sortedDebitsByName
+         }
     } else if(sortOption === 'budget'){
       // sort by name
-          sortByName(sortOption)
+         if (sortedDebitsByName != undefined){
+          sortedDebits = sortedDebitsByName
+         }
 
     } else if(sortOption === 'kommentar'){
       // sort by name
-          sortByName(sortOption)
+         if (sortedDebitsByName != undefined){
+          sortedDebits = sortedDebitsByName
+         }
     } 
 
  return sortedDebits

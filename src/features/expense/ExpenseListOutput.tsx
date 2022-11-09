@@ -35,6 +35,7 @@ const ExpenseListOutput = () => {
     setSortedDebits(debits)
   }, [])
 const SortExpenses =(sortBy: string)=> {
+  debugger
   setSortedDebits(SortExpenseList(sortBy, debits))
 
 }
@@ -73,11 +74,12 @@ const SortExpenses =(sortBy: string)=> {
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell></TableCell>
                 <TableCell><Button onClick={() => SortExpenses('datum')}>Datum</Button></TableCell>
-            <TableCell><Button onClick={() => SortExpenses('summa')}>Summa</Button></TableCell>
-            <TableCell><Button onClick={() => SortExpenses('kategori')}>Kategori</Button></TableCell>
-            <TableCell><Button onClick={() => SortExpenses('budget')}>Budget</Button></TableCell>
-            <TableCell><Button onClick={() => SortExpenses('kommentar')}>Kommentar</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('summa')}>Summa</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('kategori')}>Kategori</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('budget')}>Budget</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('kommentar')}>Kommentar</Button></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
