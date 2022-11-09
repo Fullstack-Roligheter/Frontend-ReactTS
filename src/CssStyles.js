@@ -76,12 +76,11 @@ const styles = {
     margin: "5px",
   },
   siteBackground: {
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'top',
-    background:
-      'radial-gradient(circle at center, rgba(65, 162, 72, 0.4), rgba(65, 162, 72, 0.0))',
     paddingTop: '75px',
-    minHeight: "calc(100vh - 60px)",
+    minHeight: "calc(100vh - 56px)",
     height: "fit-content"
   }
 };
