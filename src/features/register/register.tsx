@@ -15,6 +15,9 @@ import {
 import { Register } from '../../shared/fetch/user'
 import { useNavigate } from 'react-router'
 import styles from '../../CssStyles.js'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 const RegisterUser = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -31,64 +34,67 @@ const RegisterUser = () => {
 
   const navigate = useNavigate()
 
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
+  //zod
+  const registerSchema = z
+    .object({
+      firstName: z.string(),
+      lastName: z.string(),
+      email: z.string().email(),
+      password: z
+        .string()
+        .min(4, { message: 'Password must be at least 4 characters' })
+        .regex(new RegExp('[A-Z]'), {
+          message: 'Password must contain at least one uppercase letter',
+        })
+        .regex(new RegExp('[a-z]'), {
+          message: 'Password must contain at least one lowercase letter',
+        })
+        .regex(new RegExp('[0-9]'), {
+          message: 'Password must contain at least one number',
+        })
+        .regex(new RegExp('[#?!@$ %^&*-]'), {
+          message: 'Password must contain at least special character',
+        }),
+      comfirmPassword: z.string(),
+    })
+    .refine((data) => data.password === data.comfirmPassword, {
+      message: 'Password does not match',
+      path: ['comfirmPassword'],
+    })
+
+  type Schema = z.infer<typeof registerSchema>
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<Schema>({
+    resolver: zodResolver(registerSchema),
   })
 
-  const checkForm = () => {
-    if (
-      formData.firstName === '' ||
-      formData.lastName === '' ||
-      formData.email === '' ||
-      formData.password === '' ||
-      sPassword === ''
-    ) {
-      return false
-    } else {
-      return true
-    }
-  }
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value,
+  const onSubmit = handleSubmit(({ firstName, lastName, email, password }) => {
+    Register({
+      firstName,
+      lastName,
+      email,
+      password,
     })
-  }
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
-    if (sPassword !== formData.password) {
-      setmessage('Lösenorden matchar inte')
-      setmessageState(true)
-      setTimeout(() => {
-        setmessageState(false)
-      }, 3000)
-    } else {
-      setloadingState(true)
-      Register(formData)
-        .then((response) => {
-          alert('Du är nu registrerad')
+      .then((response) => {
+        alert('Du är nu registrerad')
+        setTimeout(() => {
+          navigate(`/login`)
+        }, 1000)
+      })
+      .catch((error) => {
+        setTimeout(() => {
+          setmessage(error.response.data)
+          setmessageState(true)
           setTimeout(() => {
-            navigate(`/login`)
-          }, 1000)
+            setmessageState(false)
+          }, 3000)
         })
-        .catch((error) => {
-          setTimeout(() => {
-            setloadingState(false)
-            setmessage(error.response.data)
-            setmessageState(true)
-            setTimeout(() => {
-              setmessageState(false)
-            }, 3000)
-          })
-        })
-    }
-  }
+      })
+  })
 
   return (
     <Grid
@@ -127,16 +133,13 @@ const RegisterUser = () => {
           </Box>
         </Grid>
         <Grid item>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={onSubmit}>
             <TextField
               label='First Name'
               variant='outlined'
               type='text'
-              name='firstName'
-              required={true}
-              value={formData.firstName}
-              onChange={handleChange}
               style={styles.textfield}
+              {...register('firstName')}
             />
             <br />
             <br />
@@ -144,11 +147,8 @@ const RegisterUser = () => {
               label='Last Name'
               variant='outlined'
               type='text'
-              name='lastName'
-              required={true}
-              value={formData.lastName}
-              onChange={handleChange}
               style={styles.textfield}
+              {...register('lastName')}
             />
             <br />
             <br />
@@ -156,11 +156,10 @@ const RegisterUser = () => {
               label='Enter email'
               variant='outlined'
               type='text'
-              name='email'
-              required={true}
-              value={formData.email}
-              onChange={handleChange}
               style={styles.textfield}
+              {...register('email')}
+              error={Boolean(errors.email)}
+              helperText={errors.email?.message}
             />
 
             <br />
@@ -168,10 +167,9 @@ const RegisterUser = () => {
             <TextField
               label=' Select Password'
               variant='outlined'
-              name='password'
-              onChange={handleChange}
-              value={formData.password}
-              required={true}
+              error={!!errors['password']?.message}
+              helperText={errors['password']?.message}
+              {...register('password')}
               style={styles.textfield}
               type={showPassword ? 'text' : 'password'}
               InputProps={{
@@ -193,10 +191,9 @@ const RegisterUser = () => {
             <TextField
               label=' Enter Password again'
               variant='outlined'
-              name='sPassword'
-              onChange={(e) => setPassword(e.target.value)}
-              value={sPassword}
-              required={true}
+              error={Boolean(errors.comfirmPassword)}
+              helperText={errors['comfirmPassword']?.message}
+              {...register('comfirmPassword')}
               style={styles.textfield}
               type={showPassword2 ? 'text' : 'password'}
               InputProps={{
@@ -227,18 +224,7 @@ const RegisterUser = () => {
             })()}
             <br />
             <Grid container justifyContent='center'>
-              {(() => {
-                if (!checkForm()) {
-                  return <DisabledSubmitButton buttontext={'Sign Up'} />
-                } else {
-                  return (
-                    <SubmitButton
-                      isLoading={isLoading}
-                      buttontext={'Sign Up'}
-                    />
-                  )
-                }
-              })()}
+              <SubmitButton isLoading={isLoading} buttontext={'Sign Up'} />
             </Grid>
           </form>
         </Grid>
