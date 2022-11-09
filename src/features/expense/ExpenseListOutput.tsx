@@ -34,10 +34,9 @@ const ExpenseListOutput = () => {
   useEffect(() => {
     setSortedDebits(debits)
   }, [])
-const SortExpenses =(sortBy: string)=> {
-  debugger
-  setSortedDebits(SortExpenseList(sortBy, debits))
 
+const SortExpenses =(sortBy: string)=> {
+  setSortedDebits(SortExpenseList(sortBy, debits))
 }
 
   //Pagination, sätter startpage 0, visar 5 rows per sida

@@ -1,7 +1,4 @@
-import { useState } from "react";
-
  export const SortExpenseList = (sortOption: string, debits: any[]) => {
-  debugger
    let sortedDebits: any[] = [debits];
    let sortedDebitsByName;
 
@@ -10,7 +7,7 @@ import { useState } from "react";
      if(sortBy === 'kategori'){
         sortedDebits = debits.sort((a, b) => {
          const nameA = a.category.toLocaleLowerCase() // ignore upper and lowercase
-         const nameB = b.category.toUpperCase(); // ignore upper and lowercase
+         const nameB = b.category.toLocaleLowerCase(); // ignore upper and lowercase
          if (nameA < nameB) {
            return -1;
          }
@@ -24,7 +21,7 @@ import { useState } from "react";
      } else if(sortOption === 'budget'){
        sortedDebits =debits.sort((a, b) => {
          const nameA = a.budget.toLocaleLowerCase() // ignore upper and lowercase
-         const nameB = b.budget.toUpperCase(); // ignore upper and lowercase
+         const nameB = b.budget.toLocaleLowerCase(); // ignore upper and lowercase
          if (nameA < nameB) {
            return -1;
          }
@@ -38,7 +35,7 @@ import { useState } from "react";
      }else if(sortOption === 'kommentar'){
        sortedDebits =debits.sort((a, b) => {
          const nameA = a.comment.toLocaleLowerCase() // ignore upper and lowercase
-         const nameB = b.comment.toUpperCase(); // ignore upper and lowercase
+         const nameB = b.comment.toLocaleLowerCase(); // ignore upper and lowercase
          if (nameA < nameB) {
            return -1;
          }
