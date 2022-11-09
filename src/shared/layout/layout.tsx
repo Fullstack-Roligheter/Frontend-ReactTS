@@ -17,7 +17,7 @@ const Layout = () => {
 
   return (
     <Box
-      height='100vh'
+      height='100%'
       display='flex'
       flexDirection='column'
       style={styles.paperContainer}

@@ -19,7 +19,7 @@ const AuthenticatedLayout = () => {
       if (window.innerWidth < 900) {
         setSmallWindowOpen(false)
         SetDrawerVariant('temporary')
-        SetContentPadding('0px')
+        // SetContentPadding('0px')
       } else {
         SetDrawerVariant('permanent')
         SetContentPadding('240px')
@@ -52,12 +52,21 @@ const AuthenticatedLayout = () => {
 
   return (
     <>
-      <Box minHeight='100vh' maxHeight='fitContent'>
+      <Box height='100vh'>
         <AuthenticatedHeader {...newUserHeader} />
         <Sidebar {...newUserSidebar} />
-        <Grid container={true} justifyContent='center' spacing={0} my={8} pl={contentPadding}>
+        <Grid
+          container={true}
+          justifyContent='center'
+          spacing={0}
+          my={8}
+          pl={contentPadding}
+        >
           <Outlet />
         </Grid>
+        {/* <Box>
+          <Outlet />
+        </Box> */}
       </Box>
       <Footer />
     </>
