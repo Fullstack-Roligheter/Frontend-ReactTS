@@ -227,14 +227,12 @@ const ExpenseDashboard = () => {
                 <Modal
                   isShown={isShown}
                   hide={toggle}
-                  headerText='
-                  Add your own category'
+                  headerText='Add your own category'
                   modalContent={
                     <NewCategoryModal
                       onConfirm={onConfirm}
                       // onCancel={onCancel}
-                      message='
-                      Enter the name of the new category'
+                      message='Name of your new category'
                       categories={categories}
                       callBack={getCategories}
                     />
