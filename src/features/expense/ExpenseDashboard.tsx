@@ -227,12 +227,12 @@ const ExpenseDashboard = () => {
                 <Modal
                   isShown={isShown}
                   hide={toggle}
-                  headerText='Lägg till egen kategori'
+                  headerText='Add your own category'
                   modalContent={
                     <NewCategoryModal
                       onConfirm={onConfirm}
                       // onCancel={onCancel}
-                      message='Skriv in namn på nya kategorin'
+                      message='Name of your new category'
                       categories={categories}
                       callBack={getCategories}
                     />
@@ -244,7 +244,7 @@ const ExpenseDashboard = () => {
               sx={{ textAlign: 'center' }}
               style={styles.textIncludedInForm}
             >
-              Tryck på plusset för att lägga till en ny kategori
+              Click the plus icon to add a new category
             </Typography>
             <TextField
               select

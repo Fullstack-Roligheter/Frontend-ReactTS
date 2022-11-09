@@ -74,11 +74,11 @@ const SortExpenses =(sortBy: string)=> {
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell><Button onClick={() => SortExpenses('datum')}>Datum</Button></TableCell>
-                <TableCell><Button onClick={() => SortExpenses('summa')}>Summa</Button></TableCell>
-                <TableCell><Button onClick={() => SortExpenses('kategori')}>Kategori</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('date')}>Date</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('sum')}>Amount</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('category')}>Category</Button></TableCell>
                 <TableCell><Button onClick={() => SortExpenses('budget')}>Budget</Button></TableCell>
-                <TableCell><Button onClick={() => SortExpenses('kommentar')}>Kommentar</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('comment')}>Comment</Button></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

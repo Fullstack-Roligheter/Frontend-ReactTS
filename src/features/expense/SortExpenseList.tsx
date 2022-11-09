@@ -49,15 +49,15 @@
      }
     }
 
-    if(sortOption === 'summa'){
+    if(sortOption === 'sum'){
       // sort by value
       sortedDebits = debits.sort((a, b) => a.amount - b.amount)
      
-    } else if(sortOption === 'datum'){
+    } else if(sortOption === 'date'){
       // sort by date
       sortedDebits = debits.sort((a,b)=>a.date.getTime()-b.date.getTime());
       
-    } else if(sortOption === 'kategori'){
+    } else if(sortOption === 'category'){
       // sort by name
          sortedDebitsByName = sortByName(sortOption)
          if (sortedDebitsByName != undefined){
@@ -69,7 +69,7 @@
           sortedDebits = sortedDebitsByName
          }
 
-    } else if(sortOption === 'kommentar'){
+    } else if(sortOption === 'comment'){
       // sort by name
          if (sortedDebitsByName != undefined){
           sortedDebits = sortedDebitsByName
