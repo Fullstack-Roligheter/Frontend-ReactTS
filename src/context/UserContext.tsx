@@ -67,7 +67,7 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
     }
     
     const object = await getResponse.json()
-    localStorage.setItem("userProfile", object)
+    localStorage.setItem("userToken", object)
     console.log(object) // Vi har tagit emot ett JWT object med vår userinfo som payload
 
     const decodedObject = jwtDecode<userType>(object)
