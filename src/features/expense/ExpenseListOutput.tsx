@@ -78,7 +78,6 @@ const SortExpenses =(sortBy: string)=> {
                 <TableCell><Button onClick={() => SortExpenses('sum')}>Amount</Button></TableCell>
                 <TableCell><Button onClick={() => SortExpenses('category')}>Category</Button></TableCell>
                 <TableCell><Button onClick={() => SortExpenses('budget')}>Budget</Button></TableCell>
-                <TableCell><Button onClick={() => SortExpenses('comment')}>Comment</Button></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

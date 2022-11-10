@@ -4,7 +4,7 @@
 
     const sortByName = (sortBy: string) => {
 // // sort by name
-     if(sortBy === 'kategori'){
+     if(sortBy === 'category'){
         sortedDebits = debits.sort((a, b) => {
          const nameA = a.category.toLocaleLowerCase() // ignore upper and lowercase
          const nameB = b.category.toLocaleLowerCase(); // ignore upper and lowercase
@@ -22,20 +22,6 @@
        sortedDebits =debits.sort((a, b) => {
          const nameA = a.budget.toLocaleLowerCase() // ignore upper and lowercase
          const nameB = b.budget.toLocaleLowerCase(); // ignore upper and lowercase
-         if (nameA < nameB) {
-           return -1;
-         }
-         if (nameA > nameB) {
-           return 1;
-         }
-         // names must be equal
-         return 0;
-       });
-       return sortedDebits
-     }else if(sortOption === 'kommentar'){
-       sortedDebits =debits.sort((a, b) => {
-         const nameA = a.comment.toLocaleLowerCase() // ignore upper and lowercase
-         const nameB = b.comment.toLocaleLowerCase(); // ignore upper and lowercase
          if (nameA < nameB) {
            return -1;
          }
@@ -69,11 +55,6 @@
           sortedDebits = sortedDebitsByName
          }
 
-    } else if(sortOption === 'comment'){
-      // sort by name
-         if (sortedDebitsByName != undefined){
-          sortedDebits = sortedDebitsByName
-         }
     } 
 
  return sortedDebits
