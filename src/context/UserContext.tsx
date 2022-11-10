@@ -1,4 +1,3 @@
-import { log } from 'console'
 import React, {
   createContext,
   PropsWithChildren,
@@ -7,6 +6,8 @@ import React, {
 } from 'react'
 import { useNavigate } from 'react-router'
 import { baseURL } from '../config'
+import jwtDecode from "jwt-decode";
+import { userType } from '../shared/Interfaces/userToken';
 
 type IProps = PropsWithChildren<{}>
 
@@ -45,7 +46,7 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
   const [lastName, setLastName] = useState<string | null>(
     sessionStorage.getItem('lastName')
   )
-
+  
   //login code
   const signIn = async (userEmail: string, password: string) => {
     const getResponse = await fetch(`${baseURL}/user/Login`, {
@@ -64,23 +65,32 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
       alert('Access Denied')
       return
     }
-
+    
     const object = await getResponse.json()
-    //console.log(object)
+    localStorage.setItem("userProfile", object)
+    console.log(object) // Vi har tagit emot ett JWT object med vår userinfo som payload
 
-    sessionStorage.setItem('userId', object.userId)
-    sessionStorage.setItem('email', object.email)
-    sessionStorage.setItem('firstName', object.firstName)
-    sessionStorage.setItem('lastName', object.lastName)
+    const decodedObject = jwtDecode<userType>(object)
+    console.log(decodedObject)
+    const userId = decodedObject.userId
+    console.log(userId)
+    //TODO: Spara vår JWT token som vi tar emot, antingen i Localstorage eller i en cookie
+    
+    sessionStorage.setItem('userId', decodedObject.userId)
+    sessionStorage.setItem('email', decodedObject.email)
+    sessionStorage.setItem('firstName', decodedObject.firstName)
+    sessionStorage.setItem('lastName', decodedObject.lastName)
 
-    setUserId(object.userId)
-    setEmail(object.email)
-    setFirstName(object.firstName)
-    setLastName(object.lastName)
+    setUserId(decodedObject.userId)
+    setEmail(decodedObject.email)
+    setFirstName(decodedObject.firstName)
+    setLastName(decodedObject.lastName)
 
     navigate(`/dashboard`)
   }
+  
   /*  console.log('userID:', userId) */
+
 
   //sign out
   const signOut = () => {}
