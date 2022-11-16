@@ -1,12 +1,16 @@
-import './App.css';
-import Button from '@mui/material/Button';
+import { BrowserRouter } from 'react-router-dom'
+import './App.css'
+import { UserContextProvider } from './context/UserContext'
+import AppRouter from './routes'
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <Button variant="contained">Hello World</Button>
-    </div>
-  );
+    <BrowserRouter>
+      <UserContextProvider>
+        <AppRouter />
+      </UserContextProvider>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App

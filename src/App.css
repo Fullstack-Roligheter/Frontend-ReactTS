@@ -1,38 +1,45 @@
-.App {
-  text-align: center;
+.text-link {
+    text-decoration: none;
+    margin: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.edit-link {
+    text-decoration: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.container {
+    margin: 30px;
+}
+
+.icon-container {
+    margin-top: 5px;
+    display: flex;
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+    padding: 10px;
+    margin: 10px;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+ 
+  /* För scrollning av långa kommentarer/text */
+  /* SIMON DELETE THIS */
+  .comments {
+    max-width: 125px;
+    min-width: 125px;
+    padding: 0 !important;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center !important;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* -------------------------------- */
+
+
+  

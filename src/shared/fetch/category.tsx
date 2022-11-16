@@ -1,37 +1,84 @@
-import axios from "axios";
+import instance from './baseURL.js'
 
-export function GetCategories(id: any) {
-    return axios.get(`https://localhost:7073/api/category/getcategories${id}`)
-        .then((response) => {
-            const data = response.data;
-            return data;
-        })
-        .catch((error) => {
-            console.log("Error in GetCategories: ", error);
-            throw error;
-        })
+export function GetCategoriesForUser(id: any) {
+  return instance
+    .get(`api/categories/GetCategoriesForUser?userId=${id}`)
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in GetCategoriesForUser: ', error)
+      throw error
+    })
 }
 
-export function GetCategoryBudget(name: any, id: any) {
-    return axios.get(`https://localhost:7073/api/category/categorybudget${name}&${id}`)
-        .then((response) => {
-            const data = response.data;
-            return data;
-        })
-        .catch((error) => {
-            console.log("Error in GetCategoryBudget: ", error);
-            throw error;
-        })
+export function GetUserCreatedCatogories(id: any) {
+  return instance
+    .get(`/api/categories/GetUserCreatedCategories?userId=${id}`)
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in GetCategoriesForUser: ', error)
+      throw error
+    })
 }
 
-export function AddNewCategory(data: any) {
-    return axios.post(`https://localhost:7073/api/category/addnewcategory`, data)
-        .then((response) => {
-            const data = response.data;
-            return data;
-        })
-        .catch((error) => {
-            console.log("Error in AddNewCategory: ", error);
-            throw error;
-        })
+// export function GetCategoryBudget(name: any, id: any) {
+//   return axios
+//     .get(`${BaseURL}/api/category/categorybudget${name}&${id}`)
+//     .then((response) => {
+//       const data = response.data
+//       return data
+//     })
+//     .catch((error) => {
+//       console.log('Error in GetCategoryBudget: ', error)
+//       throw error
+//     })
+// }
+
+export function CreateCategory(data: any) {
+  return instance
+    .post(`api/categories/CreateCategory`, data)
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in CreateCategory: ', error)
+      throw error
+    })
+}
+export function EditCategory(data: any) {
+  return instance
+    .put(`api/categories/EditCategory`, data)
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in CreateCategory: ', error)
+      throw error
+    })
+}
+
+export function DeleteCategory(input: any) {
+  const data = {
+    userId: input.userId,
+    categoryId: input.categoryId,
+  }
+  return instance
+    .delete(
+      `api/categories/DeleteCategory?userId=${data.userId}&categoryId=${data.categoryId}`
+    )
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in DeleteCategory: ', error)
+      throw error
+    })
 }
