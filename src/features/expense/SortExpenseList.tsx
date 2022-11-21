@@ -2,8 +2,8 @@
    let sortedDebits: any[] = [debits];
    let sortedDebitsByName;
 
-   debugger
-    const sortByName = (sortBy: string) => {
+   debugger 
+   const sortByName = (sortBy: string) => {
 // // sort by name
      if(sortBy === 'category'){
         sortedDebits = debits.sort((a, b) => {
@@ -21,8 +21,8 @@
        return sortedDebits
      } else if(sortOption === 'budget'){
        sortedDebits =debits.sort((a, b) => {
-         const nameA = a.budget.Name.toLocaleLowerCase(); // ignore upper and lowercase
-         const nameB = b.budget.Name.toLocaleLowerCase(); // ignore upper and lowercase
+         const nameA = a.budget.toLocaleLowerCase(); // ignore upper and lowercase
+         const nameB = b.budget.toLocaleLowerCase(); // ignore upper and lowercase
          if (nameA < nameB) {
            return -1;
          }

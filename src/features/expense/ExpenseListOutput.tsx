@@ -33,7 +33,7 @@ const ExpenseListOutput = () => {
   console.log(debits)
   
   useEffect(() => {
-    setSortedDebits(debits)
+    setDebits(sortedDebits)
   }, [sorted])
 
 const SortExpenses =(sortBy: string)=> {
