@@ -22,6 +22,7 @@ const ExpenseListOutput = () => {
   const [debits, setDebits] = useState<any[]>([])
   const [sortedDebits, setSortedDebits] = useState<any[]>([])
   const [open, setOpen] = useState(-1)
+  const [sorted, setSorted] = useState(false)
 
   //Get all debits to put in list
   useEffect(() => {
@@ -33,10 +34,11 @@ const ExpenseListOutput = () => {
   
   useEffect(() => {
     setSortedDebits(debits)
-  }, [])
+  }, [sorted])
 
 const SortExpenses =(sortBy: string)=> {
   setSortedDebits(SortExpenseList(sortBy, debits))
+  setSorted(!sorted)
 }
 
   //Pagination, sätter startpage 0, visar 5 rows per sida
