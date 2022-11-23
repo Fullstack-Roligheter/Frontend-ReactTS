@@ -16,27 +16,18 @@ import { SortExpenseList } from './SortExpenseList'
 import { Collapse, IconButton, Box } from '@mui/material'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
 
-const ExpenseListOutput = () => {
+const ExpenseListOutput = (props :any) => {
   const user = useUserContext()
 
-  const [debits, setDebits] = useState<any[]>([])
-  const [sortedDebits, setSortedDebits] = useState<any[]>([])
   const [open, setOpen] = useState(-1)
-
-  //Get all debits to put in list
-  useEffect(() => {
-    GetDebitsForUser(user.userId).then((Response) => {
-      setDebits(Response)
-    })
-  }, [])
-  console.log(debits)
+  const [sortedDebits, setSortedDebits] = useState<any[]>([])
   
   useEffect(() => {
-    setSortedDebits(debits)
+    setSortedDebits(props.debits)
   }, [])
 
 const SortExpenses =(sortBy: string)=> {
-  setSortedDebits(SortExpenseList(sortBy, debits))
+  setSortedDebits(SortExpenseList(sortBy, props.debits))
 }
 
   //Pagination, sätter startpage 0, visar 5 rows per sida
@@ -45,7 +36,7 @@ const SortExpenses =(sortBy: string)=> {
 
   //Om inte det finns jämt 5 rows kvar, visa tomma rows
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - debits.length) : 0
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.debits.length) : 0
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -83,12 +74,12 @@ const SortExpenses =(sortBy: string)=> {
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                ? debits.slice(
+                ? props.debits.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )
-                : debits
-              ).map((debit, index) => (
+                : props.debits
+              ).map((debit : any, index : number) => (
                 <>
                   <TableRow key={debit.id}>
                     <TableCell sx={{ paddingBottom: 0, borderBottom: '0px' }}>
@@ -125,7 +116,7 @@ const SortExpenses =(sortBy: string)=> {
                       sx={{ paddingBottom: 0 }}
                     >
                       <Collapse
-                        in={open === index}
+                        in={open === props.index}
                         timeout='auto'
                         unmountOnExit
                       >
@@ -146,7 +137,7 @@ const SortExpenses =(sortBy: string)=> {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={5}
-                count={debits.length}
+                count={props.debits.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
@@ -167,4 +158,4 @@ const SortExpenses =(sortBy: string)=> {
   )
 }
 
-export default ExpenseListOutput
+export default ExpenseListOutput;
