@@ -6,23 +6,21 @@ import { useEffect, useState } from 'react'
 import AuthenticatedHeader from './header/authenticatedHeader'
 import Grid from '@mui/material/Grid'
 import { useUserContext } from '../../context/UserContext'
+import styles from '../../CssStyles'
 
 const AuthenticatedLayout = () => {
   const user = useUserContext()
 
   const [smallWindow, setSmallWindowOpen] = useState(true)
   const [drawervariant, SetDrawerVariant] = useState('permanent')
-  const [contentPadding, SetContentPadding] = useState('')
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 767) {
+      if (window.innerWidth < 900) {
         setSmallWindowOpen(false)
         SetDrawerVariant('temporary')
-        SetContentPadding('0px')
       } else {
         SetDrawerVariant('permanent')
-        SetContentPadding('240px')
       }
     }
     window.addEventListener('resize', handleResize)
@@ -52,10 +50,10 @@ const AuthenticatedLayout = () => {
 
   return (
     <>
-      <Box height='100vh'>
+      <Box style={styles.siteBackground} display='flex'>
         <AuthenticatedHeader {...newUserHeader} />
         <Sidebar {...newUserSidebar} />
-        <Grid container={true} justifyContent='center' spacing={0} my={8} pl={contentPadding}>
+        <Grid container={true} justifyContent='center' spacing={0} my={8}>
           <Outlet />
         </Grid>
       </Box>

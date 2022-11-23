@@ -7,16 +7,28 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Paper from '@mui/material/Paper'
 import { useEffect, useState } from 'react'
-import { TablePagination } from '@mui/material'
+import { Button, TablePagination } from '@mui/material'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import { GetDebitsForUser } from '../../shared/fetch/expense'
 import { useUserContext } from '../../context/UserContext'
+import { SortExpenseList } from './SortExpenseList'
+
 import { Collapse, IconButton, Box } from '@mui/material'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
 
 const ExpenseListOutput = (props :any) => {
   const user = useUserContext()
+
   const [open, setOpen] = useState(-1)
+  const [sortedDebits, setSortedDebits] = useState<any[]>([])
+  
+  useEffect(() => {
+    setSortedDebits(props.debits)
+  }, [])
+
+const SortExpenses =(sortBy: string)=> {
+  setSortedDebits(SortExpenseList(sortBy, props.debits))
+}
 
   //Pagination, sätter startpage 0, visar 5 rows per sida
   const [page, setPage] = React.useState(0)
@@ -53,10 +65,11 @@ const ExpenseListOutput = (props :any) => {
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell>Date</TableCell>
-                <TableCell>Amount</TableCell>
-                <TableCell>Category</TableCell>
-                <TableCell>Budget</TableCell>
+                <TableCell><Button onClick={() => SortExpenses('date')}>Date</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('sum')}>Amount</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('category')}>Category</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('budget')}>Budget</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('comment')}>Comment</Button></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -14,7 +14,7 @@ const Footer = () => {
         container
         direction='column'
         alignItems='center'
-        sx={{ color: common.black }}
+        sx={{ color: common.black, Height: '60px' }}
       >
         <Box>
           <IconButton

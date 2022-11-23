@@ -23,6 +23,8 @@ const styles = {
   whiteTypography: {
     textShadow: '1px 1px 2px black',
     color: 'white'
+  }, blackTypography: {
+    color: 'black'
   },
   textIncludedInForm: {
     fontSize: '10px',
@@ -73,6 +75,14 @@ const styles = {
   userProfileInfo: {
     margin: "5px",
   },
+  siteBackground: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'top',
+    paddingTop: '75px',
+    minHeight: "calc(100vh - 56px)",
+    height: "fit-content"
+  }
 };
 
 
