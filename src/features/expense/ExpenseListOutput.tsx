@@ -18,16 +18,21 @@ import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
 
 const ExpenseListOutput = (props :any) => {
   const user = useUserContext()
-
-  const [open, setOpen] = useState(-1)
+  const [debits, setDebits] = useState<any[]>([])
   const [sortedDebits, setSortedDebits] = useState<any[]>([])
+  const [open, setOpen] = useState(-1)
+  const [sorted, setSorted] = useState(false)
   
   useEffect(() => {
-    setSortedDebits(props.debits)
+    setDebits(props.debits)
   }, [])
+   useEffect(() => {
+    setDebits(sortedDebits)
+  }, [sorted])
 
 const SortExpenses =(sortBy: string)=> {
   setSortedDebits(SortExpenseList(sortBy, props.debits))
+  setSorted(!sorted)
 }
 
   //Pagination, sätter startpage 0, visar 5 rows per sida
@@ -51,7 +56,7 @@ const SortExpenses =(sortBy: string)=> {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
-
+  
   return (
     <>
       <Box
