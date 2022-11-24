@@ -36,19 +36,35 @@ sortedDebits = debits.sort((a, b) => {
        return sortedDebits
       }
      } else if(sortOption === 'budget'){
-       sortedDebits =debits.sort((a, b) => {
-         const nameA = a.budget.toLocaleLowerCase(); // ignore upper and lowercase
-         const nameB = b.budget.toLocaleLowerCase(); // ignore upper and lowercase
-         if (nameA < nameB) {
-           return -1;
-         }
-         if (nameA > nameB) {
-           return 1;
-         }
-         // names must be equal
-         return 0;
-       });
-       return sortedDebits
+       if(sameSortOption && descending){
+sortedDebits =debits.sort((a, b) => {
+           const nameA = a.budget.toLocaleLowerCase(); // ignore upper and lowercase
+           const nameB = b.budget.toLocaleLowerCase(); // ignore upper and lowercase
+           if (nameA < nameB) {
+             return 1;
+           }
+           if (nameA > nameB) {
+             return -1;
+           }
+           // names must be equal
+           return 0;
+         });
+         return sortedDebits
+       }else{
+         sortedDebits =debits.sort((a, b) => {
+           const nameA = a.budget.toLocaleLowerCase(); // ignore upper and lowercase
+           const nameB = b.budget.toLocaleLowerCase(); // ignore upper and lowercase
+           if (nameA < nameB) {
+             return -1;
+           }
+           if (nameA > nameB) {
+             return 1;
+           }
+           // names must be equal
+           return 0;
+         });
+         return sortedDebits
+       }
      }
     }
 
