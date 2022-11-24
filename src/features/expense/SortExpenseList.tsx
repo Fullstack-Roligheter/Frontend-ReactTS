@@ -3,9 +3,24 @@ const SortExpenseList = (sortOption: string, debits: any[],sameSortOption:boolea
    let sortedDebitsByName;
 
 
-   const sortByName = (sortBy: string) => {
+   const sortByName = (sortBy: string,sameSortOption:boolean, descending:boolean) => {
 // // sort by name
      if(sortBy === 'category'){
+      if(sameSortOption && descending){
+sortedDebits = debits.sort((a, b) => {
+         const nameA = a.category.toLocaleLowerCase() // ignore upper and lowercase
+         const nameB = b.category.toLocaleLowerCase(); // ignore upper and lowercase
+         if (nameA < nameB) {
+           return 1;
+         }
+         if (nameA > nameB) {
+           return -1;
+         }
+         // names must be equal
+         return 0;
+       });
+       return sortedDebits
+      }else{
         sortedDebits = debits.sort((a, b) => {
          const nameA = a.category.toLocaleLowerCase() // ignore upper and lowercase
          const nameB = b.category.toLocaleLowerCase(); // ignore upper and lowercase
@@ -19,6 +34,7 @@ const SortExpenseList = (sortOption: string, debits: any[],sameSortOption:boolea
          return 0;
        });
        return sortedDebits
+      }
      } else if(sortOption === 'budget'){
        sortedDebits =debits.sort((a, b) => {
          const nameA = a.budget.toLocaleLowerCase(); // ignore upper and lowercase
@@ -54,13 +70,13 @@ const SortExpenseList = (sortOption: string, debits: any[],sameSortOption:boolea
       
     } else if(sortOption === 'category'){
       // sort by name
-        sortedDebitsByName = sortByName(sortOption)
+        sortedDebitsByName = sortByName(sortOption, sameSortOption, descending)
         if (sortedDebitsByName != undefined){
           sortedDebits = sortedDebitsByName
         }
     } else if(sortOption === 'budget'){
       // sort by name
-        sortedDebitsByName = sortByName(sortOption)
+        sortedDebitsByName = sortByName(sortOption, sameSortOption, descending)
         if (sortedDebitsByName != undefined){
           sortedDebits = sortedDebitsByName
         }
