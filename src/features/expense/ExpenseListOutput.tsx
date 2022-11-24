@@ -11,34 +11,42 @@ import { Button, TablePagination } from '@mui/material'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import { GetDebitsForUser } from '../../shared/fetch/expense'
 import { useUserContext } from '../../context/UserContext'
-import { SortExpenseList } from './SortExpenseList'
+import SortExpenseList  from './SortExpenseList'
 
 import { Collapse, IconButton, Box } from '@mui/material'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
 
   const ExpenseListOutput = (props :any) => {
-  const user = useUserContext()
+   const user = useUserContext()
   const [debits, setDebits] = useState<any[]>([])
   const [sortedDebits, setSortedDebits] = useState<any[]>([])
   const [open, setOpen] = useState(-1)
   const [sorted, setSorted] = useState(false)
-
-  //Get all debits to put in list
-  useEffect(() => {
-    GetDebitsForUser(user.userId).then((Response) => {
-      setDebits(Response)
-    })
-  }, [])
-  console.log(debits)
+  const [activeSortOption, setActiveSortOption] = useState('')
+  const [sameSortOption, setSameSortOption] = useState(false)
+  const [descending, setDescending] = useState(false)
   
   useEffect(() => {
+    setDebits(props.debits)
+  }, [])
+   useEffect(() => {
     setDebits(sortedDebits)
   }, [sorted])
 
 const SortExpenses =(sortBy: string)=> {
-  setSortedDebits(SortExpenseList(sortBy, debits))
+  debugger
+  if (activeSortOption === sortBy){
+    setSameSortOption(true)
+    setDescending(!descending)
+  } else if (sameSortOption){
+    setSameSortOption(false)
+    setDescending(false)
+  }
+  setSortedDebits(SortExpenseList(sortBy, props.debits, sameSortOption, descending))
   setSorted(!sorted)
+  setActiveSortOption(sortBy)
 }
+
 
   //Pagination, sätter startpage 0, visar 5 rows per sida
   const [page, setPage] = React.useState(0)

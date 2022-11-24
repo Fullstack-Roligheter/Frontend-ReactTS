@@ -1,4 +1,4 @@
- export const SortExpenseList = (sortOption: string, debits: any[]) => {
+const SortExpenseList = (sortOption: string, debits: any[],sameSortOption:boolean, descending:boolean) => {
    let sortedDebits: any[] = [debits];
    let sortedDebitsByName;
 
@@ -62,3 +62,5 @@
  return sortedDebits
 
   }
+
+  export default SortExpenseList;
