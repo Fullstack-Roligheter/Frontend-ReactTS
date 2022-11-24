@@ -26,12 +26,6 @@ import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
   const [sameSortOption, setSameSortOption] = useState(false)
   const [descending, setDescending] = useState(false)
   
-  // useEffect(() => {
-  //   setDebitsToShow(props.debits)
-  //   console.log(props.debits)
-  //   console.log(debitsToShow)
-  // }, [])
-
    useEffect(() => {
     setDebitsToShow(sortedDebits)
   }, [sorted])
@@ -57,7 +51,7 @@ const SortExpenses =(sortBy: string)=> {
 
   //Om inte det finns jämt 5 rows kvar, visa tomma rows
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - debitsToShow.length) : 0
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.debits.length) : 0
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -95,11 +89,11 @@ const SortExpenses =(sortBy: string)=> {
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                ? debitsToShow.slice(
+                ? props.debits.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )
-                : debitsToShow
+                : props.debits
               ).map((debit : any, index : number) => (
                 <>
                   <TableRow key={debit.id}>
@@ -158,7 +152,7 @@ const SortExpenses =(sortBy: string)=> {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={5}
-                count={debitsToShow.length}
+                count={props.debits.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
