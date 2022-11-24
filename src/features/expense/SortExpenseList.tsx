@@ -38,7 +38,11 @@ const SortExpenseList = (sortOption: string, debits: any[],sameSortOption:boolea
 
     if(sortOption === 'sum'){
       // sort by value
+      if(sameSortOption && descending){
+        sortedDebits = debits.sort((a, b) => b.amount - a.amount)
+      }else{
         sortedDebits = debits.sort((a, b) => a.amount - b.amount)
+      }
      
     } else if(sortOption === 'date'){
       // sort by date
