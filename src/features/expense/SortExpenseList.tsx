@@ -46,7 +46,11 @@ const SortExpenseList = (sortOption: string, debits: any[],sameSortOption:boolea
      
     } else if(sortOption === 'date'){
       // sort by date
+      if(sameSortOption && descending){
+        sortedDebits = debits.sort((a,b)=> +new Date(b.date)- +new Date(a.date));
+      }else{
         sortedDebits = debits.sort((a,b)=> +new Date(a.date)- +new Date(b.date));
+      }
       
     } else if(sortOption === 'category'){
       // sort by name
