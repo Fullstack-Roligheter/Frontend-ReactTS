@@ -18,20 +18,16 @@ import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
 
   const ExpenseListOutput = (props :any) => {
   const user = useUserContext()
-  const [sortedDebits, setSortedDebits] = useState<any[]>([])
+  const [sortedDebits, setSortedDebits] = useState<any[]>(props.debits)
   const [open, setOpen] = useState(-1)
   const [sorted, setSorted] = useState(false)
   const [debits, setDebits] = useState<any[]>([])
   
-  
+
   const SortExpenses =(sortBy: string)=> {
     setSortedDebits(SortExpenseList(sortBy, debits))
     setSorted(!sorted)
   }
-  
-   useEffect(() => {
-    setDebits(props.debits)
-  }, [])
   
   useEffect(() => {
     setDebits(sortedDebits)
