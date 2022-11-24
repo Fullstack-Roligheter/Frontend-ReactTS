@@ -2,7 +2,7 @@
    let sortedDebits: any[] = [debits];
    let sortedDebitsByName;
 
-   debugger 
+
    const sortByName = (sortBy: string) => {
 // // sort by name
      if(sortBy === 'category'){
