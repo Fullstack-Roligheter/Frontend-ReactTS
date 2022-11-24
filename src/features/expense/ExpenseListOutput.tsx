@@ -9,16 +9,16 @@ import Paper from '@mui/material/Paper'
 import { useEffect, useState } from 'react'
 import { Button, TablePagination } from '@mui/material'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
-import { GetDebitsForUser } from '../../shared/fetch/expense'
 import { useUserContext } from '../../context/UserContext'
 import SortExpenseList  from './SortExpenseList'
 
 import { Collapse, IconButton, Box } from '@mui/material'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
 
+
   const ExpenseListOutput = (props :any) => {
-   const user = useUserContext()
-  const [debits, setDebits] = useState<any[]>([])
+  const user = useUserContext()
+  const [debitsToShow, setDebitsToShow] = useState<any[]>([props.debits])
   const [sortedDebits, setSortedDebits] = useState<any[]>([])
   const [open, setOpen] = useState(-1)
   const [sorted, setSorted] = useState(false)
@@ -26,15 +26,18 @@ import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
   const [sameSortOption, setSameSortOption] = useState(false)
   const [descending, setDescending] = useState(false)
   
-  useEffect(() => {
-    setDebits(props.debits)
-  }, [])
+  // useEffect(() => {
+  //   setDebitsToShow(props.debits)
+  //   console.log(props.debits)
+  //   console.log(debitsToShow)
+  // }, [])
+
    useEffect(() => {
-    setDebits(sortedDebits)
+    setDebitsToShow(sortedDebits)
   }, [sorted])
 
 const SortExpenses =(sortBy: string)=> {
-  debugger
+
   if (activeSortOption === sortBy){
     setSameSortOption(true)
     setDescending(!descending)
@@ -47,14 +50,14 @@ const SortExpenses =(sortBy: string)=> {
   setActiveSortOption(sortBy)
 }
 
-
+ 
   //Pagination, sätter startpage 0, visar 5 rows per sida
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
   //Om inte det finns jämt 5 rows kvar, visa tomma rows
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.debits.length) : 0
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - debitsToShow.length) : 0
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -69,6 +72,7 @@ const SortExpenses =(sortBy: string)=> {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
+
 
   return (
     <>
@@ -91,11 +95,11 @@ const SortExpenses =(sortBy: string)=> {
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                ? debits.slice(
+                ? debitsToShow.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )
-                : debits
+                : debitsToShow
               ).map((debit : any, index : number) => (
                 <>
                   <TableRow key={debit.id}>
@@ -154,7 +158,7 @@ const SortExpenses =(sortBy: string)=> {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={5}
-                count={props.debits.length}
+                count={debitsToShow.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
