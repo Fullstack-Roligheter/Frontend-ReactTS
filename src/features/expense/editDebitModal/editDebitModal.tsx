@@ -55,7 +55,8 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
     }
   }
 const FindCategoryId =()=>{
-  const categoryMatch = categories.filter((categoryName:string) => categoryName === debitCategory)
+  console.log(categories)
+  const categoryMatch = categories.find((categoryName:string) => categoryName === debitCategory)
   editSumbitData.categoryId = categoryMatch.categoryId
 }
 
@@ -78,6 +79,7 @@ const CheckForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     FindCategoryId()
+    console.log(editSumbitData)
       setloadingState(true)
       setmessage('Edit Debit')
       setmessageState(true)

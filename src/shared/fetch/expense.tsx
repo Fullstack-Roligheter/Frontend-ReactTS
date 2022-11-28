@@ -41,7 +41,7 @@ export function EditDebit(debit: any){
 export function DeleteDebit(input: any) {
   const data = {
     userId: input.userId,
-    debitId: input.categoryId,
+    debitId: input.debitId,
   }
   return instance
     .delete(
