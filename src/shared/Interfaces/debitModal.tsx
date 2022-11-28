@@ -3,7 +3,7 @@ export interface EditDebitModalProps {
   debitId: string | null
   debitDate: Date
   debitAmount: number
-  debitCategoryId: string | null
+  debitCategory: string | null
   debitComment: string | null
   debitBudget: string | null
   message: string
@@ -19,7 +19,7 @@ export interface DeleteDebitModalProps {
   debitDate: Date
   debitAmount: number
   debitComment: string | null
-  debitCategoryId: string | null
+  debitCategory: string | null
   debitBudget: string | null
   message: string
   debits: any

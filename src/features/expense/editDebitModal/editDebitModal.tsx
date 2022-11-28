@@ -23,7 +23,7 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   const [debitDate, setDebitDate] = useState(props.debitDate)
   const [debitAmount, setDebitAmount] = useState(props.debitAmount)
   const [debitComment, setDebitComment] = useState(props.debitComment)
-  const [debitCategoryId, setDebitCategoryId] = useState(props.debitCategoryId)
+  const [debitCategory, setdebitCategory] = useState(props.debitCategory)
   const [debitBudget, setDebitBudget] = useState(props.debitBudget)
   const [isLoading, setloadingState] = useState(false)
   const [message, setmessage] = useState('')
@@ -35,7 +35,7 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
     amount: debitAmount,
     comment: debitComment,
     userId: user.userId,
-    categoryId: debitCategoryId,
+    categoryId: debitCategory,
     budgetId: debitBudget,
   }
   const debits = props.debits
@@ -47,19 +47,23 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
     if (
       debitDate === null ||
       debitAmount === null ||
-      debitCategoryId === undefined
+      debitCategory === undefined
     ) {
       return false
     } else {
       return true
     }
   }
+const FindCategoryId =()=>{
+  const categoryMatch = categories.filter((categoryName:string) => categoryName === debitCategory)
+  editSumbitData.categoryId = categoryMatch.categoryId
+}
 
 const CheckForm = () => {
     if (
       debitDate === undefined ||
       debitAmount === null ||
-      debitCategoryId === undefined
+      debitCategory === undefined
     ) {
       return false
     } else {
@@ -73,6 +77,7 @@ const CheckForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    FindCategoryId()
       setloadingState(true)
       setmessage('Edit Debit')
       setmessageState(true)
@@ -130,8 +135,8 @@ const CheckForm = () => {
                 select
                 label='Category'
                 name='CategoryId'
-                value={debitCategoryId}
-                onChange={(e)=> setDebitCategoryId(e.target.value)}
+                value={debitCategory}
+                onChange={(e)=> setdebitCategory(e.target.value)}
                 style={styles.textfield}
                 SelectProps={{
                   native: true,

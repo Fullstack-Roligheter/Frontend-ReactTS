@@ -16,7 +16,7 @@ export const DeleteDebitModal: FunctionComponent<
   const [debitDate, setDebitDate] = useState(props.debitDate)
   const [debitAmount, setDebitAmount] = useState(props.debitAmount)
   const [debitComment, setDebitComment] = useState(props.debitComment)
-  const [debitCategoryId, setDebitCategoryId] = useState(props.debitCategoryId)
+  const [debitCategory, setdebitCategory] = useState(props.debitCategory)
   const [debitBudget, setDebitBudget] = useState(props.debitBudget)
   const deleteData: any = {
     userId: user.userId,
@@ -62,7 +62,7 @@ export const DeleteDebitModal: FunctionComponent<
         <Typography>{debitComment}</Typography>
         <br />
         <Typography>Category:</Typography>
-        <Typography>{debitCategoryId}</Typography>
+        <Typography>{debitCategory}</Typography>
         <br />
         <Typography>Budget:</Typography>
         <Typography>{debitBudget}</Typography>

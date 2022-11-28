@@ -255,7 +255,7 @@ const ToEdit = (debitId: string, debitDate: Date, debitAmount: number, debitCate
                 debitAmount={debitSendAmount}
                 debitDate={debitSendDate}
                 debitBudget={debitSendBudget}
-                debitCategoryId={debitSendCategory}
+                debitCategory={debitSendCategory}
                 debitComment={debitSendComment}
                 callBack={UpdateDebitsState}
                 />
@@ -277,7 +277,7 @@ const ToEdit = (debitId: string, debitDate: Date, debitAmount: number, debitCate
                 debitDate={debitSendDate}
                 debitAmount={debitSendAmount}
                 debitComment={debitSendComment}
-                debitCategoryId={debitSendCategory}
+                debitCategory={debitSendCategory}
                 debitBudget={debitSendBudget}
                 debits={props.debits}
                 />
