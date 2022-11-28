@@ -26,6 +26,37 @@ export function GetDebitsForUser(id: any) {
     })
 }
 
+export function EditDebit(debit: any){
+  return instance
+  .put(`api/debit/EditDebit`, debit)
+  .then((response) => {
+     const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in CreateCategory: ', error)
+      throw error
+  })
+}
+export function DeleteDebit(input: any) {
+  const data = {
+    userId: input.userId,
+    debitId: input.categoryId,
+  }
+  return instance
+    .delete(
+      `api/debit/DeleteDebit?userId=${data.userId}&categoryId=${data.debitId}`
+    )
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in DeleteCategory: ', error)
+      throw error
+    })
+}
+
 // export function GetExpenseForSpecificBudget(data: any) {
 //   return axios
 //     .post(`${BaseURL}/api/expense/GetExpenseForSpecificBudget`, data)

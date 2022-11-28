@@ -7,14 +7,25 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Paper from '@mui/material/Paper'
 import { useEffect, useState } from 'react'
-import { Button, TablePagination } from '@mui/material'
+import { Button, ListItemIcon, TablePagination } from '@mui/material'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import { useUserContext } from '../../context/UserContext'
 import SortExpenseList  from './SortExpenseList'
 
 import { Collapse, IconButton, Box } from '@mui/material'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
+import { Modal } from '../../shared/modal/modal'
+import {
+  useDeleteModal,
+  useEditModal,
+} from '../../shared/modal/useModal'
 
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import { GetDebitsForUser } from '../../shared/fetch/expense'
+import { EditDebitModal } from './editDebitModal/editDebitModal'
+import { DateFetcher } from '../../shared/dateFetcher/dateFetcher'
+import { DeleteDebitModal } from './deleteDebitModal/deleteDebitModal'
 
   const ExpenseListOutput = (props :any) => {
   const user = useUserContext()
@@ -25,12 +36,29 @@ import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
   const [activeSortOption, setActiveSortOption] = useState('')
   const [sameSortOption, setSameSortOption] = useState(false)
   const [descending, setDescending] = useState(false)
+  const [debitSendAmount, setDebitSendAmount] = useState(0)
+  const [debitSendDate, setDebitSendDate] = useState(new Date())
+  const [debitSendBudget, setDebitSendBudget] = useState('')
+  const [debitSendComment, setDebitSendComment] = useState('')
+  const [debitSendCategory, setDebitSendCategory] = useState('')
+  const [debitSendId, setDebitSendId] = useState('')
+  const {isShownEdit, toggleEdit} = useEditModal()
+  const { isShownDelete, toggleDelete } = useDeleteModal()
+  const onConfirmEdit = () => toggleEdit()
+  const onConfirmDelete = () => toggleDelete()
+
   
    useEffect(() => {
     setDebitsToShow(sortedDebits)
   }, [sorted])
 
-const SortExpenses =(sortBy: string)=> {
+  const UpdateDebitsState = () => {
+    GetDebitsForUser(user.userId).then((Response) => {
+      setDebitsToShow(Response)
+    })
+  }
+
+  const SortExpenses =(sortBy: string)=> {
 
   if (activeSortOption === sortBy){
     setSameSortOption(true)
@@ -44,6 +72,20 @@ const SortExpenses =(sortBy: string)=> {
   setActiveSortOption(sortBy)
 }
 
+const ToEdit = (debitId: React.SetStateAction<string>, debitDate: Date, debitAmount: number, debitCategory: string, debitBudget: string, debitComment: string) => {
+    setDebitSendId(debitId)
+    setDebitSendAmount(debitAmount)
+    setDebitSendDate(debitDate)
+    setDebitSendCategory(debitCategory)
+    setDebitSendBudget(debitBudget)
+    setDebitSendComment(debitComment)
+    toggleEdit()
+  }
+
+  const ToDelete = (debitId: React.SetStateAction<string>) => {
+    setDebitSendId(debitId)
+    toggleDelete()
+  }
  
   //Pagination, sätter startpage 0, visar 5 rows per sida
   const [page, setPage] = React.useState(0)
@@ -123,6 +165,28 @@ const SortExpenses =(sortBy: string)=> {
                     >
                       {debit.budget}
                     </TableCell>
+                    <TableCell>
+                       <ListItemIcon>
+                    <IconButton
+                      onClick={() => {
+                        ToEdit(debit.Id, debit.date, debit.amount, debit.category, debit.budget, debit.comment)
+                      }}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </ListItemIcon>
+                    </TableCell>
+                    <TableCell>
+                       <ListItemIcon>
+                    <IconButton
+                      onClick={() => {
+                        ToDelete(debit.Id)
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemIcon>
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell
@@ -169,6 +233,52 @@ const SortExpenses =(sortBy: string)=> {
           </Table>
         </TableContainer>
       </Box>
+       <>
+          <Modal
+            isShown={isShownEdit}
+            hide={toggleEdit}
+            headerText='Edit Category'
+            modalContent={
+              <EditDebitModal
+                onConfirm={onConfirmEdit}
+                // onCancel={onCancel}
+                message={'Change Debit'}
+                debits={props.debits}
+                categories={props.categories}
+                budgets ={props.budgets}
+                debitId={debitSendId}
+                debitAmount={debitSendAmount}
+                debitDate={debitSendDate}
+                debitBudget={debitSendBudget}
+                debitCategoryId={debitSendCategory}
+                debitComment={debitSendComment}
+                callBack={UpdateDebitsState}
+                />
+                
+            }
+          />
+        </>
+        <>
+          <Modal
+            isShown={isShownDelete}
+            hide={toggleDelete}
+            headerText='Delete Category'
+            modalContent={
+              <DeleteDebitModal
+                onConfirm={onConfirmDelete}
+                message={'Delete following Category?'}
+                callBack={UpdateDebitsState}
+                debitId={debitSendId}
+                debitDate={debitSendDate}
+                debitAmount={debitSendAmount}
+                debitComment={debitSendComment}
+                debitCategoryId={debitSendCategory}
+                debitBudget={debitSendBudget}
+                debits={props.debits}
+                />
+            }
+          />
+        </>
     </>
   )
 }
