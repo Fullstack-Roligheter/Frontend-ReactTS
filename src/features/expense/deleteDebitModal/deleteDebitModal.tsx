@@ -52,14 +52,19 @@ export const DeleteDebitModal: FunctionComponent<
         {props.message}
       </Typography>
       <form onSubmit={handleSubmit}>
-        <Typography>{debitDate.toISOString()}</Typography>
+        <Typography>Date:</Typography>
+        <Typography>{debitDate.toString()}</Typography>
         <br />
+        <Typography>Amount:</Typography>
         <Typography>{debitAmount}</Typography>
         <br />
+        <Typography>Comment:</Typography>
         <Typography>{debitComment}</Typography>
         <br />
+        <Typography>Category:</Typography>
         <Typography>{debitCategoryId}</Typography>
         <br />
+        <Typography>Budget:</Typography>
         <Typography>{debitBudget}</Typography>
         {(() => {
           if (messageState) {

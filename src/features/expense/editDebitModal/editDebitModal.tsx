@@ -1,5 +1,5 @@
 import { Box, FormControl, FormControlLabel, InputAdornment, TextField, Typography } from '@mui/material'
-import { FormEvent, FunctionComponent, useState, useRef } from 'react'
+import { FormEvent, FunctionComponent, useState, useRef, useEffect } from 'react'
 import styles from '../../../CssStyles'
 import { ButtonCollection } from '../../../CustomComponents'
 import {
@@ -12,6 +12,7 @@ import {
   EditDebitModalProps,
   EditSubmitData,
 } from '../../../shared/Interfaces/debitModal'
+import { DateFetcher } from '../../../shared/dateFetcher/dateFetcher'
 export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   props
 ) => {
@@ -64,6 +65,10 @@ const CheckForm = () => {
       return true
     }
   }
+  useEffect(() => {
+    let currentDate = DateFetcher()
+    setDebitDate(currentDate as unknown as Date)
+  }, [])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -73,7 +78,7 @@ const CheckForm = () => {
       setmessageState(true)
       EditDebit(editSumbitData)
         .then((response) => {
-          setmessage('Category Saved')
+          setmessage('Debit Saved')
           setloadingState(false)
         })
         .catch((err) => {
@@ -121,7 +126,6 @@ const CheckForm = () => {
               }}
               margin='normal'
             />
-            
               <TextField
                 select
                 label='Category'
@@ -141,12 +145,6 @@ const CheckForm = () => {
                   </option>
                 ))}
               </TextField>
-            <Typography
-              sx={{ textAlign: 'center' }}
-              style={styles.textIncludedInForm}
-            >
-              Click the plus icon to add a new category
-            </Typography>
             <TextField
               select
               label='Budget'
@@ -220,15 +218,6 @@ const CheckForm = () => {
           }
         })()}
         <br />
-        <ButtonCollection>
-          {(() => {
-            if (CheckForm()) {
-              return <DisabledSubmitButton buttontext={'Save'} />
-            } else {
-              return <SubmitButton isLoading={isLoading} buttontext={'Save'} />
-            }
-          })()}
-        </ButtonCollection>
       </form>
     </>
   )

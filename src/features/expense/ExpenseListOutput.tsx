@@ -82,8 +82,13 @@ const ToEdit = (debitId: React.SetStateAction<string>, debitDate: Date, debitAmo
     toggleEdit()
   }
 
-  const ToDelete = (debitId: React.SetStateAction<string>) => {
+  const ToDelete = (debitId: React.SetStateAction<string>, debitDate: Date, debitAmount: number, debitCategory: string, debitBudget: string, debitComment: string) => {
     setDebitSendId(debitId)
+    setDebitSendAmount(debitAmount)
+    setDebitSendDate(debitDate)
+    setDebitSendCategory(debitCategory)
+    setDebitSendBudget(debitBudget)
+    setDebitSendComment(debitComment)
     toggleDelete()
   }
  
@@ -180,7 +185,7 @@ const ToEdit = (debitId: React.SetStateAction<string>, debitDate: Date, debitAmo
                        <ListItemIcon>
                     <IconButton
                       onClick={() => {
-                        ToDelete(debit.Id)
+                        ToDelete(debit.Id, debit.date, debit.amount, debit.category, debit.budget, debit.comment)
                       }}
                     >
                       <DeleteIcon />
@@ -237,7 +242,7 @@ const ToEdit = (debitId: React.SetStateAction<string>, debitDate: Date, debitAmo
           <Modal
             isShown={isShownEdit}
             hide={toggleEdit}
-            headerText='Edit Category'
+            headerText='Edit Debit'
             modalContent={
               <EditDebitModal
                 onConfirm={onConfirmEdit}
@@ -262,11 +267,11 @@ const ToEdit = (debitId: React.SetStateAction<string>, debitDate: Date, debitAmo
           <Modal
             isShown={isShownDelete}
             hide={toggleDelete}
-            headerText='Delete Category'
+            headerText='Delete Debit'
             modalContent={
               <DeleteDebitModal
                 onConfirm={onConfirmDelete}
-                message={'Delete following Category?'}
+                message={'Delete following Debit?'}
                 callBack={UpdateDebitsState}
                 debitId={debitSendId}
                 debitDate={debitSendDate}
