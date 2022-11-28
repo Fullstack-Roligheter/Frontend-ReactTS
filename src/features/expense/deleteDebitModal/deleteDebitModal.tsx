@@ -19,8 +19,8 @@ export const DeleteDebitModal: FunctionComponent<
   const [debitCategoryId, setDebitCategoryId] = useState(props.debitCategoryId)
   const [debitBudget, setDebitBudget] = useState(props.debitBudget)
   const deleteData: any = {
-    debitId: props.debitId,
     userId: user.userId,
+    debitId: props.debitId,
   }
 
   const handleSubmit = (e: any) => {

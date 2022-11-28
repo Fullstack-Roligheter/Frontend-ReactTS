@@ -34,7 +34,7 @@ export function EditDebit(debit: any){
       return data
     })
     .catch((error) => {
-      console.log('Error in CreateCategory: ', error)
+      console.log('Error in EditDebit: ', error)
       throw error
   })
 }
@@ -45,7 +45,7 @@ export function DeleteDebit(input: any) {
   }
   return instance
     .delete(
-      `api/debit/DeleteDebit?userId=${data.userId}&categoryId=${data.debitId}`
+      `api/debit/DeleteDebit?userId=${data.userId}&debitId=${data.debitId}`
     )
     .then((response) => {
       const data = response.data

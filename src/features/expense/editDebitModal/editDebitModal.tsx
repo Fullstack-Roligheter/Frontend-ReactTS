@@ -13,6 +13,7 @@ import {
   EditSubmitData,
 } from '../../../shared/Interfaces/debitModal'
 import { DateFetcher } from '../../../shared/dateFetcher/dateFetcher'
+import { ClosedCaptionDisabledOutlined } from '@mui/icons-material'
 export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   props
 ) => {
@@ -29,13 +30,13 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   const [messageState, setmessageState] = useState(false)
 
   const editSumbitData: EditSubmitData = {
-    userId: user.userId,
     debitId: props.debitId,
-    debitDate: debitDate,
-    debitAmount: debitAmount,
-    debitCategoryId: debitCategoryId,
-    debitComment: debitComment,
-    debitBudget: debitBudget,
+    date: debitDate,
+    amount: debitAmount,
+    comment: debitComment,
+    userId: user.userId,
+    categoryId: debitCategoryId,
+    budgetId: debitBudget,
   }
   const debits = props.debits
   const debitId = props.debitId 
@@ -72,7 +73,6 @@ const CheckForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-  
       setloadingState(true)
       setmessage('Edit Debit')
       setmessageState(true)
@@ -205,18 +205,6 @@ const CheckForm = () => {
               }
             })()}
           </FormControl>
-        <br />
-        {(() => {
-          if (messageState) {
-            return (
-              <Box>
-                <br />
-                <Typography>{message}</Typography>
-                <br />
-              </Box>
-            )
-          }
-        })()}
         <br />
       </form>
     </>

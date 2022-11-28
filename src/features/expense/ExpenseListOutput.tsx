@@ -72,7 +72,7 @@ import { DeleteDebitModal } from './deleteDebitModal/deleteDebitModal'
   setActiveSortOption(sortBy)
 }
 
-const ToEdit = (debitId: React.SetStateAction<string>, debitDate: Date, debitAmount: number, debitCategory: string, debitBudget: string, debitComment: string) => {
+const ToEdit = (debitId: string, debitDate: Date, debitAmount: number, debitCategory: string, debitBudget: string, debitComment: string) => { 
     setDebitSendId(debitId)
     setDebitSendAmount(debitAmount)
     setDebitSendDate(debitDate)
@@ -82,7 +82,7 @@ const ToEdit = (debitId: React.SetStateAction<string>, debitDate: Date, debitAmo
     toggleEdit()
   }
 
-  const ToDelete = (debitId: React.SetStateAction<string>, debitDate: Date, debitAmount: number, debitCategory: string, debitBudget: string, debitComment: string) => {
+  const ToDelete = (debitId: string, debitDate: Date, debitAmount: number, debitCategory: string, debitBudget: string, debitComment: string) => {
     setDebitSendId(debitId)
     setDebitSendAmount(debitAmount)
     setDebitSendDate(debitDate)
@@ -174,7 +174,7 @@ const ToEdit = (debitId: React.SetStateAction<string>, debitDate: Date, debitAmo
                        <ListItemIcon>
                     <IconButton
                       onClick={() => {
-                        ToEdit(debit.Id, debit.date, debit.amount, debit.category, debit.budget, debit.comment)
+                        ToEdit(debit.id, debit.date, debit.amount, debit.category, debit.budget, debit.comment)
                       }}
                     >
                       <EditIcon />
@@ -185,7 +185,7 @@ const ToEdit = (debitId: React.SetStateAction<string>, debitDate: Date, debitAmo
                        <ListItemIcon>
                     <IconButton
                       onClick={() => {
-                        ToDelete(debit.Id, debit.date, debit.amount, debit.category, debit.budget, debit.comment)
+                        ToDelete(debit.id, debit.date, debit.amount, debit.category, debit.budget, debit.comment)
                       }}
                     >
                       <DeleteIcon />

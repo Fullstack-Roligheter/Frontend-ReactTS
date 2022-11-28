@@ -29,9 +29,9 @@ export interface DeleteDebitModalProps {
 export interface EditSubmitData {
   userId: string | null
   debitId: string | null
-  debitDate: Date
-  debitAmount: number
-  debitCategoryId: string | null
-  debitComment: string | null
-  debitBudget: string | null
+  date: Date
+  amount: number
+  categoryId: string | null
+  comment: string | null
+  budgetId: string | null
 }
