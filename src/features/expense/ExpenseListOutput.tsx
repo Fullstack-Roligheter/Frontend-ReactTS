@@ -7,18 +7,20 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Paper from '@mui/material/Paper'
 import { useEffect, useState } from 'react'
-import { Button, ListItemIcon, TablePagination } from '@mui/material'
+import {
+  Button,
+  ListItemIcon,
+  TableFooter,
+  TablePagination,
+} from '@mui/material'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import { useUserContext } from '../../context/UserContext'
-import SortExpenseList  from './SortExpenseList'
+import SortExpenseList from './SortExpenseList'
 
 import { Collapse, IconButton, Box } from '@mui/material'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
 import { Modal } from '../../shared/modal/modal'
-import {
-  useDeleteModal,
-  useEditModal,
-} from '../../shared/modal/useModal'
+import { useDeleteModal, useEditModal } from '../../shared/modal/useModal'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
@@ -27,7 +29,7 @@ import { EditDebitModal } from './editDebitModal/editDebitModal'
 import { DateFetcher } from '../../shared/dateFetcher/dateFetcher'
 import { DeleteDebitModal } from './deleteDebitModal/deleteDebitModal'
 
-  const ExpenseListOutput = (props :any) => {
+const ExpenseListOutput = (props: any) => {
   const user = useUserContext()
   const [debitsToShow, setDebitsToShow] = useState<any[]>([props.debits])
   const [sortedDebits, setSortedDebits] = useState<any[]>([])
@@ -42,13 +44,12 @@ import { DeleteDebitModal } from './deleteDebitModal/deleteDebitModal'
   const [debitSendComment, setDebitSendComment] = useState('')
   const [debitSendCategory, setDebitSendCategory] = useState('')
   const [debitSendId, setDebitSendId] = useState('')
-  const {isShownEdit, toggleEdit} = useEditModal()
+  const { isShownEdit, toggleEdit } = useEditModal()
   const { isShownDelete, toggleDelete } = useDeleteModal()
   const onConfirmEdit = () => toggleEdit()
   const onConfirmDelete = () => toggleDelete()
 
-  
-   useEffect(() => {
+  useEffect(() => {
     setDebitsToShow(sortedDebits)
   }, [sorted])
 
@@ -58,21 +59,29 @@ import { DeleteDebitModal } from './deleteDebitModal/deleteDebitModal'
     })
   }
 
-  const SortExpenses =(sortBy: string)=> {
-
-  if (activeSortOption === sortBy){
-    setSameSortOption(true)
-    setDescending(!descending)
-  } else if (sameSortOption){
-    setSameSortOption(false)
-    setDescending(false)
+  const SortExpenses = (sortBy: string) => {
+    if (activeSortOption === sortBy) {
+      setSameSortOption(true)
+      setDescending(!descending)
+    } else if (sameSortOption) {
+      setSameSortOption(false)
+      setDescending(false)
+    }
+    setSortedDebits(
+      SortExpenseList(sortBy, props.debits, sameSortOption, descending)
+    )
+    setSorted(!sorted)
+    setActiveSortOption(sortBy)
   }
-  setSortedDebits(SortExpenseList(sortBy, props.debits, sameSortOption, descending))
-  setSorted(!sorted)
-  setActiveSortOption(sortBy)
-}
 
-const ToEdit = (debitId: string, debitDate: Date, debitAmount: number, debitCategory: string, debitBudget: string, debitComment: string) => { 
+  const ToEdit = (
+    debitId: string,
+    debitDate: Date,
+    debitAmount: number,
+    debitCategory: string,
+    debitBudget: string,
+    debitComment: string
+  ) => {
     setDebitSendId(debitId)
     setDebitSendAmount(debitAmount)
     setDebitSendDate(debitDate)
@@ -82,7 +91,14 @@ const ToEdit = (debitId: string, debitDate: Date, debitAmount: number, debitCate
     toggleEdit()
   }
 
-  const ToDelete = (debitId: string, debitDate: Date, debitAmount: number, debitCategory: string, debitBudget: string, debitComment: string) => {
+  const ToDelete = (
+    debitId: string,
+    debitDate: Date,
+    debitAmount: number,
+    debitCategory: string,
+    debitBudget: string,
+    debitComment: string
+  ) => {
     setDebitSendId(debitId)
     setDebitSendAmount(debitAmount)
     setDebitSendDate(debitDate)
@@ -91,7 +107,7 @@ const ToEdit = (debitId: string, debitDate: Date, debitAmount: number, debitCate
     setDebitSendComment(debitComment)
     toggleDelete()
   }
- 
+
   //Pagination, sätter startpage 0, visar 5 rows per sida
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
@@ -114,24 +130,50 @@ const ToEdit = (debitId: string, debitDate: Date, debitAmount: number, debitCate
     setPage(0)
   }
 
+  const getCatId = (catName: string) => {
+    const categoriesArray = props.categories
+    let thisCategoryId: string = ''
+    categoriesArray.forEach((categoryItem: any) => {
+      if (catName === categoryItem.categoryName) {
+        thisCategoryId = categoryItem.categoryId
+      }
+    })
+    return thisCategoryId
+  }
+
+  const getBudgetId = (budName: string) => {
+    const budgetsArray = props.budgets
+    let thisBudgetId: string = ''
+    budgetsArray.forEach((budgetItem: any) => {
+      if (budName === budgetItem.budgetName) {
+        thisBudgetId = budgetItem.budgetId
+      }
+    })
+    return thisBudgetId
+  }
 
   return (
     <>
-      <Box
-      width={800}
-      display="flex"
-      flexWrap="wrap"
-        sx={{mt: 7}}
-        >
+      <Box width={800} display='flex' flexWrap='wrap' sx={{ mt: 7 }}>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell><Button onClick={() => SortExpenses('date')}>Date</Button></TableCell>
-                <TableCell><Button onClick={() => SortExpenses('sum')}>Amount</Button></TableCell>
-                <TableCell><Button onClick={() => SortExpenses('category')}>Category</Button></TableCell>
-                <TableCell><Button onClick={() => SortExpenses('budget')}>Budget</Button></TableCell>
+                <TableCell>
+                  <Button onClick={() => SortExpenses('date')}>Date</Button>
+                </TableCell>
+                <TableCell>
+                  <Button onClick={() => SortExpenses('sum')}>Amount</Button>
+                </TableCell>
+                <TableCell>
+                  <Button onClick={() => SortExpenses('category')}>
+                    Category
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button onClick={() => SortExpenses('budget')}>Budget</Button>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -141,7 +183,7 @@ const ToEdit = (debitId: string, debitDate: Date, debitAmount: number, debitCate
                     page * rowsPerPage + rowsPerPage
                   )
                 : props.debits
-              ).map((debit : any, index : number) => (
+              ).map((debit: any, index: number) => (
                 <>
                   <TableRow key={debit.id}>
                     <TableCell sx={{ paddingBottom: 0, borderBottom: '0px' }}>
@@ -171,26 +213,44 @@ const ToEdit = (debitId: string, debitDate: Date, debitAmount: number, debitCate
                       {debit.budget}
                     </TableCell>
                     <TableCell>
-                       <ListItemIcon>
-                    <IconButton
-                      onClick={() => {
-                        ToEdit(debit.id, debit.date, debit.amount, debit.category, debit.budget, debit.comment)
-                      }}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                  </ListItemIcon>
+                      <ListItemIcon>
+                        <IconButton
+                          onClick={() => {
+                            let categoryId: string = getCatId(debit.category)
+                            let budgetId: string = getBudgetId(debit.budget)
+                            ToEdit(
+                              debit.id,
+                              debit.date,
+                              debit.amount,
+                              categoryId,
+                              budgetId,
+                              // debit.category,
+                              // debit.budget,
+                              debit.comment
+                            )
+                          }}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </ListItemIcon>
                     </TableCell>
                     <TableCell>
-                       <ListItemIcon>
-                    <IconButton
-                      onClick={() => {
-                        ToDelete(debit.id, debit.date, debit.amount, debit.category, debit.budget, debit.comment)
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemIcon>
+                      <ListItemIcon>
+                        <IconButton
+                          onClick={() => {
+                            ToDelete(
+                              debit.id,
+                              debit.date,
+                              debit.amount,
+                              debit.category,
+                              debit.budget,
+                              debit.comment
+                            )
+                          }}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </ListItemIcon>
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -217,75 +277,76 @@ const ToEdit = (debitId: string, debitDate: Date, debitAmount: number, debitCate
                 </TableRow>
               )}
             </TableBody>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                colSpan={5}
-                count={props.debits.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: {
-                    'aria-label': 'rows per page',
-                  },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  colSpan={5}
+                  count={props.debits.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: {
+                      'aria-label': 'rows per page',
+                    },
+                    native: true,
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
       </Box>
-       <>
-          <Modal
-            isShown={isShownEdit}
-            hide={toggleEdit}
-            headerText='Edit Debit'
-            modalContent={
-              <EditDebitModal
-                onConfirm={onConfirmEdit}
-                // onCancel={onCancel}
-                message={'Change Debit'}
-                debits={props.debits}
-                categories={props.categories}
-                budgets ={props.budgets}
-                debitId={debitSendId}
-                debitAmount={debitSendAmount}
-                debitDate={debitSendDate}
-                debitBudget={debitSendBudget}
-                debitCategory={debitSendCategory}
-                debitComment={debitSendComment}
-                callBack={UpdateDebitsState}
-                />
-                
-            }
-          />
-        </>
-        <>
-          <Modal
-            isShown={isShownDelete}
-            hide={toggleDelete}
-            headerText='Delete Debit'
-            modalContent={
-              <DeleteDebitModal
-                onConfirm={onConfirmDelete}
-                message={'Delete following Debit?'}
-                callBack={UpdateDebitsState}
-                debitId={debitSendId}
-                debitDate={debitSendDate}
-                debitAmount={debitSendAmount}
-                debitComment={debitSendComment}
-                debitCategory={debitSendCategory}
-                debitBudget={debitSendBudget}
-                debits={props.debits}
-                />
-            }
-          />
-        </>
+      <>
+        <Modal
+          isShown={isShownEdit}
+          hide={toggleEdit}
+          headerText='Edit Debit'
+          modalContent={
+            <EditDebitModal
+              onConfirm={onConfirmEdit}
+              // onCancel={onCancel}
+              message={'Change Debit'}
+              debits={props.debits}
+              categories={props.categories}
+              budgets={props.budgets}
+              debitId={debitSendId}
+              debitAmount={debitSendAmount}
+              debitDate={debitSendDate}
+              debitBudget={debitSendBudget}
+              debitCategory={debitSendCategory}
+              debitComment={debitSendComment}
+              callBack={UpdateDebitsState}
+            />
+          }
+        />
+      </>
+      <>
+        <Modal
+          isShown={isShownDelete}
+          hide={toggleDelete}
+          headerText='Delete Debit'
+          modalContent={
+            <DeleteDebitModal
+              onConfirm={onConfirmDelete}
+              message={'Delete following Debit?'}
+              callBack={UpdateDebitsState}
+              debitId={debitSendId}
+              debitDate={debitSendDate}
+              debitAmount={debitSendAmount}
+              debitComment={debitSendComment}
+              debitCategory={debitSendCategory}
+              debitBudget={debitSendBudget}
+              debits={props.debits}
+            />
+          }
+        />
+      </>
     </>
   )
 }
 
-export default ExpenseListOutput;
+export default ExpenseListOutput

@@ -1,7 +1,18 @@
-import { Box, FormControl, FormControlLabel, InputAdornment, TextField, Typography } from '@mui/material'
-import { FormEvent, FunctionComponent, useState, useRef, useEffect } from 'react'
+import {
+  Box,
+  FormControl,
+  InputAdornment,
+  TextField,
+  Typography,
+} from '@mui/material'
+import {
+  FormEvent,
+  FunctionComponent,
+  useState,
+  useRef,
+  useEffect,
+} from 'react'
 import styles from '../../../CssStyles'
-import { ButtonCollection } from '../../../CustomComponents'
 import {
   DisabledSubmitButton,
   SubmitButton,
@@ -12,8 +23,7 @@ import {
   EditDebitModalProps,
   EditSubmitData,
 } from '../../../shared/Interfaces/debitModal'
-import { DateFetcher } from '../../../shared/dateFetcher/dateFetcher'
-import { ClosedCaptionDisabledOutlined } from '@mui/icons-material'
+
 export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   props
 ) => {
@@ -39,7 +49,7 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
     budgetId: debitBudget,
   }
   const debits = props.debits
-  const debitId = props.debitId 
+  const debitId = props.debitId
   const categories = props.categories
   const budgets = props.budgets
 
@@ -54,51 +64,50 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
       return true
     }
   }
-const FindCategoryId =()=>{
-  console.log(categories)
-  const categoryMatch = categories.find((categoryName:string) => categoryName === debitCategory)
-  editSumbitData.categoryId = categoryMatch.categoryId
-}
+  // const FindCategoryId =()=>{
+  //   console.log(categories)
+  //   const categoryMatch = categories.find((categoryName:string) => categoryName === debitCategory)
+  //   editSumbitData.categoryId = categoryMatch.categoryId
+  // }
 
-const CheckForm = () => {
-    if (
-      debitDate === undefined ||
-      debitAmount === null ||
-      debitCategory === undefined
-    ) {
-      return false
-    } else {
-      return true
-    }
+  function DateConverter() {
+    const propDate = props.debitDate
+    let todaysDate = new Date(propDate)
+    todaysDate.setDate(todaysDate.getDate() + 1)
+    const date = todaysDate.toISOString().substring(0, 10)
+    return date
   }
+
   useEffect(() => {
-    let currentDate = DateFetcher()
-    setDebitDate(currentDate as unknown as Date)
+    // let currentDate = DateFetcher()
+    // setDebitDate(currentDate as unknown as Date)
+    var debitDate = DateConverter()
+    setDebitDate(debitDate as unknown as Date)
   }, [])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    FindCategoryId()
-    console.log(editSumbitData)
-      setloadingState(true)
-      setmessage('Edit Debit')
-      setmessageState(true)
-      EditDebit(editSumbitData)
-        .then((response) => {
-          setmessage('Debit Saved')
-          setloadingState(false)
-        })
-        .catch((err) => {
-          setmessage('Edit Unsuccessful')
-          setloadingState(false)
-        })
-        .finally(() => {
-          setTimeout(() => {
-            setmessageState(false)
-            props.onConfirm()
-            props.callBack()
-          }, 2000)
-        })
+
+    setloadingState(true)
+    setmessage('Edit Debit')
+    setmessageState(true)
+
+    EditDebit(editSumbitData)
+      .then((response) => {
+        setmessage('Debit Saved')
+        setloadingState(false)
+      })
+      .catch((err) => {
+        setmessage('Edit Unsuccessful')
+        setloadingState(false)
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setmessageState(false)
+          props.onConfirm()
+          props.callBack()
+        }, 2000)
+      })
   }
 
   return (
@@ -108,110 +117,109 @@ const CheckForm = () => {
       </Typography>
       <form onSubmit={handleSubmit}>
         <FormControl>
-            <TextField
-              required
-              type='date'
-              name='Date'
-              label='Date'
-              value={debitDate}
-              onChange={(e)=> setDebitDate(e.target.value as unknown as Date)}
-              margin='normal'
-              style={styles.textfield}
-            />
-            <TextField
-              required
-              label='Amount'
-              type='number'
-              name='Amount'
-              value={debitAmount}
-              onChange={(e)=> setDebitAmount(e.target.value as unknown as number)}
-              style={styles.textfield}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>Kr</InputAdornment>
-                ),
-              }}
-              margin='normal'
-            />
-              <TextField
-                select
-                label='Category'
-                name='CategoryId'
-                value={debitCategory}
-                onChange={(e)=> setdebitCategory(e.target.value)}
-                style={styles.textfield}
-                SelectProps={{
-                  native: true,
-                }}
-                margin='normal'
-              >
-                <option value='' />
-                {categories.map((option: any) => (
-                  <option key={option.categoryId} value={option.categoryId}>
-                    {option.categoryName}
-                  </option>
-                ))}
-              </TextField>
-            <TextField
-              select
-              label='Budget'
-              name='BudgetId'
-              value={debitBudget}
-              onChange={(e)=> setDebitBudget(e.target.value)}
-              style={styles.textfield}
-              SelectProps={{
-                native: true,
-              }}
-              margin='normal'
-            >
-              <option value='' />
-              {budgets.map((option: any) => (
-                <option key={option.budgetId} value={option.budgetId}>
-                  {option.budgetName}
-                </option>
-              ))}
-            </TextField>
-            <TextField
-              label='Description'
-              multiline
-              rows={5}
-              helperText='Company, Notes, Reciever Etc.'
-              name='Comment'
-              value={debitComment}
-              onChange={(e)=> setDebitComment(e.target.value)}
-              margin='normal'
-            />
-            {(() => {
-              if (messageState) {
-                return (
-                  <Box>
-                    <br />
-                    <Typography>{message}</Typography>
-                    <br />
-                  </Box>
-                )
-              }
-            })()}
-            {(() => {
-              if (!checkForm()) {
-
-                return (
-                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <DisabledSubmitButton buttontext={'Save expense'} />
-                  </Box>)
-
-              } else {
-                return (
-                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <SubmitButton
-                      isLoading={isLoading}
-                      buttontext={'Save expense'}
-                    />
-                  </Box>
-                )
-              }
-            })()}
-          </FormControl>
+          <TextField
+            required
+            type='date'
+            name='Date'
+            label='Date'
+            value={debitDate}
+            onChange={(e) => setDebitDate(e.target.value as unknown as Date)}
+            margin='normal'
+            style={styles.textfield}
+          />
+          <TextField
+            required
+            label='Amount'
+            type='number'
+            name='Amount'
+            value={debitAmount}
+            onChange={(e) =>
+              setDebitAmount(e.target.value as unknown as number)
+            }
+            style={styles.textfield}
+            InputProps={{
+              endAdornment: <InputAdornment position='end'>Kr</InputAdornment>,
+            }}
+            margin='normal'
+          />
+          <TextField
+            select
+            label='Category'
+            name='CategoryId'
+            value={debitCategory}
+            onChange={(e) => setdebitCategory(e.target.value)}
+            style={styles.textfield}
+            SelectProps={{
+              native: true,
+            }}
+            margin='normal'
+          >
+            <option value='' />
+            {categories.map((option: any) => (
+              <option key={option.categoryId} value={option.categoryId}>
+                {option.categoryName}
+              </option>
+            ))}
+          </TextField>
+          <TextField
+            select
+            label='Budget'
+            name='BudgetId'
+            value={debitBudget}
+            onChange={(e) => setDebitBudget(e.target.value)}
+            style={styles.textfield}
+            SelectProps={{
+              native: true,
+            }}
+            margin='normal'
+          >
+            <option value='' />
+            {budgets.map((option: any) => (
+              <option key={option.budgetId} value={option.budgetId}>
+                {option.budgetName}
+              </option>
+            ))}
+          </TextField>
+          <TextField
+            label='Description'
+            multiline
+            rows={5}
+            helperText='Company, Notes, Reciever Etc.'
+            name='Comment'
+            value={debitComment}
+            onChange={(e) => setDebitComment(e.target.value)}
+            margin='normal'
+          />
+          {(() => {
+            if (messageState) {
+              return (
+                <Box>
+                  <br />
+                  <Typography>{message}</Typography>
+                  <br />
+                </Box>
+              )
+            }
+          })()}
+          {(() => {
+            if (!checkForm()) {
+              return (
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <DisabledSubmitButton buttontext={'Save expense'} />
+                </Box>
+              )
+            } else {
+              return (
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <SubmitButton
+                    isLoading={isLoading}
+                    buttontext={'Save expense'}
+                  />
+                </Box>
+              )
+            }
+          })()}
+        </FormControl>
         <br />
       </form>
     </>
