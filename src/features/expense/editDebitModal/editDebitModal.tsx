@@ -48,8 +48,7 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
     categoryId: debitCategory,
     budgetId: debitBudget,
   }
-  const debits = props.debits
-  const debitId = props.debitId
+
   const categories = props.categories
   const budgets = props.budgets
 
@@ -73,7 +72,7 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
       let foundCategory = props.categories.find((obj: { categoryName: string }) => {
       return obj.categoryName === catName;
       })
-      editSumbitData.categoryId = foundCategory.categoryId
+      // editSumbitData.categoryId = foundCategory.categoryId
       setdebitCategory(foundCategory.categoryId)
     }
     
@@ -88,7 +87,7 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
         return obj.budgetName === budName;
       })
       
-      editSumbitData.budgetId = foundBudget.budgetId
+      // editSumbitData.budgetId = foundBudget.budgetId
       setDebitBudget(foundBudget.budgetId)
     }
   }
@@ -140,7 +139,8 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
             label='Date'
             value={debitDate}
             defaultValue={debitDate}
-            onChange={(e) => setDebitDate(e.target.value as unknown as Date)}
+            onChange={(e) => 
+              setDebitDate(e.target.value as unknown as Date)}
             margin='normal'
             style={styles.textfield}
           />

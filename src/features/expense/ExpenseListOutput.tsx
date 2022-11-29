@@ -31,10 +31,10 @@ import { DeleteDebitModal } from './deleteDebitModal/deleteDebitModal'
 
 const ExpenseListOutput = (props: any) => {
   const user = useUserContext()
-  const [debitsToShow, setDebitsToShow] = useState<any[]>([props.debits])
-  const [sortedDebits, setSortedDebits] = useState<any[]>([])
+  // const [debitsToShow, setDebitsToShow] = useState<any[]>([props.debits])
+  const [alteredDebitList, setAlteredDebitList] = useState<any[]>([])
   const [open, setOpen] = useState(-1)
-  const [sorted, setSorted] = useState(false)
+  const [altered, setAltered] = useState(false)
   const [activeSortOption, setActiveSortOption] = useState('')
   const [sameSortOption, setSameSortOption] = useState(false)
   const [descending, setDescending] = useState(false)
@@ -49,13 +49,17 @@ const ExpenseListOutput = (props: any) => {
   const onConfirmEdit = () => toggleEdit()
   const onConfirmDelete = () => toggleDelete()
 
+  let debitsToShow = props.debits
+  
   useEffect(() => {
-    setDebitsToShow(sortedDebits)
-  }, [sorted])
+    debitsToShow =alteredDebitList
+  }, [altered])
 
   function UpdateDepitList(): any{
-    GetDebitsForUser(user.userId).then((Response) => {
-      setDebitsToShow(Response)
+    GetDebitsForUser(user.userId)
+    .then((Response) => {
+      setAlteredDebitList(Response)
+      setAltered(!altered)
     })
   }
 
@@ -67,10 +71,10 @@ const ExpenseListOutput = (props: any) => {
       setSameSortOption(false)
       setDescending(false)
     }
-    setSortedDebits(
+    setAlteredDebitList(
       SortExpenseList(sortBy, props.debits, sameSortOption, descending)
     )
-    setSorted(!sorted)
+    setAltered(!altered)
     setActiveSortOption(sortBy)
   }
 
@@ -114,7 +118,7 @@ const ExpenseListOutput = (props: any) => {
 
   //Om inte det finns jämt 5 rows kvar, visa tomma rows
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.debits.length) : 0
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - debitsToShow.length) : 0
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -156,11 +160,11 @@ const ExpenseListOutput = (props: any) => {
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                ? props.debits.slice(
+                ? debitsToShow.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )
-                : props.debits
+                : debitsToShow
               ).map((debit: any, index: number) => (
                 <>
                   <TableRow key={debit.id}>
@@ -256,7 +260,7 @@ const ExpenseListOutput = (props: any) => {
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                   colSpan={5}
-                  count={props.debits.length}
+                  count={debitsToShow.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   SelectProps={{
@@ -307,7 +311,7 @@ const ExpenseListOutput = (props: any) => {
             <DeleteDebitModal
               onConfirm={onConfirmDelete}
               message={'Delete following Debit?'}
-              callBack={()=>UpdateDepitList()}
+              callBack={UpdateDepitList}
               debitId={debitSendId}
               debitDate={debitSendDate}
               debitAmount={debitSendAmount}
