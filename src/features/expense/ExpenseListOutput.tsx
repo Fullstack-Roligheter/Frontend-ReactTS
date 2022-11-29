@@ -130,28 +130,6 @@ const ExpenseListOutput = (props: any) => {
     setPage(0)
   }
 
-  const getCatId = (catName: string) => {
-    const categoriesArray = props.categories
-    let thisCategoryId: string = ''
-    categoriesArray.forEach((categoryItem: any) => {
-      if (catName === categoryItem.categoryName) {
-        thisCategoryId = categoryItem.categoryId
-      }
-    })
-    return thisCategoryId
-  }
-
-  const getBudgetId = (budName: string) => {
-    const budgetsArray = props.budgets
-    let thisBudgetId: string = ''
-    budgetsArray.forEach((budgetItem: any) => {
-      if (budName === budgetItem.budgetName) {
-        thisBudgetId = budgetItem.budgetId
-      }
-    })
-    return thisBudgetId
-  }
-
   return (
     <>
       <Box width={800} display='flex' flexWrap='wrap' sx={{ mt: 7 }}>
@@ -216,16 +194,12 @@ const ExpenseListOutput = (props: any) => {
                       <ListItemIcon>
                         <IconButton
                           onClick={() => {
-                            let categoryId: string = getCatId(debit.category)
-                            let budgetId: string = getBudgetId(debit.budget)
                             ToEdit(
                               debit.id,
                               debit.date,
                               debit.amount,
-                              categoryId,
-                              budgetId,
-                              // debit.category,
-                              // debit.budget,
+                              debit.category,
+                              debit.budget,
                               debit.comment
                             )
                           }}

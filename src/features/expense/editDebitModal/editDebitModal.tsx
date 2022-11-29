@@ -70,6 +70,26 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   //   editSumbitData.categoryId = categoryMatch.categoryId
   // }
 
+    const getCatId = (catName: string) => {
+    const categoriesArray = props.categories
+    categoriesArray.forEach((categoryItem: any) => {
+      if (catName === categoryItem.categoryName) {
+        editSumbitData.categoryId = categoryItem.categoryId
+        setdebitCategory(categoryItem.categoryId)
+      }
+    })
+  }
+
+  const getBudgetId = (budName: string) => {
+    const budgetsArray = props.budgets
+    budgetsArray.forEach((budgetItem: any) => {
+      if (budName === budgetItem.budgetName) {
+        editSumbitData.budgetId = budgetItem.budgetId
+        setDebitBudget(budgetItem.budgetId)
+      }
+    })
+  }
+
   function DateConverter() {
     const propDate = props.debitDate
     let todaysDate = new Date(propDate)
@@ -79,10 +99,10 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   }
 
   useEffect(() => {
-    // let currentDate = DateFetcher()
-    // setDebitDate(currentDate as unknown as Date)
     var debitDate = DateConverter()
     setDebitDate(debitDate as unknown as Date)
+    getCatId(debitCategory)
+    getBudgetId(debitBudget)
   }, [])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -147,6 +167,7 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
             label='Category'
             name='CategoryId'
             value={debitCategory}
+            defaultValue={debitCategory}
             onChange={(e) => setdebitCategory(e.target.value)}
             style={styles.textfield}
             SelectProps={{
@@ -166,6 +187,7 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
             label='Budget'
             name='BudgetId'
             value={debitBudget}
+            defaultValue={debitBudget}
             onChange={(e) => setDebitBudget(e.target.value)}
             style={styles.textfield}
             SelectProps={{

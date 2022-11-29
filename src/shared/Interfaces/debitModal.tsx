@@ -3,9 +3,9 @@ export interface EditDebitModalProps {
   debitId: string | null
   debitDate: Date
   debitAmount: number
-  debitCategory: string | null
+  debitCategory: string
   debitComment: string | null
-  debitBudget: string | null
+  debitBudget: string
   message: string
   debits: any
   categories: any
@@ -31,7 +31,7 @@ export interface EditSubmitData {
   debitId: string | null
   date: Date
   amount: number
-  categoryId: string | null
+  categoryId: string
   comment: string | null
-  budgetId: string | null
+  budgetId: string
 }
