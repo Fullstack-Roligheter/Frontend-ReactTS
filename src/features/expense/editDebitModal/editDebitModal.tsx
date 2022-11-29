@@ -23,7 +23,6 @@ import {
   EditDebitModalProps,
   EditSubmitData,
 } from '../../../shared/Interfaces/debitModal'
-import { DateFetcher, DateFetcherWithOldDate } from '../../../shared/dateFetcher/dateFetcher'
 
 export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   props
