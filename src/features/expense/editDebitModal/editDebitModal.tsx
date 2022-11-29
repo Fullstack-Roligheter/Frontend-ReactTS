@@ -65,20 +65,32 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
     }
   }
 
-    const getCatId = (catName: string) => {
-    let foundCategory = props.categories.find((obj: { categoryName: string }) => {
+  const getCatId = (catName: string) => {
+    if(catName === ''){
+      editSumbitData.categoryId = ''
+      setdebitCategory('')
+    } else{
+      let foundCategory = props.categories.find((obj: { categoryName: string }) => {
       return obj.categoryName === catName;
-    })
-    editSumbitData.categoryId = foundCategory.categoryId
-    setdebitCategory(foundCategory.categoryId)
+      })
+      editSumbitData.categoryId = foundCategory.categoryId
+      setdebitCategory(foundCategory.categoryId)
+    }
+    
   }
 
   const getBudgetId = (budName: string) => {
-    let foundBudget = props.budgets.find((obj: { budgetName: string})=>{
-      return obj.budgetName === budName;
-    })
-    editSumbitData.budgetId = foundBudget.budgetId
-    setDebitBudget(foundBudget.budgetId)
+    if(budName === ''){
+      editSumbitData.budgetId = ''
+      setDebitBudget('')
+    } else{
+      let foundBudget = props.budgets.find((obj: { budgetName: string})=>{
+        return obj.budgetName === budName;
+      })
+      
+      editSumbitData.budgetId = foundBudget.budgetId
+      setDebitBudget(foundBudget.budgetId)
+    }
   }
 
   useEffect(() => {

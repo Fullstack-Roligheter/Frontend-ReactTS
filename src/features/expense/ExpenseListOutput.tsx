@@ -53,7 +53,7 @@ const ExpenseListOutput = (props: any) => {
     setDebitsToShow(sortedDebits)
   }, [sorted])
 
-  const UpdateDepitList = () => {
+  function UpdateDepitList(): any{
     GetDebitsForUser(user.userId).then((Response) => {
       setDebitsToShow(Response)
     })
@@ -293,7 +293,7 @@ const ExpenseListOutput = (props: any) => {
               debitBudget={debitSendBudget}
               debitCategory={debitSendCategory}
               debitComment={debitSendComment}
-              callBack={()=>UpdateDepitList()}
+              callBack={UpdateDepitList}
             />
           }
         />
