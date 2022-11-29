@@ -23,6 +23,7 @@ import {
   EditDebitModalProps,
   EditSubmitData,
 } from '../../../shared/Interfaces/debitModal'
+import { DateFetcher } from '../../../shared/dateFetcher/dateFetcher'
 
 export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   props
@@ -85,16 +86,8 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
     })
   }
 
-  function DateConverter() {
-    const propDate = props.debitDate
-    let todaysDate = new Date(propDate)
-    todaysDate.setDate(todaysDate.getDate() + 1)
-    const date = todaysDate.toISOString().substring(0, 10)
-    return date
-  }
-
   useEffect(() => {
-    var debitDate = DateConverter()
+    var debitDate = DateFetcher()
     setDebitDate(debitDate as unknown as Date)
     getCatId(debitCategory)
     getBudgetId(debitBudget)
