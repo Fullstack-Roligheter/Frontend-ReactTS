@@ -25,7 +25,6 @@ export const DeleteDebitModal: FunctionComponent<
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    console.log(deleteData)
     setloadingState(true)
     setmessage('Deleting Debit')
     setmessageState(true)
