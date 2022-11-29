@@ -64,11 +64,6 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
       return true
     }
   }
-  // const FindCategoryId =()=>{
-  //   console.log(categories)
-  //   const categoryMatch = categories.find((categoryName:string) => categoryName === debitCategory)
-  //   editSumbitData.categoryId = categoryMatch.categoryId
-  // }
 
     const getCatId = (catName: string) => {
     const categoriesArray = props.categories
