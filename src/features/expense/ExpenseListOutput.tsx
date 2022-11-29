@@ -53,7 +53,7 @@ const ExpenseListOutput = (props: any) => {
     setDebitsToShow(sortedDebits)
   }, [sorted])
 
-  const UpdateDebitsState = () => {
+  const UpdateDepitList = () => {
     GetDebitsForUser(user.userId).then((Response) => {
       setDebitsToShow(Response)
     })
@@ -293,7 +293,7 @@ const ExpenseListOutput = (props: any) => {
               debitBudget={debitSendBudget}
               debitCategory={debitSendCategory}
               debitComment={debitSendComment}
-              callBack={UpdateDebitsState}
+              callBack={()=>UpdateDepitList()}
             />
           }
         />
@@ -307,7 +307,7 @@ const ExpenseListOutput = (props: any) => {
             <DeleteDebitModal
               onConfirm={onConfirmDelete}
               message={'Delete following Debit?'}
-              callBack={UpdateDebitsState}
+              callBack={()=>UpdateDepitList()}
               debitId={debitSendId}
               debitDate={debitSendDate}
               debitAmount={debitSendAmount}

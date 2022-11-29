@@ -23,7 +23,7 @@ import {
   EditDebitModalProps,
   EditSubmitData,
 } from '../../../shared/Interfaces/debitModal'
-import { DateFetcher } from '../../../shared/dateFetcher/dateFetcher'
+import { DateFetcher, DateFetcherWithOldDate } from '../../../shared/dateFetcher/dateFetcher'
 
 export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   props
@@ -87,8 +87,9 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   }
 
   useEffect(() => {
-    var debitDate = DateFetcher()
-    setDebitDate(debitDate as unknown as Date)
+    let oldDateAsString = debitDate.toString()
+    let date = oldDateAsString.substring(0, 10)
+    setDebitDate(date as unknown as Date)
     getCatId(debitCategory)
     getBudgetId(debitBudget)
   }, [])
@@ -131,6 +132,7 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
             name='Date'
             label='Date'
             value={debitDate}
+            defaultValue={debitDate}
             onChange={(e) => setDebitDate(e.target.value as unknown as Date)}
             margin='normal'
             style={styles.textfield}
