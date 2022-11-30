@@ -56,11 +56,7 @@ const ExpenseListOutput = (props: any) => {
   }, [altered])
 
   function UpdateDepitList(): any{
-    GetDebitsForUser(user.userId)
-    .then((Response) => {
-      setAlteredDebitList(Response)
-      setAltered(!altered)
-    })
+    props.callBack()
   }
 
   const SortExpenses = (sortBy: string) => {

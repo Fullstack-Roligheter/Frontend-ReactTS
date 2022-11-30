@@ -376,7 +376,7 @@ const ExpenseDashboard = () => {
         mb={{ xs: '10px', md: 0 }}
         boxSizing='border-box'
       >
-        <ExpenseListOutput debits={debits} categories ={categories} budgets={budgets}/>
+        <ExpenseListOutput debits={debits} categories ={categories} budgets={budgets} callBack={UpdateDebitsState}/>
       </Box>
     </>
   )
