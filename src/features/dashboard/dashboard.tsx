@@ -20,7 +20,6 @@ import { color } from '@mui/system'
 function DashboardFeature() {
 
   const [dashboardTextSize, setDashboardTextSize] = useState('big')
-  const [planList, setPlanList] = useState<any[]>([])
   const [planName, setPlanName] = useState("")
   const [planAmount, setPlanAmount] = useState("")
   const [planStartDate, setPlanStartDate] = useState("")
@@ -45,16 +44,11 @@ function DashboardFeature() {
     }
   }, [])
 
-  let timeMilli = Date.now().toString().slice(-3)
-
   const user = useUserContext()
 
   if (user.userId === null) {
     return <Navigate to='/login' replace />
   }
-
-
-  //Savingsplan
 
   const getPlans = async () => {
     GetPlans(user.userId).then((response) => {
@@ -65,25 +59,6 @@ function DashboardFeature() {
       setPlanEndDate(response[latestItem].planEndDate)
     })
   }
-
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }))
-
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }))
 
   return (
     <>
