@@ -7,25 +7,33 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Paper from '@mui/material/Paper'
 import { useEffect, useState } from 'react'
-import { TablePagination } from '@mui/material'
+import { Button, TablePagination } from '@mui/material'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import { GetDebitsForUser } from '../../shared/fetch/expense'
 import { useUserContext } from '../../context/UserContext'
+import { SortExpenseList } from './SortExpenseList'
+
 import { Collapse, IconButton, Box } from '@mui/material'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
 
-const ExpenseListOutput = () => {
+const ExpenseListOutput = (props :any) => {
   const user = useUserContext()
-
   const [debits, setDebits] = useState<any[]>([])
+  const [sortedDebits, setSortedDebits] = useState<any[]>([])
   const [open, setOpen] = useState(-1)
-
-  //Get all debits to put in list
+  const [sorted, setSorted] = useState(false)
+  
   useEffect(() => {
-    GetDebitsForUser(user.userId).then((Response) => {
-      setDebits(Response)
-    })
+    setDebits(props.debits)
   }, [])
+   useEffect(() => {
+    setDebits(sortedDebits)
+  }, [sorted])
+
+const SortExpenses =(sortBy: string)=> {
+  setSortedDebits(SortExpenseList(sortBy, props.debits))
+  setSorted(!sorted)
+}
 
   //Pagination, sätter startpage 0, visar 5 rows per sida
   const [page, setPage] = React.useState(0)
@@ -33,7 +41,7 @@ const ExpenseListOutput = () => {
 
   //Om inte det finns jämt 5 rows kvar, visa tomma rows
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - debits.length) : 0
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.debits.length) : 0
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -48,7 +56,7 @@ const ExpenseListOutput = () => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
-
+  
   return (
     <>
       <Box
@@ -62,20 +70,20 @@ const ExpenseListOutput = () => {
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell>Date</TableCell>
-                <TableCell>Amount</TableCell>
-                <TableCell>Category</TableCell>
-                <TableCell>Budget</TableCell>
+                <TableCell><Button onClick={() => SortExpenses('date')}>Date</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('sum')}>Amount</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('category')}>Category</Button></TableCell>
+                <TableCell><Button onClick={() => SortExpenses('budget')}>Budget</Button></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                ? debits.slice(
+                ? props.debits.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )
-                : debits
-              ).map((debit, index) => (
+                : props.debits
+              ).map((debit : any, index : number) => (
                 <>
                   <TableRow key={debit.id}>
                     <TableCell sx={{ paddingBottom: 0, borderBottom: '0px' }}>
@@ -133,7 +141,7 @@ const ExpenseListOutput = () => {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={5}
-                count={debits.length}
+                count={props.debits.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
@@ -154,58 +162,4 @@ const ExpenseListOutput = () => {
   )
 }
 
-export default ExpenseListOutput
-
-// <TableContainer className="table-container" component={Paper}>
-//   <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-//     <TableHead>
-//       <TableRow>
-//         <TableCell>Datum</TableCell>
-//         <TableCell>Summa</TableCell>
-//         <TableCell>Kategori</TableCell>
-//         <TableCell>Budget</TableCell>
-//         <TableCell>Kommentar</TableCell>
-//       </TableRow>
-//     </TableHead>
-//     <TableBody>
-//     {(rowsPerPage > 0
-//       ? debits.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-//       : debits
-//       ).map((debit) => (
-//         <TableRow
-//           key={debit.id}
-//           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-//         >
-//           <TableCell>{debit.date}</TableCell>
-//           <TableCell>{debit.amount}</TableCell>
-//           <TableCell>{debit.category}</TableCell>
-//           <TableCell>{debit.budget}</TableCell>
-//           <TableCell className="comments">{debit.comment}</TableCell>
-//         </TableRow>
-//       ))}
-//       {emptyRows > 0 && (
-//         <TableRow style={{ height: 53 * emptyRows }}>
-//           <TableCell colSpan={6} />
-//         </TableRow>
-//       )}
-//     </TableBody>
-//     <TableRow>
-//       <TablePagination
-//         rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-//         colSpan={3}
-//         count={debits.length}
-//         rowsPerPage={rowsPerPage}
-//         page={page}
-//         SelectProps={{
-//           inputProps: {
-//             'aria-label': 'rows per page',
-//           },
-//           native: true,
-//         }}
-//         onPageChange={handleChangePage}
-//         onRowsPerPageChange={handleChangeRowsPerPage}
-//         ActionsComponent={TablePaginationActions}
-//       />
-//     </TableRow>
-//   </Table>
-// </TableContainer>
+export default ExpenseListOutput;

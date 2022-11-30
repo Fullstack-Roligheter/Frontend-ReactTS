@@ -41,17 +41,15 @@ const ExpenseDashboard = () => {
 
   const [message, setmessage] = useState('')
   const [messageState, setmessageState] = useState(false)
-
+  const [debits, setDebits] = useState<any[]>([])
   const [categories, setCategories] = useState<any[]>([])
   const [budgets, setBudgets] = useState<any[]>([])
-  const [debits, setDebits] = useState<any[]>([])
   const { isShown, toggle } = useModal()
   const [isLoading, setloadingState] = useState(false)
   const [ReturningTransactionsStart, setReturningTransactionsStart] = useState('')
   const [ReturningTransactionsEnd, setReturningTransactionsEnd] = useState('')
   const onConfirm = () => toggle()
   const onCancel = () => toggle()
-
   const [newExpense, setNewExpense] = useState({
     Date: '',
     Amount: '',
@@ -99,6 +97,8 @@ const ExpenseDashboard = () => {
     })
   }
 
+
+
   const handleSubmit = (e: any) => {
     e.preventDefault()
     setloadingState(true)
@@ -109,6 +109,9 @@ const ExpenseDashboard = () => {
       newExpense.CategoryId = undefined
     }
     CreateDebit(newExpense).then((Response) => {
+
+      UpdateDebitsState()
+
       setTimeout(() => {
         setloadingState(false)
         setmessage('Transaction Created')
@@ -140,7 +143,7 @@ const ExpenseDashboard = () => {
     })
   }, [])
 
-  //DateFetcher 
+  //DateFetcher
   useEffect(() => {
     let currentDate = DateFetcher()
     setNewExpense({
@@ -151,16 +154,32 @@ const ExpenseDashboard = () => {
     setReturningTransactionsEnd(currentDate)
   }, [])
 
+  //Get all debits to put in list
+  useEffect(() => {
+    if (!debits.length) {
+      GetDebitsForUser(user.userId).then((Response) => {
+        setDebits(Response)
+      })
+    }
+  }, [])
+
+  const UpdateDebitsState = () => {
+    GetDebitsForUser(user.userId).then((Response) => {
+      setDebits(Response)
+    })
+  }
+
   //Grön styling för när vi ändrar färg på standardfärgen i projektet, den accepterar denna variabel och tolkar som strängen den sparat
   //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: styles.formBackground.background}}
   return (
     <>
-      <Box width={400}
+      <Box
+        width={400}
         sx={{ mb: 2 }}
-        display="flex"
-        flexWrap="wrap"
-        justifyContent="center"
-        boxSizing="border-box"
+        display='flex'
+        flexWrap='wrap'
+        justifyContent='center'
+        boxSizing='border-box'
       >
         <form onSubmit={handleSubmit}>
           <FormControl
@@ -227,14 +246,12 @@ const ExpenseDashboard = () => {
                 <Modal
                   isShown={isShown}
                   hide={toggle}
-                  headerText='
-                  Add your own category'
+                  headerText='Add your own category'
                   modalContent={
                     <NewCategoryModal
                       onConfirm={onConfirm}
                       // onCancel={onCancel}
-                      message='
-                      Enter the name of the new category'
+                      message='Name of your new category'
                       categories={categories}
                       callBack={getCategories}
                     />
@@ -354,12 +371,12 @@ const ExpenseDashboard = () => {
         </form>
       </Box>
       <Box
-        display="flex"
+        display='flex'
         width={{ xs: 2, sm: 2 / 3, md: 2 / 4 }}
         mb={{ xs: '10px', md: 0 }}
-        boxSizing="border-box"
+        boxSizing='border-box'
       >
-        <ExpenseListOutput />
+        <ExpenseListOutput debits={debits} />
       </Box>
     </>
   )

@@ -14,7 +14,7 @@ function DashboardFeature() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 850) {
+      if (window.innerWidth < 900) {
         setDashboardTextSize('small')
       } else {
         setDashboardTextSize('big')
@@ -41,29 +41,32 @@ function DashboardFeature() {
 
   return (
     <>
-    <Box sx={{ flexDirection: 'column' }}>
+      <Box sx={{ flexDirection: 'column' }}>
         <Box
-          sx={{
-            width: 850,
-            m: 3,
-            mt: 3,
-            p: 3,
-            pt: 3,
-            borderRadius: 2,
-            bgcolor: 'RGBA(255,255,255,0.65)',
-            boxShadow: 5,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
+          sx={
+            {
+              width: 850,
+              m: 3,
+              mt: 3,
+              p: 3,
+              pt: 3,
+              borderRadius: 2,
+              bgcolor: 'RGBA(255,255,255,0.65)',
+              boxShadow: 5,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }
+          }
         >
-          
-            <Typography variant='h4' style={styles.blackTypography}>DASHBOARD</Typography>
-         
-        <DebitChart />
+          <Typography variant='h4' style={styles.blackTypography}>
+            DASHBOARD
+          </Typography>
+
+          <DebitChart />
+        </Box>
       </Box>
-    </Box>
     </>
   )
 }
