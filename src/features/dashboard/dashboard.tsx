@@ -108,12 +108,14 @@ function DashboardFeature() {
           <Typography variant='h4' style={styles.blackTypography}>
             Latest Savingsplan
           </Typography>
-          <Typography variant="h3" style={styles.savingsPlanInfo}> 
-            {planName}
-          </Typography>
-          <Typography variant="h3" style={styles.savingsPlanInfo}>
-            {planAmount}:-
-          </Typography>
+          <div  style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <Typography variant="h3" style={styles.savingsPlanInfo}> 
+              {planName}
+            </Typography>
+            <Typography variant="h3" style={styles.savingsPlanInfo}>
+              {planAmount}:-
+            </Typography>
+          </div>
           <div style={{ display: "flex", flexDirection: 'column', width: "100%"}}>
             <div style={{display: "flex", justifyContent: "space-between"}}>
               <Typography variant="h6" style={styles.savingsplanDate}>
