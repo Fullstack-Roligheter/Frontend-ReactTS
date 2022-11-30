@@ -43,8 +43,8 @@ const styles = {
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '80vw',
-    background:
-      'radial-gradient(circle at center, rgba(65, 162, 72, 0.4), rgba(65, 162, 72, 0.0))',
+    // background:
+    //   'radial-gradient(circle at center, rgba(65, 162, 72, 0.4), rgba(65, 162, 72, 0.0))',
     borderRadius: '15px',
     paddingLeft: '30px',
     paddingRight: '30px',

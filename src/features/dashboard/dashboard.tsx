@@ -5,17 +5,8 @@ import { userType } from '../../shared/Interfaces/userToken'
 import styles from '../../CssStyles.js'
 import { useEffect, useState } from 'react'
 import DebitChart from '../../shared/charts/DebitChart'
-import { Plan } from '../../shared/Interfaces/savingPlan'
 import { GetPlans } from '../../shared/fetch/savingplan'
 
-import { styled } from '@mui/material/styles'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell, { tableCellClasses } from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import { color } from '@mui/system'
 
 function DashboardFeature() {
 

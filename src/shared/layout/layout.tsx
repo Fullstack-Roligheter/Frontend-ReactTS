@@ -11,8 +11,8 @@ const styles = {
     backgroundRepeat: 'no-repeat',
   },
   layer: {
-    background:
-      'radial-gradient(circle at center, rgba(65, 162, 72, 0.4), rgba(65, 162, 72, 0.0))',
+    // background:
+      // 'radial-gradient(circle at center, rgba(65, 162, 72, 0.4), rgba(65, 162, 72, 0.0))',
   },
 }
 
