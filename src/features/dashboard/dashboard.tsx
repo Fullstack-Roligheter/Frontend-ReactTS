@@ -18,8 +18,6 @@ import TableRow from '@mui/material/TableRow'
 import { color } from '@mui/system'
 
 function DashboardFeature() {
-  // let UserIsLoggedIn = sessionStorage.getItem('user')
-  // console.log('authenticatedLayout: ', UserIsLoggedIn)
 
   const [dashboardTextSize, setDashboardTextSize] = useState('big')
   const [planList, setPlanList] = useState<any[]>([])
@@ -60,7 +58,6 @@ function DashboardFeature() {
 
   const getPlans = async () => {
     GetPlans(user.userId).then((response) => {
-      console.log('response: ', response)
       let latestItem: number = response.length - 1
       setPlanName(response[latestItem].name)
       setPlanAmount(response[latestItem].amount)

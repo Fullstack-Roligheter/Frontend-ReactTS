@@ -21,22 +21,46 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
     useEffect(() => {
       GetDebitsForUser(user.userId).then((Response) => {
         setDebits(Response)
+        console.log(Response)
       })
     }, [])
 
     const labels = [];
     const dataValues = [];
     
+    console.log(debits)
+    
     for (let i = 0; i < debits.length; i++) {
-      if (!labels.includes(debits[i].category)){
-        labels.push(debits[i].category)
-      }
-    }
 
+        var then = new Date(debits[i].date);
+        var now = new Date();
+        const msBetweenDates = Math.abs(then.getTime() - now.getTime());
+        const daysBetweenDates = msBetweenDates / (24 * 60 * 60 * 1000);
+
+        console.log("Then: " + then)
+        console.log("Now: " + now)
+
+        if (!labels.includes(debits[i].category) && daysBetweenDates <= 30){
+          labels.push(debits[i].category)
+        }
+    }
+    
     for (let i = 0; i < labels.length; i++) {
       var sum = 0;
+
       debits.forEach(element => {
-        if(element.category === labels[i]){
+
+        var then = new Date(element.date);
+        var now = new Date(); 
+    
+        // console.log("Then: " + then)
+        // console.log("Now: " + now)
+  
+        // then.setDate(then.getDate()-30)
+        const msBetweenDates = Math.abs(then.getTime() - now.getTime());
+        const daysBetweenDates = msBetweenDates / (24 * 60 * 60 * 1000);
+
+        if(element.category === labels[i] && daysBetweenDates <= 30){
           sum += element.amount;
         }
       });
@@ -62,7 +86,7 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
           },
           title: {
             display: true,
-            text: 'Expense Oversight',
+            text: 'Expenses for the last 30 days',
           },
         },
         maintainAspectRatio: false,
