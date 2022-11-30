@@ -167,8 +167,8 @@ const RegisterUser = () => {
             <TextField
               label=' Select Password'
               variant='outlined'
-              error={!!errors['password']?.message}
-              helperText={errors['password']?.message}
+              error={Boolean(errors.password)}
+              helperText={errors.password?.message}
               {...register('password')}
               style={styles.textfield}
               type={showPassword ? 'text' : 'password'}
