@@ -37,9 +37,6 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
         const msBetweenDates = Math.abs(then.getTime() - now.getTime());
         const daysBetweenDates = msBetweenDates / (24 * 60 * 60 * 1000);
 
-        console.log("Then: " + then)
-        console.log("Now: " + now)
-
         if (!labels.includes(debits[i].category) && daysBetweenDates <= 30){
           labels.push(debits[i].category)
         }
@@ -49,14 +46,9 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
       var sum = 0;
 
       debits.forEach(element => {
-
         var then = new Date(element.date);
         var now = new Date(); 
     
-        // console.log("Then: " + then)
-        // console.log("Now: " + now)
-  
-        // then.setDate(then.getDate()-30)
         const msBetweenDates = Math.abs(then.getTime() - now.getTime());
         const daysBetweenDates = msBetweenDates / (24 * 60 * 60 * 1000);
 
