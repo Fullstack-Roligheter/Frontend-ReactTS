@@ -133,7 +133,7 @@ const ExpenseListOutput = (props: any) => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
-
+  
   return (
     <>
       <Box width={800} display='flex' flexWrap='wrap' sx={{ mt: 7 }}>
