@@ -45,18 +45,18 @@ function DashboardFeature() {
         <Box
           sx={
             {
-              // width: 850,
-              // m: 3,
-              // mt: 3,
-              // p: 3,
-              // pt: 3,
-              // borderRadius: 2,
-              // bgcolor: 'RGBA(255,255,255,0.65)',
-              // boxShadow: 5,
-              // display: 'flex',
-              // flexDirection: 'column',
-              // justifyContent: 'center',
-              // alignItems: 'center',
+              width: 850,
+              m: 3,
+              mt: 3,
+              p: 3,
+              pt: 3,
+              borderRadius: 2,
+              bgcolor: 'RGBA(255,255,255,0.65)',
+              boxShadow: 5,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
             }
           }
         >
