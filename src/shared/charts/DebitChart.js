@@ -82,7 +82,7 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
 
     return (
         <div>
-            <div style={{width: "600px", height: "400px"}}>
+            <div style={{width: "500px", height: "300px"}}>
                 <Bar options={options} data={data}
             />
             </div>

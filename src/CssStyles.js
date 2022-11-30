@@ -82,6 +82,12 @@ const styles = {
     paddingTop: '75px',
     minHeight: "calc(100vh - 56px)",
     height: "fit-content"
+  },
+  savingsplanDate: {
+    color: "#676d98"
+  },
+  savingsPlanInfo: {
+    color: "#1976D2"
   }
 };
 
