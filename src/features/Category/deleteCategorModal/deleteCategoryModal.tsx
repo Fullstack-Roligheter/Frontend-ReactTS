@@ -1,10 +1,10 @@
 import { Box, Typography } from '@mui/material'
 import { FunctionComponent, useState } from 'react'
-import { ButtonCollection } from '../../CustomComponents'
-import { SubmitButton } from '../../shared/buttons/button-default'
-import { useUserContext } from '../../context/UserContext'
-import { DeleteCategory } from '../../shared/fetch/category'
-import { DeleteCategoryModalProps } from '../../shared/Interfaces/categoryModal'
+import { ButtonCollection } from '../../../CustomComponents'
+import { SubmitButton } from '../../../shared/buttons/button-default'
+import { useUserContext } from '../../../context/UserContext'
+import { DeleteCategory } from '../../../shared/fetch/category'
+import { DeleteCategoryModalProps } from '../../../shared/Interfaces/categoryModal'
 
 export const DeleteCategoryModal: FunctionComponent<
   DeleteCategoryModalProps

@@ -1,17 +1,17 @@
 import { Box, TextField, Typography } from '@mui/material'
 import { FormEvent, FunctionComponent, useState, useRef } from 'react'
-import styles from '../../CssStyles'
-import { ButtonCollection } from '../../CustomComponents'
+import styles from '../../../CssStyles'
+import { ButtonCollection } from '../../../CustomComponents'
 import {
   DisabledSubmitButton,
   SubmitButton,
-} from '../../shared/buttons/button-default'
-import { useUserContext } from '../../context/UserContext'
-import { EditCategory } from '../../shared/fetch/category'
+} from '../../../shared/buttons/button-default'
+import { useUserContext } from '../../../context/UserContext'
+import { EditCategory } from '../../../shared/fetch/category'
 import {
   EditCategoryModalProps,
   EditSubmitData,
-} from '../../shared/Interfaces/categoryModal'
+} from '../../../shared/Interfaces/categoryModal'
 
 export const EditCategoryModal: FunctionComponent<EditCategoryModalProps> = (
   props
