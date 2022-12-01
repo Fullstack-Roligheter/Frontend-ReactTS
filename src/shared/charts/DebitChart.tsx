@@ -21,14 +21,11 @@ import { GetDebitsForUser } from '../fetch/expense'
     useEffect(() => {
       GetDebitsForUser(user.userId).then((Response) => {
         setDebits(Response)
-        console.log(Response)
       })
     }, [])
 
     const labels: any = [];
     const dataValues = [];
-    
-    console.log(debits)
     
     for (let i = 0; i < debits.length; i++) {
 
@@ -68,7 +65,6 @@ import { GetDebitsForUser } from '../fetch/expense'
         Legend
       );
 
-      
       const options: any = {
         responsive: true,
         plugins: {
@@ -84,7 +80,6 @@ import { GetDebitsForUser } from '../fetch/expense'
         maintainAspectRatio: false,
       };
       
-      
       const data = {
         labels,
         datasets: [
@@ -95,8 +90,6 @@ import { GetDebitsForUser } from '../fetch/expense'
           },
         ],
       };
-
-      console.log(labels.length)
 
     return (
     <div>
