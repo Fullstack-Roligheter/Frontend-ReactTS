@@ -27,7 +27,6 @@ const AuthenticatedHeader = (props: any) => {
 
   let settings = [
     { title: 'Profile', route: '/profile' },
-    { title: 'Account', route: '/account' },
     { title: 'Dashboard', route: `/dashboard` },
     { title: 'Log Out', route: 'handleLogout' },
   ]

@@ -21,14 +21,14 @@ import {
   useEditModal,
   useModal,
 } from '../../shared/modal/useModal'
-import { NewCategoryModal } from '../newCategoryModal/newcategoryModal'
-import { EditCategoryModal } from '../editCategoryModal/editCategoryModal'
+import { NewCategoryModal } from '../Category/newCategoryModal/newcategoryModal'
+import { EditCategoryModal } from '../Category/editCategoryModal/editCategoryModal'
 import { AddButton } from '../../shared/buttons/button-default'
 import React from 'react'
 import { GetUserCreatedCatogories } from '../../shared/fetch/category'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import { DeleteCategoryModal } from '../deleteCategorModal/deleteCategoryModal'
+import { DeleteCategoryModal } from '../Category/deleteCategorModal/deleteCategoryModal'
 
 function ProfileFeature() {
   const user = useUserContext()
