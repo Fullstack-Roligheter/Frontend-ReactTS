@@ -12,6 +12,7 @@ import { Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react'
 import { useUserContext } from '../../context/UserContext'
 import { GetDebitsForUser } from '../fetch/expense'
+import { Typography } from '@mui/material';
  
  function DebitChart() {
 
@@ -97,7 +98,7 @@ import { GetDebitsForUser } from '../fetch/expense'
         if (labels.length === 0) {
           return (
             <div style={{width: "500px", height: "300px", display: "flex", justifyContent: "space-around", alignItems: "center" }}>
-               <h3>No expenses for the last 30 days</h3>
+               <Typography variant ="h6">No expenses for the last 30 days</Typography>
             </div>
           )
         } else {
@@ -108,9 +109,7 @@ import { GetDebitsForUser } from '../fetch/expense'
           )
         }
       })()}
-
     </div>
-
     )
 }
 

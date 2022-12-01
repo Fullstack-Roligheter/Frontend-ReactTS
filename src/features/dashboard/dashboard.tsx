@@ -96,35 +96,58 @@ function DashboardFeature() {
             }
           }
           >
-          <Typography variant='h4' style={styles.blackTypography}>
-            Latest Savingsplan
-          </Typography>
-          <div  style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <Typography variant="h3" style={styles.savingsPlanInfo}> 
-              {planName}
-            </Typography>
-            <Typography variant="h3" style={styles.savingsPlanInfo}>
-              {planAmount}:-
-            </Typography>
-          </div>
-          <div style={{ display: "flex", flexDirection: 'column', width: "100%"}}>
-            <div style={{display: "flex", justifyContent: "space-between"}}>
-              <Typography variant="h6" style={styles.savingsplanDate}>
-                Startdate
-              </Typography>
-              <Typography variant="h6" style={styles.savingsplanDate}>
-                Enddate
-              </Typography>
+          
+
+          <div>
+          {(() => {
+            if (planName === "") {
+              return (
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-around", alignItems: "center" }}>
+                  <Typography variant='h4' style={styles.blackTypography}>
+                    Latest Savingsplan
+                  </Typography>
+                  <div style={{width: "500px", height: "300px", display: "flex", justifyContent: "space-around", alignItems: "center"}}>
+                    <Typography variant="h6" align='left'>No Active Savings plan</Typography>
+                  </div>
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  <Typography variant='h4' style={styles.blackTypography}>
+                    Latest Savingsplan
+                  </Typography>
+                  <div  style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                    <Typography variant="h3" style={styles.savingsPlanInfo}> 
+                      {planName}
+                    </Typography>
+                    <Typography variant="h3" style={styles.savingsPlanInfo}>
+                      {planAmount}:-
+                    </Typography>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: 'column', width: "100%"}}>
+                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                      <Typography variant="h6" style={styles.savingsplanDate}>
+                        Startdate
+                      </Typography>
+                      <Typography variant="h6" style={styles.savingsplanDate}>
+                        Enddate
+                      </Typography>
+                    </div>
+                  <div style={{display: "flex", justifyContent: "space-between"}}>
+                    <Typography variant="h6" style={styles.savingsplanDate}>
+                      {planStartDate}
+                    </Typography>
+                    <Typography variant="h6" style={styles.savingsplanDate}>
+                      {planEndDate}
+                    </Typography>
+                  </div>
             </div>
-            <div style={{display: "flex", justifyContent: "space-between"}}>
-              <Typography variant="h6" style={styles.savingsplanDate}>
-                {planStartDate}
-              </Typography>
-              <Typography variant="h6" style={styles.savingsplanDate}>
-                {planEndDate}
-              </Typography>
-            </div>
           </div>
+              )
+            }
+          })()}
+        </div>
           
           </Box>
       </Box>
