@@ -11,12 +11,12 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react'
 import { useUserContext } from '../../context/UserContext'
-import { GetDebitsForUser } from '../../shared/fetch/expense'
+import { GetDebitsForUser } from '../fetch/expense'
  
  function DebitChart() {
 
     const user = useUserContext()
-    const [debits, setDebits] = useState([])
+    const [debits, setDebits] = useState<any []>([])
 
     useEffect(() => {
       GetDebitsForUser(user.userId).then((Response) => {
@@ -25,7 +25,7 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
       })
     }, [])
 
-    const labels = [];
+    const labels: any = [];
     const dataValues = [];
     
     console.log(debits)
@@ -69,7 +69,7 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
       );
 
       
-      const options = {
+      const options: any = {
         responsive: true,
         plugins: {
           legend: {
@@ -96,13 +96,28 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
         ],
       };
 
+      console.log(labels.length)
+
     return (
-        <div>
-            <div style={{width: "500px", height: "300px"}}>
-                <Bar options={options} data={data}
-            />
+    <div>
+      {(() => {
+        if (labels.length === 0) {
+          return (
+            <div style={{width: "500px", height: "300px", display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+               <h3>No expenses for the last 30 days</h3>
             </div>
-        </div>
+          )
+        } else {
+          return (
+          <div style={{width: "500px", height: "300px"}}>
+             <Bar options={options} data={data} />
+          </div>
+          )
+        }
+      })()}
+
+    </div>
+
     )
 }
 
