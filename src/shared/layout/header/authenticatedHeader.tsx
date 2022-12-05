@@ -68,7 +68,7 @@ const AuthenticatedHeader = (props: any) => {
       position='fixed'
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        backgroundColor: 'rgba(25, 118, 210, 1)',
+        // backgroundColor: 'rgba(25, 118, 210, 1)',
       }}
     >
       <Container maxWidth='xl'>
@@ -164,7 +164,7 @@ const AuthenticatedHeader = (props: any) => {
                   </Tooltip>
                   <Menu
                     sx={{
-                      mt: '45px',
+                      mt: '47px',
                       '& .css-6hp17o-MuiList-root-MuiMenu-list': {
                         paddingBottom: '0px',
                         paddingTop: '0px',
@@ -186,7 +186,7 @@ const AuthenticatedHeader = (props: any) => {
                   >
                     {settings.map((setting) => (
                       <MenuItem
-                        sx={{ backgroundColor: 'rgba(65, 162, 72, 0.5)' }}
+                        sx={{ backgroundColor: 'secondary.main' }}
                         key={setting.title}
                         onClick={(e) => {
                           handleMenuClick(setting.route)

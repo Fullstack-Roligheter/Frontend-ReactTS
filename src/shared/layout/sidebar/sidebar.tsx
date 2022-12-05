@@ -68,21 +68,21 @@ export default function Sidebar(props: any) {
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: 'rgba(65, 162, 72, 0.68)',
+            backgroundColor: 'rgba(128, 203, 196, 0.60)',
           },
         }}
       >
         <Toolbar />
 
         <Box
-          sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.1)' }}
+          // sx={{ overflow: 'auto', backgroundColor: 'rgba(65, 162, 72, 0.1)' }}
         >
           <List
             sx={{
-              color: 'white',
+                // color: 'white',
               '& .MuiListItemButton-root:hover': {
                 bgcolor: 'white',
-                color: 'black',
+                // color: 'primary.main',
               },
             }}
           >
@@ -91,7 +91,7 @@ export default function Sidebar(props: any) {
                 <ListItemButton onClick={() => navigate(menuItem.route)}>
                   <ListItemIcon
                     sx={{
-                      color: 'inherit',
+                      color: 'primary.main',
                     }}
                   >
                     {menuItem.icon}
@@ -104,7 +104,7 @@ export default function Sidebar(props: any) {
           <Divider />
           <List
             sx={{
-              color: 'white',
+              // color: 'white',
               '& .MuiListItemButton-root:hover': {
                 bgcolor: 'white',
                 color: 'black',
@@ -114,7 +114,7 @@ export default function Sidebar(props: any) {
             {SubMenu.map((subMenuItem) => (
               <ListItem key={subMenuItem.title} disablePadding>
                 <ListItemButton onClick={() => navigate(subMenuItem.route)}>
-                  <ListItemIcon sx={{ color: 'inherit' }}>
+                  <ListItemIcon sx={{ color: 'primary.main' }}>
                     {subMenuItem.icon}
                   </ListItemIcon>
                   <ListItemText primary={subMenuItem.title} />

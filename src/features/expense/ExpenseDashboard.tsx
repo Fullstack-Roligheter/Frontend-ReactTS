@@ -114,12 +114,8 @@ const ExpenseDashboard = () => {
 
       setTimeout(() => {
         setloadingState(false)
-        setmessage('Transaction Created')
         setmessageState(true)
-        setTimeout(() => {
-          setmessageState(false)
-        }, 3000)
-      }, 3000)
+      }, 2000)
     })
   }
 
@@ -169,8 +165,6 @@ const ExpenseDashboard = () => {
     })
   }
 
-  //Grön styling för när vi ändrar färg på standardfärgen i projektet, den accepterar denna variabel och tolkar som strängen den sparat
-  //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: styles.formBackground.background}}
   return (
     <>
       <Box
@@ -190,8 +184,8 @@ const ExpenseDashboard = () => {
               p: 3,
               pt: 1,
               borderRadius: 2,
-              bgcolor: 'RGBA(255,255,255,0.65)',
-              boxShadow: 5,
+              bgcolor: 'white',
+              boxShadow: 2,
             }}
           >
             <TextField
@@ -250,7 +244,6 @@ const ExpenseDashboard = () => {
                   modalContent={
                     <NewCategoryModal
                       onConfirm={onConfirm}
-                      // onCancel={onCancel}
                       message='Name of your new category'
                       categories={categories}
                       callBack={getCategories}
@@ -300,7 +293,7 @@ const ExpenseDashboard = () => {
                   <Checkbox
                     name='ReturningTransactions'
                     onChange={handleBoolean}
-                    sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
+                    sx={{ '& .MuiSvgIcon-root': { fontSize: 40 }}}
                   />
                 }
                 label='Recurring expense'
@@ -337,17 +330,6 @@ const ExpenseDashboard = () => {
                 }
               })()}
             </Box>
-            {(() => {
-              if (messageState) {
-                return (
-                  <Box>
-                    <br />
-                    <Typography>{message}</Typography>
-                    <br />
-                  </Box>
-                )
-              }
-            })()}
             {(() => {
               if (!checkForm()) {
 

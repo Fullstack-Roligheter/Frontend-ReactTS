@@ -9,11 +9,7 @@ const styles = {
     backgroundImage: `url(${Image})`,
     backgroundSize: '100% 100%',
     backgroundRepeat: 'no-repeat',
-  },
-  layer: {
-    background:
-      'radial-gradient(circle at center, rgba(65, 162, 72, 0.4), rgba(65, 162, 72, 0.0))',
-  },
+  }
 }
 
 const Layout = () => {
@@ -30,7 +26,6 @@ const Layout = () => {
         display='flex'
         flexDirection='column'
         height='fit-content'
-        style={styles.layer}
       >
         {(() => {
           if (user.userId === null) {

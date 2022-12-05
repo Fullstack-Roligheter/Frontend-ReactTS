@@ -50,12 +50,12 @@ const ExpenseListOutput = (props: any) => {
   const onConfirmDelete = () => toggleDelete()
 
   let debitsToShow = props.debits
-  
+
   useEffect(() => {
-    debitsToShow =alteredDebitList
+    debitsToShow = alteredDebitList
   }, [altered])
 
-  function UpdateDepitList(): any{
+  function UpdateDepitList(): any {
     props.callBack()
   }
 
@@ -129,10 +129,10 @@ const ExpenseListOutput = (props: any) => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
-  
+
   return (
     <>
-      <Box width={800} display='flex' flexWrap='wrap' sx={{ mt: 7 }}>
+      <Box width={1000} display='flex' flexWrap='wrap' sx={{ mt: 7 }}>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
@@ -152,6 +152,8 @@ const ExpenseListOutput = (props: any) => {
                 <TableCell>
                   <Button onClick={() => SortExpenses('budget')}>Budget</Button>
                 </TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -185,31 +187,31 @@ const ExpenseListOutput = (props: any) => {
                       {debit.category}
                     </TableCell>
                     <TableCell
-                      colSpan={5}
+                      // colSpan={5}
                       sx={{ paddingBottom: 0, borderBottom: '0px' }}
                     >
                       {debit.budget}
                     </TableCell>
-                    <TableCell>
-                      <ListItemIcon>
-                        <IconButton
-                          onClick={() => {
-                            ToEdit(
-                              debit.id,
-                              debit.date,
-                              debit.amount,
-                              debit.category,
-                              debit.budget,
-                              debit.comment
-                            )
-                          }}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                      </ListItemIcon>
+                    <TableCell                       sx={{ paddingBottom: 0, borderBottom: '0px' }}>
+                      {/* <ListItemIcon> */}
+                      <IconButton
+                        onClick={() => {
+                          ToEdit(
+                            debit.id,
+                            debit.date,
+                            debit.amount,
+                            debit.category,
+                            debit.budget,
+                            debit.comment
+                          )
+                        }}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      {/* </ListItemIcon> */}
                     </TableCell>
-                    <TableCell>
-                      <ListItemIcon>
+                    <TableCell                       sx={{ paddingBottom: 0, borderBottom: '0px' }}>
+                      {/* <ListItemIcon> */}
                         <IconButton
                           onClick={() => {
                             ToDelete(
@@ -224,13 +226,13 @@ const ExpenseListOutput = (props: any) => {
                         >
                           <DeleteIcon />
                         </IconButton>
-                      </ListItemIcon>
+                      {/* </ListItemIcon> */}
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell
                       className='comments'
-                      colSpan={5}
+                      colSpan={7}
                       sx={{ paddingBottom: 0 }}
                     >
                       <Collapse
@@ -255,7 +257,7 @@ const ExpenseListOutput = (props: any) => {
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                  colSpan={5}
+                  colSpan={7}
                   count={debitsToShow.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
@@ -265,6 +267,7 @@ const ExpenseListOutput = (props: any) => {
                     },
                     native: true,
                   }}
+                  sx={{mr: '2'}}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                   ActionsComponent={TablePaginationActions}

@@ -17,7 +17,7 @@ const SavingsLayout: React.FC = () => {
           to={'create'}
           className={({ isActive }) => `text-link ${isActive ? 'active' : ''}`}
         >
-          <Button variant='contained'>Create saving plan</Button>
+          <Button variant='contained' sx={{backgroundColor: 'secondary.main'}}>Create saving plan</Button>
         </NavLink>
       </Box>
       <Box className='container'>

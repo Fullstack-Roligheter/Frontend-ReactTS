@@ -12,7 +12,6 @@ import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import LoginIcon from '@mui/icons-material/Login'
-
 const pages = [
   { name: 'ABOUT US', target: '/aboutus' },
   { name: 'FAQ', target: '/faq' },
@@ -34,7 +33,7 @@ const ResponsiveAppBar = (props: any) => {
       position='fixed'
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        backgroundColor: 'rgba(25, 118, 210, 1)',
+        // backgroundColor: 'rgba(25, 118, 210, 1)',
       }}
     >
       <Container maxWidth='xl'>
