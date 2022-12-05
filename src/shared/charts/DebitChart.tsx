@@ -11,12 +11,13 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react'
 import { useUserContext } from '../../context/UserContext'
-import { GetDebitsForUser } from '../../shared/fetch/expense'
+import { GetDebitsForUser } from '../fetch/expense'
+import { Typography } from '@mui/material';
  
  function DebitChart() {
 
     const user = useUserContext()
-    const [debits, setDebits] = useState([])
+    const [debits, setDebits] = useState<any []>([])
 
     useEffect(() => {
       GetDebitsForUser(user.userId).then((Response) => {
@@ -24,19 +25,32 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
       })
     }, [])
 
-    const labels = [];
+    const labels: any = [];
     const dataValues = [];
     
     for (let i = 0; i < debits.length; i++) {
-      if (!labels.includes(debits[i].category)){
-        labels.push(debits[i].category)
-      }
-    }
 
+        var then = new Date(debits[i].date);
+        var now = new Date();
+        const msBetweenDates = Math.abs(then.getTime() - now.getTime());
+        const daysBetweenDates = msBetweenDates / (24 * 60 * 60 * 1000);
+
+        if (!labels.includes(debits[i].category) && daysBetweenDates <= 30){
+          labels.push(debits[i].category)
+        }
+    }
+    
     for (let i = 0; i < labels.length; i++) {
       var sum = 0;
+
       debits.forEach(element => {
-        if(element.category === labels[i]){
+        var then = new Date(element.date);
+        var now = new Date(); 
+    
+        const msBetweenDates = Math.abs(then.getTime() - now.getTime());
+        const daysBetweenDates = msBetweenDates / (24 * 60 * 60 * 1000);
+
+        if(element.category === labels[i] && daysBetweenDates <= 30){
           sum += element.amount;
         }
       });
@@ -52,8 +66,7 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
         Legend
       );
 
-      
-      const options = {
+      const options: any = {
         responsive: true,
         plugins: {
           legend: {
@@ -62,12 +75,11 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
           },
           title: {
             display: true,
-            text: 'Expense Oversight',
+            text: 'Expenses for the last 30 days',
           },
         },
         maintainAspectRatio: false,
       };
-      
       
       const data = {
         labels,
@@ -81,12 +93,23 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
       };
 
     return (
-        <div>
-            <div style={{width: "600px", height: "400px"}}>
-                <Bar options={options} data={data}
-            />
+    <div>
+      {(() => {
+        if (labels.length === 0) {
+          return (
+            <div style={{width: "500px", height: "300px", display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+               <Typography variant ="h6">No expenses for the last 30 days</Typography>
             </div>
-        </div>
+          )
+        } else {
+          return (
+          <div style={{width: "500px", height: "300px"}}>
+             <Bar options={options} data={data} />
+          </div>
+          )
+        }
+      })()}
+    </div>
     )
 }
 
