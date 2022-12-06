@@ -1,19 +1,12 @@
-import { Box, TextField, Typography } from '@mui/material'
+import { TextField, Typography } from '@mui/material'
 import { FunctionComponent, useState } from 'react'
 import { ButtonCollection } from '../../CustomComponents'
-import {
-  SubmitButton,
-  WarningButton,
-} from '../../shared/buttons/button-default'
+import { WarningButton } from '../../shared/buttons/button-default'
 import { useUserContext } from '../../context/UserContext'
-import {
-  DeleteSubmitDataProps,
-  DeleteUserModalProps,
-} from '../../shared/Interfaces/deleteUserModal'
+import { DeleteUserModalProps } from '../../shared/Interfaces/deleteUserModal'
 import { DeleteUser } from '../../shared/fetch/user'
 import { useNavigate } from 'react-router'
 import styles from '../../CssStyles'
-import { WindowSharp } from '@mui/icons-material'
 
 export const DeleteUserModal: FunctionComponent<DeleteUserModalProps> = (
   props

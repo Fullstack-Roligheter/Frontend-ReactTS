@@ -78,7 +78,6 @@ function ProfileFeature() {
   const [localLastName, setLocalLastName] = useState<string | null>('')
   const [localPassword, setLocalPassword] = useState<string>('')
   const [localPasswordCheck, setLocalPasswordCheck] = useState<string>('')
-  const [deletePassword, setDeletePassword] = useState<string>('')
 
   const [loadingState, setProfileloadingState] = useState(false)
 
@@ -398,14 +397,14 @@ function ProfileFeature() {
             } else {
               return (
                 <Box>
-                  <div style={styles.userProfileBOX}>
-                    <div style={styles.userProfileIMG}>
+                  <Box style={styles.userProfileBOX}>
+                    <Box style={styles.userProfileIMG}>
                       <img
                         src={`${profileImage}?s=200`}
                         alt='UserprofileImage'
                       />
-                    </div>
-                    <div style={styles.userProfileInfo}>
+                    </Box>
+                    <Box style={styles.userProfileInfo}>
                       <Typography variant='subtitle1'>Name: {name}</Typography>
                       <Typography variant='subtitle1'>
                         Email: {email}
@@ -427,8 +426,15 @@ function ProfileFeature() {
                         Change your profile here:{' '}
                         <Link href='https://en.gravatar.com/'>Gravatar</Link>
                       </Typography>
-                    </div>
-                  </div>
+                    </Box>
+                  </Box>
+                  <Button
+                    onClick={handleDelete}
+                    variant='contained'
+                    sx={{ mt: '20px', backgroundColor: 'error.main' }}
+                  >
+                    DELETE USER
+                  </Button>
                 </Box>
               )
             }
