@@ -25,3 +25,16 @@ export function Register(data: any) {
       throw error
     })
 }
+
+export function UpdateUser(data: any) {
+  return instance
+    .patch(`api/user/Update`, data)
+    .then((response) => {
+      const data = response.data
+      return data
+    })
+    .catch((error) => {
+      console.log('Error in UpdateUser: ', error)
+      throw error
+    })
+}
