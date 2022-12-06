@@ -1,19 +1,17 @@
-import { Box, IconButton, Typography } from '@mui/material'
-import { Link, Navigate } from 'react-router-dom'
+import { Box, Typography } from '@mui/material'
+import { Navigate } from 'react-router-dom'
 import { useUserContext } from '../../context/UserContext'
-import { userType } from '../../shared/Interfaces/userToken'
 import styles from '../../CssStyles.js'
 import { useEffect, useState } from 'react'
 import DebitChart from '../../shared/charts/DebitChart'
 import { GetPlans } from '../../shared/fetch/savingplan'
-import { Height } from '@mui/icons-material'
 
 
 function DashboardFeature() {
 
   const [dashboardTextSize, setDashboardTextSize] = useState('big')
   const [planName, setPlanName] = useState("")
-  const [planAmount, setPlanAmount] = useState("")
+  var [planAmount, setPlanAmount] = useState("")
   const [planStartDate, setPlanStartDate] = useState("")
   const [planEndDate, setPlanEndDate] = useState("")
 
@@ -51,6 +49,12 @@ function DashboardFeature() {
       setPlanEndDate(response[latestItem].planEndDate)
     })
   }
+
+function numberWithSpaces(planAmountWithoutSpaces: string) {
+    return planAmountWithoutSpaces.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
+planAmount =  numberWithSpaces(planAmount);
 
   return (
     <>
