@@ -35,3 +35,12 @@ export const useMessageModal = () => {
     toggleMessage,
   }
 }
+
+export const useDeleteUserModal = () => {
+  const [isShownDeleteUser, setIsShown] = useState<boolean>(false)
+  const toggleDeleteUser = () => setIsShown(!isShownDeleteUser)
+  return {
+    isShownDeleteUser,
+    toggleDeleteUser,
+  }
+}

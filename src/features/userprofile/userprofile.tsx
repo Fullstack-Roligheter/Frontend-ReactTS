@@ -1,4 +1,6 @@
-import styles from '../../CssStyles.js'
+import React from 'react'
+import { FormEvent, useEffect, useState } from 'react'
+
 import {
   Box,
   Link,
@@ -14,28 +16,33 @@ import {
   Button,
   InputAdornment,
 } from '@mui/material'
-import { GetGravatarProfile } from '../../shared/fetch/gravatar'
-import { FormEvent, useEffect, useState } from 'react'
+import { FormControl } from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+
 import { useUserContext } from '../../context/UserContext'
+
 import { Modal } from '../../shared/modal/modal'
 import {
   useDeleteModal,
   useEditModal,
   useModal,
   useMessageModal,
+  useDeleteUserModal,
 } from '../../shared/modal/useModal'
 import { NewCategoryModal } from '../Category/newCategoryModal/newcategoryModal'
 import { EditCategoryModal } from '../Category/editCategoryModal/editCategoryModal'
-import { AddButton } from '../../shared/buttons/button-default'
-import React from 'react'
-import { GetUserCreatedCatogories } from '../../shared/fetch/category'
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
 import { DeleteCategoryModal } from '../Category/deleteCategorModal/deleteCategoryModal'
-import { FormControl } from '@mui/material'
-import { UpdateUser } from '../../shared/fetch/user'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { DeleteUserModal } from './deleteUserModal'
 import { MessageModal } from '../../shared/modal/messageModal'
+
+import { GetGravatarProfile } from '../../shared/fetch/gravatar'
+import { GetUserCreatedCatogories } from '../../shared/fetch/category'
+import { UpdateUser, DeleteUser } from '../../shared/fetch/user'
+
+import { AddButton } from '../../shared/buttons/button-default'
+import styles from '../../CssStyles.js'
 
 function ProfileFeature() {
   const user = useUserContext()
@@ -64,12 +71,14 @@ function ProfileFeature() {
   const { isShownEdit, toggleEdit } = useEditModal()
   const { isShownDelete, toggleDelete } = useDeleteModal()
   const { isShownMessage, toggleMessage } = useMessageModal()
+  const { isShownDeleteUser, toggleDeleteUser } = useDeleteUserModal()
 
   const [localEmail, setLocalEmail] = useState<string | null>('')
   const [localFirstName, setLocalFirstName] = useState<string | null>('')
   const [localLastName, setLocalLastName] = useState<string | null>('')
   const [localPassword, setLocalPassword] = useState<string>('')
   const [localPasswordCheck, setLocalPasswordCheck] = useState<string>('')
+  const [deletePassword, setDeletePassword] = useState<string>('')
 
   const [loadingState, setProfileloadingState] = useState(false)
 
@@ -91,6 +100,7 @@ function ProfileFeature() {
   const onConfirmEdit = () => toggleEdit()
   const onConfirmDelete = () => toggleDelete()
   const onConfirmMessage = () => toggleMessage()
+  const onConfirmDeleteUser = () => toggleMessage()
 
   const validEmail = new RegExp(
     '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{4,}$'
@@ -157,8 +167,16 @@ function ProfileFeature() {
     toggleDelete()
   }
 
+  const ToDeleteUser = () => {
+    toggleDeleteUser()
+  }
+
   const ShowMessage = () => {
     toggleMessage()
+  }
+
+  const handleDelete = () => {
+    ToDeleteUser()
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -360,11 +378,18 @@ function ProfileFeature() {
                         }
                       })()}
                       <Button
-                        variant='contained'
                         type='submit'
+                        variant='contained'
                         sx={{ mt: '20px' }}
                       >
                         Submit Changes
+                      </Button>
+                      <Button
+                        onClick={handleDelete}
+                        variant='contained'
+                        sx={{ mt: '20px', backgroundColor: 'error.main' }}
+                      >
+                        DELETE USER
                       </Button>
                     </FormControl>
                   </form>
@@ -526,6 +551,19 @@ function ProfileFeature() {
                 onConfirm={onConfirmMessage}
                 taskbarTitle={messageTaskbarTitle}
                 message={messageBody}
+              />
+            }
+          />
+        </>
+        <>
+          <Modal
+            isShown={isShownDeleteUser}
+            hide={toggleDeleteUser}
+            headerText='Delete User'
+            modalContent={
+              <DeleteUserModal
+                onConfirm={onConfirmDeleteUser}
+                message={'ARE YOU SURE?'}
               />
             }
           />
