@@ -3,18 +3,21 @@ import './App.css'
 import { UserContextProvider } from './context/UserContext'
 import AppRouter from './routes'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { lightBlue, teal } from '@mui/material/colors'
+import { lightBlue, lightGreen , teal, brown, grey, indigo, blueGrey, deepPurple, green } from '@mui/material/colors'
 
 export const theme = createTheme({
   palette: {
     primary: {
-      main: lightBlue[900]
+      main: teal[900]
     },
     secondary: {
-      main: teal[200]
+      main: brown[200]
     }
   },
 })
+
+//grön och brun     primary: main: teal[900]        secondary: main: brown[100]
+//blåGrå och teal     primary: main: blueGrey[700]        secondary: main: teal[100]
 
 const App: React.FC = () => {
   return (

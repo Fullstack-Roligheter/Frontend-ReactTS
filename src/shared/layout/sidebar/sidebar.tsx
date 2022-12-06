@@ -68,7 +68,7 @@ export default function Sidebar(props: any) {
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: 'rgba(128, 203, 196, 0.60)',
+            backgroundColor: 'rgba(161,136,127, 0.60)',
           },
         }}
       >

@@ -12,6 +12,7 @@ import {
   ListItemIcon,
   TableFooter,
   TablePagination,
+  Typography,
 } from '@mui/material'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import { useUserContext } from '../../context/UserContext'
@@ -132,8 +133,8 @@ const ExpenseListOutput = (props: any) => {
 
   return (
     <>
-      <Box width={1000} display='flex' flexWrap='wrap' sx={{ mt: 7 }}>
-        <TableContainer component={Paper}>
+      <Box width={1000} display='flex' flexWrap='wrap' sx={{ mt: '-10px'}}>
+        <TableContainer component={Paper} sx={{borderRadius: 2, height: '680px'}}>
           <Table>
             <TableHead>
               <TableRow>
@@ -240,8 +241,14 @@ const ExpenseListOutput = (props: any) => {
                         timeout='auto'
                         unmountOnExit
                       >
-                        <Box>Comment</Box>
+                        <Box>
+                          <Typography variant='subtitle1' align='left' sx={{ml:4}}>
+                          Comment
+                          </Typography>
+                          </Box>
+                          <Typography variant='body2' align='left' sx={{ml:5}}>
                         {debit.comment}
+                        </Typography>
                       </Collapse>
                     </TableCell>
                   </TableRow>
@@ -267,7 +274,6 @@ const ExpenseListOutput = (props: any) => {
                     },
                     native: true,
                   }}
-                  sx={{mr: '2'}}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                   ActionsComponent={TablePaginationActions}

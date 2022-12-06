@@ -180,7 +180,7 @@ const ExpenseDashboard = () => {
             sx={{
               width: 330,
               m: 3,
-              mt: 7,
+              mt: '-10px',
               p: 3,
               pt: 1,
               borderRadius: 2,

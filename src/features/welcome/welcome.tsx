@@ -14,7 +14,7 @@ function WelcomeFeature() {
           <Typography
             variant='h1'
             align='center'
-            style={styles.whiteTypography}
+            // style={styles.whiteTypography}
           >
             Welcome to start saving with Xpense!
           </Typography>

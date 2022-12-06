@@ -75,7 +75,7 @@ import { GetDebitsForUser } from '../../shared/fetch/expense'
           {
             label: 'Categories',
             data: dataValues,
-            backgroundColor: 'rgba(25, 118, 210, 1)',
+            backgroundColor: 'secondary.main',
           },
         ],
       };

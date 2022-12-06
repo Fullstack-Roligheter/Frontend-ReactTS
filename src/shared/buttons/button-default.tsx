@@ -10,7 +10,7 @@ import { IconButton } from '@mui/material'
 export function SubmitButton(props: any) {
   return (
     <Box sx={{ m: 1, position: 'relative' }}>
-      <Button variant='contained' type='submit' sx={{backgroundColor: 'secondary.main'}}>
+      <Button variant='contained' type='submit'>
         {props.buttontext}
         {(() => {
           if (props.isLoading) {
