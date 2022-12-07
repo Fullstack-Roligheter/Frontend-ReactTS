@@ -1,12 +1,10 @@
-import { Box, IconButton, Typography } from '@mui/material'
-import { Link, Navigate } from 'react-router-dom'
+import { Box, Typography } from '@mui/material'
+import { Navigate } from 'react-router-dom'
 import { useUserContext } from '../../context/UserContext'
-import { userType } from '../../shared/Interfaces/userToken'
 import styles from '../../CssStyles.js'
 import { useEffect, useState } from 'react'
 import DebitChart from '../../shared/charts/DebitChart'
 import { GetPlans } from '../../shared/fetch/savingplan'
-import { Height } from '@mui/icons-material'
 
 
 function DashboardFeature() {
@@ -51,6 +49,8 @@ function DashboardFeature() {
       setPlanEndDate(response[latestItem].planEndDate)
     })
   }
+
+const planAmountWithSpaces = planAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
   return (
     <>
@@ -120,7 +120,7 @@ function DashboardFeature() {
                           {planName}
                         </Typography>
                         <Typography variant="h3" style={styles.savingsPlanInfo}>
-                          {planAmount}:-
+                          {planAmountWithSpaces}:-
                         </Typography>
                       </div>
                       <div style={{ display: "flex", flexDirection: 'column', width: "100%"}}>
