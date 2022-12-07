@@ -12,6 +12,7 @@ import {
   ListItemIcon,
   TableFooter,
   TablePagination,
+  Typography,
 } from '@mui/material'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import { useUserContext } from '../../context/UserContext'
@@ -32,7 +33,6 @@ import { DateFormatter } from '../../shared/functions/functions'
 const ExpenseListOutput = (props: any) => {
   const user = useUserContext()
 
-  // const [debitsToShow, setDebitsToShow] = useState<any[]>([props.debits])
   const [alteredDebitList, setAlteredDebitList] = useState<any[]>([])
   const [open, setOpen] = useState(-1)
   const [altered, setAltered] = useState(false)
@@ -158,14 +158,15 @@ const ExpenseListOutput = (props: any) => {
   return (
     <>
       <Box
-        width={800}
-        minWidth={800}
+        width={1000}
         display='flex'
         flexWrap='wrap'
-        height={'fit-content'}
-        sx={{ mt: 7 }}
+        sx={{ mt: -1.3 }}
       >
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          sx={{ borderRadius: 2, height: '680px' }}
+        >
           <Table>
             <TableHead>
               <TableRow key='table-header'>
@@ -233,6 +234,7 @@ const ExpenseListOutput = (props: any) => {
                     >
                       {debit.budget}
                     </TableCell>
+
                     <TableCell
                       key={debit.id + 'edit'}
                       colSpan={5}
@@ -288,7 +290,7 @@ const ExpenseListOutput = (props: any) => {
                     <TableCell
                       key={debit.id + 'comment'}
                       className='comments'
-                      colSpan={5}
+                      colSpan={7}
                       sx={{
                         paddingBottom: 0,
                       }}
@@ -298,8 +300,18 @@ const ExpenseListOutput = (props: any) => {
                         timeout='auto'
                         unmountOnExit
                       >
-                        <Box>Comment</Box>
-                        {debit.comment}
+                        <Box>
+                          <Typography
+                            variant='subtitle1'
+                            align='left'
+                            sx={{ ml: 4 }}
+                          >
+                            Comment
+                          </Typography>
+                        </Box>
+                        <Typography variant='body2' align='left' sx={{ ml: 5 }}>
+                          {debit.comment}
+                        </Typography>
                       </Collapse>
                     </TableCell>
                   </TableRow>
@@ -320,7 +332,6 @@ const ExpenseListOutput = (props: any) => {
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                  colSpan={5}
                   count={debitsToShow.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
@@ -347,7 +358,6 @@ const ExpenseListOutput = (props: any) => {
           modalContent={
             <EditDebitModal
               onConfirm={onConfirmEdit}
-              // onCancel={onCancel}
               message={'Change Debit'}
               debits={props.debits}
               categories={props.categories}

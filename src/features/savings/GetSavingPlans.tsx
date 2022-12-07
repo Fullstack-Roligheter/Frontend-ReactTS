@@ -17,8 +17,8 @@ import { useUserContext } from '../../context/UserContext'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.main,
+    fontSize: 16
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -26,9 +26,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }))
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
   '&:last-child td, &:last-child th': {
     border: 0,
   },

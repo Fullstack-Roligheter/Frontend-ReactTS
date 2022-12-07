@@ -1,7 +1,7 @@
 
 const styles = {
   welcomeBackgroundColor: {
-    background: 'radial-gradient(circle at center, rgba(65, 162, 72, 0.4), rgba(65, 162, 72, 0.1))',
+    //background: 'radial-gradient(circle at center, rgba(65, 162, 72, 0.4), rgba(65, 162, 72, 0.1))',
     borderRadius: '15px',
     paddingLeft: '30px',
     paddingRight: '30px',
@@ -33,7 +33,7 @@ const styles = {
     color: 'grey'
   },
   formBackground: {
-    background: 'rgba(65, 162, 72, 0.4)',
+    backgroundColor: 'rgba(161,136,127, 0.60)',
     width: 'fit-content',
     padding: '30px',
     borderRadius: '15px',
