@@ -3,12 +3,13 @@ import { FunctionComponent, useState } from 'react'
 import { ButtonCollection } from '../../../CustomComponents'
 import { SubmitButton } from '../../../shared/buttons/button-default'
 import { useUserContext } from '../../../context/UserContext'
-import { DeleteDebit} from '../../../shared/fetch/expense'
+import { DeleteDebit } from '../../../shared/fetch/expense'
 import { DeleteDebitModalProps } from '../../../shared/Interfaces/debitModal'
+import { DateFormatter } from '../../../shared/functions/functions'
 
-export const DeleteDebitModal: FunctionComponent<
-  DeleteDebitModalProps
-> = (props) => {
+export const DeleteDebitModal: FunctionComponent<DeleteDebitModalProps> = (
+  props
+) => {
   const user = useUserContext()
   const [isLoading, setloadingState] = useState(false)
   const [message, setmessage] = useState('')
@@ -53,7 +54,7 @@ export const DeleteDebitModal: FunctionComponent<
       </Typography>
       <form onSubmit={handleSubmit}>
         <Typography>Date:</Typography>
-        <Typography>{debitDate.toString()}</Typography>
+        <Typography>{DateFormatter(debitDate.toString())}</Typography>
         <br />
         <Typography>Amount:</Typography>
         <Typography>{debitAmount}</Typography>

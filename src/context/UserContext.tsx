@@ -23,6 +23,7 @@ type IUserContext = {
   setUserId: (userId: string) => void
   signIn: (userEmail: string, password: string) => void
   signOut: () => void
+  updateUser: (props: any) => void
 }
 
 export const UserContext = React.createContext<IUserContext>({} as IUserContext)
@@ -78,6 +79,19 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
 
     navigate(`/dashboard`)
   }
+
+  const updateUser = (props: any) => {
+    sessionStorage.setItem('userId', props.userId)
+    sessionStorage.setItem('email', props.email)
+    sessionStorage.setItem('firstName', props.firstName)
+    sessionStorage.setItem('lastName', props.lastName)
+
+    setUserId(props.userId)
+    setEmail(props.email)
+    setFirstName(props.firstName)
+    setLastName(props.lastName)
+  }
+
   /*  console.log('userID:', userId) */
 
   //sign out
@@ -107,6 +121,7 @@ export const UserContextProvider: React.FC<IProps> = (props) => {
         setUserId,
         signIn,
         signOut,
+        updateUser,
       }}
     >
       {props.children}

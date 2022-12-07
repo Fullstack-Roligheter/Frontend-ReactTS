@@ -25,14 +25,14 @@ import { useDeleteModal, useEditModal } from '../../shared/modal/useModal'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import { GetDebitsForUser } from '../../shared/fetch/expense'
 import { EditDebitModal } from './editDebitModal/editDebitModal'
-import { DateFetcher } from '../../shared/dateFetcher/dateFetcher'
 import { DeleteDebitModal } from './deleteDebitModal/deleteDebitModal'
+
+import { DateFormatter } from '../../shared/functions/functions'
 
 const ExpenseListOutput = (props: any) => {
   const user = useUserContext()
-  // const [debitsToShow, setDebitsToShow] = useState<any[]>([props.debits])
+
   const [alteredDebitList, setAlteredDebitList] = useState<any[]>([])
   const [open, setOpen] = useState(-1)
   const [altered, setAltered] = useState(false)
@@ -56,7 +56,7 @@ const ExpenseListOutput = (props: any) => {
     debitsToShow = alteredDebitList
   }, [altered])
 
-  function UpdateDepitList(): any {
+  function UpdateDebitList(): any {
     props.callBack()
   }
 
@@ -131,32 +131,60 @@ const ExpenseListOutput = (props: any) => {
     setPage(0)
   }
 
+  type HeaderType = {
+    title: string
+    sortTarget: string
+  }
+
+  const headCells: HeaderType[] = [
+    {
+      title: 'Date',
+      sortTarget: 'date',
+    },
+    {
+      title: 'Amount',
+      sortTarget: 'sum',
+    },
+    {
+      title: 'Category',
+      sortTarget: 'category',
+    },
+    {
+      title: 'Budget',
+      sortTarget: 'budget',
+    },
+  ]
+
   return (
     <>
-      <Box width={1000} display='flex' flexWrap='wrap' sx={{ mt: '-10px'}}>
-        <TableContainer component={Paper} sx={{borderRadius: 2, height: '680px'}}>
+      <Box
+        width={1000}
+        display='flex'
+        flexWrap='wrap'
+        sx={{ mt: -1.3 }}
+      >
+        <TableContainer
+          component={Paper}
+          sx={{ borderRadius: 2, height: '680px' }}
+        >
           <Table>
             <TableHead>
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell>
-                  <Button onClick={() => SortExpenses('date')}>Date</Button>
-                </TableCell>
-                <TableCell>
-                  <Button onClick={() => SortExpenses('sum')}>Amount</Button>
-                </TableCell>
-                <TableCell>
-                  <Button onClick={() => SortExpenses('category')}>
-                    Category
-                  </Button>
-                </TableCell>
-                <TableCell>
-                  <Button onClick={() => SortExpenses('budget')}>Budget</Button>
-                </TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
+              <TableRow key='table-header'>
+                <TableCell key={'space'}></TableCell>
+                {headCells.map((headCell: HeaderType) => (
+                  <TableCell key={headCell.title}>
+                    <Button
+                      onClick={() => {
+                        SortExpenses(headCell.sortTarget)
+                      }}
+                    >
+                      {headCell.title}
+                    </Button>
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
+
             <TableBody>
               {(rowsPerPage > 0
                 ? debitsToShow.slice(
@@ -166,8 +194,11 @@ const ExpenseListOutput = (props: any) => {
                 : debitsToShow
               ).map((debit: any, index: number) => (
                 <>
-                  <TableRow key={debit.id}>
-                    <TableCell sx={{ paddingBottom: 0, borderBottom: '0px' }}>
+                  <TableRow key={debit.id + 'row'}>
+                    <TableCell
+                      key={debit.id + 'open'}
+                      sx={{ paddingBottom: 0, borderBottom: '0px' }}
+                    >
                       <IconButton
                         onClick={() => setOpen(open === index ? -1 : index)}
                       >
@@ -178,41 +209,66 @@ const ExpenseListOutput = (props: any) => {
                         )}
                       </IconButton>
                     </TableCell>
-                    <TableCell sx={{ paddingBottom: 0, borderBottom: '0px' }}>
-                      {debit.date}
+                    <TableCell
+                      key={debit.id + debit.date}
+                      sx={{ paddingBottom: 0, borderBottom: '0px' }}
+                    >
+                      {DateFormatter(debit.date)}
                     </TableCell>
-                    <TableCell sx={{ paddingBottom: 0, borderBottom: '0px' }}>
+                    <TableCell
+                      key={debit.id + debit.amount}
+                      sx={{ paddingBottom: 0, borderBottom: '0px' }}
+                    >
                       {debit.amount}
                     </TableCell>
-                    <TableCell sx={{ paddingBottom: 0, borderBottom: '0px' }}>
+                    <TableCell
+                      key={debit.id + debit.category}
+                      sx={{ paddingBottom: 0, borderBottom: '0px' }}
+                    >
                       {debit.category}
                     </TableCell>
                     <TableCell
-                      // colSpan={5}
+                      key={debit.id + debit.budget}
+                      colSpan={5}
                       sx={{ paddingBottom: 0, borderBottom: '0px' }}
                     >
                       {debit.budget}
                     </TableCell>
-                    <TableCell                       sx={{ paddingBottom: 0, borderBottom: '0px' }}>
-                      {/* <ListItemIcon> */}
-                      <IconButton
-                        onClick={() => {
-                          ToEdit(
-                            debit.id,
-                            debit.date,
-                            debit.amount,
-                            debit.category,
-                            debit.budget,
-                            debit.comment
-                          )
-                        }}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                      {/* </ListItemIcon> */}
+
+                    <TableCell
+                      key={debit.id + 'edit'}
+                      colSpan={5}
+                      sx={{
+                        borderBottom: '0px',
+                        borderTop: '1px solid rgba(224, 224, 224, 1)',
+                      }}
+                    >
+                      <ListItemIcon>
+                        <IconButton
+                          onClick={() => {
+                            ToEdit(
+                              debit.id,
+                              debit.date,
+                              debit.amount,
+                              debit.category,
+                              debit.budget,
+                              debit.comment
+                            )
+                          }}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </ListItemIcon>
                     </TableCell>
-                    <TableCell                       sx={{ paddingBottom: 0, borderBottom: '0px' }}>
-                      {/* <ListItemIcon> */}
+                    <TableCell
+                      key={debit.id + 'delete'}
+                      colSpan={5}
+                      sx={{
+                        borderBottom: '0px',
+                        borderTop: '1px solid rgba(224, 224, 224, 1)',
+                      }}
+                    >
+                      <ListItemIcon>
                         <IconButton
                           onClick={() => {
                             ToDelete(
@@ -227,14 +283,17 @@ const ExpenseListOutput = (props: any) => {
                         >
                           <DeleteIcon />
                         </IconButton>
-                      {/* </ListItemIcon> */}
+                      </ListItemIcon>
                     </TableCell>
                   </TableRow>
-                  <TableRow>
+                  <TableRow key={debit.id + 'commentrow'}>
                     <TableCell
+                      key={debit.id + 'comment'}
                       className='comments'
                       colSpan={7}
-                      sx={{ paddingBottom: 0 }}
+                      sx={{
+                        paddingBottom: 0,
+                      }}
                     >
                       <Collapse
                         in={open === index}
@@ -242,12 +301,16 @@ const ExpenseListOutput = (props: any) => {
                         unmountOnExit
                       >
                         <Box>
-                          <Typography variant='subtitle1' align='left' sx={{ml:4}}>
-                          Comment
+                          <Typography
+                            variant='subtitle1'
+                            align='left'
+                            sx={{ ml: 4 }}
+                          >
+                            Comment
                           </Typography>
-                          </Box>
-                          <Typography variant='body2' align='left' sx={{ml:5}}>
-                        {debit.comment}
+                        </Box>
+                        <Typography variant='body2' align='left' sx={{ ml: 5 }}>
+                          {debit.comment}
                         </Typography>
                       </Collapse>
                     </TableCell>
@@ -256,15 +319,19 @@ const ExpenseListOutput = (props: any) => {
               ))}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <TableCell key={Date.now()} colSpan={6} />
                 </TableRow>
               )}
             </TableBody>
-            <TableFooter>
+            <TableFooter
+              sx={{
+                borderBottom: '0px',
+                borderTop: '1px solid rgba(224, 224, 224, 1)',
+              }}
+            >
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                  colSpan={7}
                   count={debitsToShow.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
@@ -291,7 +358,6 @@ const ExpenseListOutput = (props: any) => {
           modalContent={
             <EditDebitModal
               onConfirm={onConfirmEdit}
-              // onCancel={onCancel}
               message={'Change Debit'}
               debits={props.debits}
               categories={props.categories}
@@ -302,7 +368,7 @@ const ExpenseListOutput = (props: any) => {
               debitBudget={debitSendBudget}
               debitCategory={debitSendCategory}
               debitComment={debitSendComment}
-              callBack={UpdateDepitList}
+              callBack={UpdateDebitList}
             />
           }
         />
@@ -316,7 +382,7 @@ const ExpenseListOutput = (props: any) => {
             <DeleteDebitModal
               onConfirm={onConfirmDelete}
               message={'Delete following Debit?'}
-              callBack={UpdateDepitList}
+              callBack={UpdateDebitList}
               debitId={debitSendId}
               debitDate={debitSendDate}
               debitAmount={debitSendAmount}
