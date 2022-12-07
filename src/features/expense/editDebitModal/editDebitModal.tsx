@@ -5,13 +5,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import {
-  FormEvent,
-  FunctionComponent,
-  useState,
-  useRef,
-  useEffect,
-} from 'react'
+import { FormEvent, FunctionComponent, useState, useEffect } from 'react'
 import styles from '../../../CssStyles'
 import {
   DisabledSubmitButton,
@@ -24,11 +18,12 @@ import {
   EditSubmitData,
 } from '../../../shared/Interfaces/debitModal'
 
+import { DateFormatter } from '../../../shared/functions/functions'
+
 export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   props
 ) => {
   const user = useUserContext()
-  const ref = useRef(null)
 
   const [debitDate, setDebitDate] = useState(props.debitDate)
   const [debitAmount, setDebitAmount] = useState(props.debitAmount)
@@ -65,36 +60,36 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
   }
 
   const getCatId = (catName: string) => {
-    if(catName === ''){
+    if (catName === '') {
       editSumbitData.categoryId = ''
       setdebitCategory('')
-    } else{
-      let foundCategory = props.categories.find((obj: { categoryName: string }) => {
-      return obj.categoryName === catName;
-      })
+    } else {
+      let foundCategory = props.categories.find(
+        (obj: { categoryName: string }) => {
+          return obj.categoryName === catName
+        }
+      )
       // editSumbitData.categoryId = foundCategory.categoryId
       setdebitCategory(foundCategory.categoryId)
     }
-    
   }
 
   const getBudgetId = (budName: string) => {
-    if(budName === ''){
+    if (budName === '') {
       editSumbitData.budgetId = ''
       setDebitBudget('')
-    } else{
-      let foundBudget = props.budgets.find((obj: { budgetName: string})=>{
-        return obj.budgetName === budName;
+    } else {
+      let foundBudget = props.budgets.find((obj: { budgetName: string }) => {
+        return obj.budgetName === budName
       })
-      
+
       // editSumbitData.budgetId = foundBudget.budgetId
       setDebitBudget(foundBudget.budgetId)
     }
   }
 
   useEffect(() => {
-    let oldDateAsString = debitDate.toString()
-    let date = oldDateAsString.substring(0, 10)
+    let date = DateFormatter(debitDate.toString())
     setDebitDate(date as unknown as Date)
     getCatId(debitCategory)
     getBudgetId(debitBudget)
@@ -139,8 +134,7 @@ export const EditDebitModal: FunctionComponent<EditDebitModalProps> = (
             label='Date'
             value={debitDate}
             defaultValue={debitDate}
-            onChange={(e) => 
-              setDebitDate(e.target.value as unknown as Date)}
+            onChange={(e) => setDebitDate(e.target.value as unknown as Date)}
             margin='normal'
             style={styles.textfield}
           />
