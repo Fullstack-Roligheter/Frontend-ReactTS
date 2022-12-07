@@ -26,7 +26,7 @@ import styles from '../../CssStyles'
 
 import { useUserContext } from '../../context/UserContext'
 import ExpenseListOutput from './ExpenseListOutput'
-import { string } from 'zod'
+// import { string } from 'zod'
 
 const ExpenseDashboard = () => {
   const user = useUserContext()
@@ -113,14 +113,8 @@ const ExpenseDashboard = () => {
       UpdateDebitsState()
 
       setTimeout(() => {
-        setNewExpense(initialState)
         setLoadingState(false)
-        setMessage('Transaction Created')
-        setMessageState(true)
-        setTimeout(() => {
-          setMessageState(false)
-        }, 3000)
-      })
+      }, 2000)
     })
   }
 
@@ -170,8 +164,6 @@ const ExpenseDashboard = () => {
     })
   }
 
-  //Grön styling för när vi ändrar färg på standardfärgen i projektet, den accepterar denna variabel och tolkar som strängen den sparat
-  //sx={{ width: 1, m: 3, mt: 7, p: 3, pt: 1, border: 1, borderColor: 'text.disabled', borderRadius: 2, bgcolor: styles.formBackground.background}}
   return (
     <>
       <Box
@@ -187,12 +179,12 @@ const ExpenseDashboard = () => {
             sx={{
               width: 330,
               m: 3,
-              mt: 7,
+              mt: '-10px',
               p: 3,
               pt: 1,
               borderRadius: 2,
-              bgcolor: 'RGBA(255,255,255,0.65)',
-              boxShadow: 5,
+              bgcolor: 'white',
+              boxShadow: 2,
             }}
           >
             <TextField
@@ -307,7 +299,7 @@ const ExpenseDashboard = () => {
                   <Checkbox
                     name='ReturningTransactions'
                     onChange={handleBoolean}
-                    sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
+                    sx={{ '& .MuiSvgIcon-root': { fontSize: 40 }}}
                   />
                 }
                 label='Recurring expense'
@@ -348,18 +340,6 @@ const ExpenseDashboard = () => {
                 }
               })()}
             </Box>
-            {(() => {
-              if (messageState) {
-                return (
-                  <Box height={'20px'}>
-                    <Typography>{message}</Typography>
-                  </Box>
-                )
-              }
-              if (!messageState) {
-                return <Box height={'20px'}></Box>
-              }
-            })()}
             {(() => {
               if (!checkForm()) {
                 return (
