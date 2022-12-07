@@ -117,3 +117,36 @@ export function AddButton() {
     </Box>
   )
 }
+
+export function WarningButton(props: any) {
+  return (
+    <Box sx={{ m: 1, position: 'relative' }}>
+      <Button
+        variant='contained'
+        type='submit'
+        sx={{ backgroundColor: 'error.main' }}
+      >
+        {props.buttontext}
+        {(() => {
+          if (props.isLoading) {
+            return (
+              <Box sx={{ display: 'flex' }}>
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    color: 'white',
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    marginTop: '-12px',
+                    marginLeft: '-12px',
+                  }}
+                />
+              </Box>
+            )
+          }
+        })()}
+      </Button>
+    </Box>
+  )
+}
