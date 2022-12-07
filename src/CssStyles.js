@@ -84,10 +84,10 @@ const styles = {
     height: "fit-content"
   },
   savingsplanDate: {
-    color: "#676d98"
+    color: "rgba(161,136,127, 0.95)"
   },
   savingsPlanInfo: {
-    color: "#1976D2"
+    color: "rgb(0,77,64)"
   }
 };
 
