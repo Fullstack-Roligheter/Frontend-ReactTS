@@ -87,7 +87,7 @@ import { Typography } from '@mui/material';
           {
             label: 'Categories',
             data: dataValues,
-            backgroundColor: 'secondary.main',
+            backgroundColor: 'rgb(0, 77, 64)',
           },
         ],
       };
