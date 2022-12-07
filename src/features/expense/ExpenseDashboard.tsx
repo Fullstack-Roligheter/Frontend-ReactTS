@@ -12,7 +12,7 @@ import {
 } from '../../shared/fetch/category'
 import { GetBudgetsForUser } from '../../shared/fetch/budget'
 import { CreateDebit, GetDebitsForUser } from '../../shared/fetch/expense'
-import { DateFetcher } from '../../shared/dateFetcher/dateFetcher'
+import { DateFetcher } from '../../shared/functions/functions'
 
 import { Modal } from '../../shared/modal/modal'
 import { useModal } from '../../shared/modal/useModal'
@@ -26,6 +26,7 @@ import styles from '../../CssStyles'
 
 import { useUserContext } from '../../context/UserContext'
 import ExpenseListOutput from './ExpenseListOutput'
+import { string } from 'zod'
 
 const ExpenseDashboard = () => {
   const user = useUserContext()
@@ -41,26 +42,34 @@ const ExpenseDashboard = () => {
     useState('')
   const [ReturningTransactionsEnd, setReturningTransactionsEnd] = useState('')
 
-  const [newExpense, setNewExpense] = useState({
+  type newExpenseType = {
+    Date: string
+    Amount: string
+    Comment: string
+    UserId: string | null
+    CategoryId: string | null | undefined
+    BudgetId: string | null | undefined
+    ReturningTransactions: boolean
+  }
+
+  const initialState: newExpenseType = {
     Date: '',
     Amount: '',
     Comment: '',
     UserId: user.userId,
-    CategoryId: undefined,
-    BudgetId: undefined,
+    CategoryId: '',
+    BudgetId: '',
     ReturningTransactions: false,
     // ReturningTransactionsStart: '',
     // ReturningTransactionsEnd: '',
-  })
+  }
+
+  const [newExpense, setNewExpense] = useState<newExpenseType>(initialState)
 
   const onConfirm = () => toggle()
 
   const checkForm = () => {
-    if (
-      newExpense.Date === '' ||
-      newExpense.Amount === '' ||
-      newExpense.CategoryId === undefined
-    ) {
+    if (newExpense.Date === '' || newExpense.Amount === '') {
       return false
     } else {
       if (newExpense.ReturningTransactions) {
@@ -104,13 +113,14 @@ const ExpenseDashboard = () => {
       UpdateDebitsState()
 
       setTimeout(() => {
+        setNewExpense(initialState)
         setLoadingState(false)
         setMessage('Transaction Created')
         setMessageState(true)
         setTimeout(() => {
           setMessageState(false)
         }, 3000)
-      }, 3000)
+      })
     })
   }
 
@@ -341,12 +351,13 @@ const ExpenseDashboard = () => {
             {(() => {
               if (messageState) {
                 return (
-                  <Box>
-                    <br />
+                  <Box height={'20px'}>
                     <Typography>{message}</Typography>
-                    <br />
                   </Box>
                 )
+              }
+              if (!messageState) {
+                return <Box height={'20px'}></Box>
               }
             })()}
             {(() => {
@@ -375,6 +386,7 @@ const ExpenseDashboard = () => {
         width={{ xs: 2, sm: 2 / 3, md: 2 / 4 }}
         mb={{ xs: '10px', md: 0 }}
         boxSizing='border-box'
+        sx={{ minHeight: '800px' }}
       >
         <ExpenseListOutput
           debits={debits}
