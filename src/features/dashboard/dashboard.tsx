@@ -11,7 +11,7 @@ function DashboardFeature() {
 
   const [dashboardTextSize, setDashboardTextSize] = useState('big')
   const [planName, setPlanName] = useState("")
-  var [planAmount, setPlanAmount] = useState("")
+  const [planAmount, setPlanAmount] = useState("")
   const [planStartDate, setPlanStartDate] = useState("")
   const [planEndDate, setPlanEndDate] = useState("")
 
