@@ -50,11 +50,7 @@ function DashboardFeature() {
     })
   }
 
-function numberWithSpaces(planAmountWithoutSpaces: string) {
-    return planAmountWithoutSpaces.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-}
-
-planAmount =  numberWithSpaces(planAmount);
+const planAmountWithSpaces = planAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
   return (
     <>
@@ -124,7 +120,7 @@ planAmount =  numberWithSpaces(planAmount);
                           {planName}
                         </Typography>
                         <Typography variant="h3" style={styles.savingsPlanInfo}>
-                          {planAmount}:-
+                          {planAmountWithSpaces}:-
                         </Typography>
                       </div>
                       <div style={{ display: "flex", flexDirection: 'column', width: "100%"}}>
