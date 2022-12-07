@@ -53,7 +53,7 @@ const ExpenseDashboard = () => {
   }
 
   const initialState: newExpenseType = {
-    Date: '',
+    Date: DateFetcher(),
     Amount: '',
     Comment: '',
     UserId: user.userId,
@@ -119,7 +119,7 @@ const ExpenseDashboard = () => {
   }
 
   function getCategories(): any {
-    GetUserCreatedCatogories(user.userId).then((Response) => {
+    GetCategoriesForUser(user.userId).then((Response) => {
       setCategories(Response)
     })
   }
