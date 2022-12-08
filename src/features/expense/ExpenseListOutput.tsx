@@ -157,22 +157,17 @@ const ExpenseListOutput = (props: any) => {
 
   return (
     <>
-      <Box
-        width={1000}
-        display='flex'
-        flexWrap='wrap'
-        sx={{ mt: -1.3 }}
-      >
+      <Box width={1000} display='flex' flexWrap='wrap' sx={{ mt: -1.3 }}>
         <TableContainer
           component={Paper}
           sx={{ borderRadius: 2, height: '680px' }}
         >
           <Table>
             <TableHead>
-              <TableRow key='table-header'>
-                <TableCell key={'space'}></TableCell>
+              <TableRow>
+                <TableCell></TableCell>
                 {headCells.map((headCell: HeaderType) => (
-                  <TableCell key={headCell.title}>
+                  <TableCell key={headCell.title + '_title'}>
                     <Button
                       onClick={() => {
                         SortExpenses(headCell.sortTarget)
@@ -193,10 +188,10 @@ const ExpenseListOutput = (props: any) => {
                   )
                 : debitsToShow
               ).map((debit: any, index: number) => (
-                <>
-                  <TableRow key={debit.id + 'row'}>
+                <React.Fragment key={debit.id + '_item'}>
+                  <TableRow key={debit.id + '_row'}>
                     <TableCell
-                      key={debit.id + 'open'}
+                      key={debit.id + '_open'}
                       sx={{ paddingBottom: 0, borderBottom: '0px' }}
                     >
                       <IconButton
@@ -210,25 +205,25 @@ const ExpenseListOutput = (props: any) => {
                       </IconButton>
                     </TableCell>
                     <TableCell
-                      key={debit.id + debit.date}
+                      key={debit.id + '_date'}
                       sx={{ paddingBottom: 0, borderBottom: '0px' }}
                     >
                       {DateFormatter(debit.date)}
                     </TableCell>
                     <TableCell
-                      key={debit.id + debit.amount}
+                      key={debit.id + '_amount'}
                       sx={{ paddingBottom: 0, borderBottom: '0px' }}
                     >
                       {debit.amount}
                     </TableCell>
                     <TableCell
-                      key={debit.id + debit.category}
+                      key={debit.id + debit.category + '_cat'}
                       sx={{ paddingBottom: 0, borderBottom: '0px' }}
                     >
                       {debit.category}
                     </TableCell>
                     <TableCell
-                      key={debit.id + debit.budget}
+                      key={debit.id + debit.budget + '_bud'}
                       colSpan={5}
                       sx={{ paddingBottom: 0, borderBottom: '0px' }}
                     >
@@ -236,7 +231,7 @@ const ExpenseListOutput = (props: any) => {
                     </TableCell>
 
                     <TableCell
-                      key={debit.id + 'edit'}
+                      key={debit.id + '_edit'}
                       colSpan={5}
                       sx={{
                         borderBottom: '0px',
@@ -261,7 +256,7 @@ const ExpenseListOutput = (props: any) => {
                       </ListItemIcon>
                     </TableCell>
                     <TableCell
-                      key={debit.id + 'delete'}
+                      key={debit.id + '_delete'}
                       colSpan={5}
                       sx={{
                         borderBottom: '0px',
@@ -286,9 +281,9 @@ const ExpenseListOutput = (props: any) => {
                       </ListItemIcon>
                     </TableCell>
                   </TableRow>
-                  <TableRow key={debit.id + 'commentrow'}>
+                  <TableRow key={debit.id + '_commentrow'}>
                     <TableCell
-                      key={debit.id + 'comment'}
+                      key={debit.id + '_comment'}
                       className='comments'
                       colSpan={7}
                       sx={{
@@ -315,11 +310,11 @@ const ExpenseListOutput = (props: any) => {
                       </Collapse>
                     </TableCell>
                   </TableRow>
-                </>
+                </React.Fragment>
               ))}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell key={Date.now()} colSpan={6} />
+                  <TableCell colSpan={6} />
                 </TableRow>
               )}
             </TableBody>
